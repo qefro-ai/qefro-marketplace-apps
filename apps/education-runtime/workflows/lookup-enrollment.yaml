@@ -1,0 +1,21 @@
+id: lookup-enrollment
+name: "Lookup enrollment"
+description: "Fetch one enrollment"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which enrollment id?"
+  - id: run
+    type: tool
+    tool: entity.enrollment.get
+    execution: runtime
+    input_map:
+      id: id
+  - id: confirm
+    type: message
+    message: "Here is enrollment {{id}}."
+  - id: done
+    type: complete

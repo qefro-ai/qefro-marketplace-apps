@@ -1,0 +1,18 @@
+id: vehicle
+name: Vehicle
+description: "Fleet vehicle"
+allocate_code:
+  prefix: VEH-
+  start: 1001
+fields:
+  - name: label
+    type: string
+    required: true
+  - name: capacity
+    type: integer
+  - name: status
+    type: enum
+    enum_values:
+      - available
+      - in_use
+      - maintenance

@@ -1,0 +1,21 @@
+id: session
+name: Session
+description: "Class or coaching session"
+allocate_code:
+  prefix: SES-
+  start: 1001
+fields:
+  - name: course_title
+    type: string
+    required: true
+  - name: date
+    type: date
+    required: true
+  - name: time
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - scheduled
+      - completed
+      - cancelled

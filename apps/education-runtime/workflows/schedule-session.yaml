@@ -1,0 +1,31 @@
+id: schedule-session
+name: "Schedule session"
+description: "Create a class session"
+trigger:
+  type: conversation
+steps:
+  - id: ask_course_title
+    type: ask
+    field: course_title
+    message: "Which course?"
+  - id: ask_date
+    type: ask
+    field: date
+    message: "Which date?"
+  - id: ask_time
+    type: ask
+    field: time
+    message: "What time?"
+  - id: run
+    type: tool
+    tool: entity.session.create
+    execution: runtime
+    input_map:
+      course_title: course_title
+      date: date
+      time: time
+  - id: confirm
+    type: message
+    message: "Session scheduled for {{course_title}} on {{date}}."
+  - id: done
+    type: complete

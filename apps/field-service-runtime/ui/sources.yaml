@@ -1,0 +1,12 @@
+- id: work_orders
+  type: entity
+  target: work_order
+- id: sites
+  type: entity
+  target: site
+- id: technicians
+  type: entity
+  target: technician
+- id: parts
+  type: entity
+  target: part

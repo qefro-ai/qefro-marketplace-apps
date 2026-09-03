@@ -1,0 +1,21 @@
+id: lookup-visit
+name: "Lookup visit"
+description: "Fetch one visit"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which visit id?"
+  - id: run
+    type: tool
+    tool: entity.visit.get
+    execution: runtime
+    input_map:
+      id: id
+  - id: confirm
+    type: message
+    message: "Here is visit {{id}}."
+  - id: done
+    type: complete

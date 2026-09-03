@@ -1,0 +1,15 @@
+id: assignment
+name: Assignment
+description: "Learner assignment"
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: course_title
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - assigned
+      - submitted
+      - reviewed

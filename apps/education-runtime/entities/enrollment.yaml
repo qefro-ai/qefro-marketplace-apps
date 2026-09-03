@@ -1,0 +1,26 @@
+id: enrollment
+name: Enrollment
+description: "Learner enrollment bound to Person"
+allocate_code:
+  prefix: ENR-
+  start: 1001
+fields:
+  - name: learner_name
+    type: string
+    required: true
+  - name: course_title
+    type: string
+    required: true
+  - name: date
+    type: date
+  - name: status
+    type: enum
+    enum_values:
+      - applied
+      - active
+      - completed
+      - withdrawn
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

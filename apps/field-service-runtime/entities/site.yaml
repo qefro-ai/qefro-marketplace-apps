@@ -1,0 +1,15 @@
+id: site
+name: Site
+description: "Customer site or location"
+allocate_code:
+  prefix: SITE-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: address
+    type: string
+    required: true
+  - name: contact_name
+    type: string

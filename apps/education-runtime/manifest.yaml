@@ -1,0 +1,134 @@
+# Education / Coaching — native metadata Marketplace App.
+id: education-runtime
+name: Education
+version: 0.1.0
+hosting: runtime
+description: "Courses, enrollments, sessions, and assignments as a native Qefro coaching application"
+category: education
+tags:
+  - education
+  - coaching
+  - runtime
+channels:
+  - widget
+  - whatsapp
+entities:
+  - course
+  - enrollment
+  - session
+  - assignment
+flows:
+  - enroll-student
+  - schedule-session
+  - complete-session
+  - lookup-enrollment
+events:
+  - enrollment.created
+  - session.created
+  - session.completed
+  - assignment.created
+permissions:
+  - workflow.execute
+  - storage.read
+  - storage.write
+  - storage.update
+  - storage.delete
+capabilities:
+  - theme.get
+  - user.get
+  - tenant.get
+  - runtime.query
+  - workflow.trigger
+  - storage.read
+  - storage.write
+triggers:
+  - id: enroll_student
+    workflow: enroll-student
+    input_variable: enroll_input
+    match:
+      intents:
+        - "enroll a student"
+        - "sign up for the course"
+      confirmation:
+        reply_signals:
+          - enrolled
+        required_slots:
+          - learner_name
+          - course_title
+    confirmation_message: "{{learner_name}} enrolled in {{course_title}}."
+  - id: schedule_session
+    workflow: schedule-session
+    input_variable: session_input
+    match:
+      intents:
+        - "schedule a class"
+        - "book a coaching session"
+      confirmation:
+        reply_signals:
+          - scheduled
+        required_slots:
+          - course_title
+          - date
+    confirmation_message: "Session scheduled for {{course_title}} on {{date}}."
+  - id: complete_session
+    workflow: complete-session
+    input_variable: session_complete
+    match:
+      intents:
+        - "complete the session"
+        - "mark class done"
+      confirmation:
+        reply_signals:
+          - completed
+        required_slots:
+          - id
+    confirmation_message: "Session {{id}} completed."
+  - id: lookup_enrollment
+    workflow: lookup-enrollment
+    input_variable: enroll_lookup
+    match:
+      intents:
+        - "find the enrollment"
+        - "enrollment status"
+      confirmation:
+        reply_signals:
+          - enrollment
+        required_slots:
+          - id
+    confirmation_message: "Here is enrollment {{id}}."
+conversation_slots:
+  - id: learner_name
+    labels:
+      - learner
+      - student
+      - name
+    kind: person_name
+    identity: person_name
+  - id: course_title
+    labels:
+      - course
+      - program
+      - class
+    kind: string
+  - id: date
+    labels:
+      - date
+      - tomorrow
+    kind: date
+  - id: time
+    labels:
+      - time
+    kind: time
+    chip_prefix: time
+  - id: id
+    labels:
+      - enrollment
+      - "session id"
+    kind: string
+  - id: status
+    labels:
+      - status
+      - completed
+    kind: string
+ui:
+  name: Education

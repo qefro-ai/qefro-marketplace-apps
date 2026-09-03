@@ -1,0 +1,13 @@
+id: technician
+name: Technician
+description: "Field technician"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: skill
+    type: string
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

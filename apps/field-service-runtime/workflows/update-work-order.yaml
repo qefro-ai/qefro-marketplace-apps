@@ -1,0 +1,31 @@
+id: update-work-order
+name: "Update work order"
+description: "Assign or edit a work order"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which work order id?"
+  - id: ask_technician_name
+    type: ask
+    field: technician_name
+    message: "Assign which technician?"
+  - id: ask_status
+    type: ask
+    field: status
+    message: "New status?"
+  - id: run
+    type: tool
+    tool: entity.work_order.update
+    execution: runtime
+    input_map:
+      id: id
+      technician_name: technician_name
+      status: status
+  - id: confirm
+    type: message
+    message: "Work order {{id}} updated."
+  - id: done
+    type: complete

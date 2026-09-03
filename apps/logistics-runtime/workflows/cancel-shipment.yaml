@@ -1,0 +1,26 @@
+id: cancel-shipment
+name: "Cancel shipment"
+description: "Cancel a shipment"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which shipment id should we cancel?"
+  - id: ask_status
+    type: ask
+    field: status
+    message: "Type cancelled to confirm."
+  - id: run
+    type: tool
+    tool: entity.shipment.update
+    execution: runtime
+    input_map:
+      id: id
+      status: status
+  - id: confirm
+    type: message
+    message: "Shipment {{id}} cancelled."
+  - id: done
+    type: complete

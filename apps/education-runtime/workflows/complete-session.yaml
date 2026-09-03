@@ -1,0 +1,26 @@
+id: complete-session
+name: "Complete session"
+description: "Mark a session completed"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which session id?"
+  - id: ask_status
+    type: ask
+    field: status
+    message: "Type completed to confirm."
+  - id: run
+    type: tool
+    tool: entity.session.update
+    execution: runtime
+    input_map:
+      id: id
+      status: status
+  - id: confirm
+    type: message
+    message: "Session {{id}} completed."
+  - id: done
+    type: complete

@@ -1,0 +1,12 @@
+id: part
+name: Part
+description: "Spare part used on jobs"
+fields:
+  - name: sku
+    type: string
+    required: true
+  - name: name
+    type: string
+    required: true
+  - name: quantity_on_hand
+    type: integer

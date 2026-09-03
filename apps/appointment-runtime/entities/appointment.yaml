@@ -1,0 +1,32 @@
+id: appointment
+name: Appointment
+description: "Customer booking bound to Person"
+allocate_code:
+  prefix: A-
+  start: 1001
+fields:
+  - name: guest_name
+    type: string
+    required: true
+  - name: service_name
+    type: string
+    required: true
+  - name: staff_name
+    type: string
+  - name: date
+    type: date
+    required: true
+  - name: time
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - scheduled
+      - confirmed
+      - completed
+      - cancelled
+      - no_show
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity (never an app-local CRM)"

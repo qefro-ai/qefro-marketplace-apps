@@ -1,0 +1,32 @@
+id: create-shipment
+name: "Create shipment"
+description: "Create a shipment through Qefro Runtime"
+trigger:
+  type: conversation
+steps:
+  - id: ask_origin
+    type: ask
+    field: origin
+    message: Origin?
+  - id: ask_destination
+    type: ask
+    field: destination
+    message: Destination?
+  - id: ask_scheduled_date
+    type: ask
+    field: scheduled_date
+    message: "Ship date?"
+  - id: run
+    type: tool
+    tool: entity.shipment.create
+    execution: runtime
+    input_map:
+      origin: origin
+      destination: destination
+      scheduled_date: scheduled_date
+      vehicle_label: vehicle_label
+  - id: confirm
+    type: message
+    message: "Shipment created from {{origin}} to {{destination}}."
+  - id: done
+    type: complete

@@ -1,0 +1,31 @@
+id: visit
+name: Visit
+description: "Clinic visit bound to Person"
+allocate_code:
+  prefix: V-
+  start: 1001
+fields:
+  - name: patient_name
+    type: string
+    required: true
+  - name: practitioner_name
+    type: string
+  - name: reason
+    type: string
+  - name: date
+    type: date
+    required: true
+  - name: time
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - scheduled
+      - checked_in
+      - completed
+      - cancelled
+      - no_show
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

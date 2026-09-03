@@ -1,0 +1,19 @@
+id: stop
+name: Stop
+description: "Stop on a shipment"
+fields:
+  - name: shipment_id
+    type: string
+    required: true
+  - name: address
+    type: string
+    required: true
+  - name: sequence
+    type: integer
+  - name: status
+    type: enum
+    enum_values:
+      - pending
+      - arrived
+      - completed
+      - skipped

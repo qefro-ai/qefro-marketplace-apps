@@ -1,0 +1,20 @@
+id: service
+name: Service
+description: "Bookable service"
+allocate_code:
+  prefix: SVC-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: duration_minutes
+    type: integer
+    required: true
+  - name: price
+    type: float
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - inactive

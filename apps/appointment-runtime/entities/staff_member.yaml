@@ -1,0 +1,13 @@
+id: staff_member
+name: "Staff member"
+description: "Person who delivers a service"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: role
+    type: string
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Staff Person identity when the teammate is also a Qefro user"
