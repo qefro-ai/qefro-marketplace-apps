@@ -1,0 +1,12 @@
+id: update_ticket
+description: "Staff-only update ticket status or fields"
+connection: freshdesk
+method: PUT
+path: "/api/v2/tickets/{id}"
+timeout_seconds: 15
+body:
+  status: "{status}"
+  priority: "{priority}"
+access:
+  surfaces:
+    - staff

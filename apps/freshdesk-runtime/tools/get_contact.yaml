@@ -1,0 +1,9 @@
+id: get_contact
+description: "Staff-only contact fetch by id"
+connection: freshdesk
+method: GET
+path: "/api/v2/contacts/{id}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff

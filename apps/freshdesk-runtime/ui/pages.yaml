@@ -1,0 +1,36 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: tickets_status
+      span: 12
+    - widget: tickets_table
+      span: 12
+- id: tickets
+  title: Tickets
+  layout: split-grid
+  widgets:
+    - widget: ticket_form
+      span: 12
+    - widget: tickets_table
+      span: 12
+- id: fd-contacts
+  title: "Freshdesk contacts"
+  layout: split-grid
+  widgets:
+    - widget: contacts_table
+      span: 12
+- id: agents
+  title: Agents
+  layout: split-grid
+  widgets:
+    - widget: agents_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

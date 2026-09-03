@@ -1,0 +1,23 @@
+id: ticket
+name: Ticket
+description: "Support ticket"
+allocate_code:
+  prefix: T-
+  start: 1001
+fields:
+  - name: subject
+    type: string
+    required: true
+  - name: description
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - open
+      - pending
+      - resolved
+      - closed
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

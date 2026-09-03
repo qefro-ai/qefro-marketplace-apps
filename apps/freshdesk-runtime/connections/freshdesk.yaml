@@ -1,0 +1,19 @@
+# host_suffix constrains Connect to *.freshdesk.com. No subdomain or API key in YAML.
+id: freshdesk
+auth_type: bearer
+oauth:
+  host_suffix: ".freshdesk.com"
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: X-Freshdesk-Signature
+    key_source: app_client
+  identity_header: X-Freshdesk-Account
+  topic_header: X-Freshdesk-Event
+  event_id_header: X-Freshdesk-Webhook-Id
+  topics:
+    ticket_created: ticket.created
+    ticket_updated: ticket.updated
+    ticket_deleted: ticket.cancelled
+    contact_created: contact.created

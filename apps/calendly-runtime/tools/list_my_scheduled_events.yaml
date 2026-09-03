@@ -1,0 +1,27 @@
+id: list_my_scheduled_events
+description: "List scheduled events for the authenticated conversation Person only. Do not pass email, phone, person_id, or customer_id."
+connection: calendly
+method: GET
+path: "/api/v2/scheduled_events"
+timeout_seconds: 15
+query:
+  invitee_email: "{person.email}"
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: collection
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.email
+  collect: email_otp
+ownership:
+  identity: person.email
+  paths:
+    - email
+    - invitee.email

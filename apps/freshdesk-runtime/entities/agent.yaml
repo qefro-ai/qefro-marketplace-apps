@@ -1,0 +1,9 @@
+id: agent
+name: Agent
+description: "Support agent"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: email
+    type: email

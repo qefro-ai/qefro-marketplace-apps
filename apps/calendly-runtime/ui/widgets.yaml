@@ -1,0 +1,66 @@
+- id: intro
+  type: markdown
+  title: Calendly
+  options:
+    content: "Metadata Marketplace App. Chat “show my bookings” uses Hub email. Staff cancel uses generic HTTP. Automations subscribe to booking.created."
+- id: cancel_form
+  type: form
+  title: "Cancel booking"
+  options:
+    fields:
+      - name: uuid
+        label: "Event uuid"
+        type: text
+        required: true
+      - name: reason
+        label: Reason
+        type: text
+        required: false
+    submit_label: Cancel
+    action:
+      trigger: cancel-booking
+- id: events_status
+  type: status
+  title: Scheduled
+  source: scheduled_events
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: "Nothing yet"
+- id: types_table
+  type: table
+  title: "Event types"
+  source: event_types
+  options:
+    rows_path: items
+    empty_title: "No event types yet"
+    columns:
+      - key: name
+        header: Name
+      - key: duration
+        header: Minutes
+- id: events_table
+  type: table
+  title: Scheduled
+  source: scheduled_events
+  options:
+    rows_path: items
+    empty_title: "No scheduled yet"
+    columns:
+      - key: name
+        header: Name
+      - key: status
+        header: Status
+- id: invitees_table
+  type: table
+  title: Invitees
+  source: invitees
+  options:
+    rows_path: items
+    empty_title: "No invitees yet"
+    columns:
+      - key: name
+        header: Name
+      - key: email
+        header: Email

@@ -1,0 +1,12 @@
+id: deal
+name: Deal
+description: "Zoho deal"
+allocate_code:
+  prefix: D-
+  start: 1001
+fields:
+  - name: deal_name
+    type: string
+    required: true
+  - name: stage
+    type: string

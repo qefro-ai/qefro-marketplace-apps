@@ -1,0 +1,18 @@
+id: list_users
+description: "Staff-only user list"
+connection: slack
+method: GET
+path: "/api/users.list"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: members
+required_scopes:
+  - "users:read"
+access:
+  surfaces:
+    - staff

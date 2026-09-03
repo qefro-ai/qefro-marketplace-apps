@@ -1,0 +1,11 @@
+id: cancel_scheduled_event
+description: "Staff-only cancel a scheduled event"
+connection: calendly
+method: POST
+path: "/api/v2/scheduled_events/{uuid}/cancellation"
+timeout_seconds: 15
+body:
+  reason: "{reason}"
+access:
+  surfaces:
+    - staff

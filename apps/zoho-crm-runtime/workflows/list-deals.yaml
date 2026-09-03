@@ -1,0 +1,18 @@
+id: list-deals
+name: "List deals"
+description: "Staff list deals through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_deals
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are the recent deals.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

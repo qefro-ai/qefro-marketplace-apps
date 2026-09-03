@@ -1,0 +1,18 @@
+id: contact
+name: Contact
+description: "Freshdesk contact bound to Person"
+allocate_code:
+  prefix: C-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: email
+    type: email
+  - name: phone
+    type: phone
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

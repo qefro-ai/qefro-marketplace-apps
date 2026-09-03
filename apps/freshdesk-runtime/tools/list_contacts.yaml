@@ -1,0 +1,16 @@
+id: list_contacts
+description: "Staff-only contact list on the workspace HTTP connection"
+connection: freshdesk
+method: GET
+path: "/api/v2/contacts"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: contacts
+access:
+  surfaces:
+    - staff

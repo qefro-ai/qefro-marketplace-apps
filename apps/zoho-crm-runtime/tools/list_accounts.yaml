@@ -1,0 +1,18 @@
+id: list_accounts
+description: "Staff-only account list on the workspace HTTP connection"
+connection: zoho-crm
+method: GET
+path: "/crm/v2/Accounts"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: data
+required_scopes:
+  - ZohoCRM.modules.ALL
+access:
+  surfaces:
+    - staff

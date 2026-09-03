@@ -1,0 +1,9 @@
+- id: event_types
+  type: entity
+  target: event_type
+- id: scheduled_events
+  type: entity
+  target: scheduled_event
+- id: invitees
+  type: entity
+  target: invitee

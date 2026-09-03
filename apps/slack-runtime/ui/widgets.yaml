@@ -1,0 +1,55 @@
+- id: intro
+  type: markdown
+  title: Slack
+  options:
+    content: "Metadata Marketplace App. Staff chat “notify slack” runs generic Runtime HTTP. Slack signing-secret v0 timestamped signatures are a generic Runtime capability gap if the header is not a raw HMAC."
+- id: message_form
+  type: form
+  title: "Send message"
+  options:
+    fields:
+      - name: channel
+        label: Channel
+        type: text
+        required: true
+      - name: text
+        label: Message
+        type: text
+        required: true
+    submit_label: Send
+    action:
+      trigger: send-message
+- id: channels_table
+  type: table
+  title: Channels
+  source: channels
+  options:
+    rows_path: items
+    empty_title: "No channels yet"
+    columns:
+      - key: name
+        header: Name
+- id: users_table
+  type: table
+  title: Users
+  source: users
+  options:
+    rows_path: items
+    empty_title: "No users yet"
+    columns:
+      - key: name
+        header: Name
+      - key: email
+        header: Email
+- id: messages_table
+  type: table
+  title: Messages
+  source: messages
+  options:
+    rows_path: items
+    empty_title: "No messages yet"
+    columns:
+      - key: channel
+        header: Channel
+      - key: text
+        header: Text

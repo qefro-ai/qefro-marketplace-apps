@@ -1,0 +1,16 @@
+id: create_lead
+description: "Staff-only create a lead"
+connection: zoho-crm
+method: POST
+path: "/crm/v2/Leads"
+timeout_seconds: 15
+body:
+  data:
+    - Last_Name: "{last_name}"
+      Email: "{lead_email}"
+      Company: "{company}"
+required_scopes:
+  - ZohoCRM.modules.ALL
+access:
+  surfaces:
+    - staff

@@ -1,0 +1,9 @@
+id: ticket_comment
+name: "Ticket comment"
+description: "Note or reply on a ticket"
+fields:
+  - name: body
+    type: string
+    required: true
+  - name: ticket_id
+    type: string

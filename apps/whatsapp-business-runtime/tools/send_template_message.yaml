@@ -1,0 +1,17 @@
+id: send_template_message
+description: "Staff-only send a template message to a WhatsApp number collected as a slot (not Hub phone override)"
+connection: whatsapp-business
+method: POST
+path: "/v21.0/{phone_number_id}/messages"
+timeout_seconds: 15
+body:
+  messaging_product: whatsapp
+  to: "{destination_number}"
+  type: template
+  template:
+    name: "{template_name}"
+    language:
+      code: "{language}"
+access:
+  surfaces:
+    - staff

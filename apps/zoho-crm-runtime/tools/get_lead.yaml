@@ -1,0 +1,11 @@
+id: get_lead
+description: "Staff-only lead fetch"
+connection: zoho-crm
+method: GET
+path: "/crm/v2/Leads/{id}"
+timeout_seconds: 15
+required_scopes:
+  - ZohoCRM.modules.ALL
+access:
+  surfaces:
+    - staff

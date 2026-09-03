@@ -1,0 +1,25 @@
+id: slack
+auth_type: bearer
+oauth:
+  authorize_url: "https://slack.com/oauth/v2/authorize"
+  token_url: "https://slack.com/api/oauth.v2.access"
+  revoke_url: "https://slack.com/api/auth.revoke"
+  revoke_method: POST
+  scopes:
+    - "channels:read"
+    - "users:read"
+    - "chat:write"
+    - "channels:history"
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: X-Slack-Signature
+    key_source: app_client
+  identity_header: X-Slack-Team-Id
+  topic_header: X-Slack-Event
+  event_id_header: X-Slack-Request-Id
+  topics:
+    message.channels: channel.message
+    channel_created: channel.created
+    app_mention: notification.created

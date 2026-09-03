@@ -1,0 +1,18 @@
+id: list-my-bookings
+name: "List my bookings"
+description: "Show the authenticated customer's Calendly bookings"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_my_scheduled_events
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are your bookings.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

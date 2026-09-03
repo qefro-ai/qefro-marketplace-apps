@@ -1,0 +1,32 @@
+id: create-support-ticket
+name: "Create support ticket"
+description: "Create a Freshdesk ticket through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_subject
+    type: ask
+    field: subject
+    message: "What is the ticket subject?"
+  - id: ask_description
+    type: ask
+    field: description
+    message: "Describe the issue."
+  - id: ask_requester_email
+    type: ask
+    field: requester_email
+    message: "Requester email on the ticket?"
+  - id: run
+    type: tool
+    tool: create_ticket
+    execution: http
+    input_map:
+      subject: subject
+      description: description
+      requester_email: requester_email
+  - id: confirm
+    type: message
+    message: "Ticket created: {{subject}}."
+  - id: done
+    type: complete
+    message: ""

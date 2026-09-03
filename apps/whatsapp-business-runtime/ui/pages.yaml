@@ -1,0 +1,36 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: messages_status
+      span: 12
+    - widget: templates_table
+      span: 12
+- id: templates
+  title: Templates
+  layout: split-grid
+  widgets:
+    - widget: templates_table
+      span: 12
+- id: messages
+  title: Outbound
+  layout: split-grid
+  widgets:
+    - widget: send_form
+      span: 12
+    - widget: messages_table
+      span: 12
+- id: wa_contacts
+  title: "WA contacts"
+  layout: split-grid
+  widgets:
+    - widget: contacts_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

@@ -1,0 +1,27 @@
+id: create-deal
+name: "Create deal"
+description: "Create a Zoho deal through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_deal_name
+    type: ask
+    field: deal_name
+    message: "Deal name?"
+  - id: ask_stage
+    type: ask
+    field: stage
+    message: Stage?
+  - id: run
+    type: tool
+    tool: create_deal
+    execution: http
+    input_map:
+      deal_name: deal_name
+      stage: stage
+  - id: confirm
+    type: message
+    message: "Deal {{deal_name}} created."
+  - id: done
+    type: complete
+    message: ""

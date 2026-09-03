@@ -1,0 +1,13 @@
+id: wa_contact
+name: "WhatsApp contact"
+description: "Cloud API contact bound to Person"
+fields:
+  - name: wa_id
+    type: string
+    required: true
+  - name: name
+    type: string
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

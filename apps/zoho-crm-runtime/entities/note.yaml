@@ -1,0 +1,9 @@
+id: note
+name: Note
+description: "CRM note"
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: body
+    type: string

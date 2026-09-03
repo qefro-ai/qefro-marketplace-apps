@@ -1,0 +1,11 @@
+id: list_invitees
+description: "Staff-only invitees for a scheduled event"
+connection: calendly
+method: GET
+path: "/api/v2/scheduled_events/{uuid}/invitees"
+timeout_seconds: 15
+response:
+  items: collection
+access:
+  surfaces:
+    - staff

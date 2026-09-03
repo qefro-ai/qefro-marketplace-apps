@@ -1,0 +1,42 @@
+id: send-template-message
+name: "Send template message"
+description: "Send a WhatsApp template through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_phone_number_id
+    type: ask
+    field: phone_number_id
+    message: "Which phone-number id should send?"
+  - id: ask_waba_id
+    type: ask
+    field: waba_id
+    message: "WABA id (if needed for templates)?"
+  - id: ask_destination_number
+    type: ask
+    field: destination_number
+    message: "Destination WhatsApp number?"
+  - id: ask_template_name
+    type: ask
+    field: template_name
+    message: "Template name?"
+  - id: ask_language
+    type: ask
+    field: language
+    message: "Template language code?"
+  - id: run
+    type: tool
+    tool: send_template_message
+    execution: http
+    input_map:
+      phone_number_id: phone_number_id
+      waba_id: waba_id
+      destination_number: destination_number
+      template_name: template_name
+      language: language
+  - id: confirm
+    type: message
+    message: "Template {{template_name}} sent."
+  - id: done
+    type: complete
+    message: ""

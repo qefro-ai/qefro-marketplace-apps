@@ -1,0 +1,18 @@
+id: list-my-tickets
+name: "List my tickets"
+description: "Show the authenticated customer's tickets"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_my_tickets
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are your tickets.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

@@ -1,0 +1,18 @@
+id: list-channels
+name: "List channels"
+description: "List Slack channels through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_channels
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are the channels.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

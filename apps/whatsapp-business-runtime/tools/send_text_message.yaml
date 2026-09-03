@@ -1,0 +1,15 @@
+id: send_text_message
+description: "Staff-only send a text message"
+connection: whatsapp-business
+method: POST
+path: "/v21.0/{phone_number_id}/messages"
+timeout_seconds: 15
+body:
+  messaging_product: whatsapp
+  to: "{destination_number}"
+  type: text
+  text:
+    body: "{body}"
+access:
+  surfaces:
+    - staff

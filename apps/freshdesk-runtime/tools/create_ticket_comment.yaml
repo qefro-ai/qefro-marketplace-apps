@@ -1,0 +1,12 @@
+id: create_ticket_comment
+description: "Staff-only add a ticket note/comment"
+connection: freshdesk
+method: POST
+path: "/api/v2/tickets/{id}/notes"
+timeout_seconds: 15
+body:
+  body: "{body}"
+  private: false
+access:
+  surfaces:
+    - staff

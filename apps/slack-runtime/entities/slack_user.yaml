@@ -1,0 +1,9 @@
+id: slack_user
+name: "Slack user"
+description: "Workspace user"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: email
+    type: email

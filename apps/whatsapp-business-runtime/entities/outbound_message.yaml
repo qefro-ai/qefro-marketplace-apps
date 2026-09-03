@@ -1,0 +1,17 @@
+id: outbound_message
+name: "Outbound message"
+description: "Staff-sent Cloud API message"
+fields:
+  - name: destination_number
+    type: string
+    required: true
+  - name: template_name
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - queued
+      - sent
+      - delivered
+      - read
+      - failed

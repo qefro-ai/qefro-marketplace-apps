@@ -1,0 +1,14 @@
+id: lead
+name: Lead
+description: "Zoho lead"
+allocate_code:
+  prefix: L-
+  start: 1001
+fields:
+  - name: last_name
+    type: string
+    required: true
+  - name: company
+    type: string
+  - name: lead_email
+    type: email

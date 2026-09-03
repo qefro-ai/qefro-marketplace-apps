@@ -1,0 +1,9 @@
+id: activity
+name: Activity
+description: "Event or task"
+fields:
+  - name: subject
+    type: string
+    required: true
+  - name: start
+    type: datetime

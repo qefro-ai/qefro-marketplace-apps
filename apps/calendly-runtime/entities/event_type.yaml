@@ -1,0 +1,9 @@
+id: event_type
+name: "Event type"
+description: "Bookable Calendly event type"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: duration
+    type: integer
