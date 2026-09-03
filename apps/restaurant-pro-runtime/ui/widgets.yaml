@@ -1,0 +1,60 @@
+- id: intro
+  type: markdown
+  title: Restaurant Pro
+  options:
+    content: |
+      Metadata Marketplace App. Reservations persist in Qefro-managed storage.
+      Chat “Book a table tomorrow for 4” starts **create-reservation** on the
+      shared FlowRunner (RuntimeAdapter). Contacts stay on the existing Person CRM.
+
+- id: reservation_form
+  type: form
+  title: New reservation
+  options:
+    fields:
+      - { name: guest_name, label: Guest name, type: text, required: true }
+      - { name: covers, label: Guests, type: number, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: time, label: Time, type: time, required: false }
+    submit_label: Book table
+    action:
+      trigger: create-reservation
+
+- id: reservations_table
+  type: table
+  title: Reservations
+  source: reservations
+  options:
+    rows_path: items
+    empty_title: No reservations yet
+    empty_subtitle: Book from chat or the form on this page.
+    columns:
+      - { key: guest_name, header: Guest }
+      - { key: covers, header: Covers }
+      - { key: date, header: Date }
+      - { key: time, header: Time }
+      - { key: status, header: Status }
+
+- id: tables_table
+  type: table
+  title: Tables
+  source: tables
+  options:
+    rows_path: items
+    empty_title: No tables yet
+    columns:
+      - { key: label, header: Table }
+      - { key: seats, header: Seats }
+      - { key: status, header: Status }
+
+- id: menu_table
+  type: table
+  title: Menu
+  source: menu
+  options:
+    rows_path: items
+    empty_title: No dishes yet
+    columns:
+      - { key: name, header: Dish }
+      - { key: price, header: Price }
+      - { key: category, header: Category }

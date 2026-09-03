@@ -1,0 +1,19 @@
+id: table
+name: Table
+description: Dining table in the restaurant floor plan
+fields:
+  - name: label
+    type: string
+    required: true
+    description: Display name (e.g. T12)
+  - name: seats
+    type: integer
+    required: true
+    description: Number of seats
+  - name: status
+    type: enum
+    enum_values:
+      - available
+      - occupied
+      - reserved
+    description: Floor status

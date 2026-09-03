@@ -1,0 +1,33 @@
+id: create-reservation
+name: Create reservation
+description: Book a table through Qefro Runtime (FlowRunner → RuntimeAdapter)
+trigger:
+  type: conversation
+steps:
+  - id: ask_covers
+    type: ask
+    field: covers
+    message: How many guests?
+  - id: ask_date
+    type: ask
+    field: date
+    message: Which date should we book?
+  - id: ask_name
+    type: ask
+    field: guest_name
+    message: What name should the reservation be under?
+  - id: create
+    type: tool
+    tool: entity.reservation.create
+    execution: runtime
+    input_map:
+      guest_name: guest_name
+      covers: covers
+      date: date
+      time: time
+      table_id: table_id
+  - id: confirm
+    type: message
+    message: Reservation booked for {{covers}} guests on {{date}}.
+  - id: done
+    type: complete

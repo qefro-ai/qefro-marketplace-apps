@@ -1,0 +1,8 @@
+id: get_item
+description: Fetch one catalog item by id
+connection: catalog-api
+method: GET
+path: /v1/items/{id}
+response:
+  item: item
+timeout_seconds: 5

@@ -1,0 +1,5 @@
+# Workspace connection declaration. No host, URL, or secrets.
+# The workspace supplies base_url + credentials at connect time.
+id: catalog-api
+auth_type: named_header
+auth_header: X-Api-Key

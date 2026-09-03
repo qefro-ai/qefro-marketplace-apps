@@ -1,0 +1,10 @@
+id: get_product
+description: Get one catalog product by id from a previous list or search result. Do not guess the id.
+connection: shopify
+method: GET
+path: /admin/api/2024-10/products/{id}.json
+response:
+  item: product
+required_scopes:
+  - read_products
+timeout_seconds: 15

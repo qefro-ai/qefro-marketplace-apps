@@ -1,0 +1,16 @@
+id: list_products
+description: List catalog products. Each item has an id; follow-ups about a named product must call get_product with that id.
+connection: shopify
+method: GET
+path: /admin/api/2024-10/products.json
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: products
+  choice_id_prefix: product
+required_scopes:
+  - read_products
+timeout_seconds: 15

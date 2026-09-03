@@ -1,0 +1,9 @@
+- id: properties
+  type: entity
+  target: property
+- id: leads
+  type: entity
+  target: lead
+- id: viewings
+  type: entity
+  target: viewing

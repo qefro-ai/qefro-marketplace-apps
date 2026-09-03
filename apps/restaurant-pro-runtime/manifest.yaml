@@ -1,0 +1,77 @@
+# Restaurant Pro — metadata Marketplace App (hosting: runtime).
+# No SDK process. Qefro Runtime owns entities, UI, and FlowRunner execution.
+# Existing SDK restaurant-pro (takeaway) is unchanged.
+
+id: restaurant-pro-runtime
+name: Restaurant Pro
+version: 0.1.0
+hosting: runtime
+description: Table reservations and menu as a metadata Marketplace App executed by Qefro Runtime
+category: hospitality
+tags:
+  - restaurant
+  - reservations
+  - runtime
+channels:
+  - widget
+  - whatsapp
+entities:
+  - table
+  - reservation
+  - menu_item
+flows:
+  - create-reservation
+events:
+  - reservation.created
+  - reservation.cancelled
+permissions:
+  - workflow.execute
+  - storage.read
+  - storage.write
+  - storage.update
+  - storage.delete
+capabilities:
+  - theme.get
+  - user.get
+  - tenant.get
+  - runtime.query
+  - workflow.trigger
+  - storage.read
+  - storage.write
+triggers:
+  - id: book_table
+    workflow: create-reservation
+    input_variable: reservation_input
+    match:
+      intents:
+        - book a table
+        - reserve a table
+        - make a reservation
+        - book a reservation
+        - table for
+      confirmation:
+        reply_signals:
+          - reservation
+          - booked
+          - table booked
+        required_slots:
+          - covers
+          - date
+    confirmation_message: "Reservation booked for {{covers}} on {{date}}."
+conversation_slots:
+  - id: guest_name
+    labels: [guest name, guest, name]
+    kind: person_name
+    identity: person_name
+  - id: covers
+    labels: [covers, guests, party size, people, for]
+    kind: integer
+  - id: date
+    labels: [date, tomorrow, tonight]
+    kind: date
+  - id: time
+    labels: [time]
+    kind: time
+    chip_prefix: time
+ui:
+  name: Restaurant Pro

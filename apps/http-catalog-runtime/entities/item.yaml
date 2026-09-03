@@ -1,0 +1,9 @@
+id: item
+name: Item
+description: Catalog item shape for staff UI; live reads use HTTP tools
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: sku
+    type: string

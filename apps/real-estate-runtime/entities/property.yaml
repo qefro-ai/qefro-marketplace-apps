@@ -1,0 +1,23 @@
+id: property
+name: Property
+description: A listing available for viewing
+allocate_code:
+  prefix: P-
+  start: 1001
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: address
+    type: string
+    required: true
+  - name: price
+    type: float
+    description: Asking price
+  - name: status
+    type: enum
+    enum_values:
+      - available
+      - under_offer
+      - let
+      - withdrawn

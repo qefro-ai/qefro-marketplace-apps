@@ -1,0 +1,7 @@
+.DS_Store
+dist/
+.env
+.env.*
+*.pem
+*.hex
+signing_private.*

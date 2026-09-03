@@ -1,0 +1,33 @@
+# Workspace connection declaration. No host, Admin API token, or secrets.
+# Host and OAuth app credentials come from the workspace Connect form.
+# OAuth URLs and webhook HMAC headers are metadata for Qefro Runtime — this
+# package does not run an OAuth or webhook server.
+id: shopify
+auth_type: named_header
+auth_header: X-Shopify-Access-Token
+oauth:
+  authorize_url: "https://{host}/admin/oauth/authorize"
+  token_url: "https://{host}/admin/oauth/access_token"
+  revoke_url: "https://{host}/admin/api_permissions/current.json"
+  revoke_method: DELETE
+  host_suffix: ".myshopify.com"
+  scopes:
+    - read_products
+    - read_customers
+    - read_orders
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: base64
+    header: X-Shopify-Hmac-Sha256
+    key_source: app_client
+  identity_header: X-Shopify-Shop-Domain
+  topic_header: X-Shopify-Topic
+  event_id_header: X-Shopify-Webhook-Id
+  register_url: "https://{host}/admin/api/2024-10/webhooks.json"
+  topics:
+    orders/create: order.created
+    orders/updated: order.updated
+    orders/cancelled: order.cancelled
+    customers/create: customer.created
+    customers/update: customer.updated

@@ -1,0 +1,21 @@
+id: search-items
+name: Search catalog items
+description: Find catalog items through generic Runtime HTTP (FlowRunner → RuntimeAdapter → HTTP executor)
+trigger:
+  type: conversation
+steps:
+  - id: ask_query
+    type: ask
+    field: query
+    message: What are you looking for?
+  - id: list
+    type: tool
+    tool: list_items
+    execution: http
+    input_map:
+      query: query
+  - id: confirm
+    type: message
+    message: Items matching {{query}}.
+  - id: done
+    type: complete

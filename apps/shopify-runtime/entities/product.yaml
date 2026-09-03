@@ -1,0 +1,27 @@
+id: product
+name: Product
+description: Catalog product persisted in Qefro-managed storage
+allocate_code:
+  prefix: P-
+  start: 1001
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: handle
+    type: string
+    description: URL-safe catalog handle
+  - name: description
+    type: string
+  - name: price
+    type: float
+  - name: vendor
+    type: string
+  - name: product_type
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - draft
+      - active
+      - archived

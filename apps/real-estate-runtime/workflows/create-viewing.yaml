@@ -1,0 +1,32 @@
+id: create-viewing
+name: Create viewing
+description: Schedule a property viewing through Qefro Runtime (FlowRunner → RuntimeAdapter)
+trigger:
+  type: conversation
+steps:
+  - id: ask_property
+    type: ask
+    field: property_title
+    message: Which property should we show?
+  - id: ask_lead
+    type: ask
+    field: lead_name
+    message: Who is coming to the viewing?
+  - id: ask_date
+    type: ask
+    field: date
+    message: Which date should we book?
+  - id: create
+    type: tool
+    tool: entity.viewing.create
+    execution: runtime
+    input_map:
+      property_title: property_title
+      lead_name: lead_name
+      date: date
+      time: time
+  - id: confirm
+    type: message
+    message: Viewing booked for {{lead_name}} at {{property_title}} on {{date}}.
+  - id: done
+    type: complete

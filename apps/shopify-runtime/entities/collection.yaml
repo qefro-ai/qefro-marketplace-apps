@@ -1,0 +1,11 @@
+id: collection
+name: Collection
+description: Product grouping in the catalog
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: handle
+    type: string
+  - name: description
+    type: string

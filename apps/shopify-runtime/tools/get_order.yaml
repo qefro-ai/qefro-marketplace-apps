@@ -1,0 +1,13 @@
+id: get_order
+description: Staff-only get one order by id
+connection: shopify
+method: GET
+path: /admin/api/2024-10/orders/{id}.json
+response:
+  item: order
+required_scopes:
+  - read_orders
+access:
+  surfaces:
+    - staff
+timeout_seconds: 15

@@ -1,0 +1,18 @@
+id: list_orders
+description: Staff-only shop-wide order list on the workspace HTTP connection. Do not require a status filter.
+connection: shopify
+method: GET
+path: /admin/api/2024-10/orders.json
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: orders
+required_scopes:
+  - read_orders
+access:
+  surfaces:
+    - staff
+timeout_seconds: 15

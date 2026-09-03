@@ -1,0 +1,24 @@
+id: get-my-order
+name: Get my order
+description: Look up one order number and return it only if it belongs to the authenticated Person
+trigger:
+  type: conversation
+steps:
+  - id: ask_order
+    type: ask
+    field: order_number
+    message: What is your order number?
+  - id: get
+    type: tool
+    tool: get_my_order
+    execution: http
+    input_map:
+      order_number: order_number
+  - id: confirm
+    type: message
+    message: |
+      Here is that order.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

@@ -1,0 +1,14 @@
+id: menu_item
+name: Menu item
+description: Dish on the restaurant menu
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: price
+    type: float
+    required: true
+  - name: category
+    type: string
+  - name: available
+    type: boolean

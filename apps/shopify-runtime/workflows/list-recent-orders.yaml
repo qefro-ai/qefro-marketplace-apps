@@ -1,0 +1,18 @@
+id: list-recent-orders
+name: List recent orders
+description: Staff shop-wide recent orders through generic Runtime HTTP (FlowRunner → RuntimeAdapter → HTTP executor)
+trigger:
+  type: conversation
+steps:
+  - id: list
+    type: tool
+    tool: list_orders
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are the recent shop orders.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

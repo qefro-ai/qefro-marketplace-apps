@@ -1,0 +1,15 @@
+id: list_items
+description: Search catalog items on the connection allowlisted host
+connection: catalog-api
+method: GET
+path: /v1/items
+query:
+  q: "{query}"
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 100
+response:
+  items: items
+timeout_seconds: 5

@@ -1,0 +1,36 @@
+id: get_my_order
+description: Look up one order by order number for the authenticated conversation Person. The order number may come from the user; identity must not. Do not pass email, phone, person_id, or customer_id.
+connection: shopify
+method: GET
+path: /admin/api/2024-10/orders.json
+query:
+  name: "{order_number}"
+  email: "{person.email}"
+  status: any
+response:
+  items: orders
+required_scopes:
+  - read_orders
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.email
+  collect: email_otp
+ownership:
+  identity: person.email
+  paths:
+    - email
+    - customer.email
+  also:
+    - identity: person.external_id
+      paths:
+        - customer_id
+        - customer.id
+    - identity: person.phone
+      paths:
+        - phone
+        - customer.phone
+        - billing_address.phone
+timeout_seconds: 15

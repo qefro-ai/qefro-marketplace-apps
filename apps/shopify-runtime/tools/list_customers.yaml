@@ -1,0 +1,20 @@
+id: list_customers
+description: Staff-only customer list on the workspace HTTP connection
+connection: shopify
+method: GET
+path: /admin/api/2024-10/customers.json
+query:
+  query: "{query}"
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: customers
+required_scopes:
+  - read_customers
+access:
+  surfaces:
+    - staff
+timeout_seconds: 15

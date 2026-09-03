@@ -1,0 +1,9 @@
+- id: reservations
+  type: entity
+  target: reservation
+- id: tables
+  type: entity
+  target: table
+- id: menu
+  type: entity
+  target: menu_item

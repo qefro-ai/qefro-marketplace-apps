@@ -1,0 +1,16 @@
+id: variant
+name: Variant
+description: Sellable option of a product (size, color, SKU)
+fields:
+  - name: product_id
+    type: string
+    description: Owning product document id
+  - name: title
+    type: string
+    required: true
+  - name: sku
+    type: string
+  - name: price
+    type: float
+  - name: inventory_quantity
+    type: integer

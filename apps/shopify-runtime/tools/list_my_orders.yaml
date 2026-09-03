@@ -1,0 +1,40 @@
+id: list_my_orders
+description: List orders for the authenticated conversation Person only. Identity is resolved by the Runtime from Customer Hub; do not pass email, phone, person_id, or customer_id.
+connection: shopify
+method: GET
+path: /admin/api/2024-10/orders.json
+query:
+  email: "{person.email}"
+  status: any
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: orders
+required_scopes:
+  - read_orders
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.email
+  collect: email_otp
+ownership:
+  identity: person.email
+  paths:
+    - email
+    - customer.email
+  also:
+    - identity: person.external_id
+      paths:
+        - customer_id
+        - customer.id
+    - identity: person.phone
+      paths:
+        - phone
+        - customer.phone
+        - billing_address.phone
+timeout_seconds: 15

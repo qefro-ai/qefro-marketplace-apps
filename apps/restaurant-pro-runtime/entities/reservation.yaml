@@ -1,0 +1,34 @@
+id: reservation
+name: Reservation
+description: Table booking bound to the platform Person model
+allocate_code:
+  prefix: R-
+  start: 1001
+fields:
+  - name: guest_name
+    type: string
+    required: true
+  - name: covers
+    type: integer
+    required: true
+    description: Party size
+  - name: date
+    type: date
+    required: true
+  - name: time
+    type: string
+    description: Preferred seating time
+  - name: table_id
+    type: string
+    description: Optional table label or id
+  - name: status
+    type: enum
+    enum_values:
+      - confirmed
+      - seated
+      - cancelled
+      - completed
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: Existing Qefro Person identity (never a restaurant-local CRM)

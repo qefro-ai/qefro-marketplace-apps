@@ -1,0 +1,18 @@
+id: customer
+name: Customer
+description: Store customer bound to the platform Person model (never a Shopify-local CRM)
+allocate_code:
+  prefix: C-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: email
+    type: email
+  - name: phone
+    type: phone
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: Existing Qefro Person identity (never a store-local CRM)

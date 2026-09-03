@@ -1,0 +1,13 @@
+id: get_customer
+description: Staff-only get one customer by id
+connection: shopify
+method: GET
+path: /admin/api/2024-10/customers/{id}.json
+response:
+  item: customer
+required_scopes:
+  - read_customers
+access:
+  surfaces:
+    - staff
+timeout_seconds: 15
