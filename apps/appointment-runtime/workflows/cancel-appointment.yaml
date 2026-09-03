@@ -3,22 +3,20 @@ name: "Cancel appointment"
 description: "Mark an appointment cancelled through Qefro Runtime"
 trigger:
   type: conversation
+constants:
+  cancelled: cancelled
 steps:
   - id: ask_id
     type: ask
     field: id
     message: "Which appointment id should we cancel?"
-  - id: ask_status
-    type: ask
-    field: status
-    message: "Type cancelled to confirm."
   - id: run
     type: tool
     tool: entity.appointment.update
     execution: runtime
     input_map:
       id: id
-      status: status
+      status: $constants.cancelled
   - id: confirm
     type: message
     message: "Appointment {{id}} cancelled."

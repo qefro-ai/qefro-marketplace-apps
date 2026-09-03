@@ -10,7 +10,7 @@ pagination:
   default_limit: 20
   max_limit: 50
 response:
-  items: orders
+  items: $root
 access:
   surfaces:
     - staff

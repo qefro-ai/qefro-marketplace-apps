@@ -4,6 +4,8 @@ connection: stripe
 method: POST
 path: "/v1/checkout/sessions"
 timeout_seconds: 15
+request:
+  encoding: form
 body:
   mode: payment
   success_url: "{success_url}"
@@ -12,6 +14,9 @@ body:
       quantity: 1
 required_scopes:
   - read_write
+emits:
+  - event: checkout.completed
+    id_path: id
 access:
   surfaces:
     - staff

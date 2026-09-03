@@ -12,7 +12,7 @@ pagination:
   default_limit: 20
   max_limit: 50
 response:
-  items: products
+  items: $root
   choice_id_prefix: product
 access:
   surfaces:

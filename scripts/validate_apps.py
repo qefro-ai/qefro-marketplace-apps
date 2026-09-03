@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Validate every Marketplace App package against collection conventions."""
+"""Validate every Marketplace App package against collection conventions.
+
+Includes encoding, $root mapping, flow constants, emits, webhook signature /
+identity / topic metadata, auth_type (including basic), entity status_events,
+and customer identity placeholders. Every existing package must pass.
+"""
 
 from __future__ import annotations
 

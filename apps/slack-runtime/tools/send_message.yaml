@@ -9,6 +9,8 @@ body:
   text: "{text}"
 required_scopes:
   - "chat:write"
+emits:
+  - channel.message
 access:
   surfaces:
     - staff

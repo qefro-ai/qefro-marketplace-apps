@@ -27,3 +27,7 @@ fields:
     type: person
     ref_entity: person
     description: "Existing Qefro Person identity"
+status_events:
+  in_transit: shipment.updated
+  delivered: shipment.completed
+  cancelled: shipment.cancelled

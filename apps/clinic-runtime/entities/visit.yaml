@@ -29,3 +29,7 @@ fields:
     type: person
     ref_entity: person
     description: "Existing Qefro Person identity"
+status_events:
+  checked_in: visit.confirmed
+  cancelled: visit.cancelled
+  completed: visit.completed

@@ -4,12 +4,17 @@ connection: stripe
 method: POST
 path: "/v1/subscriptions"
 timeout_seconds: 15
+request:
+  encoding: form
 body:
   customer: "{stripe_customer}"
   items:
     - price: "{price_id}"
 required_scopes:
   - read_write
+emits:
+  - event: subscription.created
+    id_path: id
 access:
   surfaces:
     - staff

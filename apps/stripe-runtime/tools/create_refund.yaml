@@ -4,10 +4,15 @@ connection: stripe
 method: POST
 path: "/v1/refunds"
 timeout_seconds: 15
+request:
+  encoding: form
 body:
   payment_intent: "{payment_intent}"
 required_scopes:
   - read_write
+emits:
+  - event: refund.created
+    id_path: id
 access:
   surfaces:
     - staff

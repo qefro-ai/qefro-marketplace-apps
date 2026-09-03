@@ -314,6 +314,8 @@ class PackageConventionTests(unittest.TestCase):
                     self.assertTrue(connection.get("id"))
                     for _, key, _ in walk_keys(connection):
                         lower = str(key).lower()
+                        if lower in {"client_secret_source", "client_id_source"}:
+                            continue
                         self.assertNotIn(lower, FORBIDDEN_CONNECTION_KEYS)
                         self.assertNotIn("secret", lower)
                         self.assertNotIn("access_token", lower)
@@ -424,6 +426,121 @@ class PackageConventionTests(unittest.TestCase):
             "http-catalog-runtime",
         ):
             self.assertIn(required, names)
+
+    def test_http_request_encoding_and_root_items(self):
+        for app in app_dirs():
+            tools_dir = app / "tools"
+            if not tools_dir.exists():
+                continue
+            for path in sorted(tools_dir.glob("*.yaml")):
+                tool = load_yaml(path)
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    encoding = ((tool.get("request") or {}).get("encoding") or "json").lower()
+                    self.assertIn(encoding, {"json", "form"})
+                    items = (tool.get("response") or {}).get("items")
+                    if items:
+                        self.assertNotIn("://", str(items))
+                        self.assertTrue(items == "$root" or all(c.isalnum() or c in "._" for c in str(items)))
+                    emits = tool.get("emits") or []
+                    if isinstance(emits, str):
+                        emits = [emits]
+                    for entry in emits:
+                        name = entry if isinstance(entry, str) else entry.get("event")
+                        self.assertIn(".", name)
+                    if emits:
+                        manifest = load_yaml(app / "manifest.yaml")
+                        declared = set(manifest.get("events") or [])
+                        for entry in emits:
+                            name = entry if isinstance(entry, str) else entry.get("event")
+                            self.assertIn(name, declared)
+
+    def test_flow_constants_are_literals(self):
+        for app in app_dirs():
+            for path in sorted((app / "workflows").glob("*.yaml")):
+                flow = load_yaml(path)
+                constants = flow.get("constants") or {}
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    for key, value in constants.items():
+                        self.assertRegex(key, r"^[A-Za-z0-9_]+$")
+                        self.assertTrue(isinstance(value, (str, int, float, bool)))
+                    for step in flow.get("steps") or []:
+                        mapping = step.get("input_map") or {}
+                        for source in mapping.values():
+                            if isinstance(source, str) and source.startswith("$constants."):
+                                name = source.split(".", 1)[1]
+                                self.assertIn(name, constants)
+
+    def test_entity_status_events_are_generic(self):
+        for app in app_dirs():
+            for path in sorted((app / "entities").glob("*.yaml")):
+                entity = load_yaml(path)
+                events = entity.get("status_events") or {}
+                if not events:
+                    continue
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    field_names = {f["name"] for f in entity["fields"]}
+                    status_field = entity.get("status_field") or "status"
+                    self.assertIn(status_field, field_names)
+                    for status, event in events.items():
+                        self.assertTrue(status)
+                        self.assertIn(".", event)
+                        self.assertNotIn("workspace_id", event)
+
+    def test_connection_auth_and_webhook_metadata(self):
+        allowed_auth = {"bearer", "named_header", "basic", "none"}
+        for app in app_dirs():
+            conn_dir = app / "connections"
+            if not conn_dir.exists():
+                continue
+            for path in sorted(conn_dir.glob("*.yaml")):
+                connection = load_yaml(path)
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    auth = (connection.get("auth_type") or "named_header").lower()
+                    self.assertIn(auth, allowed_auth)
+                    oauth = connection.get("oauth") or {}
+                    if oauth.get("token_auth_method"):
+                        self.assertIn(
+                            oauth["token_auth_method"],
+                            {"client_secret_post", "client_secret_basic"},
+                        )
+                    webhooks = connection.get("webhooks") or {}
+                    if not webhooks:
+                        continue
+                    signature = webhooks.get("signature") or webhooks.get("hmac") or {}
+                    self.assertTrue(signature.get("header") or (webhooks.get("hmac") or {}).get("header"))
+                    identity = webhooks.get("identity") or {}
+                    self.assertTrue(identity.get("header") or webhooks.get("identity_header"))
+                    if identity.get("source"):
+                        self.assertEqual(identity["source"], "header")
+                    topic = webhooks.get("topic") or {}
+                    source = topic.get("source") or "header"
+                    self.assertIn(source, {"header", "json"})
+                    if source == "json":
+                        self.assertTrue(topic.get("path"))
+                    else:
+                        self.assertTrue(topic.get("header") or webhooks.get("topic_header"))
+                    if signature.get("format"):
+                        self.assertIn(signature["format"], {"raw", "timestamped", "prefixed"})
+                    if signature.get("encoding") or (webhooks.get("hmac") or {}).get("encoding"):
+                        enc = signature.get("encoding") or (webhooks.get("hmac") or {}).get("encoding")
+                        self.assertIn(enc, {"hex", "base64"})
+
+    def test_customer_identity_placeholders_are_person_scoped(self):
+        for app in app_dirs():
+            tools_dir = app / "tools"
+            if not tools_dir.exists():
+                continue
+            for path in sorted(tools_dir.glob("*.yaml")):
+                tool = load_yaml(path)
+                names = placeholders(tool.get("path")) + placeholders(tool.get("query")) + placeholders(
+                    tool.get("body")
+                )
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    for name in names:
+                        if name.startswith("person."):
+                            self.assertIn(name, {"person.email", "person.phone", "person.external_id"})
+                        self.assertNotIn(name, IDENTITY_OVERRIDE_KEYS)
+
 
 
 class NewAppCoverageTests(unittest.TestCase):

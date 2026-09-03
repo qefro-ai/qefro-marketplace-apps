@@ -1,8 +1,7 @@
-# Workspace supplies the store host and REST credentials (named Authorization header).
+# Workspace supplies the store host and Basic credentials (key:secret).
 # No store URL or consumer secret in this file.
 id: woocommerce
-auth_type: named_header
-auth_header: Authorization
+auth_type: basic
 webhooks:
   hmac:
     algorithm: hmac-sha256

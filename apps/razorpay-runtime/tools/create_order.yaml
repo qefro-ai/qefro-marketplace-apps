@@ -7,6 +7,9 @@ timeout_seconds: 15
 body:
   amount: "{amount}"
   currency: "{currency}"
+emits:
+  - event: payment.created
+    id_path: id
 access:
   surfaces:
     - staff

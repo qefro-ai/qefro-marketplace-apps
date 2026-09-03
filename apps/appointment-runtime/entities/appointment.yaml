@@ -30,3 +30,7 @@ fields:
     type: person
     ref_entity: person
     description: "Existing Qefro Person identity (never an app-local CRM)"
+status_events:
+  confirmed: appointment.confirmed
+  cancelled: appointment.cancelled
+  completed: appointment.completed

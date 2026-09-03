@@ -5,6 +5,8 @@ oauth:
   token_url: "https://accounts.zoho.com/oauth/v2/token"
   revoke_url: "https://accounts.zoho.com/oauth/v2/token/revoke"
   revoke_method: POST
+  api_host: www.zohoapis.com
+  token_auth_method: client_secret_post
   scopes:
     - ZohoCRM.modules.ALL
     - ZohoCRM.settings.ALL

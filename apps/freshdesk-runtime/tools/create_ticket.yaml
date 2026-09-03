@@ -10,6 +10,8 @@ body:
   email: "{requester_email}"
   status: 2
   priority: 1
+emits:
+  - ticket.created
 access:
   surfaces:
     - staff

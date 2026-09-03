@@ -1,8 +1,7 @@
-# Workspace stores Key Id:Key Secret as the named Authorization header value (Basic).
+# Workspace stores Key Id:Key Secret as generic Basic credentials.
 # No host or secrets in this file.
 id: razorpay
-auth_type: named_header
-auth_header: Authorization
+auth_type: basic
 webhooks:
   hmac:
     algorithm: hmac-sha256
