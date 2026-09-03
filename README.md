@@ -22,8 +22,23 @@ how you build a Marketplace App.
 | Directory | App id | Vertical | Data plane |
 | --- | --- | --- | --- |
 | [`apps/shopify-runtime`](./apps/shopify-runtime) | `shopify-runtime` | Commerce | Generic HTTP → Shopify Admin API |
+| [`apps/stripe-runtime`](./apps/stripe-runtime) | `stripe-runtime` | Payments | Generic HTTP |
+| [`apps/razorpay-runtime`](./apps/razorpay-runtime) | `razorpay-runtime` | Payments | Generic HTTP |
+| [`apps/woocommerce-runtime`](./apps/woocommerce-runtime) | `woocommerce-runtime` | Commerce | Generic HTTP |
+| [`apps/google-calendar-runtime`](./apps/google-calendar-runtime) | `google-calendar-runtime` | Calendar | Generic HTTP |
+| [`apps/google-sheets-runtime`](./apps/google-sheets-runtime) | `google-sheets-runtime` | Spreadsheets | Generic HTTP |
+| [`apps/freshdesk-runtime`](./apps/freshdesk-runtime) | `freshdesk-runtime` | Support | Generic HTTP |
+| [`apps/zoho-crm-runtime`](./apps/zoho-crm-runtime) | `zoho-crm-runtime` | CRM | Generic HTTP |
+| [`apps/whatsapp-business-runtime`](./apps/whatsapp-business-runtime) | `whatsapp-business-runtime` | Messaging | Generic HTTP (Cloud API; not ACS WhatsApp ingest) |
+| [`apps/calendly-runtime`](./apps/calendly-runtime) | `calendly-runtime` | Scheduling | Generic HTTP |
+| [`apps/slack-runtime`](./apps/slack-runtime) | `slack-runtime` | Collaboration | Generic HTTP |
 | [`apps/restaurant-pro-runtime`](./apps/restaurant-pro-runtime) | `restaurant-pro-runtime` | Hospitality | `entity.*` managed storage |
 | [`apps/real-estate-runtime`](./apps/real-estate-runtime) | `real-estate-runtime` | Real estate | `entity.*` managed storage |
+| [`apps/appointment-runtime`](./apps/appointment-runtime) | `appointment-runtime` | Booking | `entity.*` managed storage |
+| [`apps/field-service-runtime`](./apps/field-service-runtime) | `field-service-runtime` | Field service | `entity.*` managed storage |
+| [`apps/education-runtime`](./apps/education-runtime) | `education-runtime` | Education | `entity.*` managed storage |
+| [`apps/clinic-runtime`](./apps/clinic-runtime) | `clinic-runtime` | Clinic ops | `entity.*` managed storage |
+| [`apps/logistics-runtime`](./apps/logistics-runtime) | `logistics-runtime` | Logistics | `entity.*` managed storage |
 | [`apps/http-catalog-runtime`](./apps/http-catalog-runtime) | `http-catalog-runtime` | HTTP fixture | Generic HTTP (non-Shopify catalog) |
 
 Product docs: [Marketplace Apps](https://docs.qefro.com/docs/solutions/examples/marketplace-apps)
@@ -83,6 +98,13 @@ qefro app publish .
 Validator tests in `qefro-plugin-platform` still vendor copies under
 `docs/examples/` so CI can compile packages without a git submodule.
 **This repo is the collection to copy, extend, and publish from.**
+
+Collection checks (manifest, tools, workflows, surfaces, identity, webhooks):
+
+```bash
+pip install -r tests/requirements.txt
+python scripts/validate_apps.py
+```
 
 ## Related repos
 

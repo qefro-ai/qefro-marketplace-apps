@@ -5,3 +5,7 @@ dist/
 *.pem
 *.hex
 signing_private.*
+__pycache__/
+*.pyc
+.pytest_cache/
+
