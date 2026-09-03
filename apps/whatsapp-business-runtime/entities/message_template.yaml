@@ -1,0 +1,15 @@
+id: message_template
+name: "Message template"
+description: "Approved Cloud API template"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: language
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - APPROVED
+      - PENDING
+      - REJECTED

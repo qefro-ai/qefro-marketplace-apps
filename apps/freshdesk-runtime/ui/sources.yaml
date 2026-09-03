@@ -1,0 +1,9 @@
+- id: contacts
+  type: entity
+  target: contact
+- id: tickets
+  type: entity
+  target: ticket
+- id: agents
+  type: entity
+  target: agent

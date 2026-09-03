@@ -1,0 +1,92 @@
+- id: intro
+  type: markdown
+  title: Stripe
+  options:
+    content: "Metadata Marketplace App. Chat “create a payment link” or “show my invoices” runs generic Runtime HTTP tools against the workspace Stripe connection (no SDK). Contacts stay on the existing Person CRM. Automations subscribe to payment.* events on the Automations host page."
+- id: payment_link_form
+  type: form
+  title: "Create payment link"
+  options:
+    fields:
+      - name: price_id
+        label: "Price id"
+        type: text
+        required: true
+      - name: quantity
+        label: Quantity
+        type: number
+        required: true
+    submit_label: "Create link"
+    action:
+      trigger: create-payment-link
+- id: payments_status
+  type: status
+  title: Payments
+  source: payments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: amount
+    empty_title: "No payments yet"
+- id: customers_table
+  type: table
+  title: Customers
+  source: customers
+  options:
+    rows_path: items
+    empty_title: "No customers yet"
+    columns:
+      - key: name
+        header: Name
+      - key: email
+        header: Email
+- id: products_table
+  type: table
+  title: Products
+  source: products
+  options:
+    rows_path: items
+    empty_title: "No products yet"
+    columns:
+      - key: name
+        header: Name
+      - key: status
+        header: Status
+- id: invoices_table
+  type: table
+  title: Invoices
+  source: invoices
+  options:
+    rows_path: items
+    empty_title: "No invoices yet"
+    columns:
+      - key: number
+        header: Number
+      - key: amount_due
+        header: Due
+      - key: status
+        header: Status
+- id: subscriptions_table
+  type: table
+  title: Subscriptions
+  source: subscriptions
+  options:
+    rows_path: items
+    empty_title: "No subscriptions yet"
+    columns:
+      - key: customer_email
+        header: Customer
+      - key: status
+        header: Status
+- id: payments_table
+  type: table
+  title: Payments
+  source: payments
+  options:
+    rows_path: items
+    empty_title: "No payments yet"
+    columns:
+      - key: amount
+        header: Amount
+      - key: status
+        header: Status

@@ -1,0 +1,13 @@
+id: list_events
+description: "Staff-only list events on a calendar"
+connection: google-calendar
+method: GET
+path: "/calendar/v3/calendars/{calendar_id}/events"
+timeout_seconds: 15
+response:
+  items: items
+required_scopes:
+  - "https://www.googleapis.com/auth/calendar.events"
+access:
+  surfaces:
+    - staff

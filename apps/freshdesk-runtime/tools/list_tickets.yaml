@@ -1,0 +1,16 @@
+id: list_tickets
+description: "Staff-only ticket list on the workspace HTTP connection"
+connection: freshdesk
+method: GET
+path: "/api/v2/tickets"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: tickets
+access:
+  surfaces:
+    - staff

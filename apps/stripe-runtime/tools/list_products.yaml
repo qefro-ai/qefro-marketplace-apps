@@ -1,0 +1,20 @@
+id: list_products
+description: "List catalog products. Each item has an id for follow-up gets."
+connection: stripe
+method: GET
+path: "/v1/products"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: data
+  choice_id_prefix: product
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - staff
+    - customer

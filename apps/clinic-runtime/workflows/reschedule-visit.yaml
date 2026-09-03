@@ -1,0 +1,31 @@
+id: reschedule-visit
+name: "Reschedule visit"
+description: "Move a clinic visit"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which visit id?"
+  - id: ask_date
+    type: ask
+    field: date
+    message: "New date?"
+  - id: ask_time
+    type: ask
+    field: time
+    message: "New time?"
+  - id: run
+    type: tool
+    tool: entity.visit.update
+    execution: runtime
+    input_map:
+      id: id
+      date: date
+      time: time
+  - id: confirm
+    type: message
+    message: "Visit {{id}} rescheduled to {{date}}."
+  - id: done
+    type: complete

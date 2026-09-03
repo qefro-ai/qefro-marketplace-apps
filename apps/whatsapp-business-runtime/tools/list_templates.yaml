@@ -1,0 +1,11 @@
+id: list_templates
+description: "Staff-only message template list"
+connection: whatsapp-business
+method: GET
+path: "/v21.0/{waba_id}/message_templates"
+timeout_seconds: 15
+response:
+  items: data
+access:
+  surfaces:
+    - staff

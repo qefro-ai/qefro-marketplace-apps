@@ -1,0 +1,32 @@
+# Workspace OAuth supplies tokens. Host is typically www.googleapis.com.
+# No client secret in this file.
+id: google-calendar
+auth_type: bearer
+oauth:
+  authorize_url: "https://accounts.google.com/o/oauth2/v2/auth"
+  token_url: "https://oauth2.googleapis.com/token"
+  revoke_url: "https://oauth2.googleapis.com/revoke"
+  revoke_method: POST
+  api_host: www.googleapis.com
+  token_auth_method: client_secret_post
+  extra_token_params:
+    grant_type: authorization_code
+  extra_authorize_params:
+    response_type: code
+  scope_separator: " "
+  scopes:
+    - "https://www.googleapis.com/auth/calendar"
+    - "https://www.googleapis.com/auth/calendar.events"
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: X-Goog-Channel-Token
+    key_source: app_client
+  identity_header: X-Goog-Channel-ID
+  topic_header: X-Goog-Resource-State
+  event_id_header: X-Goog-Message-Number
+  topics:
+    exists: event.updated
+    sync: event.created
+    not_exists: event.cancelled

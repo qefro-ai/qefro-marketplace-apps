@@ -1,0 +1,13 @@
+id: payment
+name: Payment
+description: "Captured or authorized payment"
+fields:
+  - name: amount
+    type: integer
+  - name: status
+    type: enum
+    enum_values:
+      - created
+      - authorized
+      - captured
+      - failed

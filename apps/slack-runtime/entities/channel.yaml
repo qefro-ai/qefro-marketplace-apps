@@ -1,0 +1,9 @@
+id: channel
+name: Channel
+description: "Slack channel"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: channel
+    type: string

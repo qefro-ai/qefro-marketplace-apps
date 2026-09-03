@@ -1,0 +1,84 @@
+- id: intro
+  type: markdown
+  title: Logistics
+  options:
+    content: "Native logistics app. Chat “create a shipment” or “mark delivered” uses EntityService. Automations: shipment.cancelled → customer follow-up task."
+- id: shipment_form
+  type: form
+  title: "New shipment"
+  options:
+    fields:
+      - name: origin
+        label: Origin
+        type: text
+        required: true
+      - name: destination
+        label: Destination
+        type: text
+        required: true
+      - name: scheduled_date
+        label: Date
+        type: date
+        required: false
+    submit_label: Create
+    action:
+      trigger: create-shipment
+- id: shipments_status
+  type: status
+  title: Shipments
+  source: shipments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: destination
+    empty_title: "Nothing yet"
+- id: shipments_table
+  type: table
+  title: Shipments
+  source: shipments
+  options:
+    rows_path: items
+    empty_title: "No shipments yet"
+    columns:
+      - key: origin
+        header: Origin
+      - key: destination
+        header: Destination
+      - key: status
+        header: Status
+- id: consignments_table
+  type: table
+  title: Consignments
+  source: consignments
+  options:
+    rows_path: items
+    empty_title: "No consignments yet"
+    columns:
+      - key: reference
+        header: Ref
+      - key: customer_name
+        header: Customer
+- id: vehicles_table
+  type: table
+  title: Vehicles
+  source: vehicles
+  options:
+    rows_path: items
+    empty_title: "No vehicles yet"
+    columns:
+      - key: label
+        header: Label
+      - key: status
+        header: Status
+- id: stops_table
+  type: table
+  title: Stops
+  source: stops
+  options:
+    rows_path: items
+    empty_title: "No stops yet"
+    columns:
+      - key: address
+        header: Address
+      - key: status
+        header: Status

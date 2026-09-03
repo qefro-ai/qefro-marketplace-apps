@@ -1,0 +1,12 @@
+- id: shipments
+  type: entity
+  target: shipment
+- id: consignments
+  type: entity
+  target: consignment
+- id: vehicles
+  type: entity
+  target: vehicle
+- id: stops
+  type: entity
+  target: stop

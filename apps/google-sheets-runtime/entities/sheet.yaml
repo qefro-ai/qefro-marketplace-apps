@@ -1,0 +1,9 @@
+id: sheet
+name: Sheet
+description: "Tab inside a spreadsheet"
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: sheet_id
+    type: string

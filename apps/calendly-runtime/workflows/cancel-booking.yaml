@@ -1,0 +1,27 @@
+id: cancel-booking
+name: "Cancel booking"
+description: "Cancel a scheduled event through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_uuid
+    type: ask
+    field: uuid
+    message: "Which scheduled event uuid?"
+  - id: ask_reason
+    type: ask
+    field: reason
+    message: "Cancellation reason?"
+  - id: run
+    type: tool
+    tool: cancel_scheduled_event
+    execution: http
+    input_map:
+      uuid: uuid
+      reason: reason
+  - id: confirm
+    type: message
+    message: "Booking {{uuid}} cancelled."
+  - id: done
+    type: complete
+    message: ""

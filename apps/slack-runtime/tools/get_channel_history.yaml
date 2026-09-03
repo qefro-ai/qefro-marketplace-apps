@@ -1,0 +1,20 @@
+id: get_channel_history
+description: "Staff-only recent channel messages"
+connection: slack
+method: GET
+path: "/api/conversations.history"
+timeout_seconds: 15
+query:
+  channel: "{channel}"
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: messages
+required_scopes:
+  - "channels:history"
+access:
+  surfaces:
+    - staff

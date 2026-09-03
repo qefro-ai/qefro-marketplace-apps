@@ -1,0 +1,9 @@
+id: get_order
+description: "Staff-only order fetch by id"
+connection: razorpay
+method: GET
+path: "/v1/orders/{id}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff

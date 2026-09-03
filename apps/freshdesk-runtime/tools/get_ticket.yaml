@@ -1,0 +1,9 @@
+id: get_ticket
+description: "Staff-only ticket fetch by id"
+connection: freshdesk
+method: GET
+path: "/api/v2/tickets/{id}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff

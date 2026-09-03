@@ -1,0 +1,9 @@
+id: get_order
+description: "Staff-only order fetch by id"
+connection: woocommerce
+method: GET
+path: "/wp-json/wc/v3/orders/{id}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff

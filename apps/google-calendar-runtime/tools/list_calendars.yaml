@@ -1,0 +1,18 @@
+id: list_calendars
+description: "Staff-only calendar list for the connected Google account"
+connection: google-calendar
+method: GET
+path: "/calendar/v3/users/me/calendarList"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: items
+required_scopes:
+  - "https://www.googleapis.com/auth/calendar"
+access:
+  surfaces:
+    - staff

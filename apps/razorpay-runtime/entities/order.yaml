@@ -1,0 +1,22 @@
+id: order
+name: Order
+description: "Razorpay order"
+allocate_code:
+  prefix: O-
+  start: 1001
+fields:
+  - name: amount
+    type: integer
+    required: true
+  - name: currency
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - created
+      - attempted
+      - paid
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

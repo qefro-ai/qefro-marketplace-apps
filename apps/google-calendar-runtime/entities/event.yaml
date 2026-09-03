@@ -1,0 +1,24 @@
+id: event
+name: Event
+description: "Calendar event"
+allocate_code:
+  prefix: E-
+  start: 1001
+fields:
+  - name: summary
+    type: string
+    required: true
+  - name: start
+    type: datetime
+  - name: end
+    type: datetime
+  - name: status
+    type: enum
+    enum_values:
+      - confirmed
+      - tentative
+      - cancelled
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

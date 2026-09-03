@@ -1,0 +1,12 @@
+- id: products
+  type: entity
+  target: product
+- id: customers
+  type: entity
+  target: customer
+- id: orders
+  type: entity
+  target: order
+- id: coupons
+  type: entity
+  target: coupon

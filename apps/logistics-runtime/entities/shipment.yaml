@@ -1,0 +1,33 @@
+id: shipment
+name: Shipment
+description: "Shipment movement"
+allocate_code:
+  prefix: SHP-
+  start: 1001
+fields:
+  - name: origin
+    type: string
+    required: true
+  - name: destination
+    type: string
+    required: true
+  - name: vehicle_label
+    type: string
+  - name: scheduled_date
+    type: date
+  - name: status
+    type: enum
+    enum_values:
+      - draft
+      - in_transit
+      - delivered
+      - cancelled
+      - exception
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"
+status_events:
+  in_transit: shipment.updated
+  delivered: shipment.completed
+  cancelled: shipment.cancelled

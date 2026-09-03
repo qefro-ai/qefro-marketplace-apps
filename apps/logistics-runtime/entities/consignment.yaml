@@ -1,0 +1,19 @@
+id: consignment
+name: Consignment
+description: "Goods consignment bound to Person"
+allocate_code:
+  prefix: CON-
+  start: 1001
+fields:
+  - name: reference
+    type: string
+    required: true
+  - name: customer_name
+    type: string
+    required: true
+  - name: weight
+    type: float
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

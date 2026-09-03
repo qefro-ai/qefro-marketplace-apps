@@ -1,0 +1,24 @@
+- id: dashboard
+  page: dashboard
+  title: Today
+  icon: home
+- id: templates
+  page: templates
+  title: Templates
+  icon: list
+- id: messages
+  page: messages
+  title: Outbound
+  icon: activity
+- id: wa_contacts
+  page: wa_contacts
+  title: "WA contacts"
+  icon: users
+- id: contacts
+  page: contacts
+  title: Contacts
+  icon: users
+- id: automations
+  page: automations
+  title: Automations
+  icon: workflow

@@ -1,0 +1,18 @@
+id: appointment_slot
+name: "Appointment slot"
+description: "Open clinic slot"
+fields:
+  - name: practitioner_name
+    type: string
+    required: true
+  - name: date
+    type: date
+    required: true
+  - name: time
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - open
+      - held
+      - booked

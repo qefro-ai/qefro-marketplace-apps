@@ -1,0 +1,24 @@
+id: complete-work-order
+name: "Complete work order"
+description: "Mark a job completed"
+trigger:
+  type: conversation
+constants:
+  completed: completed
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which work order id is done?"
+  - id: run
+    type: tool
+    tool: entity.work_order.update
+    execution: runtime
+    input_map:
+      id: id
+      status: $constants.completed
+  - id: confirm
+    type: message
+    message: "Work order {{id}} completed."
+  - id: done
+    type: complete

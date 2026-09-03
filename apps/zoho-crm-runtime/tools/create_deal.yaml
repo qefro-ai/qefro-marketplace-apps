@@ -1,0 +1,15 @@
+id: create_deal
+description: "Staff-only create a deal"
+connection: zoho-crm
+method: POST
+path: "/crm/v2/Deals"
+timeout_seconds: 15
+body:
+  data:
+    - Deal_Name: "{deal_name}"
+      Stage: "{stage}"
+required_scopes:
+  - ZohoCRM.modules.ALL
+access:
+  surfaces:
+    - staff

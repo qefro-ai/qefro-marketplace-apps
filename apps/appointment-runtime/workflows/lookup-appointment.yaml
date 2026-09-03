@@ -1,0 +1,21 @@
+id: lookup-appointment
+name: "Lookup appointment"
+description: "Fetch one appointment by id"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which appointment id?"
+  - id: run
+    type: tool
+    tool: entity.appointment.get
+    execution: runtime
+    input_map:
+      id: id
+  - id: confirm
+    type: message
+    message: "Here is appointment {{id}}."
+  - id: done
+    type: complete

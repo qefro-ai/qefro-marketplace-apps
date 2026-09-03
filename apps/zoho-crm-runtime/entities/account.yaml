@@ -1,0 +1,9 @@
+id: account
+name: Account
+description: "Zoho account"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: phone
+    type: phone

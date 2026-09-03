@@ -1,0 +1,24 @@
+id: list-templates
+name: "List templates"
+description: "List Cloud API templates through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_waba_id
+    type: ask
+    field: waba_id
+    message: "Which WABA id?"
+  - id: run
+    type: tool
+    tool: list_templates
+    execution: http
+    input_map:
+      waba_id: waba_id
+  - id: confirm
+    type: message
+    message: |
+      Here are the templates.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

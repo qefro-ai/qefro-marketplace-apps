@@ -1,0 +1,42 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: visits_status
+      span: 12
+    - widget: visits_table
+      span: 12
+- id: visits
+  title: Visits
+  layout: split-grid
+  widgets:
+    - widget: visit_form
+      span: 12
+    - widget: visits_table
+      span: 12
+- id: practitioners
+  title: Practitioners
+  layout: split-grid
+  widgets:
+    - widget: practitioners_table
+      span: 12
+- id: slots
+  title: Slots
+  layout: split-grid
+  widgets:
+    - widget: slots_table
+      span: 12
+- id: treatments
+  title: Treatments
+  layout: split-grid
+  widgets:
+    - widget: treatments_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

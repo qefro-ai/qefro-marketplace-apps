@@ -1,0 +1,14 @@
+id: get_product
+description: "Get one catalog product by id from a previous list. Do not guess the id."
+connection: stripe
+method: GET
+path: "/v1/products/{id}"
+timeout_seconds: 15
+response:
+  item: product
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - staff
+    - customer

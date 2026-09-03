@@ -1,0 +1,15 @@
+id: whatsapp-business
+auth_type: bearer
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: X-Hub-Signature-256
+    key_source: app_client
+  identity_header: X-Hub-Account-Id
+  topic_header: X-Hub-Event
+  event_id_header: X-Hub-Delivery-Id
+  topics:
+    messages: message.inbound
+    message_status: message.status
+    message_template_status_update: template.updated

@@ -1,0 +1,18 @@
+id: course
+name: Course
+description: "Program or cohort"
+allocate_code:
+  prefix: CRS-
+  start: 1001
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: level
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - draft
+      - open
+      - closed

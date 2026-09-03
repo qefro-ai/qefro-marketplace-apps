@@ -1,0 +1,30 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: events_status
+      span: 12
+    - widget: calendars_table
+      span: 12
+- id: calendars
+  title: Calendars
+  layout: split-grid
+  widgets:
+    - widget: calendars_table
+      span: 12
+- id: events
+  title: Events
+  layout: split-grid
+  widgets:
+    - widget: event_form
+      span: 12
+    - widget: events_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

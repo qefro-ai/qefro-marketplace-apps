@@ -1,0 +1,12 @@
+- id: enrollments
+  type: entity
+  target: enrollment
+- id: courses
+  type: entity
+  target: course
+- id: sessions
+  type: entity
+  target: session
+- id: assignments
+  type: entity
+  target: assignment

@@ -1,0 +1,9 @@
+id: spreadsheet
+name: Spreadsheet
+description: "Google spreadsheet"
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: spreadsheet_id
+    type: string

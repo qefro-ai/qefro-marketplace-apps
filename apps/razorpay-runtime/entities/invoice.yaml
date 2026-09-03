@@ -1,0 +1,15 @@
+id: invoice
+name: Invoice
+description: "Razorpay invoice"
+fields:
+  - name: amount
+    type: integer
+  - name: customer_email
+    type: email
+  - name: status
+    type: enum
+    enum_values:
+      - draft
+      - issued
+      - paid
+      - cancelled

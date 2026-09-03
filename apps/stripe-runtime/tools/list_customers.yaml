@@ -1,0 +1,18 @@
+id: list_customers
+description: "Staff-only customer list on the workspace HTTP connection"
+connection: stripe
+method: GET
+path: "/v1/customers"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: data
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - staff

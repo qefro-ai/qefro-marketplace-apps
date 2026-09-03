@@ -1,0 +1,12 @@
+- id: appointments
+  type: entity
+  target: appointment
+- id: services
+  type: entity
+  target: service
+- id: staff
+  type: entity
+  target: staff_member
+- id: slots
+  type: entity
+  target: availability_slot

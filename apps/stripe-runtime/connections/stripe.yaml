@@ -1,0 +1,52 @@
+# Workspace connection declaration. No host, secret key, or account id.
+# OAuth URLs are metadata for Qefro Runtime; this package does not run OAuth.
+id: stripe
+auth_type: bearer
+oauth:
+  authorization_url: "https://connect.stripe.com/oauth/authorize"
+  token_url: "https://connect.stripe.com/oauth/token"
+  revoke_url: "https://connect.stripe.com/oauth/deauthorize"
+  revoke_method: POST
+  api_host: api.stripe.com
+  token_auth_method: client_secret_post
+  client_id_source: workspace
+  client_secret_source: workspace
+  scopes:
+    - read_write
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: Stripe-Signature
+    key_source: app_client
+  signature:
+    algorithm: hmac-sha256
+    source: header
+    header: Stripe-Signature
+    format: timestamped
+    encoding: hex
+    timestamp_param: t
+    signature_param: v1
+    signed_payload: "{timestamp}.{body}"
+    max_skew_seconds: 300
+  identity:
+    source: header
+    header: Stripe-Account
+  identity_header: Stripe-Account
+  topic:
+    source: json
+    path: type
+  topic_header: Stripe-Event-Type
+  event_id_header: Stripe-Event-Id
+  register_url: "https://{host}/v1/webhook_endpoints"
+  topics:
+    customer.created: customer.created
+    payment_intent.created: payment.created
+    payment_intent.succeeded: payment.succeeded
+    payment_intent.payment_failed: payment.failed
+    charge.refunded: refund.created
+    customer.subscription.created: subscription.created
+    customer.subscription.updated: subscription.updated
+    customer.subscription.deleted: subscription.cancelled
+    invoice.paid: invoice.paid
+    checkout.session.completed: checkout.completed

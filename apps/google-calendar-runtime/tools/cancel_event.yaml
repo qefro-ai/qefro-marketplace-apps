@@ -1,0 +1,11 @@
+id: cancel_event
+description: "Staff-only cancel a calendar event"
+connection: google-calendar
+method: DELETE
+path: "/calendar/v3/calendars/{calendar_id}/events/{event_id}"
+timeout_seconds: 15
+required_scopes:
+  - "https://www.googleapis.com/auth/calendar.events"
+access:
+  surfaces:
+    - staff

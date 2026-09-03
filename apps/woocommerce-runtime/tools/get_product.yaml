@@ -1,0 +1,10 @@
+id: get_product
+description: "Get one catalog product by id from a previous list. Do not guess the id."
+connection: woocommerce
+method: GET
+path: "/wp-json/wc/v3/products/{id}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff
+    - customer

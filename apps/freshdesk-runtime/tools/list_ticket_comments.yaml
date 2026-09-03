@@ -1,0 +1,11 @@
+id: list_ticket_comments
+description: "Staff-only ticket conversations/comments"
+connection: freshdesk
+method: GET
+path: "/api/v2/tickets/{id}/conversations"
+timeout_seconds: 15
+response:
+  items: conversations
+access:
+  surfaces:
+    - staff

@@ -1,0 +1,39 @@
+id: list_my_customers
+description: "List Stripe customers for the authenticated conversation Person only. Identity is resolved by the Runtime from Customer Hub; do not pass email, phone, person_id, or customer_id."
+connection: stripe
+method: GET
+path: "/v1/customers"
+timeout_seconds: 15
+query:
+  email: "{person.email}"
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: data
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.email
+  collect: email_otp
+ownership:
+  identity: person.email
+  paths:
+    - email
+  also:
+    - identity: person.external_id
+      paths:
+        - id
+        - customer
+        - customer.id
+        - customer_id
+    - identity: person.phone
+      paths:
+        - phone
+        - customer.phone

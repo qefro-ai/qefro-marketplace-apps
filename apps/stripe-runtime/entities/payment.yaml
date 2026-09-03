@@ -1,0 +1,22 @@
+id: payment
+name: Payment
+description: "PaymentIntent schema for staff UI"
+allocate_code:
+  prefix: PAY-
+  start: 1001
+fields:
+  - name: amount
+    type: integer
+  - name: currency
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - requires_payment_method
+      - requires_confirmation
+      - succeeded
+      - canceled
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

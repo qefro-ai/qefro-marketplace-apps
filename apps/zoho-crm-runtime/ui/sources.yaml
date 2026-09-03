@@ -1,0 +1,12 @@
+- id: leads
+  type: entity
+  target: lead
+- id: contacts
+  type: entity
+  target: contact
+- id: accounts
+  type: entity
+  target: account
+- id: deals
+  type: entity
+  target: deal

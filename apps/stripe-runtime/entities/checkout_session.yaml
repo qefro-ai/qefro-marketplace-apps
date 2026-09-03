@@ -1,0 +1,14 @@
+id: checkout_session
+name: "Checkout session"
+description: "Checkout session schema for staff UI"
+fields:
+  - name: amount_total
+    type: integer
+  - name: currency
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - open
+      - complete
+      - expired

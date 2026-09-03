@@ -1,0 +1,29 @@
+id: calendly
+auth_type: bearer
+oauth:
+  authorize_url: "https://auth.calendly.com/oauth/authorize"
+  token_url: "https://auth.calendly.com/oauth/token"
+  revoke_url: "https://auth.calendly.com/oauth/revoke"
+  revoke_method: POST
+  api_host: api.calendly.com
+  token_auth_method: client_secret_post
+  extra_token_params:
+    grant_type: authorization_code
+  extra_authorize_params:
+    response_type: code
+  scopes:
+    - default
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: Calendly-Webhook-Signature
+    key_source: app_client
+  identity_header: Calendly-Organization
+  topic_header: Calendly-Event
+  event_id_header: Calendly-Webhook-Id
+  register_url: "https://{host}/api/v2/webhook_subscriptions"
+  topics:
+    invitee.created: booking.created
+    invitee.canceled: booking.cancelled
+    event_type.created: event_type.created

@@ -1,0 +1,32 @@
+id: create-lead
+name: "Create lead"
+description: "Create a Zoho lead through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_last_name
+    type: ask
+    field: last_name
+    message: "Lead last name?"
+  - id: ask_lead_email
+    type: ask
+    field: lead_email
+    message: "Lead email?"
+  - id: ask_company
+    type: ask
+    field: company
+    message: Company?
+  - id: run
+    type: tool
+    tool: create_lead
+    execution: http
+    input_map:
+      last_name: last_name
+      lead_email: lead_email
+      company: company
+  - id: confirm
+    type: message
+    message: "Lead created for {{last_name}}."
+  - id: done
+    type: complete
+    message: ""

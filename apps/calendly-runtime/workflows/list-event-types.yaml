@@ -1,0 +1,18 @@
+id: list-event-types
+name: "List event types"
+description: "List Calendly event types through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_event_types
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are the event types.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

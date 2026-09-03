@@ -1,0 +1,27 @@
+id: cancel-event
+name: "Cancel event"
+description: "Cancel a calendar event through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_calendar_id
+    type: ask
+    field: calendar_id
+    message: "Which calendar id?"
+  - id: ask_event_id
+    type: ask
+    field: event_id
+    message: "Which event id should we cancel?"
+  - id: run
+    type: tool
+    tool: cancel_event
+    execution: http
+    input_map:
+      calendar_id: calendar_id
+      event_id: event_id
+  - id: confirm
+    type: message
+    message: "Event {{event_id}} cancelled."
+  - id: done
+    type: complete
+    message: ""

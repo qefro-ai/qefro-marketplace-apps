@@ -1,0 +1,13 @@
+id: contact
+name: Contact
+description: "Zoho contact bound to Person"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: email
+    type: email
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

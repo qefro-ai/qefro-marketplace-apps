@@ -1,0 +1,84 @@
+- id: intro
+  type: markdown
+  title: "Field Service"
+  options:
+    content: "Native field service app. Chat “create a work order” persists in managed storage. Automations bind to work_order.created — notify staff, create CRM activity."
+- id: wo_form
+  type: form
+  title: "New work order"
+  options:
+    fields:
+      - name: site_name
+        label: Site
+        type: text
+        required: true
+      - name: summary
+        label: Summary
+        type: text
+        required: true
+      - name: scheduled_date
+        label: Date
+        type: date
+        required: false
+    submit_label: Create
+    action:
+      trigger: create-work-order
+- id: wo_status
+  type: status
+  title: "Work orders"
+  source: work_orders
+  options:
+    rows_path: items
+    status_field: status
+    label_field: summary
+    empty_title: "Nothing yet"
+- id: wo_table
+  type: table
+  title: "Work orders"
+  source: work_orders
+  options:
+    rows_path: items
+    empty_title: "No work orders yet"
+    columns:
+      - key: site_name
+        header: Site
+      - key: summary
+        header: Summary
+      - key: status
+        header: Status
+- id: sites_table
+  type: table
+  title: Sites
+  source: sites
+  options:
+    rows_path: items
+    empty_title: "No sites yet"
+    columns:
+      - key: name
+        header: Name
+      - key: address
+        header: Address
+- id: tech_table
+  type: table
+  title: Technicians
+  source: technicians
+  options:
+    rows_path: items
+    empty_title: "No technicians yet"
+    columns:
+      - key: name
+        header: Name
+      - key: skill
+        header: Skill
+- id: parts_table
+  type: table
+  title: Parts
+  source: parts
+  options:
+    rows_path: items
+    empty_title: "No parts yet"
+    columns:
+      - key: sku
+        header: SKU
+      - key: quantity_on_hand
+        header: Qty

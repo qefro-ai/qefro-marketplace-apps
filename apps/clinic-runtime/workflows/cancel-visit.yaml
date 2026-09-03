@@ -1,0 +1,24 @@
+id: cancel-visit
+name: "Cancel visit"
+description: "Cancel a clinic visit"
+trigger:
+  type: conversation
+constants:
+  cancelled: cancelled
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which visit id should we cancel?"
+  - id: run
+    type: tool
+    tool: entity.visit.update
+    execution: runtime
+    input_map:
+      id: id
+      status: $constants.cancelled
+  - id: confirm
+    type: message
+    message: "Visit {{id}} cancelled."
+  - id: done
+    type: complete

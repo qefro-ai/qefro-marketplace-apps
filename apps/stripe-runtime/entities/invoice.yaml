@@ -1,0 +1,25 @@
+id: invoice
+name: Invoice
+description: "Invoice bound to the platform Person model"
+allocate_code:
+  prefix: I-
+  start: 1001
+fields:
+  - name: number
+    type: string
+  - name: amount_due
+    type: integer
+  - name: customer_email
+    type: email
+  - name: status
+    type: enum
+    enum_values:
+      - draft
+      - open
+      - paid
+      - void
+      - uncollectible
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

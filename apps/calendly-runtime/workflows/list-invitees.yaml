@@ -1,0 +1,24 @@
+id: list-invitees
+name: "List invitees"
+description: "List invitees through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_uuid
+    type: ask
+    field: uuid
+    message: "Which scheduled event uuid?"
+  - id: run
+    type: tool
+    tool: list_invitees
+    execution: http
+    input_map:
+      uuid: uuid
+  - id: confirm
+    type: message
+    message: |
+      Invitees for {{uuid}}.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

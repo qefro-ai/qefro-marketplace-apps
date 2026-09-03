@@ -1,0 +1,9 @@
+- id: spreadsheets
+  type: entity
+  target: spreadsheet
+- id: sheets
+  type: entity
+  target: sheet
+- id: rows
+  type: entity
+  target: row

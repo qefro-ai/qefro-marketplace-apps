@@ -1,0 +1,42 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: shipments_status
+      span: 12
+    - widget: shipments_table
+      span: 12
+- id: shipments
+  title: Shipments
+  layout: split-grid
+  widgets:
+    - widget: shipment_form
+      span: 12
+    - widget: shipments_table
+      span: 12
+- id: consignments
+  title: Consignments
+  layout: split-grid
+  widgets:
+    - widget: consignments_table
+      span: 12
+- id: vehicles
+  title: Vehicles
+  layout: split-grid
+  widgets:
+    - widget: vehicles_table
+      span: 12
+- id: stops
+  title: Stops
+  layout: split-grid
+  widgets:
+    - widget: stops_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

@@ -1,0 +1,16 @@
+id: list_event_types
+description: "Staff-only event type list"
+connection: calendly
+method: GET
+path: "/api/v2/event_types"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: collection
+access:
+  surfaces:
+    - staff

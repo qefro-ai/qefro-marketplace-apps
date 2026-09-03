@@ -1,0 +1,27 @@
+id: enroll-student
+name: "Enroll student"
+description: "Create an enrollment through Qefro Runtime"
+trigger:
+  type: conversation
+steps:
+  - id: ask_learner_name
+    type: ask
+    field: learner_name
+    message: "Learner name?"
+  - id: ask_course_title
+    type: ask
+    field: course_title
+    message: "Which course?"
+  - id: run
+    type: tool
+    tool: entity.enrollment.create
+    execution: runtime
+    input_map:
+      learner_name: learner_name
+      course_title: course_title
+      date: date
+  - id: confirm
+    type: message
+    message: "{{learner_name}} enrolled in {{course_title}}."
+  - id: done
+    type: complete

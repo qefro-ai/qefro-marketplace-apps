@@ -1,0 +1,14 @@
+id: payment_link
+name: "Payment link"
+description: "Shareable payment link"
+fields:
+  - name: amount
+    type: integer
+  - name: description
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - created
+      - paid
+      - expired

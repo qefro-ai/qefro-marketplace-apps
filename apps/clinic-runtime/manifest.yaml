@@ -1,0 +1,140 @@
+# Healthcare / Clinic — native operational metadata app, not an EHR or payer integration.
+# Stores visit logistics (who/when/reason/status), not clinical charts.
+id: clinic-runtime
+name: Clinic
+version: 0.1.0
+hosting: runtime
+description: "Practitioners, slots, visits, and treatments as a native Qefro clinic application"
+category: healthcare
+tags:
+  - clinic
+  - healthcare
+  - runtime
+channels:
+  - widget
+  - whatsapp
+entities:
+  - practitioner
+  - appointment_slot
+  - visit
+  - treatment
+flows:
+  - book-visit
+  - reschedule-visit
+  - cancel-visit
+  - lookup-visit
+events:
+  - visit.created
+  - visit.updated
+  - visit.cancelled
+  - treatment.created
+permissions:
+  - workflow.execute
+  - storage.read
+  - storage.write
+  - storage.update
+  - storage.delete
+capabilities:
+  - theme.get
+  - user.get
+  - tenant.get
+  - runtime.query
+  - workflow.trigger
+  - storage.read
+  - storage.write
+triggers:
+  - id: book_visit
+    workflow: book-visit
+    input_variable: visit_input
+    match:
+      intents:
+        - "book a visit"
+        - "schedule an appointment at the clinic"
+      confirmation:
+        reply_signals:
+          - visit
+          - booked
+        required_slots:
+          - patient_name
+          - date
+    confirmation_message: "Visit booked for {{patient_name}} on {{date}}."
+  - id: reschedule_visit
+    workflow: reschedule-visit
+    input_variable: visit_reschedule
+    match:
+      intents:
+        - "reschedule the visit"
+        - "move my clinic appointment"
+      confirmation:
+        reply_signals:
+          - rescheduled
+        required_slots:
+          - id
+          - date
+    confirmation_message: "Visit {{id}} rescheduled to {{date}}."
+  - id: cancel_visit
+    workflow: cancel-visit
+    input_variable: visit_cancel
+    match:
+      intents:
+        - "cancel the visit"
+        - "cancel clinic appointment"
+      confirmation:
+        reply_signals:
+          - cancelled
+        required_slots:
+          - id
+    confirmation_message: "Visit {{id}} cancelled."
+  - id: lookup_visit
+    workflow: lookup-visit
+    input_variable: visit_lookup
+    match:
+      intents:
+        - "find my visit"
+        - "visit status"
+      confirmation:
+        reply_signals:
+          - visit
+        required_slots:
+          - id
+    confirmation_message: "Here is visit {{id}}."
+conversation_slots:
+  - id: patient_name
+    labels:
+      - patient
+      - name
+    kind: person_name
+    identity: person_name
+  - id: practitioner_name
+    labels:
+      - doctor
+      - practitioner
+      - clinician
+    kind: string
+  - id: reason
+    labels:
+      - reason
+      - complaint
+    kind: string
+  - id: date
+    labels:
+      - date
+      - tomorrow
+    kind: date
+  - id: time
+    labels:
+      - time
+    kind: time
+    chip_prefix: time
+  - id: id
+    labels:
+      - visit
+      - "appointment id"
+    kind: string
+  - id: status
+    labels:
+      - status
+      - cancelled
+    kind: string
+ui:
+  name: Clinic

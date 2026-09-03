@@ -1,0 +1,42 @@
+id: append-rows
+name: "Append rows"
+description: "Append a row through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_spreadsheet_id
+    type: ask
+    field: spreadsheet_id
+    message: "What is the spreadsheet id?"
+  - id: ask_range
+    type: ask
+    field: range
+    message: "Which range should we append to?"
+  - id: ask_col1
+    type: ask
+    field: col1
+    message: "Value for column 1?"
+  - id: ask_col2
+    type: ask
+    field: col2
+    message: "Value for column 2?"
+  - id: ask_col3
+    type: ask
+    field: col3
+    message: "Value for column 3?"
+  - id: run
+    type: tool
+    tool: append_rows
+    execution: http
+    input_map:
+      spreadsheet_id: spreadsheet_id
+      range: range
+      col1: col1
+      col2: col2
+      col3: col3
+  - id: confirm
+    type: message
+    message: "Row appended to {{range}}."
+  - id: done
+    type: complete
+    message: ""

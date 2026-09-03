@@ -1,0 +1,34 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: channels_table
+      span: 12
+- id: channels
+  title: Channels
+  layout: split-grid
+  widgets:
+    - widget: channels_table
+      span: 12
+- id: users
+  title: Users
+  layout: split-grid
+  widgets:
+    - widget: users_table
+      span: 12
+- id: messages
+  title: Messages
+  layout: split-grid
+  widgets:
+    - widget: message_form
+      span: 12
+    - widget: messages_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

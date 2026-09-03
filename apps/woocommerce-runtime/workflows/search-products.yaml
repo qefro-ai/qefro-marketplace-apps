@@ -1,0 +1,24 @@
+id: search-products
+name: "Search products"
+description: "Find catalog products through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_query
+    type: ask
+    field: query
+    message: "What product are you looking for?"
+  - id: run
+    type: tool
+    tool: search_products
+    execution: http
+    input_map:
+      query: query
+  - id: confirm
+    type: message
+    message: |
+      Products matching {{query}}.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

@@ -1,0 +1,42 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: enroll_status
+      span: 12
+    - widget: enroll_table
+      span: 12
+- id: enrollments
+  title: Enrollments
+  layout: split-grid
+  widgets:
+    - widget: enroll_form
+      span: 12
+    - widget: enroll_table
+      span: 12
+- id: courses
+  title: Courses
+  layout: split-grid
+  widgets:
+    - widget: courses_table
+      span: 12
+- id: sessions
+  title: Sessions
+  layout: split-grid
+  widgets:
+    - widget: sessions_table
+      span: 12
+- id: assignments
+  title: Assignments
+  layout: split-grid
+  widgets:
+    - widget: assignments_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

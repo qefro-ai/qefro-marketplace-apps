@@ -1,0 +1,9 @@
+- id: channels
+  type: entity
+  target: channel
+- id: users
+  type: entity
+  target: slack_user
+- id: messages
+  type: entity
+  target: slack_message

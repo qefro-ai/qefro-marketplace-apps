@@ -1,0 +1,27 @@
+id: refund-payment
+name: "Refund payment"
+description: "Refund a Razorpay payment through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which payment id should we refund?"
+  - id: ask_amount
+    type: ask
+    field: amount
+    message: "Refund amount in the smallest currency unit?"
+  - id: run
+    type: tool
+    tool: create_refund
+    execution: http
+    input_map:
+      id: id
+      amount: amount
+  - id: confirm
+    type: message
+    message: "Refund created for payment {{id}}."
+  - id: done
+    type: complete
+    message: ""

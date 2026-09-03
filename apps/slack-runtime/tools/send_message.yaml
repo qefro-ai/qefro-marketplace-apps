@@ -1,0 +1,16 @@
+id: send_message
+description: "Staff-only send a channel message"
+connection: slack
+method: POST
+path: "/api/chat.postMessage"
+timeout_seconds: 15
+body:
+  channel: "{channel}"
+  text: "{text}"
+required_scopes:
+  - "chat:write"
+emits:
+  - channel.message
+access:
+  surfaces:
+    - staff

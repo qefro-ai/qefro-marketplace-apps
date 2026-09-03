@@ -1,0 +1,22 @@
+id: create_checkout_session
+description: "Staff-only create a Checkout Session for a price id"
+connection: stripe
+method: POST
+path: "/v1/checkout/sessions"
+timeout_seconds: 15
+request:
+  encoding: form
+body:
+  mode: payment
+  success_url: "{success_url}"
+  line_items:
+    - price: "{price_id}"
+      quantity: 1
+required_scopes:
+  - read_write
+emits:
+  - event: checkout.completed
+    id_path: id
+access:
+  surfaces:
+    - staff

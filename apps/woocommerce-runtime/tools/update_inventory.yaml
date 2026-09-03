@@ -1,0 +1,12 @@
+id: update_inventory
+description: "Staff-only update product stock quantity"
+connection: woocommerce
+method: PUT
+path: "/wp-json/wc/v3/products/{id}"
+timeout_seconds: 15
+body:
+  stock_quantity: "{stock_quantity}"
+  manage_stock: true
+access:
+  surfaces:
+    - staff

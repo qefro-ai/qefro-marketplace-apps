@@ -1,0 +1,10 @@
+id: slack_message
+name: Message
+description: "Channel message"
+fields:
+  - name: channel
+    type: string
+    required: true
+  - name: text
+    type: string
+    required: true

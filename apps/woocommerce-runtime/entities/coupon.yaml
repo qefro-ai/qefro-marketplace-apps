@@ -1,0 +1,14 @@
+id: coupon
+name: Coupon
+description: "Discount coupon"
+fields:
+  - name: code
+    type: string
+    required: true
+  - name: amount
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - publish
+      - draft

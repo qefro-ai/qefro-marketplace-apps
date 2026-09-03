@@ -1,0 +1,15 @@
+id: create_order
+description: "Staff-only create a Razorpay order"
+connection: razorpay
+method: POST
+path: "/v1/orders"
+timeout_seconds: 15
+body:
+  amount: "{amount}"
+  currency: "{currency}"
+emits:
+  - event: payment.created
+    id_path: id
+access:
+  surfaces:
+    - staff

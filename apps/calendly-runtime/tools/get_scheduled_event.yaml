@@ -1,0 +1,9 @@
+id: get_scheduled_event
+description: "Staff-only scheduled event fetch"
+connection: calendly
+method: GET
+path: "/api/v2/scheduled_events/{uuid}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff

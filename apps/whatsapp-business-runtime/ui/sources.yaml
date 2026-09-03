@@ -1,0 +1,9 @@
+- id: wa_contacts
+  type: entity
+  target: wa_contact
+- id: templates
+  type: entity
+  target: message_template
+- id: messages
+  type: entity
+  target: outbound_message

@@ -1,0 +1,76 @@
+- id: intro
+  type: markdown
+  title: WooCommerce
+  options:
+    content: "Metadata Marketplace App. Chat “find black shoes” or “show my recent orders” runs generic Runtime HTTP against the workspace WooCommerce connection. Contacts stay on Person CRM."
+- id: product_search
+  type: form
+  title: "Search products"
+  options:
+    fields:
+      - name: query
+        label: Search
+        type: text
+        required: true
+    submit_label: Search
+    action:
+      trigger: search-products
+- id: orders_status
+  type: status
+  title: Orders
+  source: orders
+  options:
+    rows_path: items
+    status_field: status
+    label_field: total
+    empty_title: "Nothing yet"
+- id: products_table
+  type: table
+  title: Products
+  source: products
+  options:
+    rows_path: items
+    empty_title: "No products yet"
+    columns:
+      - key: name
+        header: Name
+      - key: price
+        header: Price
+      - key: stock_quantity
+        header: Stock
+- id: customers_table
+  type: table
+  title: Customers
+  source: customers
+  options:
+    rows_path: items
+    empty_title: "No customers yet"
+    columns:
+      - key: name
+        header: Name
+      - key: email
+        header: Email
+- id: orders_table
+  type: table
+  title: Orders
+  source: orders
+  options:
+    rows_path: items
+    empty_title: "No orders yet"
+    columns:
+      - key: total
+        header: Total
+      - key: status
+        header: Status
+- id: coupons_table
+  type: table
+  title: Coupons
+  source: coupons
+  options:
+    rows_path: items
+    empty_title: "No coupons yet"
+    columns:
+      - key: code
+        header: Code
+      - key: amount
+        header: Amount

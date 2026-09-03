@@ -1,0 +1,17 @@
+id: product
+name: Product
+description: "Catalog product schema for staff UI"
+allocate_code:
+  prefix: P-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: description
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - inactive

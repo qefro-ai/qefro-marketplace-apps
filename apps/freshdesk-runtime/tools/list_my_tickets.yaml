@@ -1,0 +1,37 @@
+id: list_my_tickets
+description: "List tickets for the authenticated conversation Person only. Do not pass email, phone, person_id, or customer_id."
+connection: freshdesk
+method: GET
+path: "/api/v2/tickets"
+timeout_seconds: 15
+query:
+  email: "{person.email}"
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: tickets
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.email
+  collect: email_otp
+ownership:
+  identity: person.email
+  paths:
+    - email
+    - requester.email
+  also:
+    - identity: person.external_id
+      paths:
+        - id
+        - requester_id
+        - contact.id
+    - identity: person.phone
+      paths:
+        - phone
+        - mobile

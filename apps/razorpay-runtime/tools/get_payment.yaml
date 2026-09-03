@@ -1,0 +1,9 @@
+id: get_payment
+description: "Staff-only payment fetch by id"
+connection: razorpay
+method: GET
+path: "/v1/payments/{id}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff

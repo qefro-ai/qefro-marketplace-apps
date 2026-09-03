@@ -1,0 +1,94 @@
+- id: intro
+  type: markdown
+  title: Appointments
+  options:
+    content: "Native Qefro business app. Chat “book an appointment tomorrow” starts create-appointment on the shared FlowRunner. Records persist in managed storage. Contacts stay on Person CRM. Automations bind to appointment.created."
+- id: appointment_form
+  type: form
+  title: "New appointment"
+  options:
+    fields:
+      - name: guest_name
+        label: "Guest name"
+        type: text
+        required: true
+      - name: service_name
+        label: Service
+        type: text
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: time
+        label: Time
+        type: time
+        required: false
+    submit_label: Book
+    action:
+      trigger: create-appointment
+- id: appointments_status
+  type: status
+  title: Appointments
+  source: appointments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: guest_name
+    empty_title: "Nothing yet"
+- id: appointments_table
+  type: table
+  title: Appointments
+  source: appointments
+  options:
+    rows_path: items
+    empty_title: "No appointments yet"
+    columns:
+      - key: guest_name
+        header: Guest
+      - key: service_name
+        header: Service
+      - key: date
+        header: Date
+      - key: status
+        header: Status
+- id: services_table
+  type: table
+  title: Services
+  source: services
+  options:
+    rows_path: items
+    empty_title: "No services yet"
+    columns:
+      - key: name
+        header: Name
+      - key: duration_minutes
+        header: Minutes
+      - key: price
+        header: Price
+- id: staff_table
+  type: table
+  title: Staff
+  source: staff
+  options:
+    rows_path: items
+    empty_title: "No staff yet"
+    columns:
+      - key: name
+        header: Name
+      - key: role
+        header: Role
+- id: slots_table
+  type: table
+  title: Availability
+  source: slots
+  options:
+    rows_path: items
+    empty_title: "No availability yet"
+    columns:
+      - key: staff_name
+        header: Staff
+      - key: date
+        header: Date
+      - key: status
+        header: Status

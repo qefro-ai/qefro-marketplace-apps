@@ -1,0 +1,18 @@
+id: get-customer-orders
+name: "Get customer orders"
+description: "Show the authenticated customer's own orders"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_my_orders
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are your recent orders.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

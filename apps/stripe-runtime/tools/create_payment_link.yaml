@@ -1,0 +1,20 @@
+id: create_payment_link
+description: "Staff-only create a payment link for a price id"
+connection: stripe
+method: POST
+path: "/v1/payment_links"
+timeout_seconds: 15
+request:
+  encoding: form
+body:
+  line_items:
+    - price: "{price_id}"
+      quantity: "{quantity}"
+required_scopes:
+  - read_write
+emits:
+  - event: payment.created
+    id_path: id
+access:
+  surfaces:
+    - staff

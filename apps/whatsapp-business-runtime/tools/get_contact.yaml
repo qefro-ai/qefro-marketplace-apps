@@ -1,0 +1,11 @@
+id: get_contact
+description: "Staff-only look up a Cloud API contact by wa_id"
+connection: whatsapp-business
+method: GET
+path: "/v21.0/{phone_number_id}/contacts"
+timeout_seconds: 15
+query:
+  wa_id: "{wa_id}"
+access:
+  surfaces:
+    - staff

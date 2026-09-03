@@ -1,0 +1,138 @@
+# Google Calendar — metadata Marketplace App (hosting: runtime).
+# OAuth and HTTP are executed by Qefro Runtime. This package has no Google client.
+id: google-calendar-runtime
+name: "Google Calendar"
+version: 0.1.0
+hosting: runtime
+description: "Calendars, events, scheduling, and free-busy as a metadata Marketplace App"
+category: productivity
+tags:
+  - google
+  - calendar
+  - runtime
+channels:
+  - widget
+  - whatsapp
+connections:
+  - google-calendar
+http_tools:
+  - list_calendars
+  - list_events
+  - get_event
+  - create_event
+  - update_event
+  - cancel_event
+  - query_freebusy
+entities:
+  - calendar
+  - event
+flows:
+  - schedule-appointment
+  - reschedule-event
+  - cancel-event
+  - check-availability
+events:
+  - event.created
+  - event.updated
+  - event.cancelled
+  - booking.created
+permissions:
+  - workflow.execute
+  - storage.read
+  - storage.write
+  - storage.update
+  - storage.delete
+capabilities:
+  - theme.get
+  - user.get
+  - tenant.get
+  - runtime.query
+  - workflow.trigger
+  - storage.read
+  - storage.write
+triggers:
+  - id: schedule_appointment
+    workflow: schedule-appointment
+    input_variable: event_input
+    match:
+      intents:
+        - "schedule an appointment"
+        - "create a calendar event"
+        - "book a meeting"
+      confirmation:
+        reply_signals:
+          - scheduled
+        required_slots:
+          - summary
+          - start
+    confirmation_message: "Event {{summary}} scheduled."
+  - id: reschedule_event
+    workflow: reschedule-event
+    input_variable: reschedule_input
+    match:
+      intents:
+        - "reschedule the event"
+        - "move the meeting"
+      confirmation:
+        reply_signals:
+          - rescheduled
+        required_slots:
+          - event_id
+    confirmation_message: "Event {{event_id}} rescheduled."
+  - id: cancel_event
+    workflow: cancel-event
+    input_variable: cancel_input
+    match:
+      intents:
+        - "cancel the event"
+        - "delete the meeting"
+      confirmation:
+        reply_signals:
+          - cancelled
+        required_slots:
+          - event_id
+    confirmation_message: "Event {{event_id}} cancelled."
+  - id: check_availability
+    workflow: check-availability
+    input_variable: freebusy_input
+    match:
+      intents:
+        - "check availability"
+        - "am I free"
+        - "free busy"
+      confirmation:
+        reply_signals:
+          - availability
+        required_slots:
+          - calendar_id
+    confirmation_message: "Availability for {{calendar_id}}."
+conversation_slots:
+  - id: calendar_id
+    labels:
+      - calendar
+      - "calendar id"
+      - primary
+    kind: string
+  - id: event_id
+    labels:
+      - event
+      - "event id"
+    kind: string
+  - id: summary
+    labels:
+      - title
+      - summary
+      - "event name"
+    kind: string
+  - id: start
+    labels:
+      - start
+      - from
+    kind: string
+  - id: end
+    labels:
+      - end
+      - until
+    kind: string
+ui:
+  name: "Google Calendar"

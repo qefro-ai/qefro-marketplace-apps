@@ -1,0 +1,11 @@
+id: payment_link
+name: "Payment link"
+description: "Shareable Stripe payment link"
+fields:
+  - name: url
+    type: url
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - inactive

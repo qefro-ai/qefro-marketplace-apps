@@ -1,0 +1,70 @@
+- id: intro
+  type: markdown
+  title: Freshdesk
+  options:
+    content: "Metadata Marketplace App. Chat “create a support ticket” or “show my tickets” runs generic Runtime HTTP. Contacts stay on Person CRM. Automations subscribe to ticket.created."
+- id: ticket_form
+  type: form
+  title: "New ticket"
+  options:
+    fields:
+      - name: subject
+        label: Subject
+        type: text
+        required: true
+      - name: description
+        label: Description
+        type: text
+        required: true
+      - name: requester_email
+        label: "Requester email"
+        type: text
+        required: true
+    submit_label: "Create ticket"
+    action:
+      trigger: create-support-ticket
+- id: tickets_status
+  type: status
+  title: Tickets
+  source: tickets
+  options:
+    rows_path: items
+    status_field: status
+    label_field: subject
+    empty_title: "Nothing yet"
+- id: tickets_table
+  type: table
+  title: Tickets
+  source: tickets
+  options:
+    rows_path: items
+    empty_title: "No tickets yet"
+    columns:
+      - key: subject
+        header: Subject
+      - key: status
+        header: Status
+- id: contacts_table
+  type: table
+  title: "Freshdesk contacts"
+  source: contacts
+  options:
+    rows_path: items
+    empty_title: "No freshdesk contacts yet"
+    columns:
+      - key: name
+        header: Name
+      - key: email
+        header: Email
+- id: agents_table
+  type: table
+  title: Agents
+  source: agents
+  options:
+    rows_path: items
+    empty_title: "No agents yet"
+    columns:
+      - key: name
+        header: Name
+      - key: email
+        header: Email

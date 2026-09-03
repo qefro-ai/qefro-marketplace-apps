@@ -1,0 +1,25 @@
+id: order
+name: Order
+description: "Customer order"
+allocate_code:
+  prefix: O-
+  start: 1001
+fields:
+  - name: total
+    type: float
+  - name: currency
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - pending
+      - processing
+      - on-hold
+      - completed
+      - cancelled
+      - refunded
+      - failed
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

@@ -1,0 +1,32 @@
+id: work_order
+name: "Work order"
+description: "Job at a site bound to Person"
+allocate_code:
+  prefix: WO-
+  start: 1001
+fields:
+  - name: site_name
+    type: string
+    required: true
+  - name: summary
+    type: string
+    required: true
+  - name: technician_name
+    type: string
+  - name: scheduled_date
+    type: date
+  - name: status
+    type: enum
+    enum_values:
+      - open
+      - assigned
+      - in_progress
+      - completed
+      - cancelled
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"
+status_events:
+  completed: work_order.completed
+  cancelled: work_order.cancelled

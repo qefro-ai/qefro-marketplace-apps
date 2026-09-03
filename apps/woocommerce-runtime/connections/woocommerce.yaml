@@ -1,0 +1,21 @@
+# Workspace supplies the store host and Basic credentials (key:secret).
+# No store URL or consumer secret in this file.
+id: woocommerce
+auth_type: basic
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: base64
+    header: X-WC-Webhook-Signature
+    key_source: app_client
+  identity_header: X-WC-Webhook-Source
+  topic_header: X-WC-Webhook-Topic
+  event_id_header: X-WC-Webhook-ID
+  register_url: "https://{host}/wp-json/wc/v3/webhooks"
+  topics:
+    order.created: order.created
+    order.updated: order.updated
+    order.deleted: order.cancelled
+    customer.created: customer.created
+    product.updated: product.updated
+    coupon.created: coupon.created

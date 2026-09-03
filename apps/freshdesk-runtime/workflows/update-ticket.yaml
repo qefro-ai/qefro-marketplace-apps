@@ -1,0 +1,32 @@
+id: update-ticket
+name: "Update ticket"
+description: "Update ticket status through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_id
+    type: ask
+    field: id
+    message: "Which ticket id?"
+  - id: ask_status
+    type: ask
+    field: status
+    message: "New status code?"
+  - id: ask_priority
+    type: ask
+    field: priority
+    message: "New priority code?"
+  - id: run
+    type: tool
+    tool: update_ticket
+    execution: http
+    input_map:
+      id: id
+      status: status
+      priority: priority
+  - id: confirm
+    type: message
+    message: "Ticket {{id}} updated."
+  - id: done
+    type: complete
+    message: ""

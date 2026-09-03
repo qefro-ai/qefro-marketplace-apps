@@ -1,0 +1,26 @@
+id: zoho-crm
+auth_type: bearer
+oauth:
+  authorize_url: "https://accounts.zoho.com/oauth/v2/auth"
+  token_url: "https://accounts.zoho.com/oauth/v2/token"
+  revoke_url: "https://accounts.zoho.com/oauth/v2/token/revoke"
+  revoke_method: POST
+  api_host: www.zohoapis.com
+  token_auth_method: client_secret_post
+  scopes:
+    - ZohoCRM.modules.ALL
+    - ZohoCRM.settings.ALL
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: X-ZOHO-WEBHOOK-SIGNATURE
+    key_source: app_client
+  identity_header: X-ZOHO-ORG
+  topic_header: X-ZOHO-EVENT
+  event_id_header: X-ZOHO-WEBHOOK-ID
+  topics:
+    Leads.create: lead.created
+    Contacts.create: contact.created
+    Deals.create: deal.created
+    Deals.edit: deal.updated

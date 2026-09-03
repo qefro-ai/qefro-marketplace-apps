@@ -1,0 +1,13 @@
+id: get_invoice
+description: "Staff-only invoice fetch by id"
+connection: stripe
+method: GET
+path: "/v1/invoices/{id}"
+timeout_seconds: 15
+response:
+  item: invoice
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - staff

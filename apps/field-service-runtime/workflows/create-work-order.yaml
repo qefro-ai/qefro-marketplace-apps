@@ -1,0 +1,32 @@
+id: create-work-order
+name: "Create work order"
+description: "Open a field job through Qefro Runtime"
+trigger:
+  type: conversation
+steps:
+  - id: ask_site_name
+    type: ask
+    field: site_name
+    message: "Which site?"
+  - id: ask_summary
+    type: ask
+    field: summary
+    message: "What needs to be done?"
+  - id: ask_scheduled_date
+    type: ask
+    field: scheduled_date
+    message: "Which date?"
+  - id: run
+    type: tool
+    tool: entity.work_order.create
+    execution: runtime
+    input_map:
+      site_name: site_name
+      summary: summary
+      scheduled_date: scheduled_date
+      technician_name: technician_name
+  - id: confirm
+    type: message
+    message: "Work order created for {{site_name}}."
+  - id: done
+    type: complete

@@ -1,0 +1,17 @@
+id: create_ticket
+description: "Staff-only create a support ticket"
+connection: freshdesk
+method: POST
+path: "/api/v2/tickets"
+timeout_seconds: 15
+body:
+  subject: "{subject}"
+  description: "{description}"
+  email: "{requester_email}"
+  status: 2
+  priority: 1
+emits:
+  - ticket.created
+access:
+  surfaces:
+    - staff

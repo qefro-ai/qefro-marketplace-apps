@@ -1,0 +1,86 @@
+- id: intro
+  type: markdown
+  title: Education
+  options:
+    content: "Native education/coaching app. Chat “enroll a student” or “schedule a class” uses EntityService. Automations: enrollment.created → send confirmation."
+- id: enroll_form
+  type: form
+  title: "Enroll learner"
+  options:
+    fields:
+      - name: learner_name
+        label: Learner
+        type: text
+        required: true
+      - name: course_title
+        label: Course
+        type: text
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: false
+    submit_label: Enroll
+    action:
+      trigger: enroll-student
+- id: enroll_status
+  type: status
+  title: Enrollments
+  source: enrollments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: learner_name
+    empty_title: "Nothing yet"
+- id: enroll_table
+  type: table
+  title: Enrollments
+  source: enrollments
+  options:
+    rows_path: items
+    empty_title: "No enrollments yet"
+    columns:
+      - key: learner_name
+        header: Learner
+      - key: course_title
+        header: Course
+      - key: status
+        header: Status
+- id: courses_table
+  type: table
+  title: Courses
+  source: courses
+  options:
+    rows_path: items
+    empty_title: "No courses yet"
+    columns:
+      - key: title
+        header: Title
+      - key: status
+        header: Status
+- id: sessions_table
+  type: table
+  title: Sessions
+  source: sessions
+  options:
+    rows_path: items
+    empty_title: "No sessions yet"
+    columns:
+      - key: course_title
+        header: Course
+      - key: date
+        header: Date
+      - key: status
+        header: Status
+- id: assignments_table
+  type: table
+  title: Assignments
+  source: assignments
+  options:
+    rows_path: items
+    empty_title: "No assignments yet"
+    columns:
+      - key: title
+        header: Title
+      - key: status
+        header: Status

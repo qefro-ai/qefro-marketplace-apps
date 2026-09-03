@@ -1,0 +1,6 @@
+- id: calendars
+  type: entity
+  target: calendar
+- id: events
+  type: entity
+  target: event

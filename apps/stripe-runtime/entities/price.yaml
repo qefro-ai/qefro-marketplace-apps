@@ -1,0 +1,11 @@
+id: price
+name: Price
+description: "Price for a catalog product"
+fields:
+  - name: product_id
+    type: string
+    required: true
+  - name: unit_amount
+    type: integer
+  - name: currency
+    type: string

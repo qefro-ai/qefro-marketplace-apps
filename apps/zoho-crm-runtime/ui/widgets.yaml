@@ -1,0 +1,80 @@
+- id: intro
+  type: markdown
+  title: "Zoho CRM"
+  options:
+    content: "Metadata Marketplace App. Staff CRM operations run generic Runtime HTTP against the workspace Zoho connection. Qefro Person CRM stays canonical for Customer Hub."
+- id: lead_form
+  type: form
+  title: "New lead"
+  options:
+    fields:
+      - name: last_name
+        label: "Last name"
+        type: text
+        required: true
+      - name: lead_email
+        label: Email
+        type: text
+        required: false
+      - name: company
+        label: Company
+        type: text
+        required: false
+    submit_label: "Create lead"
+    action:
+      trigger: create-lead
+- id: deals_status
+  type: status
+  title: Deals
+  source: deals
+  options:
+    rows_path: items
+    status_field: status
+    label_field: deal_name
+    empty_title: "Nothing yet"
+- id: leads_table
+  type: table
+  title: Leads
+  source: leads
+  options:
+    rows_path: items
+    empty_title: "No leads yet"
+    columns:
+      - key: last_name
+        header: Name
+      - key: company
+        header: Company
+- id: contacts_table
+  type: table
+  title: "Zoho contacts"
+  source: contacts
+  options:
+    rows_path: items
+    empty_title: "No zoho contacts yet"
+    columns:
+      - key: name
+        header: Name
+      - key: email
+        header: Email
+- id: accounts_table
+  type: table
+  title: Accounts
+  source: accounts
+  options:
+    rows_path: items
+    empty_title: "No accounts yet"
+    columns:
+      - key: name
+        header: Name
+- id: deals_table
+  type: table
+  title: Deals
+  source: deals
+  options:
+    rows_path: items
+    empty_title: "No deals yet"
+    columns:
+      - key: deal_name
+        header: Deal
+      - key: stage
+        header: Stage
