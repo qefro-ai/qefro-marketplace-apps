@@ -1,0 +1,34 @@
+id: list_my_orders
+description: "List orders for the authenticated conversation Person only. Identity is resolved by the Runtime from Customer Hub; do not pass email, phone, person_id, or customer_id."
+connection: woocommerce
+method: GET
+path: "/wp-json/wc/v3/orders"
+timeout_seconds: 15
+query:
+  customer_email: "{person.email}"
+pagination:
+  style: query
+  limit_param: per_page
+  default_limit: 20
+  max_limit: 50
+response:
+  items: orders
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.email
+  collect: email_otp
+ownership:
+  identity: person.email
+  paths:
+    - billing.email
+    - email
+  also:
+    - identity: person.external_id
+      paths:
+        - customer_id
+    - identity: person.phone
+      paths:
+        - billing.phone

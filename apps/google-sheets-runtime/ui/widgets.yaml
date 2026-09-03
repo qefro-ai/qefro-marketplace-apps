@@ -1,0 +1,67 @@
+- id: intro
+  type: markdown
+  title: "Google Sheets"
+  options:
+    content: "Metadata Marketplace App. Staff chat “append a row” runs generic Runtime HTTP against the workspace Google Sheets connection. Staff-only — Customer Hub is not the Google account."
+- id: append_form
+  type: form
+  title: "Append row"
+  options:
+    fields:
+      - name: spreadsheet_id
+        label: "Spreadsheet id"
+        type: text
+        required: true
+      - name: range
+        label: Range
+        type: text
+        required: true
+      - name: col1
+        label: "Column 1"
+        type: text
+        required: true
+      - name: col2
+        label: "Column 2"
+        type: text
+        required: false
+      - name: col3
+        label: "Column 3"
+        type: text
+        required: false
+    submit_label: Append
+    action:
+      trigger: append-rows
+- id: spreadsheets_table
+  type: table
+  title: Spreadsheets
+  source: spreadsheets
+  options:
+    rows_path: items
+    empty_title: "No spreadsheets yet"
+    columns:
+      - key: title
+        header: Title
+- id: sheets_table
+  type: table
+  title: Sheets
+  source: sheets
+  options:
+    rows_path: items
+    empty_title: "No sheets yet"
+    columns:
+      - key: title
+        header: Tab
+- id: rows_table
+  type: table
+  title: Rows
+  source: rows
+  options:
+    rows_path: items
+    empty_title: "No rows yet"
+    columns:
+      - key: col1
+        header: "Col 1"
+      - key: col2
+        header: "Col 2"
+      - key: col3
+        header: "Col 3"

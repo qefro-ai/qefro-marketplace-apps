@@ -1,0 +1,13 @@
+id: get_payment
+description: "Staff-only PaymentIntent fetch by id"
+connection: stripe
+method: GET
+path: "/v1/payment_intents/{id}"
+timeout_seconds: 15
+response:
+  item: payment_intent
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - staff

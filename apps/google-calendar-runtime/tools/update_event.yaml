@@ -1,0 +1,17 @@
+id: update_event
+description: "Staff-only update a calendar event"
+connection: google-calendar
+method: PATCH
+path: "/calendar/v3/calendars/{calendar_id}/events/{event_id}"
+timeout_seconds: 15
+body:
+  summary: "{summary}"
+  start:
+    dateTime: "{start}"
+  end:
+    dateTime: "{end}"
+required_scopes:
+  - "https://www.googleapis.com/auth/calendar.events"
+access:
+  surfaces:
+    - staff

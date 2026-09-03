@@ -1,0 +1,12 @@
+- id: customers
+  type: entity
+  target: customer
+- id: orders
+  type: entity
+  target: order
+- id: payments
+  type: entity
+  target: payment
+- id: invoices
+  type: entity
+  target: invoice

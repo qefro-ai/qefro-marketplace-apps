@@ -1,0 +1,16 @@
+id: list_invoices
+description: "Staff-only invoice list on the workspace HTTP connection"
+connection: razorpay
+method: GET
+path: "/v1/invoices"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: items
+access:
+  surfaces:
+    - staff

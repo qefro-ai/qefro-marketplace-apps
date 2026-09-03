@@ -1,0 +1,21 @@
+# Workspace stores Key Id:Key Secret as the named Authorization header value (Basic).
+# No host or secrets in this file.
+id: razorpay
+auth_type: named_header
+auth_header: Authorization
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: X-Razorpay-Signature
+    key_source: app_client
+  identity_header: X-Razorpay-Account
+  topic_header: X-Razorpay-Event
+  event_id_header: X-Razorpay-Event-Id
+  topics:
+    order.paid: order.paid
+    payment.authorized: payment.created
+    payment.captured: payment.succeeded
+    payment.failed: payment.failed
+    refund.created: refund.created
+    invoice.paid: invoice.paid

@@ -1,0 +1,15 @@
+id: create_subscription
+description: "Staff-only create a subscription for an existing Stripe customer id and price id"
+connection: stripe
+method: POST
+path: "/v1/subscriptions"
+timeout_seconds: 15
+body:
+  customer: "{stripe_customer}"
+  items:
+    - price: "{price_id}"
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - staff

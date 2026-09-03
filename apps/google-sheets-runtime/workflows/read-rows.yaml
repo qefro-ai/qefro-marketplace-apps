@@ -1,0 +1,27 @@
+id: read-rows
+name: "Read rows"
+description: "Read a sheet range through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_spreadsheet_id
+    type: ask
+    field: spreadsheet_id
+    message: "What is the spreadsheet id?"
+  - id: ask_range
+    type: ask
+    field: range
+    message: "Which A1 range should we read?"
+  - id: run
+    type: tool
+    tool: read_rows
+    execution: http
+    input_map:
+      spreadsheet_id: spreadsheet_id
+      range: range
+  - id: confirm
+    type: message
+    message: "Rows from {{range}}."
+  - id: done
+    type: complete
+    message: ""

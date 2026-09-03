@@ -1,0 +1,37 @@
+id: schedule-appointment
+name: "Schedule appointment"
+description: "Create a calendar event through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_calendar_id
+    type: ask
+    field: calendar_id
+    message: "Which calendar id should we use? Use primary if unsure."
+  - id: ask_summary
+    type: ask
+    field: summary
+    message: "What is the event title?"
+  - id: ask_start
+    type: ask
+    field: start
+    message: "When does it start (RFC3339)?"
+  - id: ask_end
+    type: ask
+    field: end
+    message: "When does it end (RFC3339)?"
+  - id: run
+    type: tool
+    tool: create_event
+    execution: http
+    input_map:
+      calendar_id: calendar_id
+      summary: summary
+      start: start
+      end: end
+  - id: confirm
+    type: message
+    message: "Event {{summary}} scheduled."
+  - id: done
+    type: complete
+    message: ""

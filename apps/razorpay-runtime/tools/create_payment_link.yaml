@@ -1,0 +1,13 @@
+id: create_payment_link
+description: "Staff-only create a payment link"
+connection: razorpay
+method: POST
+path: "/v1/payment_links"
+timeout_seconds: 15
+body:
+  amount: "{amount}"
+  currency: "{currency}"
+  description: "{description}"
+access:
+  surfaces:
+    - staff

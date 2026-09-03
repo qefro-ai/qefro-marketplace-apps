@@ -1,0 +1,16 @@
+id: list_orders
+description: "Staff-only order list on the workspace HTTP connection"
+connection: razorpay
+method: GET
+path: "/v1/orders"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: items
+access:
+  surfaces:
+    - staff

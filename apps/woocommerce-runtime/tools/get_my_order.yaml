@@ -1,0 +1,24 @@
+id: get_my_order
+description: "Look up one order by id for the authenticated conversation Person. The order id may come from the user; identity must not."
+connection: woocommerce
+method: GET
+path: "/wp-json/wc/v3/orders/{id}"
+timeout_seconds: 15
+query:
+  customer_email: "{person.email}"
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.email
+  collect: email_otp
+ownership:
+  identity: person.email
+  paths:
+    - billing.email
+    - email
+  also:
+    - identity: person.external_id
+      paths:
+        - customer_id

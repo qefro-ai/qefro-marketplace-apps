@@ -1,0 +1,119 @@
+# Google Sheets — metadata Marketplace App (hosting: runtime).
+# No Google client in this package.
+id: google-sheets-runtime
+name: "Google Sheets"
+version: 0.1.0
+hosting: runtime
+description: "Spreadsheets, sheets, and row read/append/update as a metadata Marketplace App"
+category: productivity
+tags:
+  - google
+  - sheets
+  - runtime
+channels:
+  - widget
+  - whatsapp
+connections:
+  - google-sheets
+http_tools:
+  - get_spreadsheet
+  - read_rows
+  - append_rows
+  - update_rows
+entities:
+  - spreadsheet
+  - sheet
+  - row
+flows:
+  - read-rows
+  - append-rows
+  - update-rows
+events:
+  - spreadsheet.updated
+  - row.appended
+  - row.updated
+permissions:
+  - workflow.execute
+  - storage.read
+  - storage.write
+  - storage.update
+  - storage.delete
+capabilities:
+  - theme.get
+  - user.get
+  - tenant.get
+  - runtime.query
+  - workflow.trigger
+  - storage.read
+  - storage.write
+triggers:
+  - id: read_rows
+    workflow: read-rows
+    input_variable: read_input
+    match:
+      intents:
+        - "read the sheet"
+        - "show spreadsheet rows"
+      confirmation:
+        reply_signals:
+          - rows
+        required_slots:
+          - spreadsheet_id
+          - range
+    confirmation_message: "Rows from {{range}}."
+  - id: append_rows
+    workflow: append-rows
+    input_variable: append_input
+    match:
+      intents:
+        - "append a row"
+        - "add a sheet row"
+      confirmation:
+        reply_signals:
+          - appended
+        required_slots:
+          - spreadsheet_id
+          - range
+    confirmation_message: "Row appended to {{range}}."
+  - id: update_rows
+    workflow: update-rows
+    input_variable: update_input
+    match:
+      intents:
+        - "update the sheet"
+        - "change spreadsheet rows"
+      confirmation:
+        reply_signals:
+          - updated
+        required_slots:
+          - spreadsheet_id
+          - range
+    confirmation_message: "Range {{range}} updated."
+conversation_slots:
+  - id: spreadsheet_id
+    labels:
+      - spreadsheet
+      - "sheet id"
+    kind: string
+  - id: range
+    labels:
+      - range
+      - a1
+    kind: string
+  - id: col1
+    labels:
+      - "column 1"
+      - "first value"
+    kind: string
+  - id: col2
+    labels:
+      - "column 2"
+      - "second value"
+    kind: string
+  - id: col3
+    labels:
+      - "column 3"
+      - "third value"
+    kind: string
+ui:
+  name: "Google Sheets"

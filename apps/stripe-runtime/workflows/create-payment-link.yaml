@@ -1,0 +1,27 @@
+id: create-payment-link
+name: "Create payment link"
+description: "Create a Stripe payment link through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_price_id
+    type: ask
+    field: price_id
+    message: "Which Stripe price id should the link use?"
+  - id: ask_quantity
+    type: ask
+    field: quantity
+    message: "How many units?"
+  - id: run
+    type: tool
+    tool: create_payment_link
+    execution: http
+    input_map:
+      price_id: price_id
+      quantity: quantity
+  - id: confirm
+    type: message
+    message: "Payment link created for {{price_id}}."
+  - id: done
+    type: complete
+    message: ""

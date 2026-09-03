@@ -1,0 +1,18 @@
+id: list-my-customers
+name: "Find my customer record"
+description: "Show the authenticated customer's Razorpay customer records"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_my_customers
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here is your customer record.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

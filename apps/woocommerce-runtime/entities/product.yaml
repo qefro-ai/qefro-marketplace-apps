@@ -1,0 +1,22 @@
+id: product
+name: Product
+description: "Catalog product"
+allocate_code:
+  prefix: P-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: sku
+    type: string
+  - name: price
+    type: float
+  - name: stock_quantity
+    type: integer
+  - name: status
+    type: enum
+    enum_values:
+      - draft
+      - publish
+      - private

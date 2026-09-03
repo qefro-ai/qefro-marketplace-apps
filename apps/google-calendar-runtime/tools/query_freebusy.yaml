@@ -1,0 +1,16 @@
+id: query_freebusy
+description: "Staff-only free-busy query"
+connection: google-calendar
+method: POST
+path: "/calendar/v3/freeBusy"
+timeout_seconds: 15
+body:
+  timeMin: "{start}"
+  timeMax: "{end}"
+  items:
+    - id: "{calendar_id}"
+required_scopes:
+  - "https://www.googleapis.com/auth/calendar"
+access:
+  surfaces:
+    - staff

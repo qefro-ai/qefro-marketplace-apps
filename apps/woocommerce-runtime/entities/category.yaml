@@ -1,0 +1,9 @@
+id: category
+name: Category
+description: "Product category"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: slug
+    type: string

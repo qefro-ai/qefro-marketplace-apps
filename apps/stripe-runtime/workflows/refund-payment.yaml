@@ -1,0 +1,22 @@
+id: refund-payment
+name: "Refund payment"
+description: "Refund a PaymentIntent through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_payment_intent
+    type: ask
+    field: payment_intent
+    message: "Which PaymentIntent id should we refund?"
+  - id: run
+    type: tool
+    tool: create_refund
+    execution: http
+    input_map:
+      payment_intent: payment_intent
+  - id: confirm
+    type: message
+    message: "Refund created for {{payment_intent}}."
+  - id: done
+    type: complete
+    message: ""

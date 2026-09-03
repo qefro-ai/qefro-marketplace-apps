@@ -1,0 +1,17 @@
+id: create_event
+description: "Staff-only create a calendar event"
+connection: google-calendar
+method: POST
+path: "/calendar/v3/calendars/{calendar_id}/events"
+timeout_seconds: 15
+body:
+  summary: "{summary}"
+  start:
+    dateTime: "{start}"
+  end:
+    dateTime: "{end}"
+required_scopes:
+  - "https://www.googleapis.com/auth/calendar.events"
+access:
+  surfaces:
+    - staff

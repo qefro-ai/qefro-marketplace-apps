@@ -1,0 +1,16 @@
+id: list_products
+description: "Staff-only product list on the workspace HTTP connection"
+connection: woocommerce
+method: GET
+path: "/wp-json/wc/v3/products"
+timeout_seconds: 15
+pagination:
+  style: query
+  limit_param: per_page
+  default_limit: 20
+  max_limit: 50
+response:
+  items: products
+access:
+  surfaces:
+    - staff

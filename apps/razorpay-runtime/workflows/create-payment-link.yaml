@@ -1,0 +1,32 @@
+id: create-payment-link
+name: "Create payment link"
+description: "Create a Razorpay payment link through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_amount
+    type: ask
+    field: amount
+    message: "What amount should the link charge?"
+  - id: ask_currency
+    type: ask
+    field: currency
+    message: "Which currency code?"
+  - id: ask_description
+    type: ask
+    field: description
+    message: "Short description for the link?"
+  - id: run
+    type: tool
+    tool: create_payment_link
+    execution: http
+    input_map:
+      amount: amount
+      currency: currency
+      description: description
+  - id: confirm
+    type: message
+    message: "Payment link created for {{amount}} {{currency}}."
+  - id: done
+    type: complete
+    message: ""

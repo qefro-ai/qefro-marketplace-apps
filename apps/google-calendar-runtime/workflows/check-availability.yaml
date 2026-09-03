@@ -1,0 +1,32 @@
+id: check-availability
+name: "Check availability"
+description: "Free-busy query through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_calendar_id
+    type: ask
+    field: calendar_id
+    message: "Which calendar id?"
+  - id: ask_start
+    type: ask
+    field: start
+    message: "Window start (RFC3339)?"
+  - id: ask_end
+    type: ask
+    field: end
+    message: "Window end (RFC3339)?"
+  - id: run
+    type: tool
+    tool: query_freebusy
+    execution: http
+    input_map:
+      calendar_id: calendar_id
+      start: start
+      end: end
+  - id: confirm
+    type: message
+    message: "Availability for {{calendar_id}}."
+  - id: done
+    type: complete
+    message: ""

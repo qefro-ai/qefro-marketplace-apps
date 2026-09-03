@@ -1,0 +1,33 @@
+# Workspace connection declaration. No host, secret key, or account id.
+# OAuth URLs are metadata for Qefro Runtime Stripe Connect; this package does not run OAuth.
+# Stripe-Signature is declared as generic HMAC metadata. Timestamped t=/v1= schemes need a generic Runtime algorithm.
+id: stripe
+auth_type: bearer
+oauth:
+  authorize_url: "https://connect.stripe.com/oauth/authorize"
+  token_url: "https://connect.stripe.com/oauth/token"
+  revoke_url: "https://connect.stripe.com/oauth/deauthorize"
+  revoke_method: POST
+  scopes:
+    - read_write
+webhooks:
+  hmac:
+    algorithm: hmac-sha256
+    encoding: hex
+    header: Stripe-Signature
+    key_source: app_client
+  identity_header: Stripe-Account
+  topic_header: Stripe-Event-Type
+  event_id_header: Stripe-Event-Id
+  register_url: "https://{host}/v1/webhook_endpoints"
+  topics:
+    customer.created: customer.created
+    payment_intent.created: payment.created
+    payment_intent.succeeded: payment.succeeded
+    payment_intent.payment_failed: payment.failed
+    charge.refunded: refund.created
+    customer.subscription.created: subscription.created
+    customer.subscription.updated: subscription.updated
+    customer.subscription.deleted: subscription.cancelled
+    invoice.paid: invoice.paid
+    checkout.session.completed: checkout.completed

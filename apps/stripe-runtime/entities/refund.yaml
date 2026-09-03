@@ -1,0 +1,15 @@
+id: refund
+name: Refund
+description: "Refund against a payment"
+fields:
+  - name: amount
+    type: integer
+  - name: payment_intent
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - pending
+      - succeeded
+      - failed
+      - canceled

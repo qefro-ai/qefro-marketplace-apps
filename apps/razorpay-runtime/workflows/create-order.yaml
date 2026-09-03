@@ -1,0 +1,27 @@
+id: create-order
+name: "Create order"
+description: "Create a Razorpay order through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: ask_amount
+    type: ask
+    field: amount
+    message: "What amount should we charge (smallest currency unit)?"
+  - id: ask_currency
+    type: ask
+    field: currency
+    message: "Which currency code?"
+  - id: run
+    type: tool
+    tool: create_order
+    execution: http
+    input_map:
+      amount: amount
+      currency: currency
+  - id: confirm
+    type: message
+    message: "Order created for {{amount}} {{currency}}."
+  - id: done
+    type: complete
+    message: ""

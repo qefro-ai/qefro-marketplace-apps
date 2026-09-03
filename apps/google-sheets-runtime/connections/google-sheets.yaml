@@ -1,0 +1,11 @@
+# Workspace OAuth supplies tokens. Host is typically sheets.googleapis.com.
+id: google-sheets
+auth_type: bearer
+oauth:
+  authorize_url: "https://accounts.google.com/o/oauth2/v2/auth"
+  token_url: "https://oauth2.googleapis.com/token"
+  revoke_url: "https://oauth2.googleapis.com/revoke"
+  revoke_method: POST
+  scopes:
+    - "https://www.googleapis.com/auth/spreadsheets"
+    - "https://www.googleapis.com/auth/spreadsheets.readonly"

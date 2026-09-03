@@ -1,0 +1,20 @@
+id: search_products
+description: "Search the catalog when the customer names a product. Pass that text as query."
+connection: woocommerce
+method: GET
+path: "/wp-json/wc/v3/products"
+timeout_seconds: 15
+query:
+  search: "{query}"
+pagination:
+  style: query
+  limit_param: per_page
+  default_limit: 20
+  max_limit: 50
+response:
+  items: products
+  choice_id_prefix: product
+access:
+  surfaces:
+    - staff
+    - customer

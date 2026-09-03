@@ -1,0 +1,11 @@
+id: get_spreadsheet
+description: "Staff-only fetch spreadsheet metadata including sheets"
+connection: google-sheets
+method: GET
+path: "/v4/spreadsheets/{spreadsheet_id}"
+timeout_seconds: 15
+required_scopes:
+  - "https://www.googleapis.com/auth/spreadsheets.readonly"
+access:
+  surfaces:
+    - staff

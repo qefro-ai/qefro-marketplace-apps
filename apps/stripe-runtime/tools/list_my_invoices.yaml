@@ -1,0 +1,39 @@
+id: list_my_invoices
+description: "List invoices for the authenticated Person using the Hub-mapped Stripe customer id. Do not pass customer_id or email."
+connection: stripe
+method: GET
+path: "/v1/invoices"
+timeout_seconds: 15
+query:
+  customer: "{person.external_id}"
+pagination:
+  style: query
+  limit_param: limit
+  default_limit: 20
+  max_limit: 50
+response:
+  items: data
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - customer
+identity:
+  require_any:
+    - person.external_id
+ownership:
+  identity: person.email
+  paths:
+    - customer_email
+    - customer.email
+  also:
+    - identity: person.external_id
+      paths:
+        - id
+        - customer
+        - customer.id
+        - customer_id
+    - identity: person.phone
+      paths:
+        - phone
+        - customer.phone

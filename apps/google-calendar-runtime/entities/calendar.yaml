@@ -1,0 +1,9 @@
+id: calendar
+name: Calendar
+description: "Google calendar"
+fields:
+  - name: summary
+    type: string
+    required: true
+  - name: time_zone
+    type: string

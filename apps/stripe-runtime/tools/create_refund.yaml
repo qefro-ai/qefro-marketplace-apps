@@ -1,0 +1,13 @@
+id: create_refund
+description: "Staff-only refund a PaymentIntent"
+connection: stripe
+method: POST
+path: "/v1/refunds"
+timeout_seconds: 15
+body:
+  payment_intent: "{payment_intent}"
+required_scopes:
+  - read_write
+access:
+  surfaces:
+    - staff

@@ -1,0 +1,48 @@
+- id: dashboard
+  title: Today
+  layout: dashboard-grid
+  widgets:
+    - widget: intro
+      span: 12
+    - widget: payments_status
+      span: 12
+    - widget: customers_table
+      span: 12
+- id: customers
+  title: Customers
+  layout: split-grid
+  widgets:
+    - widget: customers_table
+      span: 12
+- id: products
+  title: Products
+  layout: split-grid
+  widgets:
+    - widget: payment_link_form
+      span: 12
+    - widget: products_table
+      span: 12
+- id: invoices
+  title: Invoices
+  layout: split-grid
+  widgets:
+    - widget: invoices_table
+      span: 12
+- id: subscriptions
+  title: Subscriptions
+  layout: split-grid
+  widgets:
+    - widget: subscriptions_table
+      span: 12
+- id: payments
+  title: Payments
+  layout: split-grid
+  widgets:
+    - widget: payments_table
+      span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

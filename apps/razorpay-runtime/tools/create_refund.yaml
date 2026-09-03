@@ -1,0 +1,11 @@
+id: create_refund
+description: "Staff-only refund a payment"
+connection: razorpay
+method: POST
+path: "/v1/payments/{id}/refund"
+timeout_seconds: 15
+body:
+  amount: "{amount}"
+access:
+  surfaces:
+    - staff

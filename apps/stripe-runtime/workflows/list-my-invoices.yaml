@@ -1,0 +1,18 @@
+id: list-my-invoices
+name: "List my invoices"
+description: "Show the authenticated customer's invoices through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: run
+    type: tool
+    tool: list_my_invoices
+    execution: http
+  - id: confirm
+    type: message
+    message: |
+      Here are your invoices.
+      {{items_text}}
+  - id: done
+    type: complete
+    message: ""

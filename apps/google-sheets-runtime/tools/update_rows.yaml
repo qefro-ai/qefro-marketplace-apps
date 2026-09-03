@@ -1,0 +1,16 @@
+id: update_rows
+description: "Staff-only update rows in a range"
+connection: google-sheets
+method: PUT
+path: "/v4/spreadsheets/{spreadsheet_id}/values/{range}"
+timeout_seconds: 15
+query:
+  valueInputOption: USER_ENTERED
+body:
+  values:
+    - "['{col1}', '{col2}', '{col3}']"
+required_scopes:
+  - "https://www.googleapis.com/auth/spreadsheets"
+access:
+  surfaces:
+    - staff

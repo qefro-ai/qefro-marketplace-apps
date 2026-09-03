@@ -1,0 +1,11 @@
+id: read_rows
+description: "Staff-only read cell values from a range"
+connection: google-sheets
+method: GET
+path: "/v4/spreadsheets/{spreadsheet_id}/values/{range}"
+timeout_seconds: 15
+required_scopes:
+  - "https://www.googleapis.com/auth/spreadsheets.readonly"
+access:
+  surfaces:
+    - staff

@@ -1,0 +1,9 @@
+id: get_customer
+description: "Staff-only customer fetch by id"
+connection: woocommerce
+method: GET
+path: "/wp-json/wc/v3/customers/{id}"
+timeout_seconds: 15
+access:
+  surfaces:
+    - staff
