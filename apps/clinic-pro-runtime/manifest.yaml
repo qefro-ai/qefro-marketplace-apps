@@ -1,0 +1,197 @@
+# Clinic Pro — metadata-only Qefro Marketplace App.
+# hosting: runtime. Executed by EntityService / FlowRunner / RuntimeAdapter.
+# No SDK, no custom connector, no custom REST API, no provider-specific Runtime branches.
+id: clinic-pro-runtime
+name: Clinic Pro
+version: 1.0.0
+hosting: runtime
+description: Metadata-only clinic management Marketplace App executed by Qefro Runtime (no SDK, no custom
+  server)
+category: healthcare
+tags:
+- clinic
+- healthcare
+- runtime
+- pro
+channels:
+- widget
+- whatsapp
+entities:
+- patient
+- practitioner
+- appointment_slot
+- appointment
+- visit
+- treatment
+- prescription
+- invoice
+- payment
+flows:
+- book-appointment
+- reschedule-appointment
+- cancel-appointment
+- lookup-appointment
+- create-patient
+- create-visit
+- create-prescription
+- create-invoice
+- record-payment
+events:
+- patient.created
+- patient.updated
+- appointment.created
+- appointment.updated
+- appointment.cancelled
+- appointment.completed
+- visit.created
+- visit.updated
+- treatment.created
+- treatment.completed
+- prescription.created
+- invoice.created
+- invoice.paid
+- payment.created
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: book_appointment
+  workflow: book-appointment
+  input_variable: appointment_input
+  match:
+    intents:
+    - book an appointment
+    - schedule an appointment
+    - book a clinic visit
+    confirmation:
+      reply_signals:
+      - appointment
+      - booked
+      required_slots:
+      - patient_name
+      - date
+  confirmation_message: Appointment booked for {{patient_name}} on {{date}}.
+- id: reschedule_appointment
+  workflow: reschedule-appointment
+  input_variable: appointment_reschedule
+  match:
+    intents:
+    - reschedule my appointment
+    - move my clinic appointment
+    confirmation:
+      reply_signals:
+      - rescheduled
+      required_slots:
+      - id
+      - date
+  confirmation_message: Appointment {{id}} rescheduled to {{date}}.
+- id: cancel_appointment
+  workflow: cancel-appointment
+  input_variable: appointment_cancel
+  match:
+    intents:
+    - cancel my appointment
+    - cancel clinic appointment
+    confirmation:
+      reply_signals:
+      - cancelled
+      required_slots:
+      - id
+  confirmation_message: Appointment {{id}} cancelled.
+- id: lookup_appointment
+  workflow: lookup-appointment
+  input_variable: appointment_lookup
+  match:
+    intents:
+    - find my appointment
+    - appointment status
+    confirmation:
+      reply_signals:
+      - appointment
+      required_slots:
+      - id
+  confirmation_message: Here is appointment {{id}}.
+conversation_slots:
+- id: patient_name
+  labels:
+  - patient
+  - name
+  kind: person_name
+  identity: person_name
+- id: name
+  labels:
+  - name
+  - patient name
+  kind: person_name
+  identity: person_name
+- id: practitioner_name
+  labels:
+  - doctor
+  - practitioner
+  - clinician
+  kind: string
+- id: reason
+  labels:
+  - reason
+  - complaint
+  kind: string
+- id: date
+  labels:
+  - date
+  - tomorrow
+  kind: date
+- id: time
+  labels:
+  - time
+  kind: time
+  chip_prefix: time
+- id: id
+  labels:
+  - appointment
+  - appointment id
+  - booking id
+  kind: string
+- id: medication
+  labels:
+  - medication
+  - medicine
+  - drug
+  kind: string
+- id: amount
+  labels:
+  - amount
+  - total
+  kind: string
+- id: invoice_code
+  labels:
+  - invoice
+  - invoice code
+  - bill
+  kind: string
+- id: phone
+  labels:
+  - phone
+  - mobile
+  kind: phone
+- id: email
+  labels:
+  - email
+  kind: email
+- id: status
+  labels:
+  - status
+  - cancelled
+  kind: string
+ui:
+  name: Clinic Pro

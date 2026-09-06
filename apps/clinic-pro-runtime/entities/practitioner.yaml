@@ -1,0 +1,25 @@
+id: practitioner
+name: Practitioner
+description: Clinician providing care
+fields:
+- name: name
+  type: string
+  required: true
+- name: specialty
+  type: string
+- name: email
+  type: email
+- name: phone
+  type: phone
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - inactive
+  - on_leave
+- name: location
+  type: string
+- name: person_id
+  type: person
+  description: Optional Person link for the practitioner
+  ref_entity: person

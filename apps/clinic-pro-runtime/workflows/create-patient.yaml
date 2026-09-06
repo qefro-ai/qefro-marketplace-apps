@@ -1,0 +1,29 @@
+id: create-patient
+name: Create patient
+description: Staff creates a patient record
+trigger:
+  type: conversation
+steps:
+- id: ask_name
+  type: ask
+  field: name
+  message: Patient name?
+- id: ask_phone
+  type: ask
+  field: phone
+  message: Phone number?
+- id: run
+  type: tool
+  tool: entity.patient.create
+  execution: runtime
+  input_map:
+    name: name
+    email: email
+    phone: phone
+    date_of_birth: date_of_birth
+    notes: notes
+- id: confirm
+  type: message
+  message: Patient {{name}} created.
+- id: done
+  type: complete

@@ -1,0 +1,45 @@
+id: patient
+name: Patient
+description: Clinic patient record bound to Customer Hub Person
+allocate_code:
+  prefix: PT-
+  start: 1001
+fields:
+- name: name
+  type: string
+  required: true
+- name: email
+  type: email
+- name: phone
+  type: phone
+- name: date_of_birth
+  type: date
+- name: gender
+  type: enum
+  enum_values:
+  - female
+  - male
+  - other
+  - unspecified
+- name: address
+  type: string
+- name: blood_group
+  type: string
+  description: Staff-only clinical attribute; not exposed on customer flows
+- name: emergency_contact
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - inactive
+  - archived
+- name: notes
+  type: string
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  inactive: patient.updated
+  archived: patient.updated

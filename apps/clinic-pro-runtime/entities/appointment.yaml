@@ -1,0 +1,44 @@
+id: appointment
+name: Appointment
+description: Scheduled patient appointment bound to Person
+allocate_code:
+  prefix: AP-
+  start: 1001
+fields:
+- name: patient_name
+  type: string
+  required: true
+- name: practitioner_name
+  type: string
+- name: slot_code
+  type: string
+- name: scheduled_at
+  type: datetime
+- name: date
+  type: date
+  required: true
+- name: time
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - scheduled
+  - confirmed
+  - checked_in
+  - completed
+  - cancelled
+  - no_show
+- name: reason
+  type: string
+- name: notes
+  type: string
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  confirmed: appointment.updated
+  checked_in: appointment.updated
+  completed: appointment.completed
+  cancelled: appointment.cancelled
+  no_show: appointment.updated

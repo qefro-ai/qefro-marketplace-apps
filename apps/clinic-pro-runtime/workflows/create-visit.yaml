@@ -1,0 +1,29 @@
+id: create-visit
+name: Create visit
+description: Open a clinic visit for a patient
+trigger:
+  type: conversation
+steps:
+- id: ask_patient_name
+  type: ask
+  field: patient_name
+  message: Patient name?
+- id: ask_date
+  type: ask
+  field: date
+  message: Visit date?
+- id: run
+  type: tool
+  tool: entity.visit.create
+  execution: runtime
+  input_map:
+    patient_name: patient_name
+    practitioner_name: practitioner_name
+    appointment_code: appointment_code
+    date: date
+    notes: notes
+- id: confirm
+  type: message
+  message: Visit created for {{patient_name}} on {{date}}.
+- id: done
+  type: complete

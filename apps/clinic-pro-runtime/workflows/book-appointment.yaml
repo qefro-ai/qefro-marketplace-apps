@@ -1,0 +1,34 @@
+id: book-appointment
+name: Book appointment
+description: Customer/staff book an appointment via EntityService
+trigger:
+  type: conversation
+steps:
+- id: ask_patient_name
+  type: ask
+  field: patient_name
+  message: Patient name?
+- id: ask_date
+  type: ask
+  field: date
+  message: Which date?
+- id: ask_reason
+  type: ask
+  field: reason
+  message: Reason for the visit?
+- id: run
+  type: tool
+  tool: entity.appointment.create
+  execution: runtime
+  input_map:
+    patient_name: patient_name
+    practitioner_name: practitioner_name
+    date: date
+    time: time
+    reason: reason
+    notes: notes
+- id: confirm
+  type: message
+  message: Appointment booked for {{patient_name}} on {{date}}.
+- id: done
+  type: complete

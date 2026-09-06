@@ -1,0 +1,288 @@
+- id: intro
+  type: markdown
+  title: Clinic Pro
+  options:
+    content: Metadata-only clinic operations — patients, appointments, visits, prescriptions, and billing.
+      Executed by Qefro Runtime EntityService. Customer Hub owns identity; Automations host consumes Business
+      Events.
+- id: patient_form
+  type: form
+  title: Create patient
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: email
+      label: Email
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-patient
+- id: appointment_form
+  type: form
+  title: Book appointment
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: practitioner_name
+      label: Practitioner
+      type: text
+      required: false
+    - name: date
+      label: Date
+      type: date
+      required: true
+    - name: time
+      label: Time
+      type: time
+      required: false
+    - name: reason
+      label: Reason
+      type: text
+      required: false
+    submit_label: Book
+    action:
+      trigger: book-appointment
+- id: visit_form
+  type: form
+  title: Create visit
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: practitioner_name
+      label: Practitioner
+      type: text
+      required: false
+    - name: date
+      label: Date
+      type: date
+      required: true
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-visit
+- id: prescription_form
+  type: form
+  title: Create prescription
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: medication
+      label: Medication
+      type: text
+      required: true
+    - name: dosage
+      label: Dosage
+      type: text
+      required: false
+    - name: frequency
+      label: Frequency
+      type: text
+      required: false
+    - name: duration
+      label: Duration
+      type: text
+      required: false
+    - name: instructions
+      label: Instructions
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-prescription
+- id: invoice_form
+  type: form
+  title: Create invoice
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: due_at
+      label: Due date
+      type: date
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-invoice
+- id: payment_form
+  type: form
+  title: Record payment
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: invoice_code
+      label: Invoice code
+      type: text
+      required: true
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    submit_label: Record
+    action:
+      trigger: record-payment
+- id: appointments_status
+  type: status
+  title: Appointments
+  source: appointments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: patient_name
+    empty_title: No appointments yet
+- id: patients_table
+  type: table
+  title: Patients
+  source: patients
+  options:
+    rows_path: items
+    empty_title: No patients yet
+    columns:
+    - key: name
+      header: Name
+    - key: phone
+      header: Phone
+    - key: status
+      header: Status
+- id: appointments_table
+  type: table
+  title: Appointments
+  source: appointments
+  options:
+    rows_path: items
+    empty_title: No appointments yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: date
+      header: Date
+    - key: status
+      header: Status
+    - key: reason
+      header: Reason
+- id: practitioners_table
+  type: table
+  title: Practitioners
+  source: practitioners
+  options:
+    rows_path: items
+    empty_title: No practitioners yet
+    columns:
+    - key: name
+      header: Name
+    - key: specialty
+      header: Specialty
+    - key: status
+      header: Status
+- id: visits_table
+  type: table
+  title: Visits
+  source: visits
+  options:
+    rows_path: items
+    empty_title: No visits yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: date
+      header: Date
+    - key: status
+      header: Status
+- id: treatments_table
+  type: table
+  title: Treatments
+  source: treatments
+  options:
+    rows_path: items
+    empty_title: No treatments yet
+    columns:
+    - key: name
+      header: Name
+    - key: status
+      header: Status
+    - key: patient_name
+      header: Patient
+- id: prescriptions_table
+  type: table
+  title: Prescriptions
+  source: prescriptions
+  options:
+    rows_path: items
+    empty_title: No prescriptions yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: medication
+      header: Medication
+    - key: status
+      header: Status
+- id: invoices_table
+  type: table
+  title: Invoices
+  source: invoices
+  options:
+    rows_path: items
+    empty_title: No invoices yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: payments_table
+  type: table
+  title: Payments
+  source: payments
+  options:
+    rows_path: items
+    empty_title: No payments yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: invoice_code
+      header: Invoice
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status

@@ -1,0 +1,24 @@
+id: cancel-appointment
+name: Cancel appointment
+description: Cancel an appointment by updating status (audit-preserving)
+trigger:
+  type: conversation
+constants:
+  cancelled: cancelled
+steps:
+- id: ask_id
+  type: ask
+  field: id
+  message: Which appointment id should we cancel?
+- id: run
+  type: tool
+  tool: entity.appointment.update
+  execution: runtime
+  input_map:
+    id: id
+    status: $constants.cancelled
+- id: confirm
+  type: message
+  message: Appointment {{id}} cancelled.
+- id: done
+  type: complete

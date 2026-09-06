@@ -1,0 +1,32 @@
+id: create-prescription
+name: Create prescription
+description: Issue a prescription for a patient
+trigger:
+  type: conversation
+steps:
+- id: ask_patient_name
+  type: ask
+  field: patient_name
+  message: Patient name?
+- id: ask_medication
+  type: ask
+  field: medication
+  message: Medication?
+- id: run
+  type: tool
+  tool: entity.prescription.create
+  execution: runtime
+  input_map:
+    patient_name: patient_name
+    medication: medication
+    dosage: dosage
+    frequency: frequency
+    duration: duration
+    instructions: instructions
+    practitioner_name: practitioner_name
+    visit_code: visit_code
+- id: confirm
+  type: message
+  message: Prescription for {{medication}} created.
+- id: done
+  type: complete

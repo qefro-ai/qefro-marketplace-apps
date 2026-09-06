@@ -1,0 +1,36 @@
+id: invoice
+name: Invoice
+description: Patient billing invoice
+allocate_code:
+  prefix: INV-
+  start: 1001
+fields:
+- name: patient_name
+  type: string
+  required: true
+- name: appointment_code
+  type: string
+- name: amount
+  type: float
+  required: true
+- name: currency
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - draft
+  - issued
+  - paid
+  - void
+  - overdue
+- name: due_at
+  type: date
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  issued: invoice.created
+  paid: invoice.paid
+  void: invoice.created
+  overdue: invoice.created

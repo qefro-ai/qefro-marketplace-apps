@@ -1,0 +1,72 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: appointments_status
+    span: 12
+  - widget: appointments_table
+    span: 12
+- id: patients
+  title: Patients
+  layout: split-grid
+  widgets:
+  - widget: patient_form
+    span: 12
+  - widget: patients_table
+    span: 12
+- id: appointments
+  title: Appointments
+  layout: split-grid
+  widgets:
+  - widget: appointment_form
+    span: 12
+  - widget: appointments_table
+    span: 12
+- id: practitioners
+  title: Practitioners
+  layout: split-grid
+  widgets:
+  - widget: practitioners_table
+    span: 12
+- id: visits
+  title: Visits
+  layout: split-grid
+  widgets:
+  - widget: visit_form
+    span: 12
+  - widget: visits_table
+    span: 12
+- id: treatments
+  title: Treatments
+  layout: split-grid
+  widgets:
+  - widget: treatments_table
+    span: 12
+- id: prescriptions
+  title: Prescriptions
+  layout: split-grid
+  widgets:
+  - widget: prescription_form
+    span: 12
+  - widget: prescriptions_table
+    span: 12
+- id: billing
+  title: Billing
+  layout: split-grid
+  widgets:
+  - widget: invoice_form
+    span: 12
+  - widget: payment_form
+    span: 12
+  - widget: invoices_table
+    span: 12
+  - widget: payments_table
+    span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
