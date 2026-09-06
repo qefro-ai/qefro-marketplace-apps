@@ -1,6 +1,8 @@
 id: cancel-viewing
 name: Cancel viewing
 description: Cancel a viewing by status update
+surfaces:
+- customer
 trigger:
   type: conversation
 constants:

@@ -4,6 +4,42 @@
   options:
     content: Metadata-only real estate operations — properties, leads, viewings, offers, and deals. Executed
       by Qefro Runtime. Customer Hub owns lead identity; Automations host consumes Business Events.
+- id: property_form
+  type: form
+  title: List property
+  options:
+    fields:
+    - name: title
+      label: Title
+      type: text
+      required: true
+    - name: city
+      label: City
+      type: text
+      required: false
+    - name: price
+      label: Price
+      type: number
+      required: false
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: bedrooms
+      label: Bedrooms
+      type: number
+      required: false
+    - name: description
+      label: Description
+      type: textarea
+      required: false
+    - name: image_url
+      label: Photo
+      type: image
+      required: false
+    submit_label: List property
+    action:
+      trigger: create-property
 - id: lead_form
   type: form
   title: Create lead
@@ -133,6 +169,9 @@
     rows_path: items
     empty_title: No properties yet
     columns:
+    - key: image_url
+      header: Photo
+      format: image
     - key: title
       header: Title
     - key: city

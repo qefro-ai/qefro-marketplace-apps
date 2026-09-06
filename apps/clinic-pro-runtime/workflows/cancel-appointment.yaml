@@ -1,6 +1,8 @@
 id: cancel-appointment
 name: Cancel appointment
 description: Cancel an appointment by updating status (audit-preserving)
+surfaces:
+- customer
 trigger:
   type: conversation
 constants:

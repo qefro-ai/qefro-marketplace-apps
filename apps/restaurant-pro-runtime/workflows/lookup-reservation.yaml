@@ -1,6 +1,8 @@
 id: lookup-reservation
 name: Lookup reservation
 description: Fetch one reservation by id
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

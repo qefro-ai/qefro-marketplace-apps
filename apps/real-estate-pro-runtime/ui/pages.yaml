@@ -12,6 +12,8 @@
   title: Properties
   layout: split-grid
   widgets:
+  - widget: property_form
+    span: 12
   - widget: properties_table
     span: 12
 - id: leads

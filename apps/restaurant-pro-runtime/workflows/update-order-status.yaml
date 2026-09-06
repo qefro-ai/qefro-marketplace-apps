@@ -1,6 +1,8 @@
 id: update-order-status
 name: Update order status
 description: Advance or change order status
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

@@ -3,7 +3,7 @@
 # No SDK, no custom connector, no custom REST API, no provider-specific Runtime branches.
 id: clinic-pro-runtime
 name: Clinic Pro
-version: 1.0.0
+version: 1.0.4
 hosting: runtime
 description: Metadata-only clinic management Marketplace App executed by Qefro Runtime (no SDK, no custom
   server)
@@ -32,6 +32,8 @@ flows:
 - cancel-appointment
 - lookup-appointment
 - create-patient
+- create-practitioner
+- create-slot
 - create-visit
 - create-prescription
 - create-invoice
@@ -141,6 +143,7 @@ conversation_slots:
   - practitioner
   - clinician
   kind: string
+  chip_prefix: doctor
 - id: reason
   labels:
   - reason
@@ -150,6 +153,7 @@ conversation_slots:
   labels:
   - date
   - tomorrow
+  - today
   kind: date
 - id: time
   labels:

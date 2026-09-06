@@ -1,0 +1,44 @@
+id: create-property
+name: Create property
+description: Staff lists a property with optional photo
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_title
+  type: ask
+  field: title
+  message: Property title?
+- id: ask_city
+  type: ask
+  field: city
+  message: City?
+- id: ask_price
+  type: ask
+  field: price
+  message: Price?
+- id: run
+  type: tool
+  tool: entity.property.create
+  execution: runtime
+  input_map:
+    title: title
+    description: description
+    property_type: property_type
+    status: $literal:listed
+    address: address
+    city: city
+    state: state
+    country: country
+    price: price
+    currency: currency
+    bedrooms: bedrooms
+    bathrooms: bathrooms
+    area: area
+    image_url: image_url
+- id: confirm
+  type: message
+  message: Property {{title}} listed.
+- id: done
+  type: complete

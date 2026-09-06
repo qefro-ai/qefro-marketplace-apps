@@ -3,7 +3,7 @@
 # No SDK, no custom connector, no custom REST API, no provider-specific Runtime branches.
 id: restaurant-pro-runtime
 name: Restaurant Pro
-version: 1.0.0
+version: 1.0.2
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro Runtime (no SDK, no
   custom server)

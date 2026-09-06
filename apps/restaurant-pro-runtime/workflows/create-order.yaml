@@ -1,6 +1,8 @@
 id: create-order
 name: Create order
 description: Create a dining order
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

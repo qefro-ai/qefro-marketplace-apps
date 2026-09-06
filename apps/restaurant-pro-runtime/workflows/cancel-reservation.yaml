@@ -1,6 +1,8 @@
 id: cancel-reservation
 name: Cancel reservation
 description: Cancel a reservation by status update
+surfaces:
+- customer
 trigger:
   type: conversation
 constants:

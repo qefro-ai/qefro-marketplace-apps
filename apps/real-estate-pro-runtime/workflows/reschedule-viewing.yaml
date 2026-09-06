@@ -1,6 +1,8 @@
 id: reschedule-viewing
 name: Reschedule viewing
 description: Move a viewing to a new date/time
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

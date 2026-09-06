@@ -1,6 +1,8 @@
 id: check-table-availability
 name: Check table availability
 description: List tables and availability status
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

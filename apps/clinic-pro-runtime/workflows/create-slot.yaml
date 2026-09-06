@@ -1,0 +1,35 @@
+id: create-slot
+name: Create appointment slot
+description: Staff opens a bookable time window for a practitioner
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_doctor
+  type: ask
+  field: practitioner_name
+  message: Practitioner name for this slot?
+- id: ask_start
+  type: ask
+  field: start_at
+  message: Slot start (ISO datetime, e.g. 2026-09-07T09:00:00Z)?
+- id: ask_end
+  type: ask
+  field: end_at
+  message: Slot end (ISO datetime)?
+- id: run
+  type: tool
+  tool: entity.appointment_slot.create
+  execution: runtime
+  input_map:
+    practitioner_name: practitioner_name
+    start_at: start_at
+    end_at: end_at
+    status: $literal:open
+    location: location
+- id: confirm
+  type: message
+  message: Open slot for {{practitioner_name}} from {{start_at}} created.
+- id: done
+  type: complete

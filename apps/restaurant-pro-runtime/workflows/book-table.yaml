@@ -1,6 +1,8 @@
 id: book-table
 name: Book table
 description: Create a reservation via EntityService
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

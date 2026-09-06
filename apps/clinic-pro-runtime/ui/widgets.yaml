@@ -57,6 +57,54 @@
     submit_label: Book
     action:
       trigger: book-appointment
+- id: practitioner_form
+  type: form
+  title: Add practitioner
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: specialty
+      label: Specialty
+      type: text
+      required: false
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: email
+      label: Email
+      type: text
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-practitioner
+- id: slot_form
+  type: form
+  title: Open slot
+  options:
+    fields:
+    - name: practitioner_name
+      label: Practitioner
+      type: text
+      required: true
+    - name: start_at
+      label: Start (ISO datetime)
+      type: text
+      required: true
+    - name: end_at
+      label: End (ISO datetime)
+      type: text
+      required: true
+    - name: location
+      label: Location
+      type: text
+      required: false
+    submit_label: Open slot
+    action:
+      trigger: create-slot
 - id: visit_form
   type: form
   title: Create visit
@@ -212,6 +260,22 @@
       header: Name
     - key: specialty
       header: Specialty
+    - key: status
+      header: Status
+- id: slots_table
+  type: table
+  title: Open slots
+  source: slots
+  options:
+    rows_path: items
+    empty_title: No slots yet
+    columns:
+    - key: practitioner_name
+      header: Practitioner
+    - key: start_at
+      header: Start
+    - key: end_at
+      header: End
     - key: status
       header: Status
 - id: visits_table

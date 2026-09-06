@@ -6,26 +6,37 @@
   page: patients
   title: Patients
   icon: users
+  entity: patient
 - id: appointments
   page: appointments
   title: Appointments
   icon: calendar
+  entity: appointment
 - id: practitioners
   page: practitioners
   title: Practitioners
   icon: user
+  entity: practitioner
+- id: slots
+  page: slots
+  title: Slots
+  icon: clock
+  entity: appointment_slot
 - id: visits
   page: visits
   title: Visits
   icon: stethoscope
+  entity: visit
 - id: treatments
   page: treatments
   title: Treatments
   icon: clipboard
+  entity: treatment
 - id: prescriptions
   page: prescriptions
   title: Prescriptions
   icon: file-text
+  entity: prescription
 - id: billing
   page: billing
   title: Billing
@@ -38,3 +49,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

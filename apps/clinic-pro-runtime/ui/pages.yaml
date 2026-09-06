@@ -10,48 +10,25 @@
     span: 12
 - id: patients
   title: Patients
-  layout: split-grid
-  widgets:
-  - widget: patient_form
-    span: 12
-  - widget: patients_table
-    span: 12
+  entity: patient
 - id: appointments
   title: Appointments
-  layout: split-grid
-  widgets:
-  - widget: appointment_form
-    span: 12
-  - widget: appointments_table
-    span: 12
+  entity: appointment
 - id: practitioners
   title: Practitioners
-  layout: split-grid
-  widgets:
-  - widget: practitioners_table
-    span: 12
+  entity: practitioner
+- id: slots
+  title: Slots
+  entity: appointment_slot
 - id: visits
   title: Visits
-  layout: split-grid
-  widgets:
-  - widget: visit_form
-    span: 12
-  - widget: visits_table
-    span: 12
+  entity: visit
 - id: treatments
   title: Treatments
-  layout: split-grid
-  widgets:
-  - widget: treatments_table
-    span: 12
+  entity: treatment
 - id: prescriptions
   title: Prescriptions
-  layout: split-grid
-  widgets:
-  - widget: prescription_form
-    span: 12
-  - widget: prescriptions_table
-    span: 12
+  entity: prescription
 - id: billing
   title: Billing
   layout: split-grid
@@ -70,3 +47,6 @@
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

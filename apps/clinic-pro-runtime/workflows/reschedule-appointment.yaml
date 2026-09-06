@@ -1,6 +1,8 @@
 id: reschedule-appointment
 name: Reschedule appointment
 description: Move an appointment to a new date/time
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

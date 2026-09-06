@@ -1,6 +1,8 @@
 id: request-viewing
 name: Request viewing
 description: Schedule a property viewing bound to Person
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

@@ -51,6 +51,9 @@ fields:
   type: float
 - name: area_unit
   type: string
+- name: image_url
+  type: image
+  description: Primary property photo (uploaded via solution UI media)
 status_events:
   listed: property.status_changed
   under_offer: property.status_changed

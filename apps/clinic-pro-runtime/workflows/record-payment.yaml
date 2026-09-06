@@ -1,6 +1,8 @@
 id: record-payment
 name: Record payment
 description: Record a payment against an invoice
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

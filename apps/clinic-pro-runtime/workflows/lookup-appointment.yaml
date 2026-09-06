@@ -1,6 +1,8 @@
 id: lookup-appointment
 name: Lookup appointment
 description: Fetch one appointment by id
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

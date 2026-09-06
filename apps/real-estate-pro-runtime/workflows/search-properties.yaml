@@ -1,6 +1,8 @@
 id: search-properties
 name: Search properties
 description: List properties for staff or public browsing
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

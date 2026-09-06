@@ -1,6 +1,8 @@
 id: create-prescription
 name: Create prescription
 description: Issue a prescription for a patient
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:
