@@ -1,0 +1,16 @@
+id: check-table-availability
+name: Check table availability
+description: List tables and availability status
+trigger:
+  type: conversation
+steps:
+- id: run
+  type: tool
+  tool: entity.table.list
+  execution: runtime
+  input_map: {}
+- id: confirm
+  type: message
+  message: Here are current tables and availability.
+- id: done
+  type: complete

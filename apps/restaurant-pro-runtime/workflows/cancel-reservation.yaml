@@ -1,0 +1,24 @@
+id: cancel-reservation
+name: Cancel reservation
+description: Cancel a reservation by status update
+trigger:
+  type: conversation
+constants:
+  cancelled: cancelled
+steps:
+- id: ask_id
+  type: ask
+  field: id
+  message: Which reservation id should we cancel?
+- id: run
+  type: tool
+  tool: entity.reservation.update
+  execution: runtime
+  input_map:
+    id: id
+    status: $constants.cancelled
+- id: confirm
+  type: message
+  message: Reservation {{id}} cancelled.
+- id: done
+  type: complete

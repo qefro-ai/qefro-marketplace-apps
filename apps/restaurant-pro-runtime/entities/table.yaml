@@ -1,19 +1,25 @@
 id: table
 name: Table
-description: Dining table in the restaurant floor plan
+description: Dining table
 fields:
-  - name: label
-    type: string
-    required: true
-    description: Display name (e.g. T12)
-  - name: seats
-    type: integer
-    required: true
-    description: Number of seats
-  - name: status
-    type: enum
-    enum_values:
-      - available
-      - occupied
-      - reserved
-    description: Floor status
+- name: restaurant_name
+  type: string
+- name: name
+  type: string
+  required: true
+- name: capacity
+  type: integer
+  required: true
+- name: location
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - available
+  - held
+  - occupied
+  - out_of_service
+status_events:
+  held: reservation.updated
+  occupied: reservation.updated
+  available: reservation.updated

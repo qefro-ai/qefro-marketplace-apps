@@ -1,0 +1,34 @@
+id: book-table
+name: Book table
+description: Create a reservation via EntityService
+trigger:
+  type: conversation
+steps:
+- id: ask_guest_name
+  type: ask
+  field: guest_name
+  message: Guest name?
+- id: ask_guest_count
+  type: ask
+  field: guest_count
+  message: Party size?
+- id: ask_date
+  type: ask
+  field: date
+  message: Which date?
+- id: run
+  type: tool
+  tool: entity.reservation.create
+  execution: runtime
+  input_map:
+    guest_name: guest_name
+    guest_count: guest_count
+    date: date
+    time: time
+    table_name: table_name
+    notes: notes
+- id: confirm
+  type: message
+  message: Reservation booked for {{guest_count}} on {{date}}.
+- id: done
+  type: complete

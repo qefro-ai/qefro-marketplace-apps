@@ -1,0 +1,34 @@
+id: payment
+name: Payment
+description: Order payment
+allocate_code:
+  prefix: PAY-
+  start: 1001
+fields:
+- name: order_code
+  type: string
+  required: true
+- name: guest_name
+  type: string
+- name: amount
+  type: float
+  required: true
+- name: currency
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - pending
+  - completed
+  - failed
+  - refunded
+- name: paid_at
+  type: datetime
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  completed: payment.created
+  failed: payment.created
+  refunded: payment.created

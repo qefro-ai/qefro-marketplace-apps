@@ -1,0 +1,23 @@
+id: staff_member
+name: Staff member
+description: Restaurant staff roster
+fields:
+- name: name
+  type: string
+  required: true
+- name: role
+  type: string
+- name: email
+  type: email
+- name: phone
+  type: phone
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - inactive
+  - on_leave
+- name: person_id
+  type: person
+  description: Optional Person link for staff
+  ref_entity: person

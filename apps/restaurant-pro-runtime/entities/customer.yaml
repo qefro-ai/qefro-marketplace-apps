@@ -1,0 +1,20 @@
+id: customer
+name: Customer
+description: Restaurant guest bound to Customer Hub Person
+allocate_code:
+  prefix: C-
+  start: 1001
+fields:
+- name: name
+  type: string
+  required: true
+- name: email
+  type: email
+- name: phone
+  type: phone
+- name: notes
+  type: string
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person

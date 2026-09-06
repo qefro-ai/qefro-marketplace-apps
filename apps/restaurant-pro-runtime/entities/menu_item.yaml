@@ -1,14 +1,32 @@
 id: menu_item
 name: Menu item
-description: Dish on the restaurant menu
+description: Sellable menu item
 fields:
-  - name: name
-    type: string
-    required: true
-  - name: price
-    type: float
-    required: true
-  - name: category
-    type: string
-  - name: available
-    type: boolean
+- name: category_name
+  type: string
+- name: name
+  type: string
+  required: true
+- name: description
+  type: string
+- name: price
+  type: float
+  required: true
+- name: currency
+  type: string
+- name: image_url
+  type: url
+- name: availability
+  type: enum
+  enum_values:
+  - available
+  - sold_out
+  - seasonal
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - inactive
+status_events:
+  active: menu_item.updated
+  inactive: menu_item.updated

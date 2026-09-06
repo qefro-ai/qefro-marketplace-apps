@@ -1,6 +1,6 @@
 - id: dashboard
   page: dashboard
-  title: Today
+  title: Dashboard
   icon: home
 - id: reservations
   page: reservations
@@ -13,7 +13,19 @@
 - id: menu
   page: menu
   title: Menu
-  icon: list
+  icon: chef-hat
+- id: orders
+  page: orders
+  title: Orders
+  icon: receipt
+- id: customers
+  page: customers
+  title: Customers
+  icon: users
+- id: staff
+  page: staff
+  title: Staff
+  icon: user
 - id: contacts
   page: contacts
   title: Contacts

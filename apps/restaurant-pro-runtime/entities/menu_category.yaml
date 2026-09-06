@@ -1,0 +1,16 @@
+id: menu_category
+name: Menu category
+description: Menu grouping
+fields:
+- name: name
+  type: string
+  required: true
+- name: description
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - hidden
+- name: sort_order
+  type: integer

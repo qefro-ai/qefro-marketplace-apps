@@ -1,0 +1,27 @@
+id: dining_session
+name: Dining session
+description: Active table seating session
+allocate_code:
+  prefix: DS-
+  start: 1001
+fields:
+- name: table_name
+  type: string
+  required: true
+- name: guest_name
+  type: string
+- name: guest_count
+  type: integer
+- name: started_at
+  type: datetime
+- name: status
+  type: enum
+  enum_values:
+  - open
+  - ordering
+  - dining
+  - closed
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person

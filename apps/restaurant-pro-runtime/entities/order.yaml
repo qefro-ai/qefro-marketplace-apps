@@ -1,0 +1,38 @@
+id: order
+name: Order
+description: Dining or takeaway order bound to Person
+allocate_code:
+  prefix: O-
+  start: 1001
+fields:
+- name: guest_name
+  type: string
+- name: table_name
+  type: string
+- name: reservation_code
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - pending
+  - confirmed
+  - preparing
+  - ready
+  - completed
+  - cancelled
+- name: total_amount
+  type: float
+- name: currency
+  type: string
+- name: created_at
+  type: datetime
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  confirmed: order.updated
+  preparing: order.updated
+  ready: order.updated
+  completed: order.completed
+  cancelled: order.cancelled

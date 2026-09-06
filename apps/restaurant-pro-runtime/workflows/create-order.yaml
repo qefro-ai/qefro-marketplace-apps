@@ -1,0 +1,29 @@
+id: create-order
+name: Create order
+description: Create a dining order
+trigger:
+  type: conversation
+steps:
+- id: ask_guest_name
+  type: ask
+  field: guest_name
+  message: Guest name?
+- id: ask_table_name
+  type: ask
+  field: table_name
+  message: Table name?
+- id: run
+  type: tool
+  tool: entity.order.create
+  execution: runtime
+  input_map:
+    guest_name: guest_name
+    table_name: table_name
+    reservation_code: reservation_code
+    total_amount: total_amount
+    currency: currency
+- id: confirm
+  type: message
+  message: Order created for {{guest_name}}.
+- id: done
+  type: complete

@@ -1,9 +1,33 @@
-- id: reservations
+- id: restaurants
   type: entity
-  target: reservation
+  target: restaurant
 - id: tables
   type: entity
   target: table
-- id: menu
+- id: menu_categories
+  type: entity
+  target: menu_category
+- id: menu_items
   type: entity
   target: menu_item
+- id: customers
+  type: entity
+  target: customer
+- id: reservations
+  type: entity
+  target: reservation
+- id: orders
+  type: entity
+  target: order
+- id: order_items
+  type: entity
+  target: order_item
+- id: staff
+  type: entity
+  target: staff_member
+- id: dining_sessions
+  type: entity
+  target: dining_session
+- id: payments
+  type: entity
+  target: payment
