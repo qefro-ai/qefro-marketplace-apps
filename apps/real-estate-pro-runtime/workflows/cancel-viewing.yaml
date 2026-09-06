@@ -1,0 +1,24 @@
+id: cancel-viewing
+name: Cancel viewing
+description: Cancel a viewing by status update
+trigger:
+  type: conversation
+constants:
+  cancelled: cancelled
+steps:
+- id: ask_id
+  type: ask
+  field: id
+  message: Which viewing id should we cancel?
+- id: run
+  type: tool
+  tool: entity.viewing.update
+  execution: runtime
+  input_map:
+    id: id
+    status: $constants.cancelled
+- id: confirm
+  type: message
+  message: Viewing {{id}} cancelled.
+- id: done
+  type: complete

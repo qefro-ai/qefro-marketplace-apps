@@ -1,0 +1,16 @@
+id: search-properties
+name: Search properties
+description: List properties for staff or public browsing
+trigger:
+  type: conversation
+steps:
+- id: run
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  input_map: {}
+- id: confirm
+  type: message
+  message: Here are matching properties.
+- id: done
+  type: complete

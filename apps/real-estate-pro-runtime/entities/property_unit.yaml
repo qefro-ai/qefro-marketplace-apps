@@ -1,0 +1,25 @@
+id: property_unit
+name: Property unit
+description: Unit within a multi-unit property
+fields:
+- name: property_code
+  type: string
+  required: true
+- name: name
+  type: string
+  required: true
+- name: unit_type
+  type: string
+- name: floor
+  type: string
+- name: area
+  type: float
+- name: price
+  type: float
+- name: status
+  type: enum
+  enum_values:
+  - available
+  - reserved
+  - sold
+  - unavailable

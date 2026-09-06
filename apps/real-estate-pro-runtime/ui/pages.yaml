@@ -1,0 +1,66 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: viewings_status
+    span: 12
+  - widget: properties_table
+    span: 12
+- id: properties
+  title: Properties
+  layout: split-grid
+  widgets:
+  - widget: properties_table
+    span: 12
+- id: leads
+  title: Leads
+  layout: split-grid
+  widgets:
+  - widget: lead_form
+    span: 12
+  - widget: leads_table
+    span: 12
+- id: viewings
+  title: Viewings
+  layout: split-grid
+  widgets:
+  - widget: viewing_form
+    span: 12
+  - widget: viewings_table
+    span: 12
+- id: offers
+  title: Offers
+  layout: split-grid
+  widgets:
+  - widget: offer_form
+    span: 12
+  - widget: offers_table
+    span: 12
+- id: deals
+  title: Deals
+  layout: split-grid
+  widgets:
+  - widget: deal_form
+    span: 12
+  - widget: deals_table
+    span: 12
+- id: agents
+  title: Agents
+  layout: split-grid
+  widgets:
+  - widget: agents_table
+    span: 12
+- id: documents
+  title: Documents
+  layout: split-grid
+  widgets:
+  - widget: documents_table
+    span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

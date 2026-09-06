@@ -1,0 +1,37 @@
+id: offer
+name: Offer
+description: Purchase or rental offer bound to Person
+allocate_code:
+  prefix: OF-
+  start: 1001
+fields:
+- name: property_title
+  type: string
+  required: true
+- name: lead_name
+  type: string
+  required: true
+- name: amount
+  type: float
+  required: true
+- name: currency
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - submitted
+  - under_review
+  - accepted
+  - rejected
+  - withdrawn
+- name: submitted_at
+  type: datetime
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  under_review: offer.updated
+  accepted: offer.updated
+  rejected: offer.updated
+  withdrawn: offer.updated

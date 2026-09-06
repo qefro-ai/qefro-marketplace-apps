@@ -1,0 +1,184 @@
+# Real Estate Pro — metadata-only Qefro Marketplace App.
+# hosting: runtime. Executed by EntityService / FlowRunner / RuntimeAdapter.
+# No SDK, no custom connector, no custom REST API, no provider-specific Runtime branches.
+id: real-estate-pro-runtime
+name: Real Estate Pro
+version: 1.0.0
+hosting: runtime
+description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no SDK, no custom server)
+category: real-estate
+tags:
+- real-estate
+- viewings
+- runtime
+- pro
+channels:
+- widget
+- whatsapp
+entities:
+- property
+- property_unit
+- agent
+- lead
+- viewing
+- offer
+- deal
+- property_document
+flows:
+- search-properties
+- request-viewing
+- reschedule-viewing
+- cancel-viewing
+- create-lead
+- create-offer
+- create-deal
+events:
+- property.created
+- property.updated
+- property.status_changed
+- lead.created
+- lead.updated
+- viewing.created
+- viewing.updated
+- viewing.cancelled
+- offer.created
+- offer.updated
+- deal.created
+- deal.updated
+- deal.closed
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: request_viewing
+  workflow: request-viewing
+  input_variable: viewing_input
+  match:
+    intents:
+    - schedule a viewing
+    - book a viewing
+    - arrange a viewing
+    - view the property
+    confirmation:
+      reply_signals:
+      - viewing
+      - scheduled
+      - booked
+      required_slots:
+      - property_title
+      - date
+  confirmation_message: Viewing scheduled for {{property_title}} on {{date}}.
+- id: reschedule_viewing
+  workflow: reschedule-viewing
+  input_variable: viewing_reschedule
+  match:
+    intents:
+    - reschedule my viewing
+    - move my viewing
+    confirmation:
+      reply_signals:
+      - rescheduled
+      required_slots:
+      - id
+      - date
+  confirmation_message: Viewing {{id}} rescheduled to {{date}}.
+- id: cancel_viewing
+  workflow: cancel-viewing
+  input_variable: viewing_cancel
+  match:
+    intents:
+    - cancel my viewing
+    - cancel the viewing
+    confirmation:
+      reply_signals:
+      - cancelled
+      required_slots:
+      - id
+  confirmation_message: Viewing {{id}} cancelled.
+- id: search_properties
+  workflow: search-properties
+  input_variable: property_search
+  match:
+    intents:
+    - search properties
+    - show listings
+    - browse properties
+    confirmation:
+      reply_signals:
+      - properties
+      - listings
+      required_slots: []
+  confirmation_message: Here are matching properties.
+conversation_slots:
+- id: property_title
+  labels:
+  - property
+  - listing
+  - address
+  kind: string
+- id: lead_name
+  labels:
+  - lead
+  - visitor
+  - name
+  - guest
+  kind: person_name
+  identity: person_name
+- id: name
+  labels:
+  - name
+  kind: person_name
+  identity: person_name
+- id: agent_name
+  labels:
+  - agent
+  - realtor
+  kind: string
+- id: date
+  labels:
+  - date
+  - tomorrow
+  - Saturday
+  kind: date
+- id: time
+  labels:
+  - time
+  kind: time
+  chip_prefix: time
+- id: id
+  labels:
+  - viewing
+  - viewing id
+  kind: string
+- id: amount
+  labels:
+  - amount
+  - offer
+  - price
+  kind: string
+- id: phone
+  labels:
+  - phone
+  - mobile
+  kind: phone
+- id: email
+  labels:
+  - email
+  kind: email
+- id: source
+  labels:
+  - source
+  kind: string
+ui:
+  name: Real Estate Pro

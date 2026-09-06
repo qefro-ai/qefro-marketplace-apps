@@ -1,0 +1,58 @@
+id: property
+name: Property
+description: Listable real-estate property
+allocate_code:
+  prefix: P-
+  start: 1001
+fields:
+- name: title
+  type: string
+  required: true
+- name: description
+  type: string
+- name: property_type
+  type: enum
+  enum_values:
+  - apartment
+  - house
+  - condo
+  - land
+  - commercial
+  - other
+- name: status
+  type: enum
+  enum_values:
+  - draft
+  - listed
+  - under_offer
+  - sold
+  - withdrawn
+- name: address
+  type: string
+- name: city
+  type: string
+- name: state
+  type: string
+- name: country
+  type: string
+- name: latitude
+  type: float
+- name: longitude
+  type: float
+- name: price
+  type: float
+- name: currency
+  type: string
+- name: bedrooms
+  type: integer
+- name: bathrooms
+  type: integer
+- name: area
+  type: float
+- name: area_unit
+  type: string
+status_events:
+  listed: property.status_changed
+  under_offer: property.status_changed
+  sold: property.status_changed
+  withdrawn: property.status_changed

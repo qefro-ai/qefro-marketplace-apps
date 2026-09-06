@@ -1,0 +1,41 @@
+id: viewing
+name: Viewing
+description: Property viewing appointment bound to Person
+allocate_code:
+  prefix: VW-
+  start: 1001
+fields:
+- name: property_title
+  type: string
+  required: true
+- name: lead_name
+  type: string
+  required: true
+- name: agent_name
+  type: string
+- name: scheduled_at
+  type: datetime
+- name: date
+  type: date
+  required: true
+- name: time
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - scheduled
+  - confirmed
+  - completed
+  - cancelled
+  - no_show
+- name: notes
+  type: string
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  confirmed: viewing.updated
+  completed: viewing.updated
+  cancelled: viewing.cancelled
+  no_show: viewing.updated

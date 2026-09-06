@@ -1,0 +1,20 @@
+id: agent
+name: Agent
+description: Listing or sales agent
+fields:
+- name: name
+  type: string
+  required: true
+- name: email
+  type: email
+- name: phone
+  type: phone
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - inactive
+- name: person_id
+  type: person
+  description: Optional Person link for the agent
+  ref_entity: person

@@ -1,0 +1,38 @@
+id: deal
+name: Deal
+description: Closed or in-progress deal
+allocate_code:
+  prefix: DL-
+  start: 1001
+fields:
+- name: property_title
+  type: string
+  required: true
+- name: lead_name
+  type: string
+  required: true
+- name: agent_name
+  type: string
+- name: offer_code
+  type: string
+- name: amount
+  type: float
+- name: currency
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - open
+  - under_contract
+  - closed
+  - fallen_through
+- name: closed_at
+  type: datetime
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  under_contract: deal.updated
+  closed: deal.closed
+  fallen_through: deal.updated

@@ -1,0 +1,235 @@
+- id: intro
+  type: markdown
+  title: Real Estate Pro
+  options:
+    content: Metadata-only real estate operations — properties, leads, viewings, offers, and deals. Executed
+      by Qefro Runtime. Customer Hub owns lead identity; Automations host consumes Business Events.
+- id: lead_form
+  type: form
+  title: Create lead
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: email
+      label: Email
+      type: text
+      required: false
+    - name: source
+      label: Source
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-lead
+- id: viewing_form
+  type: form
+  title: Request viewing
+  options:
+    fields:
+    - name: property_title
+      label: Property
+      type: text
+      required: true
+    - name: lead_name
+      label: Lead name
+      type: text
+      required: true
+    - name: agent_name
+      label: Agent
+      type: text
+      required: false
+    - name: date
+      label: Date
+      type: date
+      required: true
+    - name: time
+      label: Time
+      type: time
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Schedule
+    action:
+      trigger: request-viewing
+- id: offer_form
+  type: form
+  title: Create offer
+  options:
+    fields:
+    - name: property_title
+      label: Property
+      type: text
+      required: true
+    - name: lead_name
+      label: Lead name
+      type: text
+      required: true
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    submit_label: Submit
+    action:
+      trigger: create-offer
+- id: deal_form
+  type: form
+  title: Create deal
+  options:
+    fields:
+    - name: property_title
+      label: Property
+      type: text
+      required: true
+    - name: lead_name
+      label: Lead name
+      type: text
+      required: true
+    - name: agent_name
+      label: Agent
+      type: text
+      required: false
+    - name: amount
+      label: Amount
+      type: text
+      required: false
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-deal
+- id: viewings_status
+  type: status
+  title: Viewings
+  source: viewings
+  options:
+    rows_path: items
+    status_field: status
+    label_field: property_title
+    empty_title: No viewings yet
+- id: properties_table
+  type: table
+  title: Properties
+  source: properties
+  options:
+    rows_path: items
+    empty_title: No properties yet
+    columns:
+    - key: title
+      header: Title
+    - key: city
+      header: City
+    - key: price
+      header: Price
+    - key: status
+      header: Status
+- id: leads_table
+  type: table
+  title: Leads
+  source: leads
+  options:
+    rows_path: items
+    empty_title: No leads yet
+    columns:
+    - key: name
+      header: Name
+    - key: status
+      header: Status
+    - key: assigned_agent_name
+      header: Agent
+- id: viewings_table
+  type: table
+  title: Viewings
+  source: viewings
+  options:
+    rows_path: items
+    empty_title: No viewings yet
+    columns:
+    - key: property_title
+      header: Property
+    - key: lead_name
+      header: Lead
+    - key: date
+      header: Date
+    - key: status
+      header: Status
+- id: offers_table
+  type: table
+  title: Offers
+  source: offers
+  options:
+    rows_path: items
+    empty_title: No offers yet
+    columns:
+    - key: property_title
+      header: Property
+    - key: lead_name
+      header: Lead
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: deals_table
+  type: table
+  title: Deals
+  source: deals
+  options:
+    rows_path: items
+    empty_title: No deals yet
+    columns:
+    - key: property_title
+      header: Property
+    - key: lead_name
+      header: Lead
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: agents_table
+  type: table
+  title: Agents
+  source: agents
+  options:
+    rows_path: items
+    empty_title: No agents yet
+    columns:
+    - key: name
+      header: Name
+    - key: email
+      header: Email
+    - key: status
+      header: Status
+- id: documents_table
+  type: table
+  title: Documents
+  source: documents
+  options:
+    rows_path: items
+    empty_title: No documents yet
+    columns:
+    - key: name
+      header: Name
+    - key: document_type
+      header: Type
+    - key: property_code
+      header: Property
+    - key: status
+      header: Status

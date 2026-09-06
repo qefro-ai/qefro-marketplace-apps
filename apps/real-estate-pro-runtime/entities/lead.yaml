@@ -1,0 +1,38 @@
+id: lead
+name: Lead
+description: Buyer/renter lead bound to Customer Hub Person
+allocate_code:
+  prefix: L-
+  start: 1001
+fields:
+- name: name
+  type: string
+  required: true
+- name: email
+  type: email
+- name: phone
+  type: phone
+- name: source
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - new
+  - contacted
+  - qualified
+  - nurturing
+  - won
+  - lost
+- name: assigned_agent_name
+  type: string
+- name: notes
+  type: string
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  contacted: lead.updated
+  qualified: lead.updated
+  won: lead.updated
+  lost: lead.updated

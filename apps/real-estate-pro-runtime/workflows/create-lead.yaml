@@ -1,0 +1,30 @@
+id: create-lead
+name: Create lead
+description: Capture a new lead
+trigger:
+  type: conversation
+steps:
+- id: ask_name
+  type: ask
+  field: name
+  message: Lead name?
+- id: ask_phone
+  type: ask
+  field: phone
+  message: Phone?
+- id: run
+  type: tool
+  tool: entity.lead.create
+  execution: runtime
+  input_map:
+    name: name
+    email: email
+    phone: phone
+    source: source
+    notes: notes
+    assigned_agent_name: assigned_agent_name
+- id: confirm
+  type: message
+  message: Lead {{name}} created.
+- id: done
+  type: complete
