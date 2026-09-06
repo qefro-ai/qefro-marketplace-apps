@@ -1,0 +1,16 @@
+- id: projects
+  label: Projects
+  page: projects
+  entity: project
+- id: tasks
+  label: Tasks
+  page: tasks
+  entity: task
+- id: invoices
+  label: Invoices
+  page: invoices
+  entity: invoice
+- id: roles
+  label: Roles
+  page: roles
+  host: roles

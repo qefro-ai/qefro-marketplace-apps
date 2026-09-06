@@ -1,0 +1,11 @@
+id: create-invoice
+name: Create Invoice
+trigger:
+  type: manual
+surfaces: [portal]
+steps:
+  - id: save
+    type: tool
+    tool: entity.invoice.create
+    input:
+      document: "{{ input }}"

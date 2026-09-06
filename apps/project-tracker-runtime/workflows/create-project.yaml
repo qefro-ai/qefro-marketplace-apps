@@ -1,0 +1,11 @@
+id: create-project
+name: Create Project
+trigger:
+  type: manual
+surfaces: [portal]
+steps:
+  - id: save
+    type: tool
+    tool: entity.project.create
+    input:
+      document: "{{ input }}"
