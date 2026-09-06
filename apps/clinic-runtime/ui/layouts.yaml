@@ -1,6 +1,0 @@
-- id: dashboard-grid
-  type: grid
-  columns: 12
-- id: split-grid
-  type: grid
-  columns: 12
