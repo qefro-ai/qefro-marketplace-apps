@@ -1,13 +1,21 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: payments_status
-    span: 12
-  - widget: customers_table
-    span: 12
+  - widget: metric_checkout_session
+    span: 3
+  - widget: metric_customer
+    span: 3
+  - widget: metric_invoice
+    span: 3
+  - widget: metric_payment
+    span: 3
+  - widget: checkout_session_dash_status
+    span: 4
+  - widget: checkout_session_dash_table
+    span: 8
 - id: checkouts
   title: Checkouts
   entity: checkout_session

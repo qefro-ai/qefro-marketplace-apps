@@ -1,13 +1,15 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: orders_status
-    span: 5
-  - widget: orders_table
-    span: 7
+  - widget: metric_order
+    span: 12
+  - widget: order_dash_status
+    span: 4
+  - widget: order_dash_table
+    span: 8
 - id: collections
   title: Collections
   entity: collection

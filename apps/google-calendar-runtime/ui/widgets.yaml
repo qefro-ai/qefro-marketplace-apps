@@ -1,30 +1,25 @@
-- id: intro
-  type: markdown
-  title: "Google Calendar"
-  options:
-    content: "Metadata Marketplace App. Staff chat “schedule an appointment” runs generic Runtime HTTP against the workspace Google Calendar connection. Customer Hub identity is not the Google account — these tools are staff-only."
 - id: event_form
   type: form
-  title: "Schedule event"
+  title: Schedule event
   options:
     fields:
-      - name: calendar_id
-        label: "Calendar id"
-        type: text
-        required: true
-      - name: summary
-        label: Title
-        type: text
-        required: true
-      - name: start
-        label: Start
-        type: text
-        required: true
-      - name: end
-        label: End
-        type: text
-        required: true
-    submit_label: "Create event"
+    - name: calendar_id
+      label: Calendar id
+      type: text
+      required: true
+    - name: summary
+      label: Title
+      type: text
+      required: true
+    - name: start
+      label: Start
+      type: text
+      required: true
+    - name: end
+      label: End
+      type: text
+      required: true
+    submit_label: Create event
     action:
       trigger: schedule-appointment
 - id: events_status
@@ -35,30 +30,82 @@
     rows_path: items
     status_field: status
     label_field: summary
-    empty_title: "Nothing yet"
+    empty_title: Nothing yet
 - id: calendars_table
   type: table
   title: Calendars
   source: calendars
   options:
     rows_path: items
-    empty_title: "No calendars yet"
+    empty_title: No calendars yet
     columns:
-      - key: summary
-        header: Name
-      - key: time_zone
-        header: Timezone
+    - key: summary
+      header: Name
+    - key: time_zone
+      header: Timezone
 - id: events_table
   type: table
   title: Events
   source: events
   options:
     rows_path: items
-    empty_title: "No events yet"
+    empty_title: No events yet
     columns:
-      - key: summary
-        header: Title
-      - key: start
-        header: Start
-      - key: status
-        header: Status
+    - key: summary
+      header: Title
+    - key: start
+      header: Start
+    - key: status
+      header: Status
+- id: intro
+  type: markdown
+  title: Google Calendar
+  options:
+    content: Google Calendar — open a list and tap New to add records.
+- id: metric_calendar
+  type: metric
+  title: Calendars
+  source: calendars
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: calendars
+- id: metric_event
+  type: metric
+  title: Events
+  source: events
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: events
+- id: calendar_dash_status
+  type: status
+  title: Calendars status
+  source: calendars
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: No calendars yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: calendars
+    action_label: View all
+- id: calendar_dash_table
+  type: table
+  title: Recent Calendars
+  source: calendars
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No calendars yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: calendars
+    action_label: View all
+    columns:
+    - key: summary
+      header: Summary
+    - key: time_zone
+      header: Time Zone

@@ -1,6 +1,6 @@
 id: woocommerce-runtime
 name: WooCommerce
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Products, customers, orders, coupons, categories, and inventory as a
   metadata Marketplace App

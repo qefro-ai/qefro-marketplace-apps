@@ -1,22 +1,17 @@
-- id: intro
-  type: markdown
-  title: Razorpay
-  options:
-    content: "Metadata Marketplace App. Chat “create a payment link” runs generic Runtime HTTP against the workspace Razorpay connection. Contacts stay on Person CRM. Automations subscribe to payment.* events."
 - id: order_form
   type: form
-  title: "Create order"
+  title: Create order
   options:
     fields:
-      - name: amount
-        label: Amount
-        type: number
-        required: true
-      - name: currency
-        label: Currency
-        type: text
-        required: true
-    submit_label: "Create order"
+    - name: amount
+      label: Amount
+      type: number
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: true
+    submit_label: Create order
     action:
       trigger: create-order
 - id: orders_status
@@ -27,52 +22,97 @@
     rows_path: items
     status_field: status
     label_field: amount
-    empty_title: "Nothing yet"
+    empty_title: Nothing yet
 - id: customers_table
   type: table
   title: Customers
   source: customers
   options:
     rows_path: items
-    empty_title: "No customers yet"
+    empty_title: No customers yet
     columns:
-      - key: name
-        header: Name
-      - key: email
-        header: Email
+    - key: name
+      header: Name
+    - key: email
+      header: Email
 - id: orders_table
   type: table
   title: Orders
   source: orders
   options:
     rows_path: items
-    empty_title: "No orders yet"
+    empty_title: No orders yet
     columns:
-      - key: amount
-        header: Amount
-      - key: status
-        header: Status
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
 - id: payments_table
   type: table
   title: Payments
   source: payments
   options:
     rows_path: items
-    empty_title: "No payments yet"
+    empty_title: No payments yet
     columns:
-      - key: amount
-        header: Amount
-      - key: status
-        header: Status
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
 - id: invoices_table
   type: table
   title: Invoices
   source: invoices
   options:
     rows_path: items
-    empty_title: "No invoices yet"
+    empty_title: No invoices yet
     columns:
-      - key: amount
-        header: Amount
-      - key: status
-        header: Status
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: intro
+  type: markdown
+  title: Razorpay
+  options:
+    content: Razorpay — open a list and tap New to add records.
+- id: metric_order
+  type: metric
+  title: Orders
+  source: orders
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: orders
+- id: order_dash_status
+  type: status
+  title: Orders status
+  source: orders
+  options:
+    rows_path: items
+    status_field: status
+    label_field: guest_name
+    empty_title: No orders yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: orders
+    action_label: View all
+- id: order_dash_table
+  type: table
+  title: Recent Orders
+  source: orders
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No orders yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: orders
+    action_label: View all
+    columns:
+    - key: amount
+      header: Amount
+    - key: currency
+      header: Currency
+    - key: status
+      header: Status

@@ -1,29 +1,24 @@
-- id: intro
-  type: markdown
-  title: "WhatsApp Business"
-  options:
-    content: "Metadata Marketplace App for Meta Cloud API. This is not Qefro WhatsApp channel ingest. Staff send tools; inbound and status arrive as Business Events from webhooks. Surface restrictions stay staff or customer in metadata — never channel branches."
 - id: send_form
   type: form
-  title: "Send template"
+  title: Send template
   options:
     fields:
-      - name: phone_number_id
-        label: "Phone number id"
-        type: text
-        required: true
-      - name: destination_number
-        label: "Destination number"
-        type: text
-        required: true
-      - name: template_name
-        label: Template
-        type: text
-        required: true
-      - name: language
-        label: Language
-        type: text
-        required: true
+    - name: phone_number_id
+      label: Phone number id
+      type: text
+      required: true
+    - name: destination_number
+      label: Destination number
+      type: text
+      required: true
+    - name: template_name
+      label: Template
+      type: text
+      required: true
+    - name: language
+      label: Language
+      type: text
+      required: true
     submit_label: Send
     action:
       trigger: send-template-message
@@ -35,40 +30,103 @@
     rows_path: items
     status_field: status
     label_field: destination_number
-    empty_title: "Nothing yet"
+    empty_title: Nothing yet
 - id: templates_table
   type: table
   title: Templates
   source: templates
   options:
     rows_path: items
-    empty_title: "No templates yet"
+    empty_title: No templates yet
     columns:
-      - key: name
-        header: Name
-      - key: status
-        header: Status
+    - key: name
+      header: Name
+    - key: status
+      header: Status
 - id: messages_table
   type: table
   title: Outbound
   source: messages
   options:
     rows_path: items
-    empty_title: "No outbound yet"
+    empty_title: No outbound yet
     columns:
-      - key: destination_number
-        header: To
-      - key: status
-        header: Status
+    - key: destination_number
+      header: To
+    - key: status
+      header: Status
 - id: contacts_table
   type: table
-  title: "WA contacts"
+  title: WA contacts
   source: wa_contacts
   options:
     rows_path: items
-    empty_title: "No wa contacts yet"
+    empty_title: No wa contacts yet
     columns:
-      - key: name
-        header: Name
-      - key: wa_id
-        header: "WA id"
+    - key: name
+      header: Name
+    - key: wa_id
+      header: WA id
+- id: intro
+  type: markdown
+  title: WhatsApp Business
+  options:
+    content: WhatsApp Business — open a list and tap New to add records.
+- id: metric_message_template
+  type: metric
+  title: Templates
+  source: templates
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: templates
+- id: metric_outbound_message
+  type: metric
+  title: Outbound
+  source: messages
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: outbound
+- id: metric_wa_contact
+  type: metric
+  title: WA contacts
+  source: wa_contacts
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: wa_contacts
+- id: message_template_dash_status
+  type: status
+  title: Templates status
+  source: templates
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: No templates yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: templates
+    action_label: View all
+- id: message_template_dash_table
+  type: table
+  title: Recent Templates
+  source: templates
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No templates yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: templates
+    action_label: View all
+    columns:
+    - key: name
+      header: Name
+    - key: language
+      header: Language
+    - key: status
+      header: Status

@@ -1,9 +1,3 @@
-- id: intro
-  type: markdown
-  title: Restaurant Pro
-  options:
-    content: Metadata-only restaurant operations — reservations, tables, menu, orders, and staff. Executed
-      by Qefro Runtime. Customer Hub owns guest identity; Automations host consumes Business Events.
 - id: reservation_form
   type: form
   title: Book table
@@ -159,3 +153,80 @@
       header: Role
     - key: status
       header: Status
+- id: intro
+  type: markdown
+  title: Restaurant Pro
+  options:
+    content: Reservations, tables, menu, and orders — open a list and tap New to add
+      records.
+- id: metric_reservation
+  type: metric
+  title: Reservations
+  source: reservations
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: reservations
+- id: metric_table
+  type: metric
+  title: Tables
+  source: tables
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: tables
+- id: metric_order
+  type: metric
+  title: Orders
+  source: orders
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: orders
+- id: metric_menu_item
+  type: metric
+  title: Menu items
+  source: menu_items
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: menu_items
+- id: reservation_dash_status
+  type: status
+  title: Reservations status
+  source: reservations
+  options:
+    rows_path: items
+    status_field: status
+    label_field: guest_name
+    empty_title: No reservations yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    navigate_to: reservations
+    action_label: View all
+- id: reservation_dash_table
+  type: table
+  title: Recent Reservations
+  source: reservations
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: guest_name
+      header: Guest Name
+    - key: table_name
+      header: Table Name
+    - key: guest_count
+      header: Guest Count
+    - key: reservation_at
+      header: Reservation At
+    - key: date
+      header: Date
+    navigate_to: reservations
+    action_label: View all
+    empty_title: No reservations yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list

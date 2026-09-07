@@ -1,6 +1,6 @@
 id: google-calendar-runtime
 name: Google Calendar
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Calendars, events, scheduling, and free-busy as a metadata Marketplace
   App

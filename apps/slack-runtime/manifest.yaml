@@ -1,6 +1,6 @@
 id: slack-runtime
 name: Slack
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Channels, users, send message, and channel events as a metadata Marketplace
   App

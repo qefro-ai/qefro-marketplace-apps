@@ -1,33 +1,28 @@
-- id: intro
-  type: markdown
-  title: "Google Sheets"
-  options:
-    content: "Metadata Marketplace App. Staff chat “append a row” runs generic Runtime HTTP against the workspace Google Sheets connection. Staff-only — Customer Hub is not the Google account."
 - id: append_form
   type: form
-  title: "Append row"
+  title: Append row
   options:
     fields:
-      - name: spreadsheet_id
-        label: "Spreadsheet id"
-        type: text
-        required: true
-      - name: range
-        label: Range
-        type: text
-        required: true
-      - name: col1
-        label: "Column 1"
-        type: text
-        required: true
-      - name: col2
-        label: "Column 2"
-        type: text
-        required: false
-      - name: col3
-        label: "Column 3"
-        type: text
-        required: false
+    - name: spreadsheet_id
+      label: Spreadsheet id
+      type: text
+      required: true
+    - name: range
+      label: Range
+      type: text
+      required: true
+    - name: col1
+      label: Column 1
+      type: text
+      required: true
+    - name: col2
+      label: Column 2
+      type: text
+      required: false
+    - name: col3
+      label: Column 3
+      type: text
+      required: false
     submit_label: Append
     action:
       trigger: append-rows
@@ -37,31 +32,94 @@
   source: spreadsheets
   options:
     rows_path: items
-    empty_title: "No spreadsheets yet"
+    empty_title: No spreadsheets yet
     columns:
-      - key: title
-        header: Title
+    - key: title
+      header: Title
 - id: sheets_table
   type: table
   title: Sheets
   source: sheets
   options:
     rows_path: items
-    empty_title: "No sheets yet"
+    empty_title: No sheets yet
     columns:
-      - key: title
-        header: Tab
+    - key: title
+      header: Tab
 - id: rows_table
   type: table
   title: Rows
   source: rows
   options:
     rows_path: items
-    empty_title: "No rows yet"
+    empty_title: No rows yet
     columns:
-      - key: col1
-        header: "Col 1"
-      - key: col2
-        header: "Col 2"
-      - key: col3
-        header: "Col 3"
+    - key: col1
+      header: Col 1
+    - key: col2
+      header: Col 2
+    - key: col3
+      header: Col 3
+- id: intro
+  type: markdown
+  title: Google Sheets
+  options:
+    content: Google Sheets — open a list and tap New to add records.
+- id: metric_row
+  type: metric
+  title: Rows
+  source: rows
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: rows
+- id: metric_sheet
+  type: metric
+  title: Sheets
+  source: sheets
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: sheets
+- id: metric_spreadsheet
+  type: metric
+  title: Spreadsheets
+  source: spreadsheets
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: spreadsheets
+- id: row_dash_status
+  type: status
+  title: Rows status
+  source: rows
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: No rows yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: rows
+    action_label: View all
+- id: row_dash_table
+  type: table
+  title: Recent Rows
+  source: rows
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No rows yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: rows
+    action_label: View all
+    columns:
+    - key: col1
+      header: Col1
+    - key: col2
+      header: Col2
+    - key: col3
+      header: Col3

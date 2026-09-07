@@ -1,9 +1,3 @@
-- id: intro
-  type: markdown
-  title: Real Estate Pro
-  options:
-    content: Metadata-only real estate operations — properties, leads, viewings, offers, and deals. Executed
-      by Qefro Runtime. Customer Hub owns lead identity; Automations host consumes Business Events.
 - id: property_form
   type: form
   title: List property
@@ -272,3 +266,80 @@
       header: Property
     - key: status
       header: Status
+- id: intro
+  type: markdown
+  title: Real Estate Pro
+  options:
+    content: Properties, leads, viewings, and deals — open a list and tap New to add
+      records.
+- id: metric_property
+  type: metric
+  title: Properties
+  source: properties
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: properties
+- id: metric_lead
+  type: metric
+  title: Leads
+  source: leads
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: leads
+- id: metric_viewing
+  type: metric
+  title: Viewings
+  source: viewings
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: viewings
+- id: metric_deal
+  type: metric
+  title: Deals
+  source: deals
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: deals
+- id: viewing_dash_status
+  type: status
+  title: Viewings status
+  source: viewings
+  options:
+    rows_path: items
+    status_field: status
+    label_field: property_title
+    empty_title: No viewings yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    navigate_to: viewings
+    action_label: View all
+- id: viewing_dash_table
+  type: table
+  title: Recent Viewings
+  source: viewings
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: property_title
+      header: Property Title
+    - key: lead_name
+      header: Lead Name
+    - key: agent_name
+      header: Agent Name
+    - key: scheduled_at
+      header: Scheduled At
+    - key: date
+      header: Date
+    navigate_to: viewings
+    action_label: View all
+    empty_title: No viewings yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list

@@ -1,13 +1,15 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: enroll_status
+  - widget: metric_enrollment
     span: 12
-  - widget: enroll_table
-    span: 12
+  - widget: enrollment_dash_status
+    span: 4
+  - widget: enrollment_dash_table
+    span: 8
 - id: assignments
   title: Assignments
   entity: assignment

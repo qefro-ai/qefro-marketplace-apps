@@ -1,21 +1,16 @@
-- id: intro
-  type: markdown
-  title: Slack
-  options:
-    content: "Metadata Marketplace App. Staff chat “notify slack” runs generic Runtime HTTP. Slack signing-secret v0 timestamped signatures are a generic Runtime capability gap if the header is not a raw HMAC."
 - id: message_form
   type: form
-  title: "Send message"
+  title: Send message
   options:
     fields:
-      - name: channel
-        label: Channel
-        type: text
-        required: true
-      - name: text
-        label: Message
-        type: text
-        required: true
+    - name: channel
+      label: Channel
+      type: text
+      required: true
+    - name: text
+      label: Message
+      type: text
+      required: true
     submit_label: Send
     action:
       trigger: send-message
@@ -25,31 +20,92 @@
   source: channels
   options:
     rows_path: items
-    empty_title: "No channels yet"
+    empty_title: No channels yet
     columns:
-      - key: name
-        header: Name
+    - key: name
+      header: Name
 - id: users_table
   type: table
   title: Users
   source: users
   options:
     rows_path: items
-    empty_title: "No users yet"
+    empty_title: No users yet
     columns:
-      - key: name
-        header: Name
-      - key: email
-        header: Email
+    - key: name
+      header: Name
+    - key: email
+      header: Email
 - id: messages_table
   type: table
   title: Messages
   source: messages
   options:
     rows_path: items
-    empty_title: "No messages yet"
+    empty_title: No messages yet
     columns:
-      - key: channel
-        header: Channel
-      - key: text
-        header: Text
+    - key: channel
+      header: Channel
+    - key: text
+      header: Text
+- id: intro
+  type: markdown
+  title: Slack
+  options:
+    content: Slack — open a list and tap New to add records.
+- id: metric_channel
+  type: metric
+  title: Channels
+  source: channels
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: channels
+- id: metric_slack_message
+  type: metric
+  title: Messages
+  source: messages
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: messages
+- id: metric_slack_user
+  type: metric
+  title: Users
+  source: users
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: slack_users
+- id: channel_dash_status
+  type: status
+  title: Channels status
+  source: channels
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: No channels yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: channels
+    action_label: View all
+- id: channel_dash_table
+  type: table
+  title: Recent Channels
+  source: channels
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No channels yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: channels
+    action_label: View all
+    columns:
+    - key: name
+      header: Name
+    - key: channel
+      header: Channel

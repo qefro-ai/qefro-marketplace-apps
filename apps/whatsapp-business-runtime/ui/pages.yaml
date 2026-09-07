@@ -1,13 +1,19 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: messages_status
-    span: 12
-  - widget: templates_table
-    span: 12
+  - widget: metric_message_template
+    span: 4
+  - widget: metric_outbound_message
+    span: 4
+  - widget: metric_wa_contact
+    span: 4
+  - widget: message_template_dash_status
+    span: 4
+  - widget: message_template_dash_table
+    span: 8
 - id: templates
   title: Templates
   entity: message_template

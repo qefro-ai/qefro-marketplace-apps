@@ -1,10 +1,3 @@
-- id: intro
-  type: markdown
-  title: Clinic Pro
-  options:
-    content: Metadata-only clinic operations — patients, appointments, visits, prescriptions, and billing.
-      Executed by Qefro Runtime EntityService. Customer Hub owns identity; Automations host consumes Business
-      Events.
 - id: patient_form
   type: form
   title: Create patient
@@ -350,3 +343,80 @@
       header: Amount
     - key: status
       header: Status
+- id: intro
+  type: markdown
+  title: Clinic Pro
+  options:
+    content: Patients, appointments, visits, and billing — open a list and tap New
+      to add records.
+- id: metric_patient
+  type: metric
+  title: Patients
+  source: patients
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: patients
+- id: metric_appointment
+  type: metric
+  title: Appointments
+  source: appointments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: appointments
+- id: metric_visit
+  type: metric
+  title: Visits
+  source: visits
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: visits
+- id: metric_invoice
+  type: metric
+  title: Invoices
+  source: invoices
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: invoices
+- id: appointment_dash_status
+  type: status
+  title: Appointments status
+  source: appointments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: patient_name
+    empty_title: No appointments yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    navigate_to: appointments
+    action_label: View all
+- id: appointment_dash_table
+  type: table
+  title: Recent Appointments
+  source: appointments
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: patient_name
+      header: Patient Name
+    - key: practitioner_name
+      header: Practitioner Name
+    - key: slot_code
+      header: Slot Code
+    - key: scheduled_at
+      header: Scheduled At
+    - key: date
+      header: Date
+    navigate_to: appointments
+    action_label: View all
+    empty_title: No appointments yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list

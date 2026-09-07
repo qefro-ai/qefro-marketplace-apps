@@ -1,84 +1,129 @@
-- id: intro
-  type: markdown
-  title: "Field Service"
-  options:
-    content: "Native field service app. Chat “create a work order” persists in managed storage. Automations bind to work_order.created — notify staff, create CRM activity."
 - id: wo_form
   type: form
-  title: "New work order"
+  title: New work order
   options:
     fields:
-      - name: site_name
-        label: Site
-        type: text
-        required: true
-      - name: summary
-        label: Summary
-        type: text
-        required: true
-      - name: scheduled_date
-        label: Date
-        type: date
-        required: false
+    - name: site_name
+      label: Site
+      type: text
+      required: true
+    - name: summary
+      label: Summary
+      type: text
+      required: true
+    - name: scheduled_date
+      label: Date
+      type: date
+      required: false
     submit_label: Create
     action:
       trigger: create-work-order
 - id: wo_status
   type: status
-  title: "Work orders"
+  title: Work orders
   source: work_orders
   options:
     rows_path: items
     status_field: status
     label_field: summary
-    empty_title: "Nothing yet"
+    empty_title: Nothing yet
 - id: wo_table
   type: table
-  title: "Work orders"
+  title: Work orders
   source: work_orders
   options:
     rows_path: items
-    empty_title: "No work orders yet"
+    empty_title: No work orders yet
     columns:
-      - key: site_name
-        header: Site
-      - key: summary
-        header: Summary
-      - key: status
-        header: Status
+    - key: site_name
+      header: Site
+    - key: summary
+      header: Summary
+    - key: status
+      header: Status
 - id: sites_table
   type: table
   title: Sites
   source: sites
   options:
     rows_path: items
-    empty_title: "No sites yet"
+    empty_title: No sites yet
     columns:
-      - key: name
-        header: Name
-      - key: address
-        header: Address
+    - key: name
+      header: Name
+    - key: address
+      header: Address
 - id: tech_table
   type: table
   title: Technicians
   source: technicians
   options:
     rows_path: items
-    empty_title: "No technicians yet"
+    empty_title: No technicians yet
     columns:
-      - key: name
-        header: Name
-      - key: skill
-        header: Skill
+    - key: name
+      header: Name
+    - key: skill
+      header: Skill
 - id: parts_table
   type: table
   title: Parts
   source: parts
   options:
     rows_path: items
-    empty_title: "No parts yet"
+    empty_title: No parts yet
     columns:
-      - key: sku
-        header: SKU
-      - key: quantity_on_hand
-        header: Qty
+    - key: sku
+      header: SKU
+    - key: quantity_on_hand
+      header: Qty
+- id: intro
+  type: markdown
+  title: Field Service
+  options:
+    content: Work orders, sites, and technicians — open a list and tap New to add
+      records.
+- id: metric_work_order
+  type: metric
+  title: Work orders
+  source: work_orders
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: work_orders
+- id: work_order_dash_status
+  type: status
+  title: Work orders status
+  source: work_orders
+  options:
+    rows_path: items
+    status_field: status
+    label_field: title
+    empty_title: No work orders yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: work_orders
+    action_label: View all
+- id: work_order_dash_table
+  type: table
+  title: Recent Work orders
+  source: work_orders
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No work orders yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: work_orders
+    action_label: View all
+    columns:
+    - key: site_name
+      header: Site Name
+    - key: summary
+      header: Summary
+    - key: technician_name
+      header: Technician Name
+    - key: scheduled_date
+      header: Scheduled Date
+    - key: status
+      header: Status

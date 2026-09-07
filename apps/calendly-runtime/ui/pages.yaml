@@ -1,13 +1,19 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: events_status
-    span: 12
-  - widget: types_table
-    span: 12
+  - widget: metric_event_type
+    span: 4
+  - widget: metric_invitee
+    span: 4
+  - widget: metric_scheduled_event
+    span: 4
+  - widget: event_type_dash_status
+    span: 4
+  - widget: event_type_dash_table
+    span: 8
 - id: event_types
   title: Event types
   entity: event_type

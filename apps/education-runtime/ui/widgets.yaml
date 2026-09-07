@@ -1,25 +1,20 @@
-- id: intro
-  type: markdown
-  title: Education
-  options:
-    content: "Native education/coaching app. Chat “enroll a student” or “schedule a class” uses EntityService. Automations: enrollment.created → send confirmation."
 - id: enroll_form
   type: form
-  title: "Enroll learner"
+  title: Enroll learner
   options:
     fields:
-      - name: learner_name
-        label: Learner
-        type: text
-        required: true
-      - name: course_title
-        label: Course
-        type: text
-        required: true
-      - name: date
-        label: Date
-        type: date
-        required: false
+    - name: learner_name
+      label: Learner
+      type: text
+      required: true
+    - name: course_title
+      label: Course
+      type: text
+      required: true
+    - name: date
+      label: Date
+      type: date
+      required: false
     submit_label: Enroll
     action:
       trigger: enroll-student
@@ -31,56 +26,103 @@
     rows_path: items
     status_field: status
     label_field: learner_name
-    empty_title: "Nothing yet"
+    empty_title: Nothing yet
 - id: enroll_table
   type: table
   title: Enrollments
   source: enrollments
   options:
     rows_path: items
-    empty_title: "No enrollments yet"
+    empty_title: No enrollments yet
     columns:
-      - key: learner_name
-        header: Learner
-      - key: course_title
-        header: Course
-      - key: status
-        header: Status
+    - key: learner_name
+      header: Learner
+    - key: course_title
+      header: Course
+    - key: status
+      header: Status
 - id: courses_table
   type: table
   title: Courses
   source: courses
   options:
     rows_path: items
-    empty_title: "No courses yet"
+    empty_title: No courses yet
     columns:
-      - key: title
-        header: Title
-      - key: status
-        header: Status
+    - key: title
+      header: Title
+    - key: status
+      header: Status
 - id: sessions_table
   type: table
   title: Sessions
   source: sessions
   options:
     rows_path: items
-    empty_title: "No sessions yet"
+    empty_title: No sessions yet
     columns:
-      - key: course_title
-        header: Course
-      - key: date
-        header: Date
-      - key: status
-        header: Status
+    - key: course_title
+      header: Course
+    - key: date
+      header: Date
+    - key: status
+      header: Status
 - id: assignments_table
   type: table
   title: Assignments
   source: assignments
   options:
     rows_path: items
-    empty_title: "No assignments yet"
+    empty_title: No assignments yet
     columns:
-      - key: title
-        header: Title
-      - key: status
-        header: Status
+    - key: title
+      header: Title
+    - key: status
+      header: Status
+- id: intro
+  type: markdown
+  title: Education
+  options:
+    content: Courses, enrollments, and sessions — open a list and tap New to add records.
+- id: metric_enrollment
+  type: metric
+  title: Enrollments
+  source: enrollments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: enrollments
+- id: enrollment_dash_status
+  type: status
+  title: Enrollments status
+  source: enrollments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: student_name
+    empty_title: No enrollments yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: enrollments
+    action_label: View all
+- id: enrollment_dash_table
+  type: table
+  title: Recent Enrollments
+  source: enrollments
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No enrollments yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: enrollments
+    action_label: View all
+    columns:
+    - key: learner_name
+      header: Learner Name
+    - key: course_title
+      header: Course Title
+    - key: date
+      header: Date
+    - key: status
+      header: Status

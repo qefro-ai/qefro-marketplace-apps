@@ -1,6 +1,6 @@
 id: razorpay-runtime
 name: Razorpay
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Customers, orders, payments, refunds, invoices, and payment links as
   a metadata Marketplace App

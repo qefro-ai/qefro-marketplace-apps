@@ -1,13 +1,15 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: wo_status
+  - widget: metric_work_order
     span: 12
-  - widget: wo_table
-    span: 12
+  - widget: work_order_dash_status
+    span: 4
+  - widget: work_order_dash_table
+    span: 8
 - id: parts
   title: Parts
   entity: part

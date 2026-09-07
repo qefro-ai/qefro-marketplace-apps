@@ -1,1 +1,43 @@
-[]
+- id: intro
+  type: markdown
+  title: Catalog API
+  options:
+    content: Catalog API — open a list and tap New to add records.
+- id: metric_item
+  type: metric
+  title: Items
+  source: items
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: items
+- id: item_dash_status
+  type: status
+  title: Items status
+  source: items
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: No items yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: items
+    action_label: View all
+- id: item_dash_table
+  type: table
+  title: Recent Items
+  source: items
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No items yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: items
+    action_label: View all
+    columns:
+    - key: title
+      header: Title
+    - key: sku
+      header: Sku

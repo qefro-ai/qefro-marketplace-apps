@@ -1,1 +1,9 @@
-[]
+- id: projects
+  type: entity
+  target: project
+- id: tasks
+  type: entity
+  target: task
+- id: invoices
+  type: entity
+  target: invoice

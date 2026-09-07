@@ -4,10 +4,18 @@
   widgets:
   - widget: intro
     span: 12
-  - widget: reservations_status
-    span: 12
-  - widget: reservations_table
-    span: 12
+  - widget: metric_reservation
+    span: 3
+  - widget: metric_table
+    span: 3
+  - widget: metric_order
+    span: 3
+  - widget: metric_menu_item
+    span: 3
+  - widget: reservation_dash_status
+    span: 4
+  - widget: reservation_dash_table
+    span: 8
 - id: customers
   title: Customers
   entity: customer

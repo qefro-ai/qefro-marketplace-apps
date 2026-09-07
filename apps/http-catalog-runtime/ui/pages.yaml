@@ -1,3 +1,15 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_item
+    span: 12
+  - widget: item_dash_status
+    span: 4
+  - widget: item_dash_table
+    span: 8
 - id: items
   title: Items
   entity: item

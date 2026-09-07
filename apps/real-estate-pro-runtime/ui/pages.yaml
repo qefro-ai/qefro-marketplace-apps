@@ -4,10 +4,18 @@
   widgets:
   - widget: intro
     span: 12
-  - widget: viewings_status
-    span: 12
-  - widget: properties_table
-    span: 12
+  - widget: metric_property
+    span: 3
+  - widget: metric_lead
+    span: 3
+  - widget: metric_viewing
+    span: 3
+  - widget: metric_deal
+    span: 3
+  - widget: viewing_dash_status
+    span: 4
+  - widget: viewing_dash_table
+    span: 8
 - id: agents
   title: Agents
   entity: agent

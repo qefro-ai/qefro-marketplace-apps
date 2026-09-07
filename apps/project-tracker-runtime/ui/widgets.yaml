@@ -1,1 +1,63 @@
-[]
+- id: intro
+  type: markdown
+  title: Project Tracker
+  options:
+    content: Projects, tasks, and invoices — open a list and tap New to add records.
+- id: metric_project
+  type: metric
+  title: Projects
+  source: projects
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: projects
+- id: metric_task
+  type: metric
+  title: Tasks
+  source: tasks
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: tasks
+- id: metric_invoice
+  type: metric
+  title: Invoices
+  source: invoices
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: invoices
+- id: task_dash_status
+  type: status
+  title: Task status
+  source: tasks
+  options:
+    rows_path: items
+    status_field: status
+    label_field: title
+    empty_title: No tasks yet
+    empty_subtitle: Open Tasks and tap New.
+    navigate_to: tasks
+    action_label: View all
+- id: task_dash_table
+  type: table
+  title: Recent Tasks
+  source: tasks
+  options:
+    rows_path: items
+    limit: 8
+    navigate_to: tasks
+    action_label: View all
+    empty_title: No tasks yet
+    empty_subtitle: Open Tasks and tap New.
+    empty_action_label: Open list
+    columns:
+    - key: title
+      header: Title
+    - key: status
+      header: Status
+    - key: project_id
+      header: Project

@@ -1,23 +1,15 @@
-- id: intro
-  type: markdown
-  title: Shopify
-  options:
-    content: |
-      Metadata Marketplace App. Chat “find black shoes” or “show my recent
-      orders” runs generic Runtime HTTP tools against the workspace Shopify
-      connection (no SDK, no Shopify client in this package). Contacts stay
-      on the existing Person CRM. Staff tables below are schema views.
-
 - id: product_search
   type: form
   title: Search products
   options:
     fields:
-      - { name: query, label: Search, type: text, required: true }
+    - name: query
+      label: Search
+      type: text
+      required: true
     submit_label: Search
     action:
       trigger: search-products
-
 - id: products_table
   type: table
   title: Products
@@ -27,19 +19,23 @@
     empty_title: No products yet
     empty_subtitle: Add products in storage or search from chat.
     columns:
-      - { key: title, header: Title }
-      - { key: product_type, header: Type }
-      - { key: price, header: Price }
-      - { key: status, header: Status }
-
+    - key: title
+      header: Title
+    - key: product_type
+      header: Type
+    - key: price
+      header: Price
+    - key: status
+      header: Status
 - id: product_detail
   type: markdown
   title: Product
   options:
-    content: |
-      Open a row on **Products** to inspect a catalog item. Search uses the
+    content: 'Open a row on **Products** to inspect a catalog item. Search uses the
+
       generic HTTP tool `search_products` (RuntimeAdapter → HTTP executor).
 
+      '
 - id: customers_table
   type: table
   title: Customers
@@ -48,18 +44,21 @@
     rows_path: items
     empty_title: No customers yet
     columns:
-      - { key: name, header: Name }
-      - { key: email, header: Email }
-      - { key: phone, header: Phone }
-
+    - key: name
+      header: Name
+    - key: email
+      header: Email
+    - key: phone
+      header: Phone
 - id: customer_detail
   type: markdown
   title: Customer
   options:
-    content: |
-      Open a row on **Customers** for detail. `person_id` binds to the
+    content: 'Open a row on **Customers** for detail. `person_id` binds to the
+
       platform Person CRM — this app does not own contacts.
 
+      '
 - id: orders_table
   type: table
   title: Orders
@@ -69,20 +68,25 @@
     empty_title: No orders yet
     empty_subtitle: Chat “show my recent orders” lists via generic Runtime HTTP.
     columns:
-      - { key: order_number, header: Order }
-      - { key: customer_name, header: Customer }
-      - { key: total, header: Total }
-      - { key: status, header: Status }
-
+    - key: order_number
+      header: Order
+    - key: customer_name
+      header: Customer
+    - key: total
+      header: Total
+    - key: status
+      header: Status
 - id: order_detail
   type: markdown
   title: Order
   options:
-    content: |
-      Open a row on **Orders** for detail. `order.created` /
+    content: 'Open a row on **Orders** for detail. `order.created` /
+
       `order.updated` / `order.cancelled` are CRM business events on the
+
       existing bus — not a Shopify webhook.
 
+      '
 - id: orders_status
   type: status
   title: Orders
@@ -92,3 +96,52 @@
     status_field: status
     label_field: order_number
     empty_title: No orders yet
+- id: intro
+  type: markdown
+  title: Shopify
+  options:
+    content: Shopify — open a list and tap New to add records.
+- id: metric_order
+  type: metric
+  title: Orders
+  source: orders
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: orders
+- id: order_dash_status
+  type: status
+  title: Orders status
+  source: orders
+  options:
+    rows_path: items
+    status_field: status
+    label_field: guest_name
+    empty_title: No orders yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: orders
+    action_label: View all
+- id: order_dash_table
+  type: table
+  title: Recent Orders
+  source: orders
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No orders yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: orders
+    action_label: View all
+    columns:
+    - key: order_number
+      header: Order Number
+    - key: customer_name
+      header: Customer Name
+    - key: email
+      header: Email
+    - key: total
+      header: Total
+    - key: currency
+      header: Currency

@@ -1,22 +1,17 @@
-- id: intro
-  type: markdown
-  title: Stripe
-  options:
-    content: "Metadata Marketplace App. Chat “create a payment link” or “show my invoices” runs generic Runtime HTTP tools against the workspace Stripe connection (no SDK). Contacts stay on the existing Person CRM. Automations subscribe to payment.* events on the Automations host page."
 - id: payment_link_form
   type: form
-  title: "Create payment link"
+  title: Create payment link
   options:
     fields:
-      - name: price_id
-        label: "Price id"
-        type: text
-        required: true
-      - name: quantity
-        label: Quantity
-        type: number
-        required: true
-    submit_label: "Create link"
+    - name: price_id
+      label: Price id
+      type: text
+      required: true
+    - name: quantity
+      label: Quantity
+      type: number
+      required: true
+    submit_label: Create link
     action:
       trigger: create-payment-link
 - id: payments_status
@@ -27,66 +22,138 @@
     rows_path: items
     status_field: status
     label_field: amount
-    empty_title: "No payments yet"
+    empty_title: No payments yet
 - id: customers_table
   type: table
   title: Customers
   source: customers
   options:
     rows_path: items
-    empty_title: "No customers yet"
+    empty_title: No customers yet
     columns:
-      - key: name
-        header: Name
-      - key: email
-        header: Email
+    - key: name
+      header: Name
+    - key: email
+      header: Email
 - id: products_table
   type: table
   title: Products
   source: products
   options:
     rows_path: items
-    empty_title: "No products yet"
+    empty_title: No products yet
     columns:
-      - key: name
-        header: Name
-      - key: status
-        header: Status
+    - key: name
+      header: Name
+    - key: status
+      header: Status
 - id: invoices_table
   type: table
   title: Invoices
   source: invoices
   options:
     rows_path: items
-    empty_title: "No invoices yet"
+    empty_title: No invoices yet
     columns:
-      - key: number
-        header: Number
-      - key: amount_due
-        header: Due
-      - key: status
-        header: Status
+    - key: number
+      header: Number
+    - key: amount_due
+      header: Due
+    - key: status
+      header: Status
 - id: subscriptions_table
   type: table
   title: Subscriptions
   source: subscriptions
   options:
     rows_path: items
-    empty_title: "No subscriptions yet"
+    empty_title: No subscriptions yet
     columns:
-      - key: customer_email
-        header: Customer
-      - key: status
-        header: Status
+    - key: customer_email
+      header: Customer
+    - key: status
+      header: Status
 - id: payments_table
   type: table
   title: Payments
   source: payments
   options:
     rows_path: items
-    empty_title: "No payments yet"
+    empty_title: No payments yet
     columns:
-      - key: amount
-        header: Amount
-      - key: status
-        header: Status
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: intro
+  type: markdown
+  title: Stripe
+  options:
+    content: Stripe — open a list and tap New to add records.
+- id: metric_checkout_session
+  type: metric
+  title: Checkouts
+  source: checkouts
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: checkouts
+- id: metric_customer
+  type: metric
+  title: Customers
+  source: customers
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: customers
+- id: metric_invoice
+  type: metric
+  title: Invoices
+  source: invoices
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: invoices
+- id: metric_payment
+  type: metric
+  title: Payments
+  source: payments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: payments
+- id: checkout_session_dash_status
+  type: status
+  title: Checkouts status
+  source: checkouts
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: No checkouts yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: checkouts
+    action_label: View all
+- id: checkout_session_dash_table
+  type: table
+  title: Recent Checkouts
+  source: checkouts
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No checkouts yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: checkouts
+    action_label: View all
+    columns:
+    - key: amount_total
+      header: Amount Total
+    - key: currency
+      header: Currency
+    - key: status
+      header: Status

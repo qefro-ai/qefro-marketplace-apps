@@ -13,3 +13,6 @@
 - id: payments
   type: entity
   target: payment
+- id: checkouts
+  type: entity
+  target: checkout_session

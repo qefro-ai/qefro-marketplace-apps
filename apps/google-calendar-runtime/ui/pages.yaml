@@ -1,13 +1,17 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: events_status
-    span: 12
-  - widget: calendars_table
-    span: 12
+  - widget: metric_calendar
+    span: 6
+  - widget: metric_event
+    span: 6
+  - widget: calendar_dash_status
+    span: 4
+  - widget: calendar_dash_table
+    span: 8
 - id: calendars
   title: Calendars
   entity: calendar

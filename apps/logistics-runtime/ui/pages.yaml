@@ -1,13 +1,15 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: shipments_status
+  - widget: metric_shipment
     span: 12
-  - widget: shipments_table
-    span: 12
+  - widget: shipment_dash_status
+    span: 4
+  - widget: shipment_dash_table
+    span: 8
 - id: consignments
   title: Consignments
   entity: consignment

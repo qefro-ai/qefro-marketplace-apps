@@ -1,6 +1,6 @@
 id: freshdesk-runtime
 name: Freshdesk
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Contacts, tickets, comments, agents, and ticket status as a metadata
   Marketplace App

@@ -1,21 +1,16 @@
-- id: intro
-  type: markdown
-  title: Calendly
-  options:
-    content: "Metadata Marketplace App. Chat “show my bookings” uses Hub email. Staff cancel uses generic HTTP. Automations subscribe to booking.created."
 - id: cancel_form
   type: form
-  title: "Cancel booking"
+  title: Cancel booking
   options:
     fields:
-      - name: uuid
-        label: "Event uuid"
-        type: text
-        required: true
-      - name: reason
-        label: Reason
-        type: text
-        required: false
+    - name: uuid
+      label: Event uuid
+      type: text
+      required: true
+    - name: reason
+      label: Reason
+      type: text
+      required: false
     submit_label: Cancel
     action:
       trigger: cancel-booking
@@ -27,40 +22,101 @@
     rows_path: items
     status_field: status
     label_field: name
-    empty_title: "Nothing yet"
+    empty_title: Nothing yet
 - id: types_table
   type: table
-  title: "Event types"
+  title: Event types
   source: event_types
   options:
     rows_path: items
-    empty_title: "No event types yet"
+    empty_title: No event types yet
     columns:
-      - key: name
-        header: Name
-      - key: duration
-        header: Minutes
+    - key: name
+      header: Name
+    - key: duration
+      header: Minutes
 - id: events_table
   type: table
   title: Scheduled
   source: scheduled_events
   options:
     rows_path: items
-    empty_title: "No scheduled yet"
+    empty_title: No scheduled yet
     columns:
-      - key: name
-        header: Name
-      - key: status
-        header: Status
+    - key: name
+      header: Name
+    - key: status
+      header: Status
 - id: invitees_table
   type: table
   title: Invitees
   source: invitees
   options:
     rows_path: items
-    empty_title: "No invitees yet"
+    empty_title: No invitees yet
     columns:
-      - key: name
-        header: Name
-      - key: email
-        header: Email
+    - key: name
+      header: Name
+    - key: email
+      header: Email
+- id: intro
+  type: markdown
+  title: Calendly
+  options:
+    content: Calendly — open a list and tap New to add records.
+- id: metric_event_type
+  type: metric
+  title: Event types
+  source: event_types
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: event_types
+- id: metric_invitee
+  type: metric
+  title: Invitees
+  source: invitees
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: invitees
+- id: metric_scheduled_event
+  type: metric
+  title: Scheduled
+  source: scheduled_events
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: scheduled_events
+- id: event_type_dash_status
+  type: status
+  title: Event types status
+  source: event_types
+  options:
+    rows_path: items
+    status_field: status
+    label_field: name
+    empty_title: No event types yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: event_types
+    action_label: View all
+- id: event_type_dash_table
+  type: table
+  title: Recent Event types
+  source: event_types
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No event types yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: event_types
+    action_label: View all
+    columns:
+    - key: name
+      header: Name
+    - key: duration
+      header: Duration

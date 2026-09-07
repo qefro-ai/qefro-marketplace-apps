@@ -1,6 +1,6 @@
 id: logistics-runtime
 name: Logistics
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Vehicles, consignments, shipments, and stops as a native Qefro logistics
   application

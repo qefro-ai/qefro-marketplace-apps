@@ -1,6 +1,6 @@
 id: education-runtime
 name: Education
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Courses, enrollments, sessions, and assignments as a native Qefro coaching
   application

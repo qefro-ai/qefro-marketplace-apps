@@ -1,3 +1,7 @@
+- id: dashboard
+  page: dashboard
+  title: Dashboard
+  icon: home
 - id: invoices
   page: invoices
   title: Invoices

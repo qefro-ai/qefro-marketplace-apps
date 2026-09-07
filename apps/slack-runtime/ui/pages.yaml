@@ -1,11 +1,19 @@
 - id: dashboard
-  title: Today
+  title: Dashboard
   layout: dashboard-grid
   widgets:
   - widget: intro
     span: 12
-  - widget: channels_table
-    span: 12
+  - widget: metric_channel
+    span: 4
+  - widget: metric_slack_message
+    span: 4
+  - widget: metric_slack_user
+    span: 4
+  - widget: channel_dash_status
+    span: 4
+  - widget: channel_dash_table
+    span: 8
 - id: channels
   title: Channels
   entity: channel

@@ -1,17 +1,12 @@
-- id: intro
-  type: markdown
-  title: WooCommerce
-  options:
-    content: "Metadata Marketplace App. Chat “find black shoes” or “show my recent orders” runs generic Runtime HTTP against the workspace WooCommerce connection. Contacts stay on Person CRM."
 - id: product_search
   type: form
-  title: "Search products"
+  title: Search products
   options:
     fields:
-      - name: query
-        label: Search
-        type: text
-        required: true
+    - name: query
+      label: Search
+      type: text
+      required: true
     submit_label: Search
     action:
       trigger: search-products
@@ -23,54 +18,99 @@
     rows_path: items
     status_field: status
     label_field: total
-    empty_title: "Nothing yet"
+    empty_title: Nothing yet
 - id: products_table
   type: table
   title: Products
   source: products
   options:
     rows_path: items
-    empty_title: "No products yet"
+    empty_title: No products yet
     columns:
-      - key: name
-        header: Name
-      - key: price
-        header: Price
-      - key: stock_quantity
-        header: Stock
+    - key: name
+      header: Name
+    - key: price
+      header: Price
+    - key: stock_quantity
+      header: Stock
 - id: customers_table
   type: table
   title: Customers
   source: customers
   options:
     rows_path: items
-    empty_title: "No customers yet"
+    empty_title: No customers yet
     columns:
-      - key: name
-        header: Name
-      - key: email
-        header: Email
+    - key: name
+      header: Name
+    - key: email
+      header: Email
 - id: orders_table
   type: table
   title: Orders
   source: orders
   options:
     rows_path: items
-    empty_title: "No orders yet"
+    empty_title: No orders yet
     columns:
-      - key: total
-        header: Total
-      - key: status
-        header: Status
+    - key: total
+      header: Total
+    - key: status
+      header: Status
 - id: coupons_table
   type: table
   title: Coupons
   source: coupons
   options:
     rows_path: items
-    empty_title: "No coupons yet"
+    empty_title: No coupons yet
     columns:
-      - key: code
-        header: Code
-      - key: amount
-        header: Amount
+    - key: code
+      header: Code
+    - key: amount
+      header: Amount
+- id: intro
+  type: markdown
+  title: WooCommerce
+  options:
+    content: WooCommerce — open a list and tap New to add records.
+- id: metric_order
+  type: metric
+  title: Orders
+  source: orders
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: orders
+- id: order_dash_status
+  type: status
+  title: Orders status
+  source: orders
+  options:
+    rows_path: items
+    status_field: status
+    label_field: guest_name
+    empty_title: No orders yet
+    empty_subtitle: Tap New on the list page to create the first record.
+    navigate_to: orders
+    action_label: View all
+- id: order_dash_table
+  type: table
+  title: Recent Orders
+  source: orders
+  options:
+    rows_path: items
+    limit: 8
+    empty_title: No orders yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
+    navigate_to: orders
+    action_label: View all
+    columns:
+    - key: total
+      header: Total
+    - key: currency
+      header: Currency
+    - key: status
+      header: Status

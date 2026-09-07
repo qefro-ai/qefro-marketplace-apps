@@ -1,6 +1,6 @@
 id: calendly-runtime
 name: Calendly
-version: 0.1.1
+version: 0.1.2
 hosting: runtime
 description: Event types, scheduled events, invitees, and cancellations as a metadata
   Marketplace App
