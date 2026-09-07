@@ -3,7 +3,7 @@
 # No SDK, no custom connector, no custom REST API, no provider-specific Runtime branches.
 id: real-estate-pro-runtime
 name: Real Estate Pro
-version: 1.0.3
+version: 1.0.4
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no SDK, no custom server)
 category: real-estate

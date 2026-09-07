@@ -6,30 +6,37 @@
   page: properties
   title: Properties
   icon: map
+  entity: property
 - id: leads
   page: leads
   title: Leads
   icon: users
+  entity: lead
 - id: viewings
   page: viewings
   title: Viewings
   icon: calendar
+  entity: viewing
 - id: offers
   page: offers
   title: Offers
   icon: file-text
+  entity: offer
 - id: deals
   page: deals
   title: Deals
   icon: clipboard
+  entity: deal
 - id: agents
   page: agents
   title: Agents
   icon: user
+  entity: agent
 - id: documents
   page: documents
   title: Documents
   icon: file-text
+  entity: property_document
 - id: contacts
   page: contacts
   title: Contacts
@@ -38,3 +45,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings
