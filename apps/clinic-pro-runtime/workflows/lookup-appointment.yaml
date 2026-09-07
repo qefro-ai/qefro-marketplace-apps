@@ -18,6 +18,10 @@ steps:
     id: id
 - id: confirm
   type: message
-  message: Here is appointment {{id}}.
+  message: |
+    Here is appointment {{id}}.
+    {{items_text}}
+
 - id: done
   type: complete
+  message: ""

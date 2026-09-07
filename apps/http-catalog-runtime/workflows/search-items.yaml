@@ -16,6 +16,10 @@ steps:
       query: query
   - id: confirm
     type: message
-    message: Items matching {{query}}.
+    message: |
+      Items matching {{query}}.
+      {{items_text}}
+
   - id: done
     type: complete
+    message: ""

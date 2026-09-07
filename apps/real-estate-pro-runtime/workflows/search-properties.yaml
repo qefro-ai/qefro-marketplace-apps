@@ -13,6 +13,10 @@ steps:
   input_map: {}
 - id: confirm
   type: message
-  message: Here are matching properties.
+  message: |
+    Here are matching properties.
+    {{items_text}}
+
 - id: done
   type: complete
+  message: ""

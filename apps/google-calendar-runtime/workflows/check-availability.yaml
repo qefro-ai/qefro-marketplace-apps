@@ -26,7 +26,10 @@ steps:
       end: end
   - id: confirm
     type: message
-    message: "Availability for {{calendar_id}}."
+    message: |
+      Availability for {{calendar_id}}.
+      {{items_text}}
+
   - id: done
     type: complete
     message: ""

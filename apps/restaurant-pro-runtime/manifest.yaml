@@ -1,6 +1,6 @@
 id: restaurant-pro-runtime
 name: Restaurant Pro
-version: 1.0.4
+version: 1.0.5
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro
   Runtime (no SDK, no custom server)
@@ -116,7 +116,9 @@ triggers:
       reply_signals:
       - menu
       required_slots: []
-  confirmation_message: Here is the current menu.
+  confirmation_message: |
+    Here is the current menu.
+    {{items_text}}
 conversation_slots:
 - id: guest_name
   labels:

@@ -13,6 +13,10 @@ steps:
   input_map: {}
 - id: confirm
   type: message
-  message: Here are current tables and availability.
+  message: |
+    Here are current tables and availability.
+    {{items_text}}
+
 - id: done
   type: complete
+  message: ""

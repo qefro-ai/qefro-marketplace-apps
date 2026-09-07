@@ -21,7 +21,10 @@ steps:
       range: range
   - id: confirm
     type: message
-    message: "Rows from {{range}}."
+    message: |
+      Rows from {{range}}.
+      {{items_text}}
+
   - id: done
     type: complete
     message: ""

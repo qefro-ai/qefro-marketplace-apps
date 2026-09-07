@@ -1,6 +1,6 @@
 id: real-estate-pro-runtime
 name: Real Estate Pro
-version: 1.0.6
+version: 1.0.7
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no
   SDK, no custom server)
@@ -118,7 +118,9 @@ triggers:
       - properties
       - listings
       required_slots: []
-  confirmation_message: Here are matching properties.
+  confirmation_message: |
+    Here are matching properties.
+    {{items_text}}
 conversation_slots:
 - id: property_title
   labels:
