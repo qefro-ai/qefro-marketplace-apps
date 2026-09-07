@@ -1,0 +1,17 @@
+- id: items
+  page: items
+  title: Items
+  icon: clipboard
+  entity: item
+- id: contacts
+  page: contacts
+  title: Contacts
+  icon: users
+- id: automations
+  page: automations
+  title: Automations
+  icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

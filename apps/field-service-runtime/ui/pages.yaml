@@ -2,41 +2,30 @@
   title: Today
   layout: dashboard-grid
   widgets:
-    - widget: intro
-      span: 12
-    - widget: wo_status
-      span: 12
-    - widget: wo_table
-      span: 12
-- id: work_orders
-  title: "Work orders"
-  layout: split-grid
-  widgets:
-    - widget: wo_form
-      span: 12
-    - widget: wo_table
-      span: 12
-- id: sites
-  title: Sites
-  layout: split-grid
-  widgets:
-    - widget: sites_table
-      span: 12
-- id: technicians
-  title: Technicians
-  layout: split-grid
-  widgets:
-    - widget: tech_table
-      span: 12
+  - widget: intro
+    span: 12
+  - widget: wo_status
+    span: 12
+  - widget: wo_table
+    span: 12
 - id: parts
   title: Parts
-  layout: split-grid
-  widgets:
-    - widget: parts_table
-      span: 12
+  entity: part
+- id: sites
+  title: Sites
+  entity: site
+- id: technicians
+  title: Technicians
+  entity: technician
+- id: work_orders
+  title: Work orders
+  entity: work_order
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

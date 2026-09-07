@@ -2,22 +2,26 @@
   page: dashboard
   title: Today
   icon: home
-- id: work_orders
-  page: work_orders
-  title: "Work orders"
+- id: parts
+  page: parts
+  title: Parts
   icon: clipboard
+  entity: part
 - id: sites
   page: sites
   title: Sites
   icon: map
+  entity: site
 - id: technicians
   page: technicians
   title: Technicians
-  icon: users
-- id: parts
-  page: parts
-  title: Parts
-  icon: package
+  icon: user
+  entity: technician
+- id: work_orders
+  page: work_orders
+  title: Work orders
+  icon: clipboard
+  entity: work_order
 - id: contacts
   page: contacts
   title: Contacts
@@ -26,3 +30,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

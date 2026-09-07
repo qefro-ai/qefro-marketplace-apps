@@ -2,41 +2,30 @@
   title: Today
   layout: dashboard-grid
   widgets:
-    - widget: intro
-      span: 12
-    - widget: appointments_status
-      span: 12
-    - widget: appointments_table
-      span: 12
+  - widget: intro
+    span: 12
+  - widget: appointments_status
+    span: 12
+  - widget: appointments_table
+    span: 12
 - id: appointments
   title: Appointments
-  layout: split-grid
-  widgets:
-    - widget: appointment_form
-      span: 12
-    - widget: appointments_table
-      span: 12
+  entity: appointment
+- id: availability
+  title: Availability
+  entity: availability_slot
 - id: services
   title: Services
-  layout: split-grid
-  widgets:
-    - widget: services_table
-      span: 12
+  entity: service
 - id: staff
   title: Staff
-  layout: split-grid
-  widgets:
-    - widget: staff_table
-      span: 12
-- id: slots
-  title: Availability
-  layout: split-grid
-  widgets:
-    - widget: slots_table
-      span: 12
+  entity: staff_member
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

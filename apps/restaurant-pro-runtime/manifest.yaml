@@ -1,12 +1,9 @@
-# Restaurant Pro — metadata-only Qefro Marketplace App.
-# hosting: runtime. Executed by EntityService / FlowRunner / RuntimeAdapter.
-# No SDK, no custom connector, no custom REST API, no provider-specific Runtime branches.
 id: restaurant-pro-runtime
 name: Restaurant Pro
-version: 1.0.2
+version: 1.0.3
 hosting: runtime
-description: Metadata-only restaurant operations Marketplace App executed by Qefro Runtime (no SDK, no
-  custom server)
+description: Metadata-only restaurant operations Marketplace App executed by Qefro
+  Runtime (no SDK, no custom server)
 category: hospitality
 tags:
 - restaurant

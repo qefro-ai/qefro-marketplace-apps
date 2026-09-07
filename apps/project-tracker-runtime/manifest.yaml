@@ -1,41 +1,40 @@
-# Genericity fixture — metadata-only Marketplace App (M14).
 id: project-tracker-runtime
 name: Project Tracker
-version: 1.0.0
+version: 1.0.1
 hosting: runtime
 description: Sample project / task / invoice app for ZIP install genericity tests
 category: productivity
 tags:
-  - projects
-  - tasks
-  - runtime
-  - fixture
+- projects
+- tasks
+- runtime
+- fixture
 channels:
-  - widget
+- widget
 entities:
-  - project
-  - task
-  - invoice
+- project
+- task
+- invoice
 flows:
-  - create-project
-  - create-task
-  - create-invoice
+- create-project
+- create-task
+- create-invoice
 events:
-  - project.created
-  - task.created
-  - task.completed
-  - invoice.created
+- project.created
+- task.created
+- task.completed
+- invoice.created
 permissions:
-  - workflow.execute
-  - storage.read
-  - storage.write
-  - storage.update
-  - storage.delete
-  - runtime.query
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+- runtime.query
 ui:
   name: Project Tracker
 role_templates:
-  - name: Admin
-    system: true
-  - name: Staff
-    system: true
+- name: Admin
+  system: true
+- name: Staff
+  system: true

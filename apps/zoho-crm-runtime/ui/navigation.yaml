@@ -2,22 +2,36 @@
   page: dashboard
   title: Today
   icon: home
+- id: accounts
+  page: accounts
+  title: Accounts
+  icon: home
+  entity: account
+- id: activities
+  page: activities
+  title: Activities
+  icon: activity
+  entity: activity
+- id: crm_contacts
+  page: crm_contacts
+  title: Contacts list
+  icon: users
+  entity: contact
+- id: deals
+  page: deals
+  title: Deals
+  icon: clipboard
+  entity: deal
 - id: leads
   page: leads
   title: Leads
   icon: users
-- id: zoho-contacts
-  page: zoho-contacts
-  title: "Zoho contacts"
-  icon: user
-- id: accounts
-  page: accounts
-  title: Accounts
-  icon: clipboard
-- id: deals
-  page: deals
-  title: Deals
-  icon: report
+  entity: lead
+- id: notes
+  page: notes
+  title: Notes
+  icon: file-text
+  entity: note
 - id: contacts
   page: contacts
   title: Contacts
@@ -26,3 +40,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

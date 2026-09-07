@@ -6,10 +6,12 @@
   page: calendars
   title: Calendars
   icon: calendar
+  entity: calendar
 - id: events
   page: events
   title: Events
-  icon: clock
+  icon: calendar
+  entity: event
 - id: contacts
   page: contacts
   title: Contacts
@@ -18,3 +20,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

@@ -4,3 +4,4 @@ accent: '#d97706'
 background: '#fffbeb'
 surface: '#ffffff'
 text: '#78350f'
+navigation_layout: sidebar

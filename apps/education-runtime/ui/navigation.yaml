@@ -2,22 +2,26 @@
   page: dashboard
   title: Today
   icon: home
+- id: assignments
+  page: assignments
+  title: Assignments
+  icon: file-text
+  entity: assignment
+- id: courses
+  page: courses
+  title: Courses
+  icon: clipboard
+  entity: course
 - id: enrollments
   page: enrollments
   title: Enrollments
   icon: users
-- id: courses
-  page: courses
-  title: Courses
-  icon: list
+  entity: enrollment
 - id: sessions
   page: sessions
   title: Sessions
   icon: calendar
-- id: assignments
-  page: assignments
-  title: Assignments
-  icon: clipboard
+  entity: session
 - id: contacts
   page: contacts
   title: Contacts
@@ -26,3 +30,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

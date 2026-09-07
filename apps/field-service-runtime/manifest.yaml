@@ -1,132 +1,132 @@
-# Field Service — native metadata Marketplace App. No external FSM vendor wrapper.
 id: field-service-runtime
-name: "Field Service"
-version: 0.1.0
+name: Field Service
+version: 0.1.1
 hosting: runtime
-description: "Sites, technicians, parts, and work orders as a native Qefro business application"
+description: Sites, technicians, parts, and work orders as a native Qefro business
+  application
 category: operations
 tags:
-  - field-service
-  - work-orders
-  - runtime
+- field-service
+- work-orders
+- runtime
 channels:
-  - widget
-  - whatsapp
+- widget
+- whatsapp
 entities:
-  - site
-  - technician
-  - part
-  - work_order
+- site
+- technician
+- part
+- work_order
 flows:
-  - create-work-order
-  - update-work-order
-  - complete-work-order
-  - lookup-work-order
+- create-work-order
+- update-work-order
+- complete-work-order
+- lookup-work-order
 events:
-  - work_order.created
-  - work_order.updated
-  - work_order.completed
-  - work_order.cancelled
+- work_order.created
+- work_order.updated
+- work_order.completed
+- work_order.cancelled
 permissions:
-  - workflow.execute
-  - storage.read
-  - storage.write
-  - storage.update
-  - storage.delete
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
 capabilities:
-  - theme.get
-  - user.get
-  - tenant.get
-  - runtime.query
-  - workflow.trigger
-  - storage.read
-  - storage.write
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
 triggers:
-  - id: create_work_order
-    workflow: create-work-order
-    input_variable: wo_input
-    match:
-      intents:
-        - "create a work order"
-        - "open a job"
-        - "dispatch a technician"
-      confirmation:
-        reply_signals:
-          - "work order"
-        required_slots:
-          - site_name
-          - summary
-    confirmation_message: "Work order created for {{site_name}}."
-  - id: update_work_order
-    workflow: update-work-order
-    input_variable: wo_update
-    match:
-      intents:
-        - "assign the work order"
-        - "update the job"
-      confirmation:
-        reply_signals:
-          - updated
-        required_slots:
-          - id
-    confirmation_message: "Work order {{id}} updated."
-  - id: complete_work_order
-    workflow: complete-work-order
-    input_variable: wo_complete
-    match:
-      intents:
-        - "complete the work order"
-        - "close the job"
-      confirmation:
-        reply_signals:
-          - completed
-        required_slots:
-          - id
-    confirmation_message: "Work order {{id}} completed."
-  - id: lookup_work_order
-    workflow: lookup-work-order
-    input_variable: wo_lookup
-    match:
-      intents:
-        - "find the work order"
-        - "job status"
-      confirmation:
-        reply_signals:
-          - "work order"
-        required_slots:
-          - id
-    confirmation_message: "Here is work order {{id}}."
-conversation_slots:
-  - id: site_name
-    labels:
-      - site
-      - location
-      - address
-    kind: string
-  - id: summary
-    labels:
-      - job
-      - issue
+- id: create_work_order
+  workflow: create-work-order
+  input_variable: wo_input
+  match:
+    intents:
+    - create a work order
+    - open a job
+    - dispatch a technician
+    confirmation:
+      reply_signals:
+      - work order
+      required_slots:
+      - site_name
       - summary
-    kind: string
-  - id: technician_name
-    labels:
-      - technician
-      - engineer
-    kind: string
-  - id: scheduled_date
-    labels:
-      - date
-      - tomorrow
-    kind: date
-  - id: status
-    labels:
-      - status
-    kind: string
-  - id: id
-    labels:
-      - "work order"
-      - "job id"
-    kind: string
+  confirmation_message: Work order created for {{site_name}}.
+- id: update_work_order
+  workflow: update-work-order
+  input_variable: wo_update
+  match:
+    intents:
+    - assign the work order
+    - update the job
+    confirmation:
+      reply_signals:
+      - updated
+      required_slots:
+      - id
+  confirmation_message: Work order {{id}} updated.
+- id: complete_work_order
+  workflow: complete-work-order
+  input_variable: wo_complete
+  match:
+    intents:
+    - complete the work order
+    - close the job
+    confirmation:
+      reply_signals:
+      - completed
+      required_slots:
+      - id
+  confirmation_message: Work order {{id}} completed.
+- id: lookup_work_order
+  workflow: lookup-work-order
+  input_variable: wo_lookup
+  match:
+    intents:
+    - find the work order
+    - job status
+    confirmation:
+      reply_signals:
+      - work order
+      required_slots:
+      - id
+  confirmation_message: Here is work order {{id}}.
+conversation_slots:
+- id: site_name
+  labels:
+  - site
+  - location
+  - address
+  kind: string
+- id: summary
+  labels:
+  - job
+  - issue
+  - summary
+  kind: string
+- id: technician_name
+  labels:
+  - technician
+  - engineer
+  kind: string
+- id: scheduled_date
+  labels:
+  - date
+  - tomorrow
+  kind: date
+- id: status
+  labels:
+  - status
+  kind: string
+- id: id
+  labels:
+  - work order
+  - job id
+  kind: string
 ui:
-  name: "Field Service"
+  name: Field Service

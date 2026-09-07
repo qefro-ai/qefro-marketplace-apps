@@ -2,45 +2,51 @@
   page: dashboard
   title: Dashboard
   icon: home
-- id: patients
-  page: patients
-  title: Patients
-  icon: users
-  entity: patient
 - id: appointments
   page: appointments
   title: Appointments
   icon: calendar
   entity: appointment
-- id: practitioners
-  page: practitioners
-  title: Practitioners
-  icon: user
-  entity: practitioner
 - id: slots
   page: slots
   title: Slots
   icon: clock
   entity: appointment_slot
-- id: visits
-  page: visits
-  title: Visits
-  icon: stethoscope
-  entity: visit
-- id: treatments
-  page: treatments
-  title: Treatments
-  icon: clipboard
-  entity: treatment
+- id: invoices
+  page: invoices
+  title: Invoices
+  icon: receipt
+  entity: invoice
+- id: patients
+  page: patients
+  title: Patients
+  icon: users
+  entity: patient
+- id: payments
+  page: payments
+  title: Payments
+  icon: credit-card
+  entity: payment
+- id: practitioners
+  page: practitioners
+  title: Practitioners
+  icon: user
+  entity: practitioner
 - id: prescriptions
   page: prescriptions
   title: Prescriptions
   icon: file-text
   entity: prescription
-- id: billing
-  page: billing
-  title: Billing
-  icon: credit-card
+- id: treatments
+  page: treatments
+  title: Treatments
+  icon: clipboard
+  entity: treatment
+- id: visits
+  page: visits
+  title: Visits
+  icon: clipboard
+  entity: visit
 - id: contacts
   page: contacts
   title: Contacts

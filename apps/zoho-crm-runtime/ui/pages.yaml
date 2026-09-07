@@ -2,41 +2,36 @@
   title: Today
   layout: dashboard-grid
   widgets:
-    - widget: intro
-      span: 12
-    - widget: deals_status
-      span: 12
-    - widget: leads_table
-      span: 12
-- id: leads
-  title: Leads
-  layout: split-grid
-  widgets:
-    - widget: lead_form
-      span: 12
-    - widget: leads_table
-      span: 12
-- id: zoho-contacts
-  title: "Zoho contacts"
-  layout: split-grid
-  widgets:
-    - widget: contacts_table
-      span: 12
+  - widget: intro
+    span: 12
+  - widget: deals_status
+    span: 12
+  - widget: leads_table
+    span: 12
 - id: accounts
   title: Accounts
-  layout: split-grid
-  widgets:
-    - widget: accounts_table
-      span: 12
+  entity: account
+- id: activities
+  title: Activities
+  entity: activity
+- id: crm_contacts
+  title: Contacts list
+  entity: contact
 - id: deals
   title: Deals
-  layout: split-grid
-  widgets:
-    - widget: deals_table
-      span: 12
+  entity: deal
+- id: leads
+  title: Leads
+  entity: lead
+- id: notes
+  title: Notes
+  entity: note
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

@@ -4,16 +4,19 @@
   icon: home
 - id: event_types
   page: event_types
-  title: "Event types"
+  title: Event types
   icon: calendar
-- id: scheduled_events
-  page: scheduled_events
-  title: Scheduled
-  icon: clock
+  entity: event_type
 - id: invitees
   page: invitees
   title: Invitees
   icon: users
+  entity: invitee
+- id: scheduled_events
+  page: scheduled_events
+  title: Scheduled
+  icon: calendar
+  entity: scheduled_event
 - id: contacts
   page: contacts
   title: Contacts
@@ -22,3 +25,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

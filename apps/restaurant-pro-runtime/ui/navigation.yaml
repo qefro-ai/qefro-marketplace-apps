@@ -2,30 +2,61 @@
   page: dashboard
   title: Dashboard
   icon: home
-- id: reservations
-  page: reservations
-  title: Reservations
-  icon: calendar
-- id: tables
-  page: tables
-  title: Tables
-  icon: clipboard
-- id: menu
-  page: menu
-  title: Menu
-  icon: chef-hat
-- id: orders
-  page: orders
-  title: Orders
-  icon: receipt
 - id: customers
   page: customers
   title: Customers
   icon: users
+  entity: customer
+- id: dining_sessions
+  page: dining_sessions
+  title: Dining sessions
+  icon: clipboard
+  entity: dining_session
+- id: menu_categories
+  page: menu_categories
+  title: Menu categories
+  icon: clipboard
+  entity: menu_category
+- id: menu_items
+  page: menu_items
+  title: Menu
+  icon: clipboard
+  entity: menu_item
+- id: orders
+  page: orders
+  title: Orders
+  icon: receipt
+  entity: order
+- id: order_items
+  page: order_items
+  title: Order items
+  icon: receipt
+  entity: order_item
+- id: payments
+  page: payments
+  title: Payments
+  icon: credit-card
+  entity: payment
+- id: reservations
+  page: reservations
+  title: Reservations
+  icon: calendar
+  entity: reservation
+- id: restaurants
+  page: restaurants
+  title: Restaurant
+  icon: home
+  entity: restaurant
 - id: staff
   page: staff
   title: Staff
   icon: user
+  entity: staff_member
+- id: tables
+  page: tables
+  title: Tables
+  icon: clipboard
+  entity: table
 - id: contacts
   page: contacts
   title: Contacts
@@ -34,3 +65,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

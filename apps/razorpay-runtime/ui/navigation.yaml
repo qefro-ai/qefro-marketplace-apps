@@ -6,18 +6,32 @@
   page: customers
   title: Customers
   icon: users
+  entity: customer
+- id: invoices
+  page: invoices
+  title: Invoices
+  icon: receipt
+  entity: invoice
 - id: orders
   page: orders
   title: Orders
   icon: receipt
+  entity: order
 - id: payments
   page: payments
   title: Payments
   icon: credit-card
-- id: invoices
-  page: invoices
-  title: Invoices
-  icon: file-text
+  entity: payment
+- id: payment_links
+  page: payment_links
+  title: Payment links
+  icon: credit-card
+  entity: payment_link
+- id: refunds
+  page: refunds
+  title: Refunds
+  icon: credit-card
+  entity: refund
 - id: contacts
   page: contacts
   title: Contacts
@@ -26,3 +40,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

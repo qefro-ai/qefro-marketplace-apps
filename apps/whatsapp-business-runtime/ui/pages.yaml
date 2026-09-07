@@ -2,35 +2,27 @@
   title: Today
   layout: dashboard-grid
   widgets:
-    - widget: intro
-      span: 12
-    - widget: messages_status
-      span: 12
-    - widget: templates_table
-      span: 12
+  - widget: intro
+    span: 12
+  - widget: messages_status
+    span: 12
+  - widget: templates_table
+    span: 12
 - id: templates
   title: Templates
-  layout: split-grid
-  widgets:
-    - widget: templates_table
-      span: 12
-- id: messages
+  entity: message_template
+- id: outbound
   title: Outbound
-  layout: split-grid
-  widgets:
-    - widget: send_form
-      span: 12
-    - widget: messages_table
-      span: 12
+  entity: outbound_message
 - id: wa_contacts
-  title: "WA contacts"
-  layout: split-grid
-  widgets:
-    - widget: contacts_table
-      span: 12
+  title: WA contacts
+  entity: wa_contact
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

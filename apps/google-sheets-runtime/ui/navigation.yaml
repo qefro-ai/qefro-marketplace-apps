@@ -2,18 +2,21 @@
   page: dashboard
   title: Today
   icon: home
-- id: spreadsheets
-  page: spreadsheets
-  title: Spreadsheets
-  icon: file-text
-- id: sheets
-  page: sheets
-  title: Sheets
-  icon: list
 - id: rows
   page: rows
   title: Rows
   icon: clipboard
+  entity: row
+- id: sheets
+  page: sheets
+  title: Sheets
+  icon: clipboard
+  entity: sheet
+- id: spreadsheets
+  page: spreadsheets
+  title: Spreadsheets
+  icon: clipboard
+  entity: spreadsheet
 - id: contacts
   page: contacts
   title: Contacts
@@ -22,3 +25,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

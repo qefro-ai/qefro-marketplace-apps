@@ -5,15 +5,18 @@
 - id: templates
   page: templates
   title: Templates
-  icon: list
-- id: messages
-  page: messages
+  icon: file-text
+  entity: message_template
+- id: outbound
+  page: outbound
   title: Outbound
-  icon: activity
+  icon: workflow
+  entity: outbound_message
 - id: wa_contacts
   page: wa_contacts
-  title: "WA contacts"
+  title: WA contacts
   icon: users
+  entity: wa_contact
 - id: contacts
   page: contacts
   title: Contacts
@@ -22,3 +25,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

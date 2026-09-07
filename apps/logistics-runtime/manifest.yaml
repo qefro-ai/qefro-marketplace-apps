@@ -1,134 +1,134 @@
-# Logistics — native metadata Marketplace App. Not a carrier API wrapper.
 id: logistics-runtime
 name: Logistics
-version: 0.1.0
+version: 0.1.1
 hosting: runtime
-description: "Vehicles, consignments, shipments, and stops as a native Qefro logistics application"
+description: Vehicles, consignments, shipments, and stops as a native Qefro logistics
+  application
 category: logistics
 tags:
-  - logistics
-  - shipping
-  - runtime
+- logistics
+- shipping
+- runtime
 channels:
-  - widget
-  - whatsapp
+- widget
+- whatsapp
 entities:
-  - vehicle
-  - consignment
-  - shipment
-  - stop
+- vehicle
+- consignment
+- shipment
+- stop
 flows:
-  - create-shipment
-  - update-shipment-status
-  - cancel-shipment
-  - lookup-shipment
+- create-shipment
+- update-shipment-status
+- cancel-shipment
+- lookup-shipment
 events:
-  - shipment.created
-  - shipment.updated
-  - shipment.cancelled
-  - consignment.created
+- shipment.created
+- shipment.updated
+- shipment.cancelled
+- consignment.created
 permissions:
-  - workflow.execute
-  - storage.read
-  - storage.write
-  - storage.update
-  - storage.delete
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
 capabilities:
-  - theme.get
-  - user.get
-  - tenant.get
-  - runtime.query
-  - workflow.trigger
-  - storage.read
-  - storage.write
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
 triggers:
-  - id: create_shipment
-    workflow: create-shipment
-    input_variable: shipment_input
-    match:
-      intents:
-        - "create a shipment"
-        - "book a delivery"
-      confirmation:
-        reply_signals:
-          - shipment
-        required_slots:
-          - origin
-          - destination
-    confirmation_message: "Shipment created from {{origin}} to {{destination}}."
-  - id: update_shipment_status
-    workflow: update-shipment-status
-    input_variable: shipment_status
-    match:
-      intents:
-        - "update shipment status"
-        - "mark delivered"
-      confirmation:
-        reply_signals:
-          - updated
-        required_slots:
-          - id
-          - status
-    confirmation_message: "Shipment {{id}} is now {{status}}."
-  - id: cancel_shipment
-    workflow: cancel-shipment
-    input_variable: shipment_cancel
-    match:
-      intents:
-        - "cancel the shipment"
-        - "stop the delivery"
-      confirmation:
-        reply_signals:
-          - cancelled
-        required_slots:
-          - id
-    confirmation_message: "Shipment {{id}} cancelled."
-  - id: lookup_shipment
-    workflow: lookup-shipment
-    input_variable: shipment_lookup
-    match:
-      intents:
-        - "track shipment"
-        - "where is my shipment"
-      confirmation:
-        reply_signals:
-          - shipment
-        required_slots:
-          - id
-    confirmation_message: "Here is shipment {{id}}."
-conversation_slots:
-  - id: origin
-    labels:
-      - origin
-      - from
-      - pickup
-    kind: string
-  - id: destination
-    labels:
-      - destination
-      - to
-      - drop
-    kind: string
-  - id: vehicle_label
-    labels:
-      - vehicle
-      - truck
-    kind: string
-  - id: scheduled_date
-    labels:
-      - date
-      - tomorrow
-    kind: date
-  - id: status
-    labels:
-      - status
-      - delivered
-      - "in transit"
-    kind: string
-  - id: id
-    labels:
+- id: create_shipment
+  workflow: create-shipment
+  input_variable: shipment_input
+  match:
+    intents:
+    - create a shipment
+    - book a delivery
+    confirmation:
+      reply_signals:
       - shipment
-      - tracking
-    kind: string
+      required_slots:
+      - origin
+      - destination
+  confirmation_message: Shipment created from {{origin}} to {{destination}}.
+- id: update_shipment_status
+  workflow: update-shipment-status
+  input_variable: shipment_status
+  match:
+    intents:
+    - update shipment status
+    - mark delivered
+    confirmation:
+      reply_signals:
+      - updated
+      required_slots:
+      - id
+      - status
+  confirmation_message: Shipment {{id}} is now {{status}}.
+- id: cancel_shipment
+  workflow: cancel-shipment
+  input_variable: shipment_cancel
+  match:
+    intents:
+    - cancel the shipment
+    - stop the delivery
+    confirmation:
+      reply_signals:
+      - cancelled
+      required_slots:
+      - id
+  confirmation_message: Shipment {{id}} cancelled.
+- id: lookup_shipment
+  workflow: lookup-shipment
+  input_variable: shipment_lookup
+  match:
+    intents:
+    - track shipment
+    - where is my shipment
+    confirmation:
+      reply_signals:
+      - shipment
+      required_slots:
+      - id
+  confirmation_message: Here is shipment {{id}}.
+conversation_slots:
+- id: origin
+  labels:
+  - origin
+  - from
+  - pickup
+  kind: string
+- id: destination
+  labels:
+  - destination
+  - to
+  - drop
+  kind: string
+- id: vehicle_label
+  labels:
+  - vehicle
+  - truck
+  kind: string
+- id: scheduled_date
+  labels:
+  - date
+  - tomorrow
+  kind: date
+- id: status
+  labels:
+  - status
+  - delivered
+  - in transit
+  kind: string
+- id: id
+  labels:
+  - shipment
+  - tracking
+  kind: string
 ui:
   name: Logistics

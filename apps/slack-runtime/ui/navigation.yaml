@@ -6,14 +6,17 @@
   page: channels
   title: Channels
   icon: list
-- id: users
-  page: users
-  title: Users
-  icon: users
+  entity: channel
 - id: messages
   page: messages
   title: Messages
-  icon: activity
+  icon: list
+  entity: slack_message
+- id: slack_users
+  page: slack_users
+  title: Users
+  icon: users
+  entity: slack_user
 - id: contacts
   page: contacts
   title: Contacts
@@ -22,3 +25,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

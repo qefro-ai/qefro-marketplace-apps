@@ -8,49 +8,45 @@
     span: 12
   - widget: reservations_table
     span: 12
-- id: reservations
-  title: Reservations
-  layout: split-grid
-  widgets:
-  - widget: reservation_form
-    span: 12
-  - widget: reservations_table
-    span: 12
-- id: tables
-  title: Tables
-  layout: split-grid
-  widgets:
-  - widget: tables_table
-    span: 12
-- id: menu
-  title: Menu
-  layout: split-grid
-  widgets:
-  - widget: menu_table
-    span: 12
-- id: orders
-  title: Orders
-  layout: split-grid
-  widgets:
-  - widget: order_form
-    span: 12
-  - widget: orders_table
-    span: 12
 - id: customers
   title: Customers
-  layout: split-grid
-  widgets:
-  - widget: customers_table
-    span: 12
+  entity: customer
+- id: dining_sessions
+  title: Dining sessions
+  entity: dining_session
+- id: menu_categories
+  title: Menu categories
+  entity: menu_category
+- id: menu_items
+  title: Menu
+  entity: menu_item
+- id: orders
+  title: Orders
+  entity: order
+- id: order_items
+  title: Order items
+  entity: order_item
+- id: payments
+  title: Payments
+  entity: payment
+- id: reservations
+  title: Reservations
+  entity: reservation
+- id: restaurants
+  title: Restaurant
+  entity: restaurant
 - id: staff
   title: Staff
-  layout: split-grid
-  widgets:
-  - widget: staff_table
-    span: 12
+  entity: staff_member
+- id: tables
+  title: Tables
+  entity: table
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

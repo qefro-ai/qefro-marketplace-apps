@@ -2,41 +2,46 @@
   page: dashboard
   title: Dashboard
   icon: home
-- id: properties
-  page: properties
-  title: Properties
-  icon: map
-  entity: property
-- id: leads
-  page: leads
-  title: Leads
-  icon: users
-  entity: lead
-- id: viewings
-  page: viewings
-  title: Viewings
-  icon: calendar
-  entity: viewing
-- id: offers
-  page: offers
-  title: Offers
-  icon: file-text
-  entity: offer
-- id: deals
-  page: deals
-  title: Deals
-  icon: clipboard
-  entity: deal
 - id: agents
   page: agents
   title: Agents
   icon: user
   entity: agent
+- id: deals
+  page: deals
+  title: Deals
+  icon: clipboard
+  entity: deal
+- id: leads
+  page: leads
+  title: Leads
+  icon: users
+  entity: lead
+- id: offers
+  page: offers
+  title: Offers
+  icon: file-text
+  entity: offer
+- id: properties
+  page: properties
+  title: Properties
+  icon: map
+  entity: property
 - id: documents
   page: documents
   title: Documents
   icon: file-text
   entity: property_document
+- id: units
+  page: units
+  title: Units
+  icon: map
+  entity: property_unit
+- id: viewings
+  page: viewings
+  title: Viewings
+  icon: calendar
+  entity: viewing
 - id: contacts
   page: contacts
   title: Contacts

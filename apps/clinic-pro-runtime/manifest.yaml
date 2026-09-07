@@ -1,12 +1,9 @@
-# Clinic Pro — metadata-only Qefro Marketplace App.
-# hosting: runtime. Executed by EntityService / FlowRunner / RuntimeAdapter.
-# No SDK, no custom connector, no custom REST API, no provider-specific Runtime branches.
 id: clinic-pro-runtime
 name: Clinic Pro
-version: 1.0.4
+version: 1.0.5
 hosting: runtime
-description: Metadata-only clinic management Marketplace App executed by Qefro Runtime (no SDK, no custom
-  server)
+description: Metadata-only clinic management Marketplace App executed by Qefro Runtime
+  (no SDK, no custom server)
 category: healthcare
 tags:
 - clinic

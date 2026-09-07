@@ -8,27 +8,30 @@
     span: 12
   - widget: properties_table
     span: 12
-- id: properties
-  title: Properties
-  entity: property
-- id: leads
-  title: Leads
-  entity: lead
-- id: viewings
-  title: Viewings
-  entity: viewing
-- id: offers
-  title: Offers
-  entity: offer
-- id: deals
-  title: Deals
-  entity: deal
 - id: agents
   title: Agents
   entity: agent
+- id: deals
+  title: Deals
+  entity: deal
+- id: leads
+  title: Leads
+  entity: lead
+- id: offers
+  title: Offers
+  entity: offer
+- id: properties
+  title: Properties
+  entity: property
 - id: documents
   title: Documents
   entity: property_document
+- id: units
+  title: Units
+  entity: property_unit
+- id: viewings
+  title: Viewings
+  entity: viewing
 - id: contacts
   title: Contacts
   host: contacts

@@ -1,12 +1,18 @@
+- id: invoices
+  title: Invoices
+  entity: invoice
 - id: projects
   title: Projects
   entity: project
 - id: tasks
   title: Tasks
   entity: task
-- id: invoices
-  title: Invoices
-  entity: invoice
 - id: roles
   title: Roles
   host: roles
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

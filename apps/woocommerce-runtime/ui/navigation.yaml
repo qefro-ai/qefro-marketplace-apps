@@ -2,22 +2,31 @@
   page: dashboard
   title: Today
   icon: home
-- id: products
-  page: products
-  title: Products
-  icon: package
+- id: categories
+  page: categories
+  title: Categories
+  icon: clipboard
+  entity: category
+- id: coupons
+  page: coupons
+  title: Coupons
+  icon: clipboard
+  entity: coupon
 - id: customers
   page: customers
   title: Customers
   icon: users
+  entity: customer
 - id: orders
   page: orders
   title: Orders
   icon: receipt
-- id: coupons
-  page: coupons
-  title: Coupons
-  icon: wallet
+  entity: order
+- id: products
+  page: products
+  title: Products
+  icon: clipboard
+  entity: product
 - id: contacts
   page: contacts
   title: Contacts
@@ -26,3 +35,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

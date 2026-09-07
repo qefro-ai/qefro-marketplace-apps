@@ -6,18 +6,22 @@
   page: appointments
   title: Appointments
   icon: calendar
+  entity: appointment
+- id: availability
+  page: availability
+  title: Availability
+  icon: clock
+  entity: availability_slot
 - id: services
   page: services
   title: Services
-  icon: list
+  icon: clipboard
+  entity: service
 - id: staff
   page: staff
   title: Staff
-  icon: users
-- id: slots
-  page: slots
-  title: Availability
-  icon: clock
+  icon: user
+  entity: staff_member
 - id: contacts
   page: contacts
   title: Contacts
@@ -26,3 +30,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

@@ -8,39 +8,33 @@
     span: 12
   - widget: appointments_table
     span: 12
-- id: patients
-  title: Patients
-  entity: patient
 - id: appointments
   title: Appointments
   entity: appointment
-- id: practitioners
-  title: Practitioners
-  entity: practitioner
 - id: slots
   title: Slots
   entity: appointment_slot
-- id: visits
-  title: Visits
-  entity: visit
-- id: treatments
-  title: Treatments
-  entity: treatment
+- id: invoices
+  title: Invoices
+  entity: invoice
+- id: patients
+  title: Patients
+  entity: patient
+- id: payments
+  title: Payments
+  entity: payment
+- id: practitioners
+  title: Practitioners
+  entity: practitioner
 - id: prescriptions
   title: Prescriptions
   entity: prescription
-- id: billing
-  title: Billing
-  layout: split-grid
-  widgets:
-  - widget: invoice_form
-    span: 12
-  - widget: payment_form
-    span: 12
-  - widget: invoices_table
-    span: 12
-  - widget: payments_table
-    span: 12
+- id: treatments
+  title: Treatments
+  entity: treatment
+- id: visits
+  title: Visits
+  entity: visit
 - id: contacts
   title: Contacts
   host: contacts

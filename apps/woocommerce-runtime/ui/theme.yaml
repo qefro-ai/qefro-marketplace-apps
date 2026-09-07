@@ -1,6 +1,7 @@
-primary: "#7f54b3"
-secondary: "#201c1c"
-accent: "#9b6cc3"
-background: "#f6f6f6"
-surface: "#ffffff"
-text: "#201c1c"
+primary: '#7f54b3'
+secondary: '#201c1c'
+accent: '#9b6cc3'
+background: '#f6f6f6'
+surface: '#ffffff'
+text: '#201c1c'
+navigation_layout: sidebar

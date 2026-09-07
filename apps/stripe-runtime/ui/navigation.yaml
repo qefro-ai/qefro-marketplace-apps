@@ -2,26 +2,51 @@
   page: dashboard
   title: Today
   icon: home
+- id: checkouts
+  page: checkouts
+  title: Checkouts
+  icon: credit-card
+  entity: checkout_session
 - id: customers
   page: customers
   title: Customers
   icon: users
-- id: products
-  page: products
-  title: Products
-  icon: package
+  entity: customer
 - id: invoices
   page: invoices
   title: Invoices
   icon: receipt
-- id: subscriptions
-  page: subscriptions
-  title: Subscriptions
-  icon: credit-card
+  entity: invoice
 - id: payments
   page: payments
   title: Payments
-  icon: wallet
+  icon: credit-card
+  entity: payment
+- id: payment_links
+  page: payment_links
+  title: Payment links
+  icon: credit-card
+  entity: payment_link
+- id: prices
+  page: prices
+  title: Prices
+  icon: credit-card
+  entity: price
+- id: products
+  page: products
+  title: Products
+  icon: clipboard
+  entity: product
+- id: refunds
+  page: refunds
+  title: Refunds
+  icon: credit-card
+  entity: refund
+- id: subscriptions
+  page: subscriptions
+  title: Subscriptions
+  icon: clipboard
+  entity: subscription
 - id: contacts
   page: contacts
   title: Contacts
@@ -30,3 +55,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

@@ -2,22 +2,26 @@
   page: dashboard
   title: Today
   icon: home
-- id: shipments
-  page: shipments
-  title: Shipments
-  icon: map
 - id: consignments
   page: consignments
   title: Consignments
-  icon: package
+  icon: clipboard
+  entity: consignment
+- id: shipments
+  page: shipments
+  title: Shipments
+  icon: clipboard
+  entity: shipment
+- id: stops
+  page: stops
+  title: Stops
+  icon: map
+  entity: stop
 - id: vehicles
   page: vehicles
   title: Vehicles
   icon: clipboard
-- id: stops
-  page: stops
-  title: Stops
-  icon: list
+  entity: vehicle
 - id: contacts
   page: contacts
   title: Contacts
@@ -26,3 +30,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

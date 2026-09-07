@@ -2,46 +2,36 @@
   title: Today
   layout: dashboard-grid
   widgets:
-    - { widget: intro, span: 12 }
-    - { widget: orders_status, span: 5 }
-    - { widget: orders_table, span: 7 }
-- id: products
-  title: Products
-  layout: split-grid
-  widgets:
-    - { widget: product_search, span: 5 }
-    - { widget: products_table, span: 7 }
-- id: product
-  title: Product
-  layout: split-grid
-  widgets:
-    - { widget: product_detail, span: 12 }
-    - { widget: products_table, span: 12 }
+  - widget: intro
+    span: 12
+  - widget: orders_status
+    span: 5
+  - widget: orders_table
+    span: 7
+- id: collections
+  title: Collections
+  entity: collection
 - id: customers
   title: Customers
-  layout: split-grid
-  widgets:
-    - { widget: customers_table, span: 12 }
-- id: customer
-  title: Customer
-  layout: split-grid
-  widgets:
-    - { widget: customer_detail, span: 12 }
-    - { widget: customers_table, span: 12 }
+  entity: customer
 - id: orders
   title: Orders
-  layout: split-grid
-  widgets:
-    - { widget: orders_table, span: 12 }
-- id: order
-  title: Order
-  layout: split-grid
-  widgets:
-    - { widget: order_detail, span: 12 }
-    - { widget: orders_table, span: 12 }
+  entity: order
+- id: line_items
+  title: Line items
+  entity: order_line_item
+- id: products
+  title: Products
+  entity: product
+- id: variants
+  title: Variants
+  entity: variant
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

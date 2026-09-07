@@ -2,30 +2,36 @@
   page: dashboard
   title: Today
   icon: home
-- id: products
-  page: products
-  title: Products
-  icon: package
-- id: product
-  page: product
-  title: Product
+- id: collections
+  page: collections
+  title: Collections
   icon: clipboard
+  entity: collection
 - id: customers
   page: customers
   title: Customers
   icon: users
-- id: customer
-  page: customer
-  title: Customer
-  icon: user
+  entity: customer
 - id: orders
   page: orders
   title: Orders
   icon: receipt
-- id: order
-  page: order
-  title: Order
-  icon: file-text
+  entity: order
+- id: line_items
+  page: line_items
+  title: Line items
+  icon: receipt
+  entity: order_line_item
+- id: products
+  page: products
+  title: Products
+  icon: clipboard
+  entity: product
+- id: variants
+  page: variants
+  title: Variants
+  icon: clipboard
+  entity: variant
 - id: contacts
   page: contacts
   title: Contacts
@@ -34,3 +40,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

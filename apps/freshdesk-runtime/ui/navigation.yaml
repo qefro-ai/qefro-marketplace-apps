@@ -2,18 +2,26 @@
   page: dashboard
   title: Today
   icon: home
-- id: tickets
-  page: tickets
-  title: Tickets
-  icon: receipt
-- id: fd-contacts
-  page: fd-contacts
-  title: "Freshdesk contacts"
-  icon: users
 - id: agents
   page: agents
   title: Agents
   icon: user
+  entity: agent
+- id: crm_contacts
+  page: crm_contacts
+  title: Contacts list
+  icon: users
+  entity: contact
+- id: tickets
+  page: tickets
+  title: Tickets
+  icon: clipboard
+  entity: ticket
+- id: ticket_comments
+  page: ticket_comments
+  title: Comments
+  icon: list
+  entity: ticket_comment
 - id: contacts
   page: contacts
   title: Contacts
@@ -22,3 +30,7 @@
   page: automations
   title: Automations
   icon: workflow
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

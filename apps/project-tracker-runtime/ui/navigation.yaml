@@ -1,16 +1,27 @@
+- id: invoices
+  page: invoices
+  title: Invoices
+  icon: receipt
+  entity: invoice
 - id: projects
-  label: Projects
   page: projects
+  title: Projects
+  icon: clipboard
   entity: project
 - id: tasks
-  label: Tasks
   page: tasks
+  title: Tasks
+  icon: clipboard
   entity: task
-- id: invoices
-  label: Invoices
-  page: invoices
-  entity: invoice
 - id: roles
-  label: Roles
   page: roles
-  host: roles
+  title: Roles
+  icon: settings
+- id: contacts
+  page: contacts
+  title: Contacts
+  icon: users
+- id: automations
+  page: automations
+  title: Automations
+  icon: workflow

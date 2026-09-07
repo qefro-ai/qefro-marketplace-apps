@@ -1,0 +1,12 @@
+- id: items
+  title: Items
+  entity: item
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

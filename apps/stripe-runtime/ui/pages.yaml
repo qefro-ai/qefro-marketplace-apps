@@ -2,47 +2,45 @@
   title: Today
   layout: dashboard-grid
   widgets:
-    - widget: intro
-      span: 12
-    - widget: payments_status
-      span: 12
-    - widget: customers_table
-      span: 12
+  - widget: intro
+    span: 12
+  - widget: payments_status
+    span: 12
+  - widget: customers_table
+    span: 12
+- id: checkouts
+  title: Checkouts
+  entity: checkout_session
 - id: customers
   title: Customers
-  layout: split-grid
-  widgets:
-    - widget: customers_table
-      span: 12
-- id: products
-  title: Products
-  layout: split-grid
-  widgets:
-    - widget: payment_link_form
-      span: 12
-    - widget: products_table
-      span: 12
+  entity: customer
 - id: invoices
   title: Invoices
-  layout: split-grid
-  widgets:
-    - widget: invoices_table
-      span: 12
-- id: subscriptions
-  title: Subscriptions
-  layout: split-grid
-  widgets:
-    - widget: subscriptions_table
-      span: 12
+  entity: invoice
 - id: payments
   title: Payments
-  layout: split-grid
-  widgets:
-    - widget: payments_table
-      span: 12
+  entity: payment
+- id: payment_links
+  title: Payment links
+  entity: payment_link
+- id: prices
+  title: Prices
+  entity: price
+- id: products
+  title: Products
+  entity: product
+- id: refunds
+  title: Refunds
+  entity: refund
+- id: subscriptions
+  title: Subscriptions
+  entity: subscription
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

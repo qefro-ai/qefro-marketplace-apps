@@ -2,33 +2,25 @@
   title: Today
   layout: dashboard-grid
   widgets:
-    - widget: intro
-      span: 12
-    - widget: spreadsheets_table
-      span: 12
-- id: spreadsheets
-  title: Spreadsheets
-  layout: split-grid
-  widgets:
-    - widget: spreadsheets_table
-      span: 12
-- id: sheets
-  title: Sheets
-  layout: split-grid
-  widgets:
-    - widget: sheets_table
-      span: 12
+  - widget: intro
+    span: 12
+  - widget: spreadsheets_table
+    span: 12
 - id: rows
   title: Rows
-  layout: split-grid
-  widgets:
-    - widget: append_form
-      span: 12
-    - widget: rows_table
-      span: 12
+  entity: row
+- id: sheets
+  title: Sheets
+  entity: sheet
+- id: spreadsheets
+  title: Spreadsheets
+  entity: spreadsheet
 - id: contacts
   title: Contacts
   host: contacts
 - id: automations
   title: Automations
   host: automations
+- id: roles
+  title: Roles
+  host: roles

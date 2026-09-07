@@ -1,56 +1,56 @@
-# Generic HTTP Marketplace App (not Shopify).
-# Proves metadata → FlowRunner → RuntimeAdapter → generic HTTP executor → API.
-# Host and credentials come from the workspace connection, never this package.
-
 id: http-catalog-runtime
 name: Catalog API
-version: 0.1.0
+version: 0.1.1
 hosting: runtime
 description: Search and fetch catalog items through generic Runtime HTTP tools
 category: commerce
 tags:
-  - catalog
-  - http
-  - runtime
+- catalog
+- http
+- runtime
 channels:
-  - widget
+- widget
 connections:
-  - catalog-api
+- catalog-api
 http_tools:
-  - list_items
-  - get_item
+- list_items
+- get_item
 entities:
-  - item
+- item
 flows:
-  - search-items
+- search-items
 events:
-  - item.created
+- item.created
 permissions:
-  - workflow.execute
+- workflow.execute
 capabilities:
-  - theme.get
-  - user.get
-  - tenant.get
-  - runtime.query
-  - workflow.trigger
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
 triggers:
-  - id: search_items
-    workflow: search-items
-    input_variable: item_query
-    match:
-      intents:
-        - search the catalog
-        - find an item
-        - look up items
-      confirmation:
-        reply_signals:
-          - item
-          - items
-          - found
-        required_slots:
-          - query
-    confirmation_message: "Items matching {{query}}."
+- id: search_items
+  workflow: search-items
+  input_variable: item_query
+  match:
+    intents:
+    - search the catalog
+    - find an item
+    - look up items
+    confirmation:
+      reply_signals:
+      - item
+      - items
+      - found
+      required_slots:
+      - query
+  confirmation_message: Items matching {{query}}.
 conversation_slots:
-  - id: query
-    labels: [item, search, find, catalog]
-    kind: string
+- id: query
+  labels:
+  - item
+  - search
+  - find
+  - catalog
+  kind: string
