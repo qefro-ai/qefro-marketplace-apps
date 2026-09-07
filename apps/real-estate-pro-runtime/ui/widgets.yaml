@@ -202,6 +202,8 @@
       header: Lead
     - key: date
       header: Date
+    - key: time
+      header: Time
     - key: status
       header: Status
 - id: offers_table
@@ -329,15 +331,15 @@
     limit: 8
     columns:
     - key: property_title
-      header: Property Title
+      header: Property
     - key: lead_name
-      header: Lead Name
-    - key: agent_name
-      header: Agent Name
-    - key: scheduled_at
-      header: Scheduled At
+      header: Lead
     - key: date
       header: Date
+    - key: time
+      header: Time
+    - key: status
+      header: Status
     navigate_to: viewings
     action_label: View all
     empty_title: No viewings yet

@@ -17,7 +17,7 @@ steps:
 - id: ask_date
   type: ask
   field: date
-  message: Which date?
+  message: Which date and time? (e.g. tomorrow at 4pm)
 - id: run
   type: tool
   tool: entity.viewing.create
@@ -28,10 +28,11 @@ steps:
     agent_name: agent_name
     date: date
     time: time
+    scheduled_at: scheduled_at
     notes: notes
     status: "$literal:scheduled"
 - id: confirm
   type: message
-  message: Viewing scheduled for {{property_title}} on {{date}}.
+  message: Viewing scheduled for {{property_title}} on {{date}} at {{time}}.
 - id: done
   type: complete
