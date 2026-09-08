@@ -183,11 +183,13 @@
     empty_title: No leads yet
     columns:
     - key: name
-      header: Name
+      header: Lead
     - key: status
       header: Status
     - key: assigned_agent_name
       header: Agent
+    - key: source
+      header: Source
 - id: viewings_table
   type: table
   title: Viewings
