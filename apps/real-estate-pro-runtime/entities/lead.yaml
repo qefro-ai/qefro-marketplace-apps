@@ -36,16 +36,3 @@ status_events:
   qualified: lead.updated
   won: lead.updated
   lost: lead.updated
-views:
-- type: table
-  columns:
-  - name
-  - email
-  - phone
-  - source
-  - assigned_agent_name
-  - status
-- type: kanban
-  group_by: status
-  title_field: name
-  status_field: status

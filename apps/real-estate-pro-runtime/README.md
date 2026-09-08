@@ -21,15 +21,15 @@ Lead-owned records bind to Customer Hub via `person_id` (`type: person`).
 ## Tools (Runtime EntityService)
 
 Staff: create/update/search properties, leads, agents, viewings, offers, deals, documents.
-Customer: search properties, request viewing, reschedule viewing, cancel viewing.
+Customer: search properties, get property, request/list/cancel/lookup own viewings, create/list own offers.
 
 Never accept arbitrary `lead_id` / `person_id` / `customer_id` / `email` / `phone` from the LLM
 as authoritative ownership. Identity comes from Customer Hub; Runtime injects `person_id` on create.
 
 ## Workflows
 
-- Customer: `search-properties`, `request-viewing`, `reschedule-viewing`, `cancel-viewing`
-- Staff: `create-property`, `create-lead`, `create-offer`, `create-deal`
+- `search-properties`, `request-viewing`, `reschedule-viewing`, `cancel-viewing`
+- `create-lead`, `create-offer`, `create-deal`
 
 ## Business Events
 

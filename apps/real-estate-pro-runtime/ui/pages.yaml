@@ -31,20 +31,6 @@
 - id: properties
   title: Properties
   entity: property
-  views:
-  - type: table
-    columns:
-    - images
-    - title
-    - status
-    - price
-    - property_type
-    - city
-  - type: kanban
-    group_by: status
-    title_field: title
-    status_field: status
-    image_field: images
 - id: documents
   title: Documents
   entity: property_document
@@ -54,23 +40,6 @@
 - id: viewings
   title: Viewings
   entity: viewing
-  views:
-  - type: table
-    columns:
-    - property_title
-    - lead_name
-    - agent_name
-    - date
-    - time
-    - status
-  - type: kanban
-    group_by: status
-    title_field: property_title
-    status_field: status
-  - type: calendar
-    start_field: scheduled_at
-    title_field: property_title
-    status_field: status
 - id: contacts
   title: Contacts
   host: contacts

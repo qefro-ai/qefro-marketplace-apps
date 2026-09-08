@@ -6,31 +6,17 @@ surfaces:
 trigger:
   type: conversation
 steps:
-- id: ask_property_type
-  type: ask
-  field: property_type
-  message: Got it — looking for what type of property (e.g. land, house, apartment)?
-  choices:
-    land: ["land", "lands", "plot", "plots"]
-    house: ["house", "houses", "villa", "villas"]
-    apartment: ["apartment", "apartments", "flat", "flats"]
-- id: ask_city
-  type: ask
-  field: city
-  message: Which location or area?
 - id: run
   type: tool
   tool: entity.property.list
   execution: runtime
-  input_map:
-    property_type: property_type
-    city: city
+  input_map: {}
 - id: confirm
   type: message
   message: |
-    Here are matching properties:
+    Here are matching properties.
     {{items_text}}
+
 - id: done
   type: complete
   message: ""
-

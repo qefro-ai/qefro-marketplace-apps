@@ -36,16 +36,3 @@ status_events:
   under_contract: deal.updated
   closed: deal.closed
   fallen_through: deal.updated
-views:
-- type: table
-  columns:
-  - property_title
-  - lead_name
-  - agent_name
-  - amount
-  - currency
-  - status
-- type: kanban
-  group_by: status
-  title_field: property_title
-  status_field: status
