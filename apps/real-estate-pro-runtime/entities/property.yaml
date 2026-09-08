@@ -51,6 +51,11 @@ fields:
   type: float
 - name: area_unit
   type: string
+- name: images
+  type: media
+  multiple: true
+  max_items: 10
+  description: Property photographs
 - name: image_url
   type: image
   description: Primary property photo (uploaded via solution UI media)

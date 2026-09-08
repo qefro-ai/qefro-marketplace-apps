@@ -27,6 +27,12 @@
       label: Description
       type: textarea
       required: false
+    - name: images
+      label: Photos
+      type: media
+      multiple: true
+      max_items: 10
+      required: false
     - name: image_url
       label: Photo
       type: image
