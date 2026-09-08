@@ -10,16 +10,17 @@ fields:
   required: true
 - name: lead_name
   type: string
-  required: true
 - name: agent_name
   type: string
 - name: scheduled_at
   type: datetime
+  required: true
 - name: date
   type: date
   required: true
 - name: time
   type: string
+  required: true
 - name: status
   type: enum
   enum_values:

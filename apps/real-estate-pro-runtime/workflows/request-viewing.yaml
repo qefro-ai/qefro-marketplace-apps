@@ -10,10 +10,6 @@ steps:
   type: ask
   field: property_title
   message: Which property?
-- id: ask_lead_name
-  type: ask
-  field: lead_name
-  message: Your name?
 - id: ask_date
   type: ask
   field: date
@@ -24,8 +20,6 @@ steps:
   execution: runtime
   input_map:
     property_title: property_title
-    lead_name: lead_name
-    agent_name: agent_name
     date: date
     time: time
     scheduled_at: scheduled_at

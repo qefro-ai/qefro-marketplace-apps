@@ -1,6 +1,6 @@
 id: real-estate-pro-runtime
 name: Real Estate Pro
-version: 1.1.1
+version: 1.1.2
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no
   SDK, no custom server)
@@ -103,7 +103,7 @@ triggers:
       - booked
       - visit
       required_slots: []
-  confirmation_message: Viewing scheduled for {{property_title}} on {{date}}.
+  confirmation_message: Viewing scheduled for {{property_title}} on {{date}} at {{time}}.
 - id: reschedule_viewing
   workflow: reschedule-viewing
   input_variable: viewing_reschedule
@@ -117,7 +117,8 @@ triggers:
       required_slots:
       - id
       - date
-  confirmation_message: Viewing {{id}} rescheduled to {{date}}.
+      - time
+  confirmation_message: Viewing {{id}} rescheduled to {{date}} at {{time}}.
 - id: cancel_viewing
   workflow: cancel-viewing
   input_variable: viewing_cancel
@@ -213,8 +214,7 @@ conversation_slots:
 - id: date
   labels:
   - date
-  - tomorrow
-  - Saturday
+  - day
   kind: date
 - id: time
   labels:
