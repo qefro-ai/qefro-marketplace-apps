@@ -40,3 +40,20 @@ status_events:
   completed: viewing.updated
   cancelled: viewing.cancelled
   no_show: viewing.updated
+views:
+- type: table
+  columns:
+  - property_title
+  - lead_name
+  - agent_name
+  - date
+  - time
+  - status
+- type: kanban
+  group_by: status
+  title_field: property_title
+  status_field: status
+- type: calendar
+  start_field: scheduled_at
+  title_field: property_title
+  status_field: status

@@ -40,6 +40,23 @@
 - id: viewings
   title: Viewings
   entity: viewing
+  views:
+  - type: table
+    columns:
+    - property_title
+    - lead_name
+    - agent_name
+    - date
+    - time
+    - status
+  - type: kanban
+    group_by: status
+    title_field: property_title
+    status_field: status
+  - type: calendar
+    start_field: scheduled_at
+    title_field: property_title
+    status_field: status
 - id: contacts
   title: Contacts
   host: contacts
