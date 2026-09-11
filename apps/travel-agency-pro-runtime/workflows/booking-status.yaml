@@ -20,6 +20,9 @@ steps:
   input_map:
     filter.booking_reference: booking_reference
     limit: $literal:1
+  constants:
+    expand:
+      traveler: traveler
   output: booking
 
 - id: show_status
