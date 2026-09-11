@@ -1,0 +1,43 @@
+id: package-details
+name: Package Details
+description: Show details of a specific travel package
+surfaces:
+- customer
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_package
+  type: ask
+  field: package_code
+  message: "Which package would you like to know about? Please provide the package code."
+
+- id: lookup
+  type: tool
+  tool: entity.travel_package.list
+  execution: runtime
+  input_map:
+    filter.code: package_code
+    limit: $literal:1
+  output: package
+
+- id: show_details
+  type: message
+  message: |
+    Package: {{package.name}}
+
+    Destination: {{package.destination}}
+    Duration: {{package.duration_days}} days / {{package.duration_nights}} nights
+    Price: {{package.currency}} {{package.price}}
+    Max Travelers: {{package.max_travelers}}
+
+    Inclusions: {{package.inclusions}}
+
+    {{package.description}}
+
+    Would you like to book this package or request a quote?
+
+- id: done
+  type: complete
+  message: ""

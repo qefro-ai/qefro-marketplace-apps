@@ -1,4 +1,5 @@
 id: deal
+scope: customer
 name: Deal
 description: Closed or in-progress deal
 allocate_code:

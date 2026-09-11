@@ -1,4 +1,5 @@
 id: patient
+scope: customer
 name: Patient
 description: Clinic patient record bound to Customer Hub Person
 allocate_code:

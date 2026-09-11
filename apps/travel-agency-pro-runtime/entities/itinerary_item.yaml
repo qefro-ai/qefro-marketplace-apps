@@ -1,0 +1,44 @@
+id: itinerary_item
+name: Itinerary Item
+description: A day or activity within an itinerary
+allocate_code:
+  prefix: ITI-
+  start: 1001
+fields:
+- name: itinerary
+  type: string
+  required: true
+  description: Parent itinerary reference
+  ref_entity: itinerary
+- name: title
+  type: string
+  required: true
+  description: Activity title
+- name: description
+  type: string
+  description: Activity description
+- name: day_number
+  type: integer
+  description: Day number in itinerary
+- name: date
+  type: date
+  description: Activity date
+- name: start_time
+  type: string
+  description: Start time
+- name: end_time
+  type: string
+  description: End time
+- name: location
+  type: string
+  description: Activity location
+- name: supplier
+  type: string
+  description: Supplier reference
+  ref_entity: supplier
+- name: notes
+  type: string
+  description: Activity notes
+- name: code
+  type: string
+  description: Auto-allocated item code

@@ -1,0 +1,62 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_packages
+    span: 3
+  - widget: metric_bookings
+    span: 3
+  - widget: metric_travelers
+    span: 3
+  - widget: metric_payments
+    span: 3
+  - widget: bookings_status
+    span: 4
+  - widget: bookings_recent
+    span: 8
+
+- id: packages
+  title: Packages
+  entity: travel_package
+
+- id: destinations
+  title: Destinations
+  entity: destination
+
+- id: bookings
+  title: Bookings
+  entity: booking
+
+- id: travelers
+  title: Travelers
+  entity: traveler
+
+- id: itineraries
+  title: Itineraries
+  entity: itinerary
+
+- id: suppliers
+  title: Suppliers
+  entity: supplier
+
+- id: payments
+  title: Payments
+  entity: payment
+
+- id: documents
+  title: Travel Documents
+  entity: travel_document
+
+- id: contacts
+  title: Contacts
+  host: contacts
+
+- id: automations
+  title: Automations
+  host: automations
+
+- id: roles
+  title: Roles
+  host: roles

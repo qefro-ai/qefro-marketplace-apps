@@ -1,4 +1,5 @@
 id: order
+scope: customer
 name: Order
 description: Dining or takeaway order bound to Person
 allocate_code:

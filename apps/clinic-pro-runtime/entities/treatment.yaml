@@ -1,4 +1,5 @@
 id: treatment
+scope: customer
 name: Treatment
 description: Treatment performed during a visit
 allocate_code:

@@ -1,0 +1,61 @@
+id: add-itinerary-item
+name: Add Itinerary Item
+description: Add an activity or stop to an itinerary
+surfaces:
+- staff
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_itinerary
+  type: ask
+  field: itinerary_code
+  message: "Itinerary code?"
+
+- id: lookup
+  type: tool
+  tool: entity.itinerary.list
+  execution: runtime
+  input_map:
+    filter.code: itinerary_code
+    limit: $literal:1
+  output: itinerary
+
+- id: ask_title
+  type: ask
+  field: title
+  message: "Activity title?"
+
+- id: ask_day
+  type: ask
+  field: day_number
+  message: "Day number?"
+
+- id: ask_location
+  type: ask
+  field: location
+  message: "Location?"
+
+- id: create
+  type: tool
+  tool: entity.itinerary_item.create
+  execution: runtime
+  input_map:
+    itinerary: itinerary.id
+    title: title
+    day_number: day_number
+    location: location
+  output: item
+
+- id: show_result
+  type: message
+  message: |
+    Itinerary item added!
+
+    Day {{item.day_number}}: {{item.title}}
+    Location: {{item.location}}
+
+- id: done
+  type: complete
+  message: ""

@@ -1,4 +1,5 @@
 id: subscription
+scope: customer
 name: Subscription
 description: "Recurring subscription"
 allocate_code:

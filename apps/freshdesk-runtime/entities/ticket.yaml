@@ -1,4 +1,5 @@
 id: ticket
+scope: customer
 name: Ticket
 description: "Support ticket"
 allocate_code:

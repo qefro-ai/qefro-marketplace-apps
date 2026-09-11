@@ -1,0 +1,67 @@
+id: assign-supplier
+name: Assign Supplier
+description: Assign a supplier to a booking item
+surfaces:
+- staff
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_booking
+  type: ask
+  field: booking_reference
+  message: "Booking reference?"
+
+- id: lookup_booking
+  type: tool
+  tool: entity.booking.list
+  execution: runtime
+  input_map:
+    filter.booking_reference: booking_reference
+    limit: $literal:1
+  output: booking
+
+- id: ask_item_type
+  type: ask
+  field: item_type
+  message: "Item type? (hotel, flight, transfer, activity, visa, transport, other)"
+
+- id: ask_supplier
+  type: ask
+  field: supplier_code
+  message: "Supplier code?"
+
+- id: lookup_supplier
+  type: tool
+  tool: entity.supplier.list
+  execution: runtime
+  input_map:
+    filter.code: supplier_code
+    limit: $literal:1
+  output: supplier
+
+- id: create
+  type: tool
+  tool: entity.booking_item.create
+  execution: runtime
+  input_map:
+    booking: booking.id
+    item_type: item_type
+    supplier: supplier.id
+    status: $literal:pending
+  output: item
+
+- id: show_result
+  type: message
+  message: |
+    Supplier assigned!
+
+    Booking: {{booking.booking_reference}}
+    Item Type: {{item_type}}
+    Supplier: {{supplier.name}}
+    Code: {{item.code}}
+
+- id: done
+  type: complete
+  message: ""

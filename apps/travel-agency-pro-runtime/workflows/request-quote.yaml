@@ -1,0 +1,49 @@
+id: request-quote
+name: Request Quote
+description: Request a pricing quote for a travel package
+surfaces:
+- customer
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_package
+  type: ask
+  field: package_code
+  message: "Which package would you like a quote for?"
+
+- id: ask_date
+  type: ask
+  field: travel_date
+  message: "When would you like to travel?"
+
+- id: ask_travelers
+  type: ask
+  field: travelers_count
+  message: "How many travelers?"
+
+- id: create_booking
+  type: tool
+  tool: entity.booking.create
+  execution: runtime
+  input_map:
+    travel_package: package_code
+    travel_date: travel_date
+    travelers_count: travelers_count
+    status: $literal:inquiry
+  output: booking
+
+- id: show_quote
+  type: message
+  message: |
+    Thank you! Your quote request has been received.
+
+    Booking Reference: {{booking.booking_reference}}
+    Status: Inquiry
+
+    Our team will review your request and get back to you with a detailed quote shortly.
+
+- id: done
+  type: complete
+  message: ""

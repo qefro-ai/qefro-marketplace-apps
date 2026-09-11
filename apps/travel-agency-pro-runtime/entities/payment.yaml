@@ -1,0 +1,48 @@
+id: payment
+name: Payment
+description: A payment record for a booking
+allocate_code:
+  prefix: PAY-
+  start: 1001
+fields:
+- name: booking
+  type: string
+  required: true
+  description: Parent booking reference
+  ref_entity: booking
+- name: amount
+  type: float
+  required: true
+  description: Payment amount
+- name: currency
+  type: string
+  description: Currency code
+- name: payment_date
+  type: date
+  description: Payment date
+- name: payment_method
+  type: string
+  description: Payment method
+- name: reference
+  type: string
+  description: Payment reference number
+- name: status
+  type: enum
+  required: true
+  description: Payment status
+  enum_values:
+  - pending
+  - paid
+  - failed
+  - refunded
+- name: notes
+  type: string
+  description: Payment notes
+- name: code
+  type: string
+  description: Auto-allocated payment code
+status_events:
+  pending: payment.created
+  paid: payment.status_changed
+  failed: payment.updated
+  refunded: payment.status_changed

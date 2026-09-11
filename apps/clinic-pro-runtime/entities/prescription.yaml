@@ -1,4 +1,5 @@
 id: prescription
+scope: customer
 name: Prescription
 description: Medication order for a patient
 allocate_code:

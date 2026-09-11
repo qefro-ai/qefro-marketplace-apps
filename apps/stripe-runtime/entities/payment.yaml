@@ -1,4 +1,5 @@
 id: payment
+scope: customer
 name: Payment
 description: "PaymentIntent schema for staff UI"
 allocate_code:

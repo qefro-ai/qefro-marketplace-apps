@@ -1,0 +1,47 @@
+id: update-package
+name: Update Package
+description: Update an existing travel package
+surfaces:
+- staff
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_code
+  type: ask
+  field: package_code
+  message: "Package code to update?"
+
+- id: lookup
+  type: tool
+  tool: entity.travel_package.list
+  execution: runtime
+  input_map:
+    filter.code: package_code
+    limit: $literal:1
+  output: package
+
+- id: ask_status
+  type: ask
+  field: status
+  message: "New status? (draft, active, inactive, sold_out)"
+
+- id: update
+  type: tool
+  tool: entity.travel_package.update
+  execution: runtime
+  input_map:
+    id: package.id
+    status: status
+  output: updated
+
+- id: show_result
+  type: message
+  message: |
+    Package {{package.code}} updated.
+    Status: {{status}}
+
+- id: done
+  type: complete
+  message: ""

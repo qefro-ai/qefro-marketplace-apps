@@ -1,4 +1,5 @@
 id: contact
+scope: customer
 name: Contact
 description: "Freshdesk contact bound to Person"
 allocate_code:

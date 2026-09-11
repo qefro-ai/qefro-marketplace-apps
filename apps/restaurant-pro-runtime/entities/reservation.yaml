@@ -1,4 +1,5 @@
 id: reservation
+scope: customer
 name: Reservation
 description: Table reservation bound to Person
 allocate_code:

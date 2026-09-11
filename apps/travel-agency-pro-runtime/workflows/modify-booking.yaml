@@ -1,0 +1,51 @@
+id: modify-booking
+name: Modify Booking
+description: Modify an existing travel booking
+surfaces:
+- customer
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_reference
+  type: ask
+  field: booking_reference
+  message: "Please provide the booking reference you want to modify."
+
+- id: lookup
+  type: tool
+  tool: entity.booking.list
+  execution: runtime
+  input_map:
+    filter.booking_reference: booking_reference
+    limit: $literal:1
+  output: booking
+
+- id: ask_field
+  type: ask
+  field: notes
+  message: "What would you like to change? Please describe the modification."
+
+- id: update
+  type: tool
+  tool: entity.booking.update
+  execution: runtime
+  input_map:
+    id: booking.id
+    notes: notes
+  output: updated
+
+- id: show_result
+  type: message
+  message: |
+    Your booking has been updated.
+
+    Booking Reference: {{booking.booking_reference}}
+    Status: {{booking.status}}
+
+    Our team will review your request and contact you if needed.
+
+- id: done
+  type: complete
+  message: ""

@@ -1,0 +1,51 @@
+id: supplier
+name: Supplier
+description: A service supplier (hotel, airline, transport, etc.)
+allocate_code:
+  prefix: SUP-
+  start: 1001
+fields:
+- name: name
+  type: string
+  required: true
+  description: Supplier name
+- name: supplier_type
+  type: enum
+  required: true
+  description: Supplier type
+  enum_values:
+  - hotel
+  - airline
+  - transport
+  - activity
+  - tour_operator
+  - visa
+  - other
+- name: contact_name
+  type: string
+  description: Contact person name
+- name: phone
+  type: phone
+  description: Contact phone
+- name: email
+  type: email
+  description: Contact email
+- name: address
+  type: string
+  description: Address
+- name: city
+  type: string
+  description: City
+- name: country
+  type: string
+  description: Country
+- name: status
+  type: enum
+  required: true
+  description: Supplier status
+  enum_values:
+  - active
+  - inactive
+- name: code
+  type: string
+  description: Auto-allocated supplier code

@@ -1,4 +1,5 @@
 id: offer
+scope: customer
 name: Offer
 description: Purchase or rental offer bound to Person
 allocate_code:

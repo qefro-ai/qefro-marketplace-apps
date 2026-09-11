@@ -1,0 +1,60 @@
+id: create-package
+name: Create Package
+description: Create a new travel package
+surfaces:
+- staff
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_name
+  type: ask
+  field: name
+  message: "Package name?"
+
+- id: ask_destination
+  type: ask
+  field: destination
+  message: "Destination code?"
+
+- id: ask_type
+  type: ask
+  field: package_type
+  message: "Package type? (holiday, honeymoon, family, adventure, business, pilgrimage, custom)"
+
+- id: ask_duration
+  type: ask
+  field: duration_days
+  message: "Duration in days?"
+
+- id: ask_price
+  type: ask
+  field: price
+  message: "Price per person?"
+
+- id: create
+  type: tool
+  tool: entity.travel_package.create
+  execution: runtime
+  input_map:
+    name: name
+    destination: destination
+    package_type: package_type
+    duration_days: duration_days
+    price: price
+    status: $literal:draft
+  output: package
+
+- id: show_result
+  type: message
+  message: |
+    Package created!
+
+    Code: {{package.code}}
+    Name: {{package.name}}
+    Status: Draft
+
+- id: done
+  type: complete
+  message: ""

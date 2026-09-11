@@ -1,4 +1,5 @@
 id: payment
+scope: customer
 name: Payment
 description: Order payment
 allocate_code:

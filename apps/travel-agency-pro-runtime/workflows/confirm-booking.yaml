@@ -1,0 +1,46 @@
+id: confirm-booking
+name: Confirm Booking
+description: Confirm a pending travel booking
+surfaces:
+- staff
+
+trigger:
+  type: conversation
+
+constants:
+  confirmed: confirmed
+
+steps:
+- id: ask_reference
+  type: ask
+  field: booking_reference
+  message: "Booking reference to confirm?"
+
+- id: lookup
+  type: tool
+  tool: entity.booking.list
+  execution: runtime
+  input_map:
+    filter.booking_reference: booking_reference
+    limit: $literal:1
+  output: booking
+
+- id: confirm
+  type: tool
+  tool: entity.booking.update
+  execution: runtime
+  input_map:
+    id: booking.id
+    status: $constants.confirmed
+  output: updated
+
+- id: show_result
+  type: message
+  message: |
+    Booking {{booking.booking_reference}} confirmed!
+
+    The customer will be notified automatically.
+
+- id: done
+  type: complete
+  message: ""

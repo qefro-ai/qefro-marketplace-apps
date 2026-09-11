@@ -1,0 +1,64 @@
+id: booking
+scope: customer
+name: Booking
+description: A travel booking record
+allocate_code:
+  prefix: BK-
+  start: 1001
+fields:
+- name: person_id
+  type: person
+  required: true
+  description: Booking owner (Customer Hub person)
+  ref_entity: person
+- name: traveler
+  type: string
+  required: true
+  description: Traveler reference
+  ref_entity: traveler
+- name: travel_package
+  type: string
+  required: true
+  description: Travel package reference
+  ref_entity: travel_package
+- name: booking_reference
+  type: string
+  description: Unique booking reference
+- name: travel_date
+  type: date
+  description: Travel start date
+- name: travelers_count
+  type: integer
+  description: Number of travelers
+- name: total_amount
+  type: float
+  description: Total booking amount
+- name: currency
+  type: string
+  description: Currency code
+- name: status
+  type: enum
+  required: true
+  description: Booking status
+  enum_values:
+  - inquiry
+  - pending
+  - confirmed
+  - cancelled
+  - completed
+- name: notes
+  type: string
+  description: Booking notes
+- name: assigned_agent
+  type: string
+  description: Assigned staff agent
+  ref_entity: agent
+- name: code
+  type: string
+  description: Auto-allocated booking code
+status_events:
+  inquiry: booking.created
+  pending: booking.updated
+  confirmed: booking.confirmed
+  cancelled: booking.cancelled
+  completed: booking.completed

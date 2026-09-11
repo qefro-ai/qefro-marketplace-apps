@@ -1,4 +1,5 @@
 id: scheduled_event
+scope: customer
 name: "Scheduled event"
 description: "Booked event"
 allocate_code:

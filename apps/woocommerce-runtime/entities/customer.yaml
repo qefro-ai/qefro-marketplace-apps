@@ -1,4 +1,5 @@
 id: customer
+scope: customer
 name: Customer
 description: "Store customer bound to Person"
 allocate_code:

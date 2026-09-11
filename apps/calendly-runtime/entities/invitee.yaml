@@ -1,4 +1,5 @@
 id: invitee
+scope: customer
 name: Invitee
 description: "Event invitee bound to Person"
 fields:

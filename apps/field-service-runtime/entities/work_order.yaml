@@ -1,4 +1,5 @@
 id: work_order
+scope: customer
 name: "Work order"
 description: "Job at a site bound to Person"
 allocate_code:

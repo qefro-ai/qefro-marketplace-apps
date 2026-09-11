@@ -1,0 +1,79 @@
+id: travel_package
+name: Travel Package
+description: A travel package offering
+allocate_code:
+  prefix: PKG-
+  start: 1001
+fields:
+- name: name
+  type: string
+  required: true
+  description: Package name
+- name: description
+  type: string
+  description: Package description
+- name: destination
+  type: string
+  description: Destination reference
+  ref_entity: destination
+- name: package_type
+  type: enum
+  description: Package type
+  enum_values:
+  - holiday
+  - honeymoon
+  - family
+  - adventure
+  - business
+  - pilgrimage
+  - custom
+- name: duration_days
+  type: integer
+  description: Duration in days
+- name: duration_nights
+  type: integer
+  description: Duration in nights
+- name: start_date
+  type: date
+  description: Package start date
+- name: end_date
+  type: date
+  description: Package end date
+- name: price
+  type: float
+  description: Package price
+- name: currency
+  type: string
+  description: Currency code
+- name: max_travelers
+  type: integer
+  description: Maximum number of travelers
+- name: inclusions
+  type: string
+  description: What is included
+- name: exclusions
+  type: string
+  description: What is not included
+- name: terms
+  type: string
+  description: Terms and conditions
+- name: status
+  type: enum
+  required: true
+  description: Package status
+  enum_values:
+  - draft
+  - active
+  - inactive
+  - sold_out
+- name: image
+  type: image
+  description: Package image
+- name: code
+  type: string
+  description: Auto-allocated package code
+status_events:
+  draft: travel_package.created
+  active: travel_package.updated
+  inactive: travel_package.updated
+  sold_out: travel_package.status_changed

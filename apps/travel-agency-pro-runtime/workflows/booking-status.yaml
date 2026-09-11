@@ -1,0 +1,38 @@
+id: booking-status
+name: Booking Status
+description: Check the status of a travel booking
+surfaces:
+- customer
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_reference
+  type: ask
+  field: booking_reference
+  message: "Please provide your booking reference."
+
+- id: lookup
+  type: tool
+  tool: entity.booking.list
+  execution: runtime
+  input_map:
+    filter.booking_reference: booking_reference
+    limit: $literal:1
+  output: booking
+
+- id: show_status
+  type: message
+  message: |
+    Booking Reference: {{booking.booking_reference}}
+    Status: {{booking.status}}
+    Travel Date: {{booking.travel_date}}
+    Travelers: {{booking.travelers_count}}
+    Total Amount: {{booking.currency}} {{booking.total_amount}}
+
+    {{booking.notes}}
+
+- id: done
+  type: complete
+  message: ""

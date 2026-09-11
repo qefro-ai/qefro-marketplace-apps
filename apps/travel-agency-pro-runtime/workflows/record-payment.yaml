@@ -1,0 +1,58 @@
+id: record-payment
+name: Record Payment
+description: Record a payment for a booking
+surfaces:
+- staff
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_reference
+  type: ask
+  field: booking_reference
+  message: "Booking reference?"
+
+- id: lookup
+  type: tool
+  tool: entity.booking.list
+  execution: runtime
+  input_map:
+    filter.booking_reference: booking_reference
+    limit: $literal:1
+  output: booking
+
+- id: ask_amount
+  type: ask
+  field: amount
+  message: "Payment amount?"
+
+- id: ask_method
+  type: ask
+  field: payment_method
+  message: "Payment method? (bank_transfer, credit_card, cash, cheque)"
+
+- id: create
+  type: tool
+  tool: entity.payment.create
+  execution: runtime
+  input_map:
+    booking: booking.id
+    amount: amount
+    payment_method: payment_method
+    status: $literal:paid
+  output: payment
+
+- id: show_result
+  type: message
+  message: |
+    Payment recorded!
+
+    Amount: {{payment.amount}}
+    Method: {{payment.payment_method}}
+    Status: Paid
+    Code: {{payment.code}}
+
+- id: done
+  type: complete
+  message: ""

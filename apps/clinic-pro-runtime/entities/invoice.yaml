@@ -1,4 +1,5 @@
 id: invoice
+scope: customer
 name: Invoice
 description: Patient billing invoice
 allocate_code:

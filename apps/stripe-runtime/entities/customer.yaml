@@ -1,4 +1,5 @@
 id: customer
+scope: customer
 name: Customer
 description: "Stripe customer bound to the platform Person model"
 allocate_code:

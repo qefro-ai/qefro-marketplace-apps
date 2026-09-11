@@ -1,0 +1,54 @@
+id: travel_document
+name: Travel Document
+description: Travel documents (passport, visa, ticket, etc.)
+allocate_code:
+  prefix: DOC-
+  start: 1001
+fields:
+- name: traveler
+  type: string
+  required: true
+  description: Traveler reference
+  ref_entity: traveler
+- name: booking
+  type: string
+  description: Related booking reference
+  ref_entity: booking
+- name: document_type
+  type: enum
+  required: true
+  description: Document type
+  enum_values:
+  - passport
+  - visa
+  - ticket
+  - voucher
+  - insurance
+  - other
+- name: document_name
+  type: string
+  description: Document name or title
+- name: document_number
+  type: string
+  description: Document number
+- name: expiry_date
+  type: date
+  description: Document expiry date
+- name: status
+  type: enum
+  required: true
+  description: Document status
+  enum_values:
+  - pending
+  - received
+  - verified
+  - expired
+- name: file
+  type: url
+  description: Document file URL
+- name: notes
+  type: string
+  description: Document notes
+- name: code
+  type: string
+  description: Auto-allocated document code

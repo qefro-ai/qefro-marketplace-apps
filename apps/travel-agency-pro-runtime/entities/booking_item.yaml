@@ -1,0 +1,56 @@
+id: booking_item
+name: Booking Item
+description: A line item within a booking
+allocate_code:
+  prefix: BI-
+  start: 1001
+fields:
+- name: booking
+  type: string
+  required: true
+  description: Parent booking reference
+  ref_entity: booking
+- name: item_type
+  type: enum
+  required: true
+  description: Item type
+  enum_values:
+  - hotel
+  - flight
+  - transfer
+  - activity
+  - visa
+  - transport
+  - other
+- name: description
+  type: string
+  description: Item description
+- name: supplier
+  type: string
+  description: Supplier reference
+  ref_entity: supplier
+- name: quantity
+  type: integer
+  description: Quantity
+- name: unit_price
+  type: float
+  description: Unit price
+- name: total_price
+  type: float
+  description: Total price
+- name: scheduled_date
+  type: date
+  description: Scheduled date
+- name: status
+  type: enum
+  description: Item status
+  enum_values:
+  - pending
+  - confirmed
+  - cancelled
+- name: notes
+  type: string
+  description: Item notes
+- name: code
+  type: string
+  description: Auto-allocated item code

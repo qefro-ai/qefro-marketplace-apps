@@ -1,4 +1,5 @@
 id: dining_session
+scope: customer
 name: Dining session
 description: Active table seating session
 allocate_code:

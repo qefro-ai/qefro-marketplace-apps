@@ -1,0 +1,285 @@
+id: travel-agency-pro-runtime
+name: Travel Agency Pro
+version: 1.0.0
+hosting: runtime
+description: Metadata-only travel agency Marketplace App executed by Qefro Runtime (no SDK, no custom server)
+category: travel
+tags:
+- travel
+- bookings
+- packages
+- runtime
+- pro
+channels:
+- widget
+- whatsapp
+
+entities:
+- destination
+- travel_package
+- traveler
+- booking
+- booking_item
+- itinerary
+- itinerary_item
+- supplier
+- payment
+- travel_document
+
+flows:
+- search-packages
+- package-details
+- request-quote
+- create-booking
+- booking-status
+- modify-booking
+- cancel-booking
+- create-package
+- update-package
+- create-itinerary
+- add-itinerary-item
+- confirm-booking
+- record-payment
+- assign-supplier
+
+events:
+- destination.created
+- destination.updated
+- travel_package.created
+- travel_package.updated
+- travel_package.status_changed
+- traveler.created
+- traveler.updated
+- booking.created
+- booking.updated
+- booking.confirmed
+- booking.cancelled
+- booking.completed
+- booking_item.created
+- booking_item.updated
+- itinerary.created
+- itinerary.updated
+- itinerary_item.created
+- itinerary_item.updated
+- supplier.created
+- supplier.updated
+- payment.created
+- payment.updated
+- payment.status_changed
+- travel_document.created
+- travel_document.updated
+
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+
+triggers:
+- id: search_packages
+  workflow: search-packages
+  input_variable: travel_context
+  match:
+    intents:
+    - find travel packages
+    - search trips
+    - look for vacation packages
+    - find holiday deals
+    confirmation:
+      reply_signals:
+      - packages
+      - destinations
+      - available
+      required_slots:
+      - destination
+      - travel_date
+  confirmation_message: "Searching packages for {{destination}} on {{travel_date}}..."
+
+- id: package_details
+  workflow: package-details
+  input_variable: package_query
+  match:
+    intents:
+    - tell me about a package
+    - package details
+    - show package information
+    - what is included
+    confirmation:
+      reply_signals:
+      - package
+      - details
+      - included
+      required_slots:
+      - package_code
+  confirmation_message: "Looking up details for package {{package_code}}..."
+
+- id: request_quote
+  workflow: request-quote
+  input_variable: quote_request
+  match:
+    intents:
+    - request a quote
+    - get pricing
+    - how much does it cost
+    - price for a trip
+    confirmation:
+      reply_signals:
+      - quote
+      - pricing
+      - estimate
+      required_slots:
+      - package_code
+      - travelers_count
+  confirmation_message: "Preparing a quote for {{package_code}} with {{travelers_count}} travelers..."
+
+- id: create_booking
+  workflow: create-booking
+  input_variable: booking_request
+  match:
+    intents:
+    - book a trip
+    - make a booking
+    - reserve a package
+    - I want to book
+    confirmation:
+      reply_signals:
+      - booking
+      - confirmed
+      - pending
+      required_slots:
+      - package_code
+      - travel_date
+      - travelers_count
+  confirmation_message: "Creating booking for {{package_code}} on {{travel_date}} for {{travelers_count}} travelers..."
+
+- id: booking_status
+  workflow: booking-status
+  input_variable: status_query
+  match:
+    intents:
+    - check my booking
+    - booking status
+    - track my booking
+    - what is my booking status
+    confirmation:
+      reply_signals:
+      - booking
+      - status
+      required_slots:
+      - booking_reference
+  confirmation_message: "Checking status for booking {{booking_reference}}..."
+
+- id: cancel_booking
+  workflow: cancel-booking
+  input_variable: cancel_request
+  match:
+    intents:
+    - cancel my booking
+    - I need to cancel
+    - cancel reservation
+    confirmation:
+      reply_signals:
+      - cancelled
+      - cancel
+      required_slots:
+      - booking_reference
+  confirmation_message: "Cancelling booking {{booking_reference}}..."
+
+conversation_slots:
+- id: destination
+  labels:
+  - destination
+  - location
+  - city
+  - country
+  - where
+  kind: string
+  chip_prefix: "To"
+
+- id: package_type
+  labels:
+  - package type
+  - trip type
+  - category
+  kind: string
+  chip_prefix: "Type"
+
+- id: travel_date
+  labels:
+  - travel date
+  - departure date
+  - when
+  - date
+  kind: date
+  chip_prefix: "Date"
+
+- id: travelers_count
+  labels:
+  - number of travelers
+  - how many people
+  - group size
+  - travelers
+  kind: integer
+  chip_prefix: "Travelers"
+
+- id: duration_days
+  labels:
+  - duration
+  - number of days
+  - how many days
+  kind: integer
+  chip_prefix: "Days"
+
+- id: package_code
+  labels:
+  - package code
+  - package ID
+  - which package
+  kind: string
+  chip_prefix: "Package"
+
+- id: booking_reference
+  labels:
+  - booking reference
+  - booking ID
+  - reservation number
+  kind: string
+  chip_prefix: "Booking"
+
+- id: traveler_name
+  labels:
+  - traveler name
+  - passenger name
+  - guest name
+  kind: person_name
+  identity: person_name
+  chip_prefix: "Name"
+
+- id: budget
+  labels:
+  - budget
+  - price range
+  - how much
+  kind: string
+  chip_prefix: "Budget"
+
+- id: notes
+  labels:
+  - notes
+  - special requests
+  - requirements
+  kind: string
+  chip_prefix: "Notes"
+
+ui:
+  name: Travel Agency Pro

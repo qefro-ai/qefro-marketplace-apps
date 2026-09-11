@@ -1,4 +1,5 @@
 id: order
+scope: customer
 name: Order
 description: "Customer order"
 allocate_code:

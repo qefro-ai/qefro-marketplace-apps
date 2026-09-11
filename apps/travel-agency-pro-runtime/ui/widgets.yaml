@@ -1,0 +1,81 @@
+- id: intro
+  type: markdown
+  title: Travel Agency Pro
+  options:
+    content: |
+      Manage destinations, travel packages, bookings, itineraries, and payments.
+      Track travelers, suppliers, and travel documents from a single dashboard.
+
+- id: metric_packages
+  type: metric
+  title: Active Packages
+  source: travel_packages
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: packages
+
+- id: metric_bookings
+  type: metric
+  title: Total Bookings
+  source: bookings
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: bookings
+
+- id: metric_travelers
+  type: metric
+  title: Travelers
+  source: travelers
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: travelers
+
+- id: metric_payments
+  type: metric
+  title: Payments
+  source: payments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: payments
+
+- id: bookings_status
+  type: status
+  title: Booking Status
+  source: bookings
+  options:
+    rows_path: items
+    status_field: status
+    label_field: booking_reference
+    empty_title: No bookings yet
+    empty_subtitle: Bookings will appear here once created
+    navigate_to: bookings
+    action_label: View all
+
+- id: bookings_recent
+  type: table
+  title: Recent Bookings
+  source: bookings
+  options:
+    rows_path: items
+    empty_title: No bookings yet
+    empty_subtitle: New bookings will appear here
+    columns:
+    - key: booking_reference
+      header: Reference
+    - key: travel_date
+      header: Travel Date
+    - key: travelers_count
+      header: Travelers
+    - key: status
+      header: Status
+    limit: 10
+    navigate_to: bookings
+    action_label: View all

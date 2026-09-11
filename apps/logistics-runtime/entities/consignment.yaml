@@ -1,4 +1,5 @@
 id: consignment
+scope: customer
 name: Consignment
 description: "Goods consignment bound to Person"
 allocate_code:

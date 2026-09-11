@@ -1,0 +1,42 @@
+id: itinerary
+scope: customer
+name: Itinerary
+description: A travel itinerary for a booking
+allocate_code:
+  prefix: ITN-
+  start: 1001
+fields:
+- name: person_id
+  type: person
+  required: true
+  description: Itinerary owner (Customer Hub person)
+  ref_entity: person
+- name: booking
+  type: string
+  required: true
+  description: Parent booking reference
+  ref_entity: booking
+- name: title
+  type: string
+  required: true
+  description: Itinerary title
+- name: description
+  type: string
+  description: Itinerary description
+- name: start_date
+  type: date
+  description: Itinerary start date
+- name: end_date
+  type: date
+  description: Itinerary end date
+- name: status
+  type: enum
+  required: true
+  description: Itinerary status
+  enum_values:
+  - draft
+  - confirmed
+  - completed
+- name: code
+  type: string
+  description: Auto-allocated itinerary code

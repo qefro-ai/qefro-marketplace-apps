@@ -1,4 +1,5 @@
 id: visit
+scope: customer
 name: Visit
 description: In-clinic encounter linked to an appointment
 allocate_code:

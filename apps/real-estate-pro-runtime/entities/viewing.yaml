@@ -1,4 +1,5 @@
 id: viewing
+scope: customer
 name: Viewing
 description: Property viewing appointment bound to Person
 allocate_code:
@@ -10,7 +11,7 @@ fields:
   required: true
 - name: lead_name
   type: string
-  required: true
+  description: Display name (auto-filled from Person.name if available)
 - name: agent_name
   type: string
 - name: scheduled_at

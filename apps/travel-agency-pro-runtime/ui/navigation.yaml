@@ -1,0 +1,67 @@
+- id: dashboard
+  page: dashboard
+  title: Dashboard
+  icon: home
+
+- id: packages
+  page: packages
+  title: Packages
+  icon: map
+  entity: travel_package
+
+- id: destinations
+  page: destinations
+  title: Destinations
+  icon: map
+  entity: destination
+
+- id: bookings
+  page: bookings
+  title: Bookings
+  icon: clipboard
+  entity: booking
+
+- id: travelers
+  page: travelers
+  title: Travelers
+  icon: users
+  entity: traveler
+
+- id: itineraries
+  page: itineraries
+  title: Itineraries
+  icon: calendar
+  entity: itinerary
+
+- id: suppliers
+  page: suppliers
+  title: Suppliers
+  icon: users
+  entity: supplier
+
+- id: payments
+  page: payments
+  title: Payments
+  icon: credit-card
+  entity: payment
+
+- id: documents
+  page: documents
+  title: Documents
+  icon: file-text
+  entity: travel_document
+
+- id: contacts
+  page: contacts
+  title: Contacts
+  icon: users
+
+- id: automations
+  page: automations
+  title: Automations
+  icon: workflow
+
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

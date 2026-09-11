@@ -1,4 +1,5 @@
 id: appointment
+scope: customer
 name: Appointment
 description: Scheduled patient appointment bound to Person
 allocate_code:

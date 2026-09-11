@@ -1,0 +1,67 @@
+id: create-booking
+name: Create Booking
+description: Create a new travel booking
+surfaces:
+- customer
+
+trigger:
+  type: conversation
+
+steps:
+- id: ask_package
+  type: ask
+  field: package_code
+  message: "Which package would you like to book?"
+
+- id: ask_date
+  type: ask
+  field: travel_date
+  message: "When would you like to travel?"
+
+- id: ask_travelers
+  type: ask
+  field: travelers_count
+  message: "How many travelers?"
+
+- id: ask_name
+  type: ask
+  field: traveler_name
+  message: "Please provide the lead traveler's name."
+
+- id: create_traveler
+  type: tool
+  tool: entity.traveler.create
+  execution: runtime
+  input_map:
+    person_id: $context.person_id
+  output: traveler
+
+- id: create_booking
+  type: tool
+  tool: entity.booking.create
+  execution: runtime
+  input_map:
+    person_id: $context.person_id
+    traveler: traveler.id
+    travel_package: package_code
+    travel_date: travel_date
+    travelers_count: travelers_count
+    status: $literal:pending
+  output: booking
+
+- id: show_confirmation
+  type: message
+  message: |
+    Your booking has been created!
+
+    Booking Reference: {{booking.booking_reference}}
+    Package: {{package_code}}
+    Travel Date: {{travel_date}}
+    Travelers: {{travelers_count}}
+    Status: Pending
+
+    Our team will confirm your booking shortly. You will receive a notification once confirmed.
+
+- id: done
+  type: complete
+  message: ""

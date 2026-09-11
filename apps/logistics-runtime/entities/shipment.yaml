@@ -1,4 +1,5 @@
 id: shipment
+scope: customer
 name: Shipment
 description: "Shipment movement"
 allocate_code:

@@ -1,4 +1,5 @@
 id: enrollment
+scope: customer
 name: Enrollment
 description: "Learner enrollment bound to Person"
 allocate_code:

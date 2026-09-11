@@ -1,4 +1,5 @@
 id: event
+scope: customer
 name: Event
 description: "Calendar event"
 allocate_code:
