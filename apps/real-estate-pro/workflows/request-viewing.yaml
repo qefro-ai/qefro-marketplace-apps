@@ -24,6 +24,7 @@ steps:
     date: date
     time: time
     notes: notes
+    status: $literal:scheduled
 - id: confirm
   type: message
   message: "✅ Viewing scheduled for {{property_title}} on {{date}}."

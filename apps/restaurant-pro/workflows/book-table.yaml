@@ -29,6 +29,7 @@ steps:
     time: time
     table_name: table_name
     notes: notes
+    status: $literal:confirmed
 - id: confirm
   type: message
   message: "✅ Reservation booked for {{guest_count}} on {{date}}."

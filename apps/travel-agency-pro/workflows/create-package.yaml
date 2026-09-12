@@ -43,7 +43,7 @@ steps:
     package_type: package_type
     duration_days: duration_days
     price: price
-    status: $literal:draft
+    status: $literal:active
   output: package
 
 - id: show_result
@@ -53,7 +53,7 @@ steps:
 
     📋 **Code:** {{package.code}}
     ✈️ **Name:** {{package.name}}
-    📋 **Status:** Draft
+    📋 **Status:** Active
 
 - id: done
   type: complete

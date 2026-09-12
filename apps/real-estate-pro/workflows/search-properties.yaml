@@ -11,10 +11,16 @@ steps:
   field: property_type
   message: "🔍 What type of property are you looking for?"
   choices:
-  - Apartment
-  - Villa
-  - Plot / Land
-  - Commercial
+  - id: apartment
+    label: Apartment
+  - id: house
+    label: Villa / House
+  - id: condo
+    label: Condo
+  - id: land
+    label: Plot / Land
+  - id: commercial
+    label: Commercial
 - id: ask_city
   type: ask
   field: city

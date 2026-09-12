@@ -25,6 +25,7 @@ steps:
       destination: destination
       scheduled_date: scheduled_date
       vehicle_label: vehicle_label
+      status: $literal:draft
   - id: confirm
     type: message
     message: "✅ Shipment created from {{origin}} to {{destination}}."

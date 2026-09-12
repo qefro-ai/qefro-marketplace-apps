@@ -12,7 +12,7 @@ steps:
     execution: runtime
     output: shipments
     input_map:
-      filter.status: $literal:pending
+      filter.status: $literal:draft
       limit: $literal:20
   - id: ask_id
     type: ask

@@ -29,6 +29,7 @@ steps:
   execution: runtime
   input_map:
     filter.status: $literal:active
+    filter.destination: destination
     limit: $literal:20
   output: packages
 

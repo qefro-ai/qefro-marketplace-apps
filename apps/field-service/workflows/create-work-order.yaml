@@ -25,6 +25,7 @@ steps:
       summary: summary
       scheduled_date: scheduled_date
       technician_name: technician_name
+      status: $literal:open
   - id: confirm
     type: message
     message: "✅ Work order created for {{site_name}}."

@@ -57,6 +57,7 @@ steps:
     time: time
     reason: reason
     notes: notes
+    status: $literal:scheduled
 - id: confirm
   type: message
   message: "✅ Appointment booked for {{patient_name}} with {{practitioner_name}} on {{date}} at {{time}}."

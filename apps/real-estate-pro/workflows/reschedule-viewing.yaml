@@ -19,7 +19,7 @@ steps:
   field: id
   message: "🔄 Which viewing would you like to reschedule?"
   choices_from: viewings
-  title_field: property_name
+  title_field: property_title
   value_field: id
   chip_prefix: viewing
 - id: ask_date

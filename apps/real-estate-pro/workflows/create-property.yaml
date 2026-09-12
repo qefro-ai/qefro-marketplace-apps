@@ -6,6 +6,21 @@ surfaces:
 trigger:
   type: conversation
 steps:
+- id: ask_type
+  type: ask
+  field: property_type
+  message: "🏠 What type of property?"
+  choices:
+  - id: apartment
+    label: Apartment
+  - id: house
+    label: Villa / House
+  - id: condo
+    label: Condo
+  - id: land
+    label: Plot / Land
+  - id: commercial
+    label: Commercial
 - id: ask_title
   type: ask
   field: title

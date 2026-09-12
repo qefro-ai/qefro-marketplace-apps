@@ -24,6 +24,7 @@ steps:
       course_title: course_title
       date: date
       time: time
+      status: $literal:scheduled
   - id: confirm
     type: message
     message: "📅 Session scheduled for {{course_title}} on {{date}}."

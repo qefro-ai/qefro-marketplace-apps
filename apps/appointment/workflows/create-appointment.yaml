@@ -26,6 +26,7 @@ steps:
       date: date
       time: time
       staff_name: staff_name
+      status: $literal:scheduled
   - id: confirm
     type: message
     message: "✅ Appointment booked for {{guest_name}} on {{date}}."

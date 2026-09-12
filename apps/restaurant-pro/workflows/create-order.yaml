@@ -24,6 +24,7 @@ steps:
     reservation_code: reservation_code
     total_amount: total_amount
     currency: currency
+    status: $literal:pending
 - id: confirm
   type: message
   message: "🍽️ Order created for {{guest_name}}."
