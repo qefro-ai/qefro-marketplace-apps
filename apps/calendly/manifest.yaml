@@ -1,0 +1,115 @@
+id: calendly
+name: Calendly
+version: 0.1.2
+hosting: runtime
+description: Event types, scheduled events, invitees, and cancellations as a metadata
+  Marketplace App
+category: scheduling
+tags:
+- calendly
+- booking
+- runtime
+channels:
+- widget
+- whatsapp
+connections:
+- calendly
+http_tools:
+- list_event_types
+- list_scheduled_events
+- get_scheduled_event
+- list_invitees
+- list_my_scheduled_events
+- cancel_scheduled_event
+entities:
+- event_type
+- scheduled_event
+- invitee
+flows:
+- list-event-types
+- list-my-bookings
+- cancel-booking
+- list-invitees
+events:
+- booking.created
+- booking.cancelled
+- event_type.created
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: list_event_types
+  workflow: list-event-types
+  input_variable: event_type_list
+  match:
+    intents:
+    - list event types
+    - what can I book
+    confirmation:
+      reply_signals:
+      - event types
+      required_slots: []
+  confirmation_message: Here are the event types.
+- id: list_my_bookings
+  workflow: list-my-bookings
+  input_variable: my_booking_list
+  match:
+    intents:
+    - show my bookings
+    - my calendly events
+    confirmation:
+      reply_signals:
+      - your bookings
+      required_slots: []
+  confirmation_message: Here are your bookings.
+- id: cancel_booking
+  workflow: cancel-booking
+  input_variable: cancel_input
+  match:
+    intents:
+    - cancel my booking
+    - cancel the calendly event
+    confirmation:
+      reply_signals:
+      - cancelled
+      required_slots:
+      - uuid
+  confirmation_message: Booking {{uuid}} cancelled.
+- id: list_invitees
+  workflow: list-invitees
+  input_variable: invitee_list
+  match:
+    intents:
+    - list invitees
+    - who is invited
+    confirmation:
+      reply_signals:
+      - invitees
+      required_slots:
+      - uuid
+  confirmation_message: Invitees for {{uuid}}.
+conversation_slots:
+- id: uuid
+  labels:
+  - event
+  - booking
+  - uuid
+  kind: string
+- id: reason
+  labels:
+  - reason
+  - cancellation
+  kind: string
+ui:
+  name: Calendly

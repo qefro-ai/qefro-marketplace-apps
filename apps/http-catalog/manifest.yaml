@@ -1,0 +1,56 @@
+id: http-catalog
+name: Catalog API
+version: 0.1.3
+hosting: runtime
+description: Search and fetch catalog items through generic Runtime HTTP tools
+category: commerce
+tags:
+- catalog
+- http
+- runtime
+channels:
+- widget
+connections:
+- catalog-api
+http_tools:
+- list_items
+- get_item
+entities:
+- item
+flows:
+- search-items
+events:
+- item.created
+permissions:
+- workflow.execute
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+triggers:
+- id: search_items
+  workflow: search-items
+  input_variable: item_query
+  match:
+    intents:
+    - search the catalog
+    - find an item
+    - look up items
+    confirmation:
+      reply_signals:
+      - item
+      - items
+      - found
+      required_slots:
+      - query
+  confirmation_message: Items matching {{query}}.
+conversation_slots:
+- id: query
+  labels:
+  - item
+  - search
+  - find
+  - catalog
+  kind: string

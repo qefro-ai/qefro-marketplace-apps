@@ -1,0 +1,125 @@
+id: whatsapp-business
+name: WhatsApp Business
+version: 0.1.2
+hosting: runtime
+description: Cloud API contacts, templates, outbound messages, and message events
+  as a metadata Marketplace App
+category: messaging
+tags:
+- whatsapp
+- messaging
+- runtime
+channels:
+- widget
+- whatsapp
+connections:
+- whatsapp-business
+http_tools:
+- list_templates
+- send_template_message
+- send_text_message
+- get_contact
+entities:
+- wa_contact
+- message_template
+- outbound_message
+flows:
+- send-template-message
+- send-text-message
+- list-templates
+events:
+- message.inbound
+- message.status
+- template.updated
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: send_template_message
+  workflow: send-template-message
+  input_variable: template_input
+  match:
+    intents:
+    - send a whatsapp template
+    - send template message
+    confirmation:
+      reply_signals:
+      - sent
+      required_slots:
+      - template_name
+  confirmation_message: Template {{template_name}} sent.
+- id: send_text_message
+  workflow: send-text-message
+  input_variable: text_input
+  match:
+    intents:
+    - send a whatsapp message
+    - send text on whatsapp
+    confirmation:
+      reply_signals:
+      - sent
+      required_slots:
+      - destination_number
+  confirmation_message: Message sent to {{destination_number}}.
+- id: list_templates
+  workflow: list-templates
+  input_variable: template_list
+  match:
+    intents:
+    - list whatsapp templates
+    - show message templates
+    confirmation:
+      reply_signals:
+      - templates
+      required_slots:
+      - waba_id
+  confirmation_message: Here are the templates.
+conversation_slots:
+- id: phone_number_id
+  labels:
+  - phone number id
+  - sender id
+  kind: string
+- id: waba_id
+  labels:
+  - waba
+  - business account
+  kind: string
+- id: destination_number
+  labels:
+  - destination
+  - whatsapp number
+  - to
+  kind: string
+- id: template_name
+  labels:
+  - template
+  kind: string
+- id: language
+  labels:
+  - language
+  - locale
+  kind: string
+- id: body
+  labels:
+  - message
+  - text
+  kind: string
+- id: wa_id
+  labels:
+  - wa id
+  - contact id
+  kind: string
+ui:
+  name: WhatsApp Business

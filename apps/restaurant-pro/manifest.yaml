@@ -1,0 +1,171 @@
+id: restaurant-pro
+name: Restaurant Pro
+version: 1.0.6
+hosting: runtime
+description: Metadata-only restaurant operations Marketplace App executed by Qefro
+  Runtime (no SDK, no custom server)
+category: hospitality
+tags:
+- restaurant
+- reservations
+- runtime
+- pro
+channels:
+- widget
+- whatsapp
+entities:
+- restaurant
+- table
+- menu_category
+- menu_item
+- customer
+- reservation
+- order
+- order_item
+- staff_member
+- dining_session
+- payment
+flows:
+- book-table
+- cancel-reservation
+- lookup-reservation
+- create-order
+- update-order-status
+- browse-menu
+- check-table-availability
+events:
+- reservation.created
+- reservation.updated
+- reservation.cancelled
+- order.created
+- order.updated
+- order.completed
+- order.cancelled
+- payment.created
+- customer.created
+- menu_item.created
+- menu_item.updated
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: book_table
+  workflow: book-table
+  input_variable: reservation_input
+  match:
+    intents:
+    - book a table
+    - reserve a table
+    - make a reservation
+    - table for
+    confirmation:
+      reply_signals:
+      - reservation
+      - booked
+      - table booked
+      required_slots:
+      - guest_count
+      - date
+  confirmation_message: Reservation booked for {{guest_count}} on {{date}}.
+- id: cancel_reservation
+  workflow: cancel-reservation
+  input_variable: reservation_cancel
+  match:
+    intents:
+    - cancel my reservation
+    - cancel the booking
+    confirmation:
+      reply_signals:
+      - cancelled
+      required_slots:
+      - id
+  confirmation_message: Reservation {{id}} cancelled.
+- id: lookup_reservation
+  workflow: lookup-reservation
+  input_variable: reservation_lookup
+  match:
+    intents:
+    - find my reservation
+    - reservation status
+    confirmation:
+      reply_signals:
+      - reservation
+      required_slots:
+      - id
+  confirmation_message: Here is reservation {{id}}.
+- id: browse_menu
+  workflow: browse-menu
+  input_variable: menu_browse
+  match:
+    intents:
+    - show the menu
+    - browse the menu
+    - what is on the menu
+    confirmation:
+      reply_signals:
+      - menu
+      required_slots: []
+  confirmation_message: |
+    Here is the current menu.
+    {{items_text}}
+conversation_slots:
+- id: guest_name
+  labels:
+  - guest
+  - name
+  - customer
+  kind: person_name
+  identity: person_name
+- id: guest_count
+  labels:
+  - covers
+  - guests
+  - party size
+  - people
+  - for
+  kind: integer
+- id: date
+  labels:
+  - date
+  - tomorrow
+  - tonight
+  kind: date
+- id: time
+  labels:
+  - time
+  kind: time
+  chip_prefix: time
+- id: table_name
+  labels:
+  - table
+  - table name
+  kind: string
+- id: id
+  labels:
+  - reservation
+  - reservation id
+  - order
+  - order id
+  kind: string
+- id: status
+  labels:
+  - status
+  kind: string
+- id: total_amount
+  labels:
+  - total
+  - amount
+  kind: string
+ui:
+  name: Restaurant Pro

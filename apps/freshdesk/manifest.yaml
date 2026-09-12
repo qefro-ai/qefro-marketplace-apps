@@ -1,0 +1,147 @@
+id: freshdesk
+name: Freshdesk
+version: 0.1.2
+hosting: runtime
+description: Contacts, tickets, comments, agents, and ticket status as a metadata
+  Marketplace App
+category: support
+tags:
+- freshdesk
+- support
+- runtime
+channels:
+- widget
+- whatsapp
+connections:
+- freshdesk
+http_tools:
+- list_contacts
+- get_contact
+- list_tickets
+- get_ticket
+- list_my_tickets
+- create_ticket
+- update_ticket
+- list_ticket_comments
+- create_ticket_comment
+- list_agents
+entities:
+- contact
+- ticket
+- ticket_comment
+- agent
+flows:
+- create-support-ticket
+- update-ticket
+- list-my-tickets
+- add-ticket-comment
+events:
+- ticket.created
+- ticket.updated
+- ticket.cancelled
+- contact.created
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: create_support_ticket
+  workflow: create-support-ticket
+  input_variable: ticket_input
+  match:
+    intents:
+    - create a support ticket
+    - open a ticket
+    - file a ticket
+    confirmation:
+      reply_signals:
+      - ticket created
+      required_slots:
+      - subject
+  confirmation_message: 'Ticket created: {{subject}}.'
+- id: update_ticket
+  workflow: update-ticket
+  input_variable: ticket_update
+  match:
+    intents:
+    - update the ticket
+    - change ticket status
+    confirmation:
+      reply_signals:
+      - updated
+      required_slots:
+      - id
+  confirmation_message: Ticket {{id}} updated.
+- id: list_my_tickets
+  workflow: list-my-tickets
+  input_variable: my_ticket_list
+  match:
+    intents:
+    - show my tickets
+    - my support tickets
+    confirmation:
+      reply_signals:
+      - your tickets
+      required_slots: []
+  confirmation_message: Here are your tickets.
+- id: add_ticket_comment
+  workflow: add-ticket-comment
+  input_variable: comment_input
+  match:
+    intents:
+    - add a ticket comment
+    - reply on the ticket
+    confirmation:
+      reply_signals:
+      - comment added
+      required_slots:
+      - id
+  confirmation_message: Comment added to ticket {{id}}.
+conversation_slots:
+- id: subject
+  labels:
+  - subject
+  - title
+  kind: string
+- id: description
+  labels:
+  - description
+  - issue
+  - details
+  kind: string
+- id: requester_email
+  labels:
+  - requester
+  - contact email
+  kind: string
+- id: id
+  labels:
+  - ticket
+  - ticket id
+  kind: string
+- id: status
+  labels:
+  - status
+  kind: string
+- id: priority
+  labels:
+  - priority
+  kind: string
+- id: body
+  labels:
+  - comment
+  - note
+  - reply
+  kind: string
+ui:
+  name: Freshdesk
