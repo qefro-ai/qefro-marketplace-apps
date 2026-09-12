@@ -6,10 +6,21 @@ surfaces:
 trigger:
   type: conversation
 steps:
+- id: list_appointments
+  type: tool
+  tool: entity.appointment.list
+  execution: runtime
+  output: appointments
+  input_map:
+    limit: $literal:20
 - id: ask_id
   type: ask
   field: id
-  message: Which appointment id?
+  message: Which appointment would you like to view?
+  choices_from: appointments
+  title_field: patient_name
+  value_field: id
+  chip_prefix: appointment
 - id: run
   type: tool
   tool: entity.appointment.get

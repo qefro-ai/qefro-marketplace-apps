@@ -6,10 +6,22 @@ surfaces:
 trigger:
   type: conversation
 steps:
+- id: list_appointments
+  type: tool
+  tool: entity.appointment.list
+  execution: runtime
+  output: appointments
+  input_map:
+    filter.status: $literal:scheduled
+    limit: $literal:20
 - id: ask_id
   type: ask
   field: id
-  message: Which appointment id should we move?
+  message: Which appointment would you like to reschedule?
+  choices_from: appointments
+  title_field: patient_name
+  value_field: id
+  chip_prefix: appointment
 - id: ask_date
   type: ask
   field: date

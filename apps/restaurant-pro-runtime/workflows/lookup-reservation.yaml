@@ -6,10 +6,21 @@ surfaces:
 trigger:
   type: conversation
 steps:
+- id: list_reservations
+  type: tool
+  tool: entity.reservation.list
+  execution: runtime
+  output: reservations
+  input_map:
+    limit: $literal:20
 - id: ask_id
   type: ask
   field: id
-  message: Which reservation id?
+  message: Which reservation would you like to view?
+  choices_from: reservations
+  title_field: guest_name
+  value_field: id
+  chip_prefix: reservation
 - id: run
   type: tool
   tool: entity.reservation.get

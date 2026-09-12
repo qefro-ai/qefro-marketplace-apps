@@ -8,10 +8,22 @@ trigger:
 constants:
   cancelled: cancelled
 steps:
+- id: list_reservations
+  type: tool
+  tool: entity.reservation.list
+  execution: runtime
+  output: reservations
+  input_map:
+    filter.status: $literal:confirmed
+    limit: $literal:20
 - id: ask_id
   type: ask
   field: id
-  message: Which reservation id should we cancel?
+  message: Which reservation would you like to cancel?
+  choices_from: reservations
+  title_field: guest_name
+  value_field: id
+  chip_prefix: reservation
 - id: run
   type: tool
   tool: entity.reservation.update

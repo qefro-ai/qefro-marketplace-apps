@@ -4,10 +4,21 @@ description: "Refund a Razorpay payment through generic Runtime HTTP"
 trigger:
   type: conversation
 steps:
+  - id: list_payments
+    type: tool
+    tool: entity.payment.list
+    execution: runtime
+    output: payments
+    input_map:
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which payment id should we refund?"
+    message: "Which payment would you like to refund?"
+    choices_from: payments
+    title_field: amount
+    value_field: id
+    chip_prefix: payment
   - id: ask_amount
     type: ask
     field: amount

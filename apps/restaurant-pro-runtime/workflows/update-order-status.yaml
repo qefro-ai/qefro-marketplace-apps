@@ -6,10 +6,22 @@ surfaces:
 trigger:
   type: conversation
 steps:
+- id: list_orders
+  type: tool
+  tool: entity.order.list
+  execution: runtime
+  output: orders
+  input_map:
+    filter.status: $literal:pending
+    limit: $literal:20
 - id: ask_id
   type: ask
   field: id
-  message: Which order id?
+  message: Which order would you like to update?
+  choices_from: orders
+  title_field: table_number
+  value_field: id
+  chip_prefix: order
 - id: ask_status
   type: ask
   field: status

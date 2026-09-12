@@ -4,10 +4,21 @@ description: "Look up one order for the authenticated Person"
 trigger:
   type: conversation
 steps:
+  - id: list_orders
+    type: tool
+    tool: entity.order.list
+    execution: runtime
+    output: orders
+    input_map:
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "What is the order id?"
+    message: "Which order would you like to view?"
+    choices_from: orders
+    title_field: order_number
+    value_field: id
+    chip_prefix: order
   - id: run
     type: tool
     tool: get_my_order

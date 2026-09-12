@@ -6,10 +6,22 @@ surfaces:
 trigger:
   type: conversation
 steps:
+- id: list_viewings
+  type: tool
+  tool: entity.viewing.list
+  execution: runtime
+  output: viewings
+  input_map:
+    filter.status: $literal:scheduled
+    limit: $literal:20
 - id: ask_id
   type: ask
   field: id
-  message: Which viewing id should we move?
+  message: Which viewing would you like to reschedule?
+  choices_from: viewings
+  title_field: property_name
+  value_field: id
+  chip_prefix: viewing
 - id: ask_date
   type: ask
   field: date

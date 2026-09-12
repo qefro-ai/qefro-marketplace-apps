@@ -4,10 +4,21 @@ description: "Advance shipment state"
 trigger:
   type: conversation
 steps:
+  - id: list_shipments
+    type: tool
+    tool: entity.shipment.list
+    execution: runtime
+    output: shipments
+    input_map:
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which shipment id?"
+    message: "Which shipment would you like to update?"
+    choices_from: shipments
+    title_field: tracking_number
+    value_field: id
+    chip_prefix: shipment
   - id: ask_status
     type: ask
     field: status

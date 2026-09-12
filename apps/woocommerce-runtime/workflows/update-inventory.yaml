@@ -4,10 +4,21 @@ description: "Staff stock update through generic Runtime HTTP"
 trigger:
   type: conversation
 steps:
+  - id: list_products
+    type: tool
+    tool: entity.product.list
+    execution: runtime
+    output: products
+    input_map:
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which product id should we update?"
+    message: "Which product would you like to update?"
+    choices_from: products
+    title_field: name
+    value_field: id
+    chip_prefix: product
   - id: ask_stock_quantity
     type: ask
     field: stock_quantity

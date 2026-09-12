@@ -4,10 +4,21 @@ description: "Fetch one enrollment"
 trigger:
   type: conversation
 steps:
+  - id: list_enrollments
+    type: tool
+    tool: entity.enrollment.list
+    execution: runtime
+    output: enrollments
+    input_map:
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which enrollment id?"
+    message: "Which enrollment would you like to view?"
+    choices_from: enrollments
+    title_field: student_name
+    value_field: id
+    chip_prefix: enrollment
   - id: run
     type: tool
     tool: entity.enrollment.get

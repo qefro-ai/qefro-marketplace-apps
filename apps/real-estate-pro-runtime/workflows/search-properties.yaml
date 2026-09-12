@@ -6,11 +6,26 @@ surfaces:
 trigger:
   type: conversation
 steps:
+- id: ask_type
+  type: ask
+  field: property_type
+  message: What type of property are you looking for?
+  choices:
+  - Apartment
+  - Villa
+  - Plot / Land
+  - Commercial
+- id: ask_city
+  type: ask
+  field: city
+  message: Which city or area should I search in?
 - id: run
   type: tool
   tool: entity.property.list
   execution: runtime
-  input_map: {}
+  input_map:
+    filter.property_type: property_type
+    filter.city: city
 - id: confirm
   type: message
   message: |

@@ -4,10 +4,21 @@ description: "Update ticket status through generic Runtime HTTP"
 trigger:
   type: conversation
 steps:
+  - id: list_tickets
+    type: tool
+    tool: entity.ticket.list
+    execution: runtime
+    output: tickets
+    input_map:
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which ticket id?"
+    message: "Which ticket would you like to update?"
+    choices_from: tickets
+    title_field: subject
+    value_field: id
+    chip_prefix: ticket
   - id: ask_status
     type: ask
     field: status

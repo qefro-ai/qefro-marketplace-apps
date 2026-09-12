@@ -6,10 +6,22 @@ trigger:
 constants:
   completed: completed
 steps:
+  - id: list_sessions
+    type: tool
+    tool: entity.session.list
+    execution: runtime
+    output: sessions
+    input_map:
+      filter.status: $literal:scheduled
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which session id?"
+    message: "Which session would you like to mark complete?"
+    choices_from: sessions
+    title_field: title
+    value_field: id
+    chip_prefix: session
   - id: run
     type: tool
     tool: entity.session.update

@@ -6,10 +6,22 @@ trigger:
 constants:
   cancelled: cancelled
 steps:
+  - id: list_appointments
+    type: tool
+    tool: entity.appointment.list
+    execution: runtime
+    output: appointments
+    input_map:
+      filter.status: $literal:scheduled
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which appointment id should we cancel?"
+    message: "Which appointment would you like to cancel?"
+    choices_from: appointments
+    title_field: person_name
+    value_field: id
+    chip_prefix: appointment
   - id: run
     type: tool
     tool: entity.appointment.update

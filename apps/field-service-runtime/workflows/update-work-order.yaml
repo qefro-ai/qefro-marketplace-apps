@@ -4,10 +4,21 @@ description: "Assign or edit a work order"
 trigger:
   type: conversation
 steps:
+  - id: list_work_orders
+    type: tool
+    tool: entity.work_order.list
+    execution: runtime
+    output: work_orders
+    input_map:
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which work order id?"
+    message: "Which work order would you like to update?"
+    choices_from: work_orders
+    title_field: title
+    value_field: id
+    chip_prefix: work order
   - id: ask_technician_name
     type: ask
     field: technician_name

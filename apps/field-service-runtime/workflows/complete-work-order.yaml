@@ -6,10 +6,22 @@ trigger:
 constants:
   completed: completed
 steps:
+  - id: list_work_orders
+    type: tool
+    tool: entity.work_order.list
+    execution: runtime
+    output: work_orders
+    input_map:
+      filter.status: $literal:in_progress
+      limit: $literal:20
   - id: ask_id
     type: ask
     field: id
-    message: "Which work order id is done?"
+    message: "Which work order is done?"
+    choices_from: work_orders
+    title_field: title
+    value_field: id
+    chip_prefix: work order
   - id: run
     type: tool
     tool: entity.work_order.update
