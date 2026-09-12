@@ -11,7 +11,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Here are your invoices.
+      📋 **Your Invoices**
       {{items_text}}
   - id: done
     type: complete

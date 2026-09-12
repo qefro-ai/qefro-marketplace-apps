@@ -9,15 +9,15 @@ steps:
 - id: ask_patient_name
   type: ask
   field: patient_name
-  message: Patient name?
+  message: "👤 Patient name?"
 - id: ask_invoice_code
   type: ask
   field: invoice_code
-  message: Invoice code?
+  message: "💰 Invoice code?"
 - id: ask_amount
   type: ask
   field: amount
-  message: Payment amount?
+  message: "💰 Payment amount?"
 - id: run
   type: tool
   tool: entity.payment.create
@@ -29,6 +29,6 @@ steps:
     currency: currency
 - id: confirm
   type: message
-  message: Payment recorded for invoice {{invoice_code}}.
+  message: "✅ Payment recorded for invoice {{invoice_code}}."
 - id: done
   type: complete

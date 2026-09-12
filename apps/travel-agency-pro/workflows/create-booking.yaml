@@ -11,22 +11,22 @@ steps:
 - id: ask_package
   type: ask
   field: package_code
-  message: "Which package would you like to book?"
+  message: "✈️ Which package would you like to book?"
 
 - id: ask_date
   type: ask
   field: travel_date
-  message: "When would you like to travel?"
+  message: "📅 When would you like to travel?"
 
 - id: ask_travelers
   type: ask
   field: travelers_count
-  message: "How many travelers?"
+  message: "👤 How many travelers?"
 
 - id: ask_name
   type: ask
   field: traveler_name
-  message: "Please provide the lead traveler's name."
+  message: "👤 Please provide the lead traveler's name."
 
 - id: create_traveler
   type: tool
@@ -52,13 +52,13 @@ steps:
 - id: show_confirmation
   type: message
   message: |
-    Your booking has been created!
+    ✅ **Booking Created!**
 
-    Booking Reference: {{booking.booking_reference}}
-    Package: {{package_code}}
-    Travel Date: {{travel_date}}
-    Travelers: {{travelers_count}}
-    Status: Pending
+    📋 **Reference:** {{booking.booking_reference}}
+    ✈️ **Package:** {{package_code}}
+    📅 **Travel Date:** {{travel_date}}
+    👤 **Travelers:** {{travelers_count}}
+    📋 **Status:** Pending
 
     Our team will confirm your booking shortly. You will receive a notification once confirmed.
 

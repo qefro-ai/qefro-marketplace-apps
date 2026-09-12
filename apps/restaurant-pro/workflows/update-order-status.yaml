@@ -17,7 +17,7 @@ steps:
 - id: ask_id
   type: ask
   field: id
-  message: Which order would you like to update?
+  message: "📋 Which order would you like to update?"
   choices_from: orders
   title_field: table_number
   value_field: id
@@ -25,7 +25,7 @@ steps:
 - id: ask_status
   type: ask
   field: status
-  message: New status?
+  message: "🔄 New status?"
 - id: run
   type: tool
   tool: entity.order.update
@@ -35,6 +35,6 @@ steps:
     status: status
 - id: confirm
   type: message
-  message: Order {{id}} updated to {{status}}.
+  message: "🔄 Order {{id}} updated to {{status}}."
 - id: done
   type: complete

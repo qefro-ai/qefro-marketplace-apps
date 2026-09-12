@@ -9,7 +9,7 @@ steps:
 - id: ask_patient_name
   type: ask
   field: patient_name
-  message: Who is the appointment for? Reply with the patient name.
+  message: "👤 Who is the appointment for? Reply with the patient name."
 - id: list_practitioners
   type: tool
   tool: entity.practitioner.list
@@ -20,7 +20,7 @@ steps:
 - id: ask_doctor
   type: ask
   field: practitioner_name
-  message: Which doctor would you like? Tap a button below. (Configure practitioners in Clinic Pro → Practitioners.)
+  message: "👨‍⚕️ Which doctor would you like? Tap a button below. (Configure practitioners in Clinic Pro → Practitioners.)"
   choices_from: practitioners
   title_field: name
   value_field: name
@@ -37,7 +37,7 @@ steps:
 - id: ask_slot
   type: ask
   field: time
-  message: Pick an open slot for that doctor.
+  message: "⏰ Pick an open slot for that doctor."
   choices_from: slots
   title_field: start_at
   value_field: start_at
@@ -45,7 +45,7 @@ steps:
 - id: ask_reason
   type: ask
   field: reason
-  message: Reason for the visit?
+  message: "📋 Reason for the visit?"
 - id: run
   type: tool
   tool: entity.appointment.create
@@ -59,6 +59,6 @@ steps:
     notes: notes
 - id: confirm
   type: message
-  message: Appointment booked for {{patient_name}} with {{practitioner_name}} on {{date}} at {{time}}.
+  message: "✅ Appointment booked for {{patient_name}} with {{practitioner_name}} on {{date}} at {{time}}."
 - id: done
   type: complete

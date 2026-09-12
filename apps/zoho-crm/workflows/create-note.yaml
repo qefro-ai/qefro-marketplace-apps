@@ -7,15 +7,15 @@ steps:
   - id: ask_title
     type: ask
     field: title
-    message: "Note title?"
+    message: "📝 Note title?"
   - id: ask_body
     type: ask
     field: body
-    message: "Note content?"
+    message: "📝 Note content?"
   - id: ask_parent_id
     type: ask
     field: parent_id
-    message: "Parent record id?"
+    message: "📝 Parent record id?"
   - id: run
     type: tool
     tool: create_note
@@ -26,7 +26,7 @@ steps:
       parent_id: parent_id
   - id: confirm
     type: message
-    message: "Note {{title}} created."
+    message: "📝 Note {{title}} created."
   - id: done
     type: complete
     message: ""

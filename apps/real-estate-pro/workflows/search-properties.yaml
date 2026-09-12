@@ -9,7 +9,7 @@ steps:
 - id: ask_type
   type: ask
   field: property_type
-  message: What type of property are you looking for?
+  message: "🔍 What type of property are you looking for?"
   choices:
   - Apartment
   - Villa
@@ -18,7 +18,7 @@ steps:
 - id: ask_city
   type: ask
   field: city
-  message: Which city or area should I search in?
+  message: "📍 Which city or area should I search in?"
 - id: run
   type: tool
   tool: entity.property.list
@@ -29,7 +29,7 @@ steps:
 - id: confirm
   type: message
   message: |
-    Here are matching properties.
+    🔍 **Matching Properties**
     {{items_text}}
 
 - id: done

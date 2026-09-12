@@ -7,15 +7,15 @@ steps:
   - id: ask_service_name
     type: ask
     field: service_name
-    message: "Which service should we book?"
+    message: "📅 Which service should we book?"
   - id: ask_date
     type: ask
     field: date
-    message: "Which date?"
+    message: "📅 Which date?"
   - id: ask_guest_name
     type: ask
     field: guest_name
-    message: "What name should the appointment be under?"
+    message: "👤 What name should the appointment be under?"
   - id: run
     type: tool
     tool: entity.appointment.create
@@ -28,6 +28,6 @@ steps:
       staff_name: staff_name
   - id: confirm
     type: message
-    message: "Appointment booked for {{guest_name}} on {{date}}."
+    message: "✅ Appointment booked for {{guest_name}} on {{date}}."
   - id: done
     type: complete

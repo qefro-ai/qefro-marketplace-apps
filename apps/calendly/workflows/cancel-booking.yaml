@@ -7,11 +7,11 @@ steps:
   - id: ask_uuid
     type: ask
     field: uuid
-    message: "Which scheduled event uuid?"
+    message: "❌ Which scheduled event uuid?"
   - id: ask_reason
     type: ask
     field: reason
-    message: "Cancellation reason?"
+    message: "❌ Cancellation reason?"
   - id: run
     type: tool
     tool: cancel_scheduled_event
@@ -21,7 +21,7 @@ steps:
       reason: reason
   - id: confirm
     type: message
-    message: "Booking {{uuid}} cancelled."
+    message: "❌ Booking {{uuid}} cancelled."
   - id: done
     type: complete
     message: ""

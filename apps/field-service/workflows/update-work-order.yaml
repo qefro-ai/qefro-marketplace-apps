@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which work order would you like to update?"
+    message: "🔄 Which work order would you like to update?"
     choices_from: work_orders
     title_field: title
     value_field: id
@@ -22,11 +22,11 @@ steps:
   - id: ask_technician_name
     type: ask
     field: technician_name
-    message: "Assign which technician?"
+    message: "🔧 Assign which technician?"
   - id: ask_status
     type: ask
     field: status
-    message: "New status?"
+    message: "🔄 New status?"
   - id: run
     type: tool
     tool: entity.work_order.update
@@ -37,6 +37,6 @@ steps:
       status: status
   - id: confirm
     type: message
-    message: "Work order {{id}} updated."
+    message: "🔄 Work order {{id}} updated."
   - id: done
     type: complete

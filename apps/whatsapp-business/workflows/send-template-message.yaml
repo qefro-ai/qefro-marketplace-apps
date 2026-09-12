@@ -7,23 +7,23 @@ steps:
   - id: ask_phone_number_id
     type: ask
     field: phone_number_id
-    message: "Which phone-number id should send?"
+    message: "💬 Which phone-number id should send?"
   - id: ask_waba_id
     type: ask
     field: waba_id
-    message: "WABA id (if needed for templates)?"
+    message: "💬 WABA id (if needed for templates)?"
   - id: ask_destination_number
     type: ask
     field: destination_number
-    message: "Destination WhatsApp number?"
+    message: "💬 Destination WhatsApp number?"
   - id: ask_template_name
     type: ask
     field: template_name
-    message: "Template name?"
+    message: "💬 Template name?"
   - id: ask_language
     type: ask
     field: language
-    message: "Template language code?"
+    message: "💬 Template language code?"
   - id: run
     type: tool
     tool: send_template_message
@@ -36,7 +36,7 @@ steps:
       language: language
   - id: confirm
     type: message
-    message: "Template {{template_name}} sent."
+    message: "✅ Template {{template_name}} sent."
   - id: done
     type: complete
     message: ""

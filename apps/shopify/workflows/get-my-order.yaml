@@ -7,7 +7,7 @@ steps:
   - id: ask_order
     type: ask
     field: order_number
-    message: What is your order number?
+    message: 📦 What is your order number?
   - id: get
     type: tool
     tool: get_my_order
@@ -17,7 +17,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Here is that order.
+      📋 **Order Details**
       {{items_text}}
   - id: done
     type: complete

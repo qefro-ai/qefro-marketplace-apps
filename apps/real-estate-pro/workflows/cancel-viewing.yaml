@@ -19,7 +19,7 @@ steps:
 - id: ask_id
   type: ask
   field: id
-  message: Which viewing would you like to cancel?
+  message: "❌ Which viewing would you like to cancel?"
   choices_from: viewings
   title_field: property_name
   value_field: id
@@ -33,6 +33,6 @@ steps:
     status: $constants.cancelled
 - id: confirm
   type: message
-  message: Viewing {{id}} cancelled.
+  message: "❌ Viewing {{id}} cancelled."
 - id: done
   type: complete

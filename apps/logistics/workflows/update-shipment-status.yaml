@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which shipment would you like to update?"
+    message: "🔄 Which shipment would you like to update?"
     choices_from: shipments
     title_field: tracking_number
     value_field: id
@@ -22,7 +22,7 @@ steps:
   - id: ask_status
     type: ask
     field: status
-    message: "New status (in_transit, delivered, exception)?"
+    message: "🔄 New status (in_transit, delivered, exception)?"
   - id: run
     type: tool
     tool: entity.shipment.update
@@ -32,6 +32,6 @@ steps:
       status: status
   - id: confirm
     type: message
-    message: "Shipment {{id}} is now {{status}}."
+    message: "🔄 Shipment {{id}} is now {{status}}."
   - id: done
     type: complete

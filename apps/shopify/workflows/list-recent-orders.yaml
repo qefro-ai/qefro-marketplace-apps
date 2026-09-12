@@ -11,7 +11,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Here are the recent shop orders.
+      🛒 **Recent Shop Orders**
       {{items_text}}
   - id: done
     type: complete

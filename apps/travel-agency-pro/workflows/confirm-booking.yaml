@@ -14,7 +14,7 @@ steps:
 - id: ask_reference
   type: ask
   field: booking_reference
-  message: "Booking reference to confirm?"
+  message: "📋 Booking reference to confirm?"
 
 - id: lookup
   type: tool
@@ -37,7 +37,7 @@ steps:
 - id: show_result
   type: message
   message: |
-    Booking {{booking.booking_reference}} confirmed!
+    ✅ **Booking {{booking.booking_reference}} Confirmed!**
 
     The customer will be notified automatically.
 

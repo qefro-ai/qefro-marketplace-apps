@@ -14,7 +14,7 @@ steps:
 - id: confirm
   type: message
   message: |
-    Here is the current menu.
+    🍽️ **Current Menu**
     {{items_text}}
 
 - id: done

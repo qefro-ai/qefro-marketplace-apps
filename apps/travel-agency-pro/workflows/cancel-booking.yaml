@@ -14,7 +14,7 @@ steps:
 - id: ask_reference
   type: ask
   field: booking_reference
-  message: "Please provide the booking reference you want to cancel."
+  message: "❌ Please provide the booking reference you want to cancel."
 
 - id: lookup
   type: tool
@@ -37,10 +37,10 @@ steps:
 - id: show_result
   type: message
   message: |
-    Your booking has been cancelled.
+    ❌ **Booking Cancelled**
 
-    Booking Reference: {{booking.booking_reference}}
-    Status: Cancelled
+    📋 **Booking Reference:** {{booking.booking_reference}}
+    📋 **Status:** Cancelled
 
     If you have any questions, please contact our support team.
 

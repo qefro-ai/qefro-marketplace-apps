@@ -7,11 +7,11 @@ steps:
   - id: ask_stripe_customer
     type: ask
     field: stripe_customer
-    message: "Which Stripe customer id should we subscribe?"
+    message: "💳 Which Stripe customer id should we subscribe?"
   - id: ask_price_id
     type: ask
     field: price_id
-    message: "Which price id?"
+    message: "💳 Which price id?"
   - id: run
     type: tool
     tool: create_subscription
@@ -21,7 +21,7 @@ steps:
       price_id: price_id
   - id: confirm
     type: message
-    message: "Subscription created for {{stripe_customer}}."
+    message: "🔄 Subscription created for {{stripe_customer}}."
   - id: done
     type: complete
     message: ""

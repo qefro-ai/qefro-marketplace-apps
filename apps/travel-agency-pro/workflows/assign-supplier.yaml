@@ -11,7 +11,7 @@ steps:
 - id: ask_booking
   type: ask
   field: booking_reference
-  message: "Booking reference?"
+  message: "📋 Booking reference?"
 
 - id: lookup_booking
   type: tool
@@ -25,12 +25,12 @@ steps:
 - id: ask_item_type
   type: ask
   field: item_type
-  message: "Item type? (hotel, flight, transfer, activity, visa, transport, other)"
+  message: "📦 Item type? (hotel, flight, transfer, activity, visa, transport, other)"
 
 - id: ask_supplier
   type: ask
   field: supplier_code
-  message: "Supplier code?"
+  message: "📞 Supplier code?"
 
 - id: lookup_supplier
   type: tool
@@ -55,12 +55,12 @@ steps:
 - id: show_result
   type: message
   message: |
-    Supplier assigned!
+    ✅ **Supplier Assigned!**
 
-    Booking: {{booking.booking_reference}}
-    Item Type: {{item_type}}
-    Supplier: {{supplier.name}}
-    Code: {{item.code}}
+    📋 **Booking:** {{booking.booking_reference}}
+    📦 **Item Type:** {{item_type}}
+    📞 **Supplier:** {{supplier.name}}
+    📋 **Code:** {{item.code}}
 
 - id: done
   type: complete

@@ -7,11 +7,11 @@ steps:
   - id: ask_amount
     type: ask
     field: amount
-    message: "What amount should we charge (smallest currency unit)?"
+    message: "💰 What amount should we charge (smallest currency unit)?"
   - id: ask_currency
     type: ask
     field: currency
-    message: "Which currency code?"
+    message: "💰 Which currency code?"
   - id: run
     type: tool
     tool: create_order
@@ -21,7 +21,7 @@ steps:
       currency: currency
   - id: confirm
     type: message
-    message: "Order created for {{amount}} {{currency}}."
+    message: "💰 Order created for {{amount}} {{currency}}."
   - id: done
     type: complete
     message: ""

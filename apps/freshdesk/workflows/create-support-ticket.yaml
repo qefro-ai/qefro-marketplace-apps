@@ -7,15 +7,15 @@ steps:
   - id: ask_subject
     type: ask
     field: subject
-    message: "What is the ticket subject?"
+    message: "🎫 What is the ticket subject?"
   - id: ask_description
     type: ask
     field: description
-    message: "Describe the issue."
+    message: "🎫 Describe the issue."
   - id: ask_requester_email
     type: ask
     field: requester_email
-    message: "Requester email on the ticket?"
+    message: "🎫 Requester email on the ticket?"
   - id: run
     type: tool
     tool: create_ticket
@@ -26,7 +26,7 @@ steps:
       requester_email: requester_email
   - id: confirm
     type: message
-    message: "Ticket created: {{subject}}."
+    message: "🎫 Ticket created: {{subject}}."
   - id: done
     type: complete
     message: ""

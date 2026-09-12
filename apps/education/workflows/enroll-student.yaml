@@ -7,11 +7,11 @@ steps:
   - id: ask_learner_name
     type: ask
     field: learner_name
-    message: "Learner name?"
+    message: "🎓 Learner name?"
   - id: ask_course_title
     type: ask
     field: course_title
-    message: "Which course?"
+    message: "🎓 Which course?"
   - id: run
     type: tool
     tool: entity.enrollment.create
@@ -22,6 +22,6 @@ steps:
       date: date
   - id: confirm
     type: message
-    message: "{{learner_name}} enrolled in {{course_title}}."
+    message: "🎓 {{learner_name}} enrolled in {{course_title}}."
   - id: done
     type: complete

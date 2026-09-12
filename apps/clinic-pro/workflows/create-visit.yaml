@@ -9,11 +9,11 @@ steps:
 - id: ask_patient_name
   type: ask
   field: patient_name
-  message: Patient name?
+  message: "👤 Patient name?"
 - id: ask_date
   type: ask
   field: date
-  message: Visit date?
+  message: "📅 Visit date?"
 - id: run
   type: tool
   tool: entity.visit.create
@@ -26,6 +26,6 @@ steps:
     notes: notes
 - id: confirm
   type: message
-  message: Visit created for {{patient_name}} on {{date}}.
+  message: "✅ Visit created for {{patient_name}} on {{date}}."
 - id: done
   type: complete

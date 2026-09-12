@@ -7,23 +7,23 @@ steps:
   - id: ask_calendar_id
     type: ask
     field: calendar_id
-    message: "Which calendar id?"
+    message: "🔄 Which calendar id?"
   - id: ask_event_id
     type: ask
     field: event_id
-    message: "Which event id?"
+    message: "🔄 Which event id?"
   - id: ask_summary
     type: ask
     field: summary
-    message: "Updated title?"
+    message: "🔄 Updated title?"
   - id: ask_start
     type: ask
     field: start
-    message: "New start (RFC3339)?"
+    message: "🔄 New start (RFC3339)?"
   - id: ask_end
     type: ask
     field: end
-    message: "New end (RFC3339)?"
+    message: "🔄 New end (RFC3339)?"
   - id: run
     type: tool
     tool: update_event
@@ -36,7 +36,7 @@ steps:
       end: end
   - id: confirm
     type: message
-    message: "Event {{event_id}} rescheduled."
+    message: "🔄 Event {{event_id}} rescheduled."
   - id: done
     type: complete
     message: ""

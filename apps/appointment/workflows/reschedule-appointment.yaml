@@ -15,7 +15,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which appointment would you like to reschedule?"
+    message: "🔄 Which appointment would you like to reschedule?"
     choices_from: appointments
     title_field: person_name
     value_field: id
@@ -23,11 +23,11 @@ steps:
   - id: ask_date
     type: ask
     field: date
-    message: "New date?"
+    message: "📅 New date?"
   - id: ask_time
     type: ask
     field: time
-    message: "New time?"
+    message: "📅 New time?"
   - id: run
     type: tool
     tool: entity.appointment.update
@@ -38,6 +38,6 @@ steps:
       time: time
   - id: confirm
     type: message
-    message: "Appointment {{id}} rescheduled to {{date}}."
+    message: "🔄 Appointment {{id}} rescheduled to {{date}}."
   - id: done
     type: complete

@@ -9,11 +9,11 @@ steps:
 - id: ask_name
   type: ask
   field: name
-  message: Practitioner name?
+  message: "👨‍⚕️ Practitioner name?"
 - id: ask_specialty
   type: ask
   field: specialty
-  message: Specialty?
+  message: "📋 Specialty?"
 - id: run
   type: tool
   tool: entity.practitioner.create
@@ -26,6 +26,6 @@ steps:
     status: $literal:active
 - id: confirm
   type: message
-  message: Practitioner {{name}} added.
+  message: "👨‍⚕️ Practitioner {{name}} added."
 - id: done
   type: complete

@@ -11,27 +11,27 @@ steps:
 - id: ask_name
   type: ask
   field: name
-  message: "Package name?"
+  message: "✈️ Package name?"
 
 - id: ask_destination
   type: ask
   field: destination
-  message: "Destination code?"
+  message: "📍 Destination code?"
 
 - id: ask_type
   type: ask
   field: package_type
-  message: "Package type? (holiday, honeymoon, family, adventure, business, pilgrimage, custom)"
+  message: "✈️ Package type? (holiday, honeymoon, family, adventure, business, pilgrimage, custom)"
 
 - id: ask_duration
   type: ask
   field: duration_days
-  message: "Duration in days?"
+  message: "📅 Duration in days?"
 
 - id: ask_price
   type: ask
   field: price
-  message: "Price per person?"
+  message: "💰 Price per person?"
 
 - id: create
   type: tool
@@ -49,11 +49,11 @@ steps:
 - id: show_result
   type: message
   message: |
-    Package created!
+    ✅ **Package Created!**
 
-    Code: {{package.code}}
-    Name: {{package.name}}
-    Status: Draft
+    📋 **Code:** {{package.code}}
+    ✈️ **Name:** {{package.name}}
+    📋 **Status:** Draft
 
 - id: done
   type: complete

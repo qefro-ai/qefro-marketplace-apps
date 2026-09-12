@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which enrollment would you like to view?"
+    message: "📋 Which enrollment would you like to view?"
     choices_from: enrollments
     title_field: student_name
     value_field: id
@@ -28,7 +28,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Here is enrollment {{id}}.
+      📋 **Enrollment {{id}}**
       {{items_text}}
 
   - id: done

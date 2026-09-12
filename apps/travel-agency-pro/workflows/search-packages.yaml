@@ -11,17 +11,17 @@ steps:
 - id: ask_destination
   type: ask
   field: destination
-  message: "Where would you like to travel? (e.g., Dubai, Maldives, Istanbul)"
+  message: "✈️ Where would you like to travel? (e.g., Dubai, Maldives, Istanbul)"
 
 - id: ask_date
   type: ask
   field: travel_date
-  message: "When are you planning to travel?"
+  message: "📅 When are you planning to travel?"
 
 - id: ask_travelers
   type: ask
   field: travelers_count
-  message: "How many travelers?"
+  message: "👤 How many travelers?"
 
 - id: search
   type: tool
@@ -35,7 +35,7 @@ steps:
 - id: show_results
   type: message
   message: |
-    Here are available packages for {{destination}}:
+    🔍 **Available Packages for** {{destination}}
 
     {{packages}}
 

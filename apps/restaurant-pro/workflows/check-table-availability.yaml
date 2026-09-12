@@ -14,7 +14,7 @@ steps:
 - id: confirm
   type: message
   message: |
-    Here are current tables and availability.
+    🍳 **Tables & Availability**
     {{items_text}}
 
 - id: done

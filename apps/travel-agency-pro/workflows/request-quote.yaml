@@ -11,17 +11,17 @@ steps:
 - id: ask_package
   type: ask
   field: package_code
-  message: "Which package would you like a quote for?"
+  message: "✈️ Which package would you like a quote for?"
 
 - id: ask_date
   type: ask
   field: travel_date
-  message: "When would you like to travel?"
+  message: "📅 When would you like to travel?"
 
 - id: ask_travelers
   type: ask
   field: travelers_count
-  message: "How many travelers?"
+  message: "👤 How many travelers?"
 
 - id: create_booking
   type: tool
@@ -37,10 +37,10 @@ steps:
 - id: show_quote
   type: message
   message: |
-    Thank you! Your quote request has been received.
+    ✅ **Quote Request Received!**
 
-    Booking Reference: {{booking.booking_reference}}
-    Status: Inquiry
+    📋 **Booking Reference:** {{booking.booking_reference}}
+    📋 **Status:** Inquiry
 
     Our team will review your request and get back to you with a detailed quote shortly.
 

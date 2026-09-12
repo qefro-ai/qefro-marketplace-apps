@@ -9,11 +9,11 @@ steps:
 - id: ask_property_title
   type: ask
   field: property_title
-  message: Which property?
+  message: "🏠 Which property?"
 - id: ask_lead_name
   type: ask
   field: lead_name
-  message: Lead name?
+  message: "👤 Lead name?"
 - id: run
   type: tool
   tool: entity.deal.create
@@ -27,6 +27,6 @@ steps:
     currency: currency
 - id: confirm
   type: message
-  message: Deal created for {{property_title}}.
+  message: "✅ Deal created for {{property_title}}."
 - id: done
   type: complete

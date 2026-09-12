@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which product would you like to update?"
+    message: "📊 Which product would you like to update?"
     choices_from: products
     title_field: name
     value_field: id
@@ -22,7 +22,7 @@ steps:
   - id: ask_stock_quantity
     type: ask
     field: stock_quantity
-    message: "What is the new stock quantity?"
+    message: "📊 What is the new stock quantity?"
   - id: run
     type: tool
     tool: update_inventory
@@ -32,7 +32,7 @@ steps:
       stock_quantity: stock_quantity
   - id: confirm
     type: message
-    message: "Inventory updated for product {{id}}."
+    message: "📊 Inventory updated for product {{id}}."
   - id: done
     type: complete
     message: ""

@@ -9,15 +9,15 @@ steps:
 - id: ask_title
   type: ask
   field: title
-  message: Property title?
+  message: "🏠 Property title?"
 - id: ask_city
   type: ask
   field: city
-  message: City?
+  message: "📍 City?"
 - id: ask_price
   type: ask
   field: price
-  message: Price?
+  message: "💰 Price?"
 - id: run
   type: tool
   tool: entity.property.create
@@ -39,6 +39,6 @@ steps:
     image_url: image_url
 - id: confirm
   type: message
-  message: Property {{title}} listed.
+  message: "🏠 Property {{title}} listed."
 - id: done
   type: complete

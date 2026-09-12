@@ -7,15 +7,15 @@ steps:
   - id: ask_origin
     type: ask
     field: origin
-    message: Origin?
+    message: "📦 Origin?"
   - id: ask_destination
     type: ask
     field: destination
-    message: Destination?
+    message: "📦 Destination?"
   - id: ask_scheduled_date
     type: ask
     field: scheduled_date
-    message: "Ship date?"
+    message: "📦 Ship date?"
   - id: run
     type: tool
     tool: entity.shipment.create
@@ -27,6 +27,6 @@ steps:
       vehicle_label: vehicle_label
   - id: confirm
     type: message
-    message: "Shipment created from {{origin}} to {{destination}}."
+    message: "✅ Shipment created from {{origin}} to {{destination}}."
   - id: done
     type: complete

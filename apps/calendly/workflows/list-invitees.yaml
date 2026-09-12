@@ -7,7 +7,7 @@ steps:
   - id: ask_uuid
     type: ask
     field: uuid
-    message: "Which scheduled event uuid?"
+    message: "📅 Which scheduled event uuid?"
   - id: run
     type: tool
     tool: list_invitees
@@ -17,7 +17,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Invitees for {{uuid}}.
+      📋 **Invitees for {{uuid}}**
       {{items_text}}
   - id: done
     type: complete

@@ -17,7 +17,7 @@ steps:
 - id: ask_id
   type: ask
   field: id
-  message: Which viewing would you like to reschedule?
+  message: "🔄 Which viewing would you like to reschedule?"
   choices_from: viewings
   title_field: property_name
   value_field: id
@@ -25,11 +25,11 @@ steps:
 - id: ask_date
   type: ask
   field: date
-  message: New date?
+  message: "📅 New date?"
 - id: ask_time
   type: ask
   field: time
-  message: New time?
+  message: "⏰ New time?"
 - id: run
   type: tool
   tool: entity.viewing.update
@@ -40,6 +40,6 @@ steps:
     time: time
 - id: confirm
   type: message
-  message: Viewing {{id}} rescheduled to {{date}}.
+  message: "🔄 Viewing {{id}} rescheduled to {{date}}."
 - id: done
   type: complete

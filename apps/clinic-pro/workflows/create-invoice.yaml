@@ -9,11 +9,11 @@ steps:
 - id: ask_patient_name
   type: ask
   field: patient_name
-  message: Patient name?
+  message: "👤 Patient name?"
 - id: ask_amount
   type: ask
   field: amount
-  message: Invoice amount?
+  message: "💰 Invoice amount?"
 - id: run
   type: tool
   tool: entity.invoice.create
@@ -26,6 +26,6 @@ steps:
     due_at: due_at
 - id: confirm
   type: message
-  message: Invoice created for {{patient_name}}.
+  message: "💰 Invoice created for {{patient_name}}."
 - id: done
   type: complete

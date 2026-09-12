@@ -11,7 +11,7 @@ steps:
 - id: ask_code
   type: ask
   field: package_code
-  message: "Package code to update?"
+  message: "✈️ Package code to update?"
 
 - id: lookup
   type: tool
@@ -25,7 +25,7 @@ steps:
 - id: ask_status
   type: ask
   field: status
-  message: "New status? (draft, active, inactive, sold_out)"
+  message: "🔄 New status? (draft, active, inactive, sold_out)"
 
 - id: update
   type: tool
@@ -39,8 +39,8 @@ steps:
 - id: show_result
   type: message
   message: |
-    Package {{package.code}} updated.
-    Status: {{status}}
+    🔄 **Package {{package.code}} Updated**
+    ✅ **Status:** {{status}}
 
 - id: done
   type: complete

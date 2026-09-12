@@ -11,7 +11,7 @@ steps:
 - id: ask_itinerary
   type: ask
   field: itinerary_code
-  message: "Itinerary code?"
+  message: "🧳 Itinerary code?"
 
 - id: lookup
   type: tool
@@ -25,17 +25,17 @@ steps:
 - id: ask_title
   type: ask
   field: title
-  message: "Activity title?"
+  message: "📋 Activity title?"
 
 - id: ask_day
   type: ask
   field: day_number
-  message: "Day number?"
+  message: "📅 Day number?"
 
 - id: ask_location
   type: ask
   field: location
-  message: "Location?"
+  message: "📍 Location?"
 
 - id: create
   type: tool
@@ -51,10 +51,10 @@ steps:
 - id: show_result
   type: message
   message: |
-    Itinerary item added!
+    ✅ **Itinerary Item Added!**
 
-    Day {{item.day_number}}: {{item.title}}
-    Location: {{item.location}}
+    📅 **Day** {{item.day_number}}: {{item.title}}
+    📍 **Location:** {{item.location}}
 
 - id: done
   type: complete

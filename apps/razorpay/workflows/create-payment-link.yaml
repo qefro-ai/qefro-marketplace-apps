@@ -7,15 +7,15 @@ steps:
   - id: ask_amount
     type: ask
     field: amount
-    message: "What amount should the link charge?"
+    message: "💳 What amount should the link charge?"
   - id: ask_currency
     type: ask
     field: currency
-    message: "Which currency code?"
+    message: "💳 Which currency code?"
   - id: ask_description
     type: ask
     field: description
-    message: "Short description for the link?"
+    message: "💳 Short description for the link?"
   - id: run
     type: tool
     tool: create_payment_link
@@ -26,7 +26,7 @@ steps:
       description: description
   - id: confirm
     type: message
-    message: "Payment link created for {{amount}} {{currency}}."
+    message: "💳 Payment link created for {{amount}} {{currency}}."
   - id: done
     type: complete
     message: ""

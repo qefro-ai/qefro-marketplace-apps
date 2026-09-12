@@ -9,11 +9,11 @@ steps:
 - id: ask_property_title
   type: ask
   field: property_title
-  message: Which property?
+  message: "🏠 Which property?"
 - id: ask_date
   type: ask
   field: date
-  message: Which date?
+  message: "📅 Which date?"
 - id: run
   type: tool
   tool: entity.viewing.create
@@ -26,6 +26,6 @@ steps:
     notes: notes
 - id: confirm
   type: message
-  message: Viewing scheduled for {{property_title}} on {{date}}.
+  message: "✅ Viewing scheduled for {{property_title}} on {{date}}."
 - id: done
   type: complete

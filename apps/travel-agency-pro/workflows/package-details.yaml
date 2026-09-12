@@ -11,7 +11,7 @@ steps:
 - id: ask_package
   type: ask
   field: package_code
-  message: "Which package would you like to know about? Please provide the package code."
+  message: "✈️ Which package would you like to know about? Please provide the package code."
 
 - id: lookup
   type: tool
@@ -25,14 +25,14 @@ steps:
 - id: show_details
   type: message
   message: |
-    Package: {{package.name}}
+    ✈️ **Package:** {{package.name}}
 
-    Destination: {{package.destination}}
-    Duration: {{package.duration_days}} days / {{package.duration_nights}} nights
-    Price: {{package.currency}} {{package.price}}
-    Max Travelers: {{package.max_travelers}}
+    📍 **Destination:** {{package.destination}}
+    📅 **Duration:** {{package.duration_days}} days / {{package.duration_nights}} nights
+    💰 **Price:** {{package.currency}} {{package.price}}
+    👤 **Max Travelers:** {{package.max_travelers}}
 
-    Inclusions: {{package.inclusions}}
+    📋 **Inclusions:** {{package.inclusions}}
 
     {{package.description}}
 

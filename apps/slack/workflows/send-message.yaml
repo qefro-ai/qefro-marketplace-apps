@@ -7,11 +7,11 @@ steps:
   - id: ask_channel
     type: ask
     field: channel
-    message: "Which channel id or name?"
+    message: "💬 Which channel id or name?"
   - id: ask_text
     type: ask
     field: text
-    message: "What should we post?"
+    message: "💬 What should we post?"
   - id: run
     type: tool
     tool: send_message
@@ -21,7 +21,7 @@ steps:
       text: text
   - id: confirm
     type: message
-    message: "Message sent to {{channel}}."
+    message: "💬 Message sent to {{channel}}."
   - id: done
     type: complete
     message: ""

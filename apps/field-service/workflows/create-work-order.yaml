@@ -7,15 +7,15 @@ steps:
   - id: ask_site_name
     type: ask
     field: site_name
-    message: "Which site?"
+    message: "🔧 Which site?"
   - id: ask_summary
     type: ask
     field: summary
-    message: "What needs to be done?"
+    message: "🔧 What needs to be done?"
   - id: ask_scheduled_date
     type: ask
     field: scheduled_date
-    message: "Which date?"
+    message: "🔧 Which date?"
   - id: run
     type: tool
     tool: entity.work_order.create
@@ -27,6 +27,6 @@ steps:
       technician_name: technician_name
   - id: confirm
     type: message
-    message: "Work order created for {{site_name}}."
+    message: "✅ Work order created for {{site_name}}."
   - id: done
     type: complete

@@ -19,7 +19,7 @@ steps:
 - id: ask_id
   type: ask
   field: id
-  message: Which reservation would you like to cancel?
+  message: "📅 Which reservation would you like to cancel?"
   choices_from: reservations
   title_field: guest_name
   value_field: id
@@ -33,6 +33,6 @@ steps:
     status: $constants.cancelled
 - id: confirm
   type: message
-  message: Reservation {{id}} cancelled.
+  message: "❌ Reservation {{id}} cancelled."
 - id: done
   type: complete

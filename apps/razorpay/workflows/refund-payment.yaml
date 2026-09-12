@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which payment would you like to refund?"
+    message: "💰 Which payment would you like to refund?"
     choices_from: payments
     title_field: amount
     value_field: id
@@ -22,7 +22,7 @@ steps:
   - id: ask_amount
     type: ask
     field: amount
-    message: "Refund amount in the smallest currency unit?"
+    message: "💰 Refund amount in the smallest currency unit?"
   - id: run
     type: tool
     tool: create_refund
@@ -32,7 +32,7 @@ steps:
       amount: amount
   - id: confirm
     type: message
-    message: "Refund created for payment {{id}}."
+    message: "💰 Refund created for payment {{id}}."
   - id: done
     type: complete
     message: ""

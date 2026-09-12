@@ -16,7 +16,7 @@ steps:
 - id: ask_id
   type: ask
   field: id
-  message: Which appointment would you like to view?
+  message: "📅 Which appointment would you like to view?"
   choices_from: appointments
   title_field: patient_name
   value_field: id
@@ -30,7 +30,7 @@ steps:
 - id: confirm
   type: message
   message: |
-    Here is appointment {{id}}.
+    📋 **Appointment {{id}}**
     {{items_text}}
 
 - id: done

@@ -17,7 +17,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which shipment would you like to cancel?"
+    message: "❌ Which shipment would you like to cancel?"
     choices_from: shipments
     title_field: tracking_number
     value_field: id
@@ -31,6 +31,6 @@ steps:
       status: $constants.cancelled
   - id: confirm
     type: message
-    message: "Shipment {{id}} cancelled."
+    message: "❌ Shipment {{id}} cancelled."
   - id: done
     type: complete

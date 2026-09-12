@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which ticket would you like to comment on?"
+    message: "🎫 Which ticket would you like to comment on?"
     choices_from: tickets
     title_field: subject
     value_field: id
@@ -22,7 +22,7 @@ steps:
   - id: ask_body
     type: ask
     field: body
-    message: "Comment text?"
+    message: "💬 Comment text?"
   - id: run
     type: tool
     tool: create_ticket_comment
@@ -32,7 +32,7 @@ steps:
       body: body
   - id: confirm
     type: message
-    message: "Comment added to ticket {{id}}."
+    message: "💬 Comment added to ticket {{id}}."
   - id: done
     type: complete
     message: ""

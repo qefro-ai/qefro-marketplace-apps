@@ -9,11 +9,11 @@ steps:
 - id: ask_name
   type: ask
   field: name
-  message: Lead name?
+  message: "👤 Lead name?"
 - id: ask_phone
   type: ask
   field: phone
-  message: Phone?
+  message: "📞 Phone?"
 - id: run
   type: tool
   tool: entity.lead.create
@@ -27,6 +27,6 @@ steps:
     assigned_agent_name: assigned_agent_name
 - id: confirm
   type: message
-  message: Lead {{name}} created.
+  message: "✅ Lead {{name}} created."
 - id: done
   type: complete

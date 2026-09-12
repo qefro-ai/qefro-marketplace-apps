@@ -7,11 +7,11 @@ steps:
   - id: ask_deal_name
     type: ask
     field: deal_name
-    message: "Deal name?"
+    message: "💼 Deal name?"
   - id: ask_stage
     type: ask
     field: stage
-    message: Stage?
+    message: "💼 Stage?"
   - id: run
     type: tool
     tool: create_deal
@@ -21,7 +21,7 @@ steps:
       stage: stage
   - id: confirm
     type: message
-    message: "Deal {{deal_name}} created."
+    message: "✅ Deal {{deal_name}} created."
   - id: done
     type: complete
     message: ""

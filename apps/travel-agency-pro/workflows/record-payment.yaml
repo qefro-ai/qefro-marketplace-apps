@@ -11,7 +11,7 @@ steps:
 - id: ask_reference
   type: ask
   field: booking_reference
-  message: "Booking reference?"
+  message: "📋 Booking reference?"
 
 - id: lookup
   type: tool
@@ -25,12 +25,12 @@ steps:
 - id: ask_amount
   type: ask
   field: amount
-  message: "Payment amount?"
+  message: "💰 Payment amount?"
 
 - id: ask_method
   type: ask
   field: payment_method
-  message: "Payment method? (bank_transfer, credit_card, cash, cheque)"
+  message: "💰 Payment method? (bank_transfer, credit_card, cash, cheque)"
 
 - id: create
   type: tool
@@ -46,12 +46,12 @@ steps:
 - id: show_result
   type: message
   message: |
-    Payment recorded!
+    ✅ **Payment Recorded!**
 
-    Amount: {{payment.amount}}
-    Method: {{payment.payment_method}}
-    Status: Paid
-    Code: {{payment.code}}
+    💰 **Amount:** {{payment.amount}}
+    💰 **Method:** {{payment.payment_method}}
+    ✅ **Status:** Paid
+    📋 **Code:** {{payment.code}}
 
 - id: done
   type: complete

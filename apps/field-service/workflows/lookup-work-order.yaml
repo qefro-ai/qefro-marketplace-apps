@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which work order would you like to view?"
+    message: "📋 Which work order would you like to view?"
     choices_from: work_orders
     title_field: title
     value_field: id
@@ -28,7 +28,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Here is work order {{id}}.
+      📋 **Work Order {{id}}**
       {{items_text}}
 
   - id: done

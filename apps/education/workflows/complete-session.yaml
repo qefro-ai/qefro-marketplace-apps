@@ -17,7 +17,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "Which session would you like to mark complete?"
+    message: "✅ Which session would you like to mark complete?"
     choices_from: sessions
     title_field: title
     value_field: id
@@ -31,6 +31,6 @@ steps:
       status: $constants.completed
   - id: confirm
     type: message
-    message: "Session {{id}} completed."
+    message: "✅ Session {{id}} completed."
   - id: done
     type: complete

@@ -16,7 +16,7 @@ steps:
 - id: ask_id
   type: ask
   field: id
-  message: Which reservation would you like to view?
+  message: "📅 Which reservation would you like to view?"
   choices_from: reservations
   title_field: guest_name
   value_field: id
@@ -30,7 +30,7 @@ steps:
 - id: confirm
   type: message
   message: |
-    Here is reservation {{id}}.
+    📋 **Reservation {{id}}**
     {{items_text}}
 
 - id: done

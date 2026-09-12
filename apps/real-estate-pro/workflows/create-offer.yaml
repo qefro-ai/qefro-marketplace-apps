@@ -9,15 +9,15 @@ steps:
 - id: ask_property_title
   type: ask
   field: property_title
-  message: Which property?
+  message: "🏠 Which property?"
 - id: ask_lead_name
   type: ask
   field: lead_name
-  message: Lead name?
+  message: "👤 Lead name?"
 - id: ask_amount
   type: ask
   field: amount
-  message: Offer amount?
+  message: "💰 Offer amount?"
 - id: run
   type: tool
   tool: entity.offer.create
@@ -29,6 +29,6 @@ steps:
     currency: currency
 - id: confirm
   type: message
-  message: Offer submitted for {{property_title}}.
+  message: "✅ Offer submitted for {{property_title}}."
 - id: done
   type: complete

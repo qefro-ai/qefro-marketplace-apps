@@ -9,15 +9,15 @@ steps:
 - id: ask_guest_name
   type: ask
   field: guest_name
-  message: Guest name?
+  message: "👤 Guest name?"
 - id: ask_guest_count
   type: ask
   field: guest_count
-  message: Party size?
+  message: "👥 Party size?"
 - id: ask_date
   type: ask
   field: date
-  message: Which date?
+  message: "📅 Which date?"
 - id: run
   type: tool
   tool: entity.reservation.create
@@ -31,6 +31,6 @@ steps:
     notes: notes
 - id: confirm
   type: message
-  message: Reservation booked for {{guest_count}} on {{date}}.
+  message: "✅ Reservation booked for {{guest_count}} on {{date}}."
 - id: done
   type: complete

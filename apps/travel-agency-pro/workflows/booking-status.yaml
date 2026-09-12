@@ -11,7 +11,7 @@ steps:
 - id: ask_reference
   type: ask
   field: booking_reference
-  message: "Please provide your booking reference."
+  message: "📋 Please provide your booking reference."
 
 - id: lookup
   type: tool
@@ -28,11 +28,11 @@ steps:
 - id: show_status
   type: message
   message: |
-    Booking Reference: {{booking.booking_reference}}
-    Status: {{booking.status}}
-    Travel Date: {{booking.travel_date}}
-    Travelers: {{booking.travelers_count}}
-    Total Amount: {{booking.currency}} {{booking.total_amount}}
+    📋 **Booking Reference:** {{booking.booking_reference}}
+    📋 **Status:** {{booking.status}}
+    📅 **Travel Date:** {{booking.travel_date}}
+    👤 **Travelers:** {{booking.travelers_count}}
+    💰 **Total Amount:** {{booking.currency}} {{booking.total_amount}}
 
     {{booking.notes}}
 

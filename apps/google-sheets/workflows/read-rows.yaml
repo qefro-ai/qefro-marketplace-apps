@@ -7,11 +7,11 @@ steps:
   - id: ask_spreadsheet_id
     type: ask
     field: spreadsheet_id
-    message: "What is the spreadsheet id?"
+    message: "📊 What is the spreadsheet id?"
   - id: ask_range
     type: ask
     field: range
-    message: "Which A1 range should we read?"
+    message: "📊 Which A1 range should we read?"
   - id: run
     type: tool
     tool: read_rows
@@ -22,7 +22,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Rows from {{range}}.
+      📊 **Rows from {{range}}**
       {{items_text}}
 
   - id: done

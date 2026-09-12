@@ -7,7 +7,7 @@ steps:
   - id: ask_waba_id
     type: ask
     field: waba_id
-    message: "Which WABA id?"
+    message: "💬 Which WABA id?"
   - id: run
     type: tool
     tool: list_templates
@@ -17,7 +17,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      Here are the templates.
+      📋 **Templates**
       {{items_text}}
   - id: done
     type: complete

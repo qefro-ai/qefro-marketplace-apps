@@ -11,7 +11,7 @@ steps:
 - id: ask_booking
   type: ask
   field: booking_reference
-  message: "Booking reference for this itinerary?"
+  message: "📋 Booking reference for this itinerary?"
 
 - id: lookup_booking
   type: tool
@@ -25,17 +25,17 @@ steps:
 - id: ask_title
   type: ask
   field: title
-  message: "Itinerary title?"
+  message: "🧳 Itinerary title?"
 
 - id: ask_start
   type: ask
   field: start_date
-  message: "Itinerary start date?"
+  message: "📅 Itinerary start date?"
 
 - id: ask_end
   type: ask
   field: end_date
-  message: "Itinerary end date?"
+  message: "📅 Itinerary end date?"
 
 - id: create
   type: tool
@@ -53,11 +53,11 @@ steps:
 - id: show_result
   type: message
   message: |
-    Itinerary created!
+    ✅ **Itinerary Created!**
 
-    Code: {{itinerary.code}}
-    Title: {{itinerary.title}}
-    Status: Draft
+    📋 **Code:** {{itinerary.code}}
+    🧳 **Title:** {{itinerary.title}}
+    📋 **Status:** Draft
 
 - id: done
   type: complete
