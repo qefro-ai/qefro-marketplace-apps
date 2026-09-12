@@ -6,7 +6,7 @@ allocate_code:
   start: 1001
 fields:
 - name: booking
-  type: relation
+  type: string
   required: true
   description: Parent booking reference
   ref_entity: booking
@@ -26,7 +26,7 @@ fields:
   type: string
   description: Item description
 - name: supplier
-  type: relation
+  type: string
   description: Supplier reference
   ref_entity: supplier
 - name: quantity

@@ -13,7 +13,7 @@ fields:
   type: string
   description: Package description
 - name: destination
-  type: relation
+  type: string
   description: Destination reference
   ref_entity: destination
 - name: package_type
