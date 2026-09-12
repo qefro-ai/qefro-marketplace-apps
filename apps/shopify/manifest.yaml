@@ -1,6 +1,6 @@
 id: shopify
 name: Shopify
-version: 0.1.4
+version: 0.2.1
 hosting: runtime
 description: Products, customers, and orders as a metadata Marketplace App executed
   by Qefro Runtime HTTP

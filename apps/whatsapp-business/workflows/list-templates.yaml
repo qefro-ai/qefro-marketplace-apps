@@ -17,7 +17,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📋 **Templates**
+      💬 **Templates**
       {{items_text}}
   - id: done
     type: complete

@@ -11,7 +11,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📋 **Your Bookings**
+      📅 **Your Bookings**
       {{items_text}}
   - id: done
     type: complete

@@ -14,7 +14,7 @@ steps:
   - id: ask_id
     type: ask
     field: id
-    message: "🛒 Which order would you like to view?"
+    message: "📦 Which order would you like to view?"
     choices_from: orders
     title_field: order_number
     value_field: id
@@ -28,7 +28,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      🛒 **Order Details**
+      📋 **Order Details**
       {{items_text}}
   - id: done
     type: complete

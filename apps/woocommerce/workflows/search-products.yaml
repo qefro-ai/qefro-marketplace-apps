@@ -7,7 +7,7 @@ steps:
   - id: ask_query
     type: ask
     field: query
-    message: "🔍 What product are you looking for?"
+    message: "🛍️ What product are you looking for?"
   - id: run
     type: tool
     tool: search_products
@@ -17,7 +17,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📦 **Products matching {{query}}**
+      🔍 **Products matching {{query}}**
       {{items_text}}
   - id: done
     type: complete

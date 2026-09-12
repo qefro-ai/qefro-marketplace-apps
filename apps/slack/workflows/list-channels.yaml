@@ -11,7 +11,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📢 **Channels**
+      💬 **Channels**
       {{items_text}}
   - id: done
     type: complete

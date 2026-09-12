@@ -11,7 +11,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📋 **Recent Deals**
+      💼 **Recent Deals**
       {{items_text}}
   - id: done
     type: complete

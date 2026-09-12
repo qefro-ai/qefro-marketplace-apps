@@ -22,11 +22,11 @@ steps:
   - id: ask_status
     type: ask
     field: status
-    message: "✅ New status code?"
+    message: "🔄 New status code?"
   - id: ask_priority
     type: ask
     field: priority
-    message: "✅ New priority code?"
+    message: "🔄 New priority code?"
   - id: run
     type: tool
     tool: update_ticket
@@ -37,7 +37,7 @@ steps:
       priority: priority
   - id: confirm
     type: message
-    message: "✅ Ticket {{id}} updated."
+    message: "🔄 Ticket {{id}} updated."
   - id: done
     type: complete
     message: ""

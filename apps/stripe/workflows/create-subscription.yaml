@@ -21,7 +21,7 @@ steps:
       price_id: price_id
   - id: confirm
     type: message
-    message: "🔄 Subscription created for {{stripe_customer}}."
+    message: "✅ Subscription created for {{stripe_customer}}."
   - id: done
     type: complete
     message: ""

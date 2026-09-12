@@ -28,7 +28,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📋 **Enrollment {{id}}**
+      🎓 **Enrollment {{id}}**
       {{items_text}}
 
   - id: done

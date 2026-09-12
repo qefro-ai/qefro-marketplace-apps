@@ -1,6 +1,6 @@
 id: clinic-pro
 name: Clinic Pro
-version: 1.0.8
+version: 1.1.1
 hosting: runtime
 description: Metadata-only clinic management Marketplace App executed by Qefro Runtime
   (no SDK, no custom server)

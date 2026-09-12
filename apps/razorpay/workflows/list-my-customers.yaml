@@ -11,7 +11,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      👥 **Your Customer Record**
+      📋 **Your Customer Record**
       {{items_text}}
   - id: done
     type: complete

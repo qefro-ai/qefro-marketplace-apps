@@ -7,15 +7,15 @@ steps:
   - id: ask_calendar_id
     type: ask
     field: calendar_id
-    message: "🔍 Which calendar id?"
+    message: "📅 Which calendar id?"
   - id: ask_start
     type: ask
     field: start
-    message: "🔍 Window start (RFC3339)?"
+    message: "📅 Window start (RFC3339)?"
   - id: ask_end
     type: ask
     field: end
-    message: "🔍 Window end (RFC3339)?"
+    message: "📅 Window end (RFC3339)?"
   - id: run
     type: tool
     tool: query_freebusy
@@ -27,7 +27,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      🔍 **Availability for {{calendar_id}}**
+      📅 **Availability for {{calendar_id}}**
       {{items_text}}
 
   - id: done

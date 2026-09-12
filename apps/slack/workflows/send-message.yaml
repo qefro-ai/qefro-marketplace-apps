@@ -21,7 +21,7 @@ steps:
       text: text
   - id: confirm
     type: message
-    message: "💬 Message sent to {{channel}}."
+    message: "✅ Message sent to {{channel}}."
   - id: done
     type: complete
     message: ""
