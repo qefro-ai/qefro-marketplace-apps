@@ -117,9 +117,25 @@ triggers:
       reply_signals:
       - properties
       - listings
-      required_slots: []
+      required_slots:
+      - property_type
+      - city
   confirmation_message: Here are matching properties.
 conversation_slots:
+- id: property_type
+  labels:
+  - property type
+  - apartment
+  - villa
+  - commercial
+  kind: string
+- id: city
+  labels:
+  - city
+  - area
+  - location
+  - San Francisco
+  kind: string
 - id: property_title
   labels:
   - property

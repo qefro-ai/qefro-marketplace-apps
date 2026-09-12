@@ -1,6 +1,6 @@
 id: travel-agency-pro-runtime
 name: Travel Agency Pro
-version: 1.0.0
+version: 1.1.0
 hosting: runtime
 description: Metadata-only travel agency Marketplace App executed by Qefro Runtime (no SDK, no custom server)
 category: travel
