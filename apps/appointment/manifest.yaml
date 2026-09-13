@@ -1,6 +1,6 @@
 id: appointment
 name: Appointments
-version: 0.1.5
+version: 1.0.0
 hosting: runtime
 description: Services, staff, availability, and bookings as a native Qefro business
   application
@@ -17,16 +17,28 @@ entities:
 - staff_member
 - availability_slot
 - appointment
+- customer
+- location
 flows:
 - create-appointment
 - reschedule-appointment
 - cancel-appointment
 - lookup-appointment
+- create-service
+- create-staff-member
+- create-customer
+- create-availability-slot
 events:
 - appointment.created
 - appointment.updated
 - appointment.cancelled
+- appointment.confirmed
+- appointment.no_show
 - booking.created
+- service.created
+- staff_member.created
+- customer.created
+- availability_slot.booked
 permissions:
 - workflow.execute
 - storage.read
@@ -118,6 +130,12 @@ conversation_slots:
   - with
   - practitioner
   kind: string
+- id: name
+  labels:
+  - name
+  - full name
+  kind: person_name
+  identity: person_name
 - id: date
   labels:
   - date
@@ -128,15 +146,52 @@ conversation_slots:
   - time
   kind: time
   chip_prefix: time
-- id: id
+- id: role
   labels:
-  - appointment
-  - booking id
+  - role
+  - position
+  kind: string
+- id: email
+  labels:
+  - email
+  - e-mail
+  kind: email
+- id: phone
+  labels:
+  - phone
+  - mobile
+  - number
+  kind: phone
+- id: duration_minutes
+  labels:
+  - duration
+  - minutes
+  kind: integer
+- id: price
+  labels:
+  - price
+  - cost
+  - fee
+  kind: float
+- id: start_time
+  labels:
+  - start
+  - from
+  kind: string
+- id: end_time
+  labels:
+  - end
+  - to
   kind: string
 - id: status
   labels:
   - status
   - cancelled
+  kind: string
+- id: id
+  labels:
+  - appointment
+  - booking id
   kind: string
 ui:
   name: Appointments

@@ -1,0 +1,21 @@
+id: create-menu-category
+name: "Add menu category"
+description: "Create a menu category"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "📋 Category name?"
+  - id: run
+    type: tool
+    tool: entity.menu_category.create
+    execution: runtime
+    input_map:
+      name: name
+  - id: confirm
+    type: message
+    message: "📋 Menu category {{name}} created."
+  - id: done
+    type: complete

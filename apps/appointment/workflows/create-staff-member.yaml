@@ -1,0 +1,26 @@
+id: create-staff-member
+name: "Add staff member"
+description: "Register a staff member"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "👤 Staff member name?"
+  - id: ask_role
+    type: ask
+    field: role
+    message: "💼 Role?"
+  - id: run
+    type: tool
+    tool: entity.staff_member.create
+    execution: runtime
+    input_map:
+      name: name
+      role: role
+  - id: confirm
+    type: message
+    message: "✅ {{name}} added as {{role}}."
+  - id: done
+    type: complete

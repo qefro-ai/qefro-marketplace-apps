@@ -18,6 +18,62 @@
     submit_label: Enroll
     action:
       trigger: enroll-student
+- id: course_form
+  type: form
+  title: Create course
+  options:
+    fields:
+    - name: title
+      label: Title
+      type: text
+      required: true
+    - name: level
+      label: Level
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-course
+- id: instructor_form
+  type: form
+  title: Add instructor
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: email
+      label: Email
+      type: text
+      required: false
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: specialty
+      label: Specialty
+      type: text
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-instructor
+- id: assignment_form
+  type: form
+  title: Create assignment
+  options:
+    fields:
+    - name: title
+      label: Title
+      type: text
+      required: true
+    - name: course_title
+      label: Course
+      type: text
+      required: true
+    submit_label: Create
+    action:
+      trigger: create-assignment
 - id: enroll_status
   type: status
   title: Enrollments
@@ -77,6 +133,40 @@
     columns:
     - key: title
       header: Title
+    - key: course_title
+      header: Course
+    - key: status
+      header: Status
+- id: instructors_table
+  type: table
+  title: Instructors
+  source: instructors
+  options:
+    rows_path: items
+    empty_title: No instructors yet
+    columns:
+    - key: name
+      header: Name
+    - key: specialty
+      header: Specialty
+    - key: email
+      header: Email
+    - key: status
+      header: Status
+- id: students_table
+  type: table
+  title: Students
+  source: students
+  options:
+    rows_path: items
+    empty_title: No students yet
+    columns:
+    - key: name
+      header: Name
+    - key: email
+      header: Email
+    - key: phone
+      header: Phone
     - key: status
       header: Status
 - id: intro
@@ -93,6 +183,33 @@
     rows_path: items
     label: Total
     navigate_to: enrollments
+- id: metric_course
+  type: metric
+  title: Courses
+  source: courses
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: courses
+- id: metric_session
+  type: metric
+  title: Sessions
+  source: sessions
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: sessions
+- id: metric_assignment
+  type: metric
+  title: Assignments
+  source: assignments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: assignments
 - id: enrollment_dash_status
   type: status
   title: Enrollments status

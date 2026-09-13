@@ -17,11 +17,21 @@
   title: Enrollments
   icon: users
   entity: enrollment
+- id: instructors
+  page: instructors
+  title: Instructors
+  icon: user
+  entity: instructor
 - id: sessions
   page: sessions
   title: Sessions
   icon: calendar
   entity: session
+- id: students
+  page: students
+  title: Students
+  icon: users
+  entity: student
 - id: contacts
   page: contacts
   title: Contacts

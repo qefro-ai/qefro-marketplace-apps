@@ -1,0 +1,27 @@
+id: create-course
+name: "Create course"
+description: "Add a new course"
+trigger:
+  type: conversation
+steps:
+  - id: ask_title
+    type: ask
+    field: title
+    message: "🎓 Course title?"
+  - id: ask_level
+    type: ask
+    field: level
+    message: "🎓 Level (beginner, intermediate, advanced)?"
+  - id: run
+    type: tool
+    tool: entity.course.create
+    execution: runtime
+    input_map:
+      title: title
+      level: level
+      status: $literal:open
+  - id: confirm
+    type: message
+    message: "🎓 Course {{title}} created."
+  - id: done
+    type: complete

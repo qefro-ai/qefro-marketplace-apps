@@ -230,3 +230,91 @@
     empty_title: No reservations yet
     empty_subtitle: Open the list and tap New to add your first record.
     empty_action_label: Open list
+- id: restaurant_form
+  type: form
+  title: Add restaurant
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: address
+      label: Address
+      type: text
+      required: false
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-restaurant
+- id: table_form
+  type: form
+  title: Add table
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: capacity
+      label: Capacity
+      type: number
+      required: true
+    submit_label: Add
+    action:
+      trigger: create-table
+- id: menu_category_form
+  type: form
+  title: Add category
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    submit_label: Add
+    action:
+      trigger: create-menu-category
+- id: customer_form
+  type: form
+  title: Add customer
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: email
+      label: Email
+      type: text
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-customer
+- id: staff_form
+  type: form
+  title: Add staff
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: role
+      label: Role
+      type: text
+      required: false
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-staff-member

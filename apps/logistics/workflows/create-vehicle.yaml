@@ -1,0 +1,27 @@
+id: create-vehicle
+name: "Add vehicle"
+description: "Register a fleet vehicle"
+trigger:
+  type: conversation
+steps:
+  - id: ask_label
+    type: ask
+    field: label
+    message: "🚛 Vehicle label or plate?"
+  - id: ask_capacity
+    type: ask
+    field: capacity
+    message: "📦 Capacity (kg)?"
+  - id: run
+    type: tool
+    tool: entity.vehicle.create
+    execution: runtime
+    input_map:
+      label: label
+      capacity: capacity
+      status: $literal:available
+  - id: confirm
+    type: message
+    message: "🚛 Vehicle {{label}} added to fleet."
+  - id: done
+    type: complete

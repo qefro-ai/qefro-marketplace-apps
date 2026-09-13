@@ -1,0 +1,26 @@
+id: create-assignment
+name: "Create assignment"
+description: "Assign work to a learner"
+trigger:
+  type: conversation
+steps:
+  - id: ask_title
+    type: ask
+    field: title
+    message: "📝 Assignment title?"
+  - id: ask_course_title
+    type: ask
+    field: course_title
+    message: "🎓 Which course?"
+  - id: run
+    type: tool
+    tool: entity.assignment.create
+    execution: runtime
+    input_map:
+      title: title
+      course_title: course_title
+  - id: confirm
+    type: message
+    message: "📝 Assignment {{title}} created for {{course_title}}."
+  - id: done
+    type: complete

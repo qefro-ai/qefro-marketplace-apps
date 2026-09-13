@@ -18,6 +18,62 @@
     submit_label: Create
     action:
       trigger: create-shipment
+- id: vehicle_form
+  type: form
+  title: Add vehicle
+  options:
+    fields:
+    - name: label
+      label: Label
+      type: text
+      required: true
+    - name: capacity
+      label: Capacity (kg)
+      type: number
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-vehicle
+- id: consignment_form
+  type: form
+  title: Create consignment
+  options:
+    fields:
+    - name: reference
+      label: Reference
+      type: text
+      required: true
+    - name: customer_name
+      label: Customer name
+      type: text
+      required: true
+    - name: weight
+      label: Weight (kg)
+      type: number
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-consignment
+- id: driver_form
+  type: form
+  title: Add driver
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: license_number
+      label: License number
+      type: text
+      required: false
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-driver
 - id: shipments_status
   type: status
   title: Shipments
@@ -65,6 +121,38 @@
       header: Label
     - key: status
       header: Status
+- id: drivers_table
+  type: table
+  title: Drivers
+  source: drivers
+  options:
+    rows_path: items
+    empty_title: No drivers yet
+    columns:
+    - key: name
+      header: Name
+    - key: license_number
+      header: License
+    - key: phone
+      header: Phone
+    - key: status
+      header: Status
+- id: warehouses_table
+  type: table
+  title: Warehouses
+  source: warehouses
+  options:
+    rows_path: items
+    empty_title: No warehouses yet
+    columns:
+    - key: name
+      header: Name
+    - key: address
+      header: Address
+    - key: capacity
+      header: Capacity
+    - key: status
+      header: Status
 - id: stops_table
   type: table
   title: Stops
@@ -73,8 +161,12 @@
     rows_path: items
     empty_title: No stops yet
     columns:
+    - key: shipment_id
+      header: Shipment
     - key: address
       header: Address
+    - key: sequence
+      header: Sequence
     - key: status
       header: Status
 - id: intro
@@ -91,6 +183,33 @@
     rows_path: items
     label: Total
     navigate_to: shipments
+- id: metric_vehicle
+  type: metric
+  title: Vehicles
+  source: vehicles
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: vehicles
+- id: metric_consignment
+  type: metric
+  title: Consignments
+  source: consignments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: consignments
+- id: metric_stop
+  type: metric
+  title: Stops
+  source: stops
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: stops
 - id: shipment_dash_status
   type: status
   title: Shipments status

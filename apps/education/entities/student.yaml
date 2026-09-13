@@ -1,0 +1,25 @@
+id: student
+scope: customer
+name: Student
+description: "Learner bound to Person"
+allocate_code:
+  prefix: STU-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: email
+    type: email
+  - name: phone
+    type: phone
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - graduated
+      - withdrawn
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

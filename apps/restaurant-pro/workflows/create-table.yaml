@@ -1,0 +1,27 @@
+id: create-table
+name: "Add table"
+description: "Register a dining table"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "🪑 Table name or number?"
+  - id: ask_capacity
+    type: ask
+    field: capacity
+    message: "👥 Seats?"
+  - id: run
+    type: tool
+    tool: entity.table.create
+    execution: runtime
+    input_map:
+      name: name
+      capacity: capacity
+      status: $literal:available
+  - id: confirm
+    type: message
+    message: "🪑 Table {{name}} added ({{capacity}} seats)."
+  - id: done
+    type: complete

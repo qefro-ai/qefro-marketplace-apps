@@ -1,0 +1,31 @@
+id: create-customer
+name: "Add customer"
+description: "Register a customer"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "👤 Customer name?"
+  - id: ask_phone
+    type: ask
+    field: phone
+    message: "📞 Phone?"
+  - id: ask_email
+    type: ask
+    field: email
+    message: "📧 Email?"
+  - id: run
+    type: tool
+    tool: entity.customer.create
+    execution: runtime
+    input_map:
+      name: name
+      email: email
+      phone: phone
+  - id: confirm
+    type: message
+    message: "✅ Customer {{name}} registered."
+  - id: done
+    type: complete

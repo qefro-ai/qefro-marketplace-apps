@@ -1,0 +1,19 @@
+id: instructor
+name: Instructor
+description: "Course instructor or teacher"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: email
+    type: email
+  - name: phone
+    type: phone
+  - name: specialty
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - on_leave
+      - inactive

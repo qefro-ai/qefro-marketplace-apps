@@ -5,7 +5,13 @@
   - widget: intro
     span: 12
   - widget: metric_appointment
-    span: 12
+    span: 3
+  - widget: metric_service
+    span: 3
+  - widget: metric_staff
+    span: 3
+  - widget: metric_availability
+    span: 3
   - widget: appointment_dash_status
     span: 4
   - widget: appointment_dash_table
@@ -22,6 +28,12 @@
 - id: staff
   title: Staff
   entity: staff_member
+- id: customers
+  title: Customers
+  entity: customer
+- id: locations
+  title: Locations
+  entity: location
 - id: contacts
   title: Contacts
   host: contacts

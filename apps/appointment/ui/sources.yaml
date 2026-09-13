@@ -10,3 +10,9 @@
 - id: slots
   type: entity
   target: availability_slot
+- id: customers
+  type: entity
+  target: customer
+- id: locations
+  type: entity
+  target: location

@@ -5,7 +5,13 @@
   - widget: intro
     span: 12
   - widget: metric_shipment
-    span: 12
+    span: 3
+  - widget: metric_vehicle
+    span: 3
+  - widget: metric_consignment
+    span: 3
+  - widget: metric_stop
+    span: 3
   - widget: shipment_dash_status
     span: 4
   - widget: shipment_dash_table
@@ -22,6 +28,12 @@
 - id: vehicles
   title: Vehicles
   entity: vehicle
+- id: drivers
+  title: Drivers
+  entity: driver
+- id: warehouses
+  title: Warehouses
+  entity: warehouse
 - id: contacts
   title: Contacts
   host: contacts

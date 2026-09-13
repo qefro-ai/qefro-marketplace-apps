@@ -1,6 +1,6 @@
 id: logistics
 name: Logistics
-version: 0.1.5
+version: 1.0.0
 hosting: runtime
 description: Vehicles, consignments, shipments, and stops as a native Qefro logistics
   application
@@ -17,16 +17,25 @@ entities:
 - consignment
 - shipment
 - stop
+- driver
+- warehouse
 flows:
 - create-shipment
 - update-shipment-status
 - cancel-shipment
 - lookup-shipment
+- create-vehicle
+- create-consignment
+- create-driver
 events:
 - shipment.created
 - shipment.updated
 - shipment.cancelled
 - consignment.created
+- vehicle.created
+- driver.created
+- warehouse.created
+- stop.completed
 permissions:
 - workflow.execute
 - storage.read
@@ -109,11 +118,57 @@ conversation_slots:
   - to
   - drop
   kind: string
+- id: reference
+  labels:
+  - reference
+  - ref
+  - consignment ref
+  kind: string
+- id: customer_name
+  labels:
+  - customer
+  - customer name
+  - client
+  kind: person_name
+  identity: person_name
 - id: vehicle_label
   labels:
   - vehicle
   - truck
   kind: string
+- id: label
+  labels:
+  - label
+  - plate
+  kind: string
+- id: capacity
+  labels:
+  - capacity
+  - load
+  kind: integer
+- id: weight
+  labels:
+  - weight
+  - kg
+  kind: float
+- id: license_number
+  labels:
+  - license
+  - license number
+  - DL
+  kind: string
+- id: name
+  labels:
+  - name
+  - driver name
+  kind: person_name
+  identity: person_name
+- id: phone
+  labels:
+  - phone
+  - mobile
+  - contact
+  kind: phone
 - id: scheduled_date
   labels:
   - date
@@ -129,6 +184,7 @@ conversation_slots:
   labels:
   - shipment
   - tracking
+  - id
   kind: string
 ui:
   name: Logistics

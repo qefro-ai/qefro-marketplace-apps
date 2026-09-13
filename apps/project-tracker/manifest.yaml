@@ -1,6 +1,6 @@
 id: project-tracker
 name: Project Tracker
-version: 1.0.2
+version: 1.1.0
 hosting: runtime
 description: Sample project / task / invoice app for ZIP install genericity tests
 category: productivity
@@ -11,6 +11,7 @@ tags:
 - fixture
 channels:
 - widget
+- chat
 entities:
 - project
 - task
@@ -24,6 +25,93 @@ events:
 - task.created
 - task.completed
 - invoice.created
+triggers:
+- id: create_project
+  workflow: create-project
+  input_variable: project_input
+  match:
+    intents:
+    - create a project
+    - new project
+    - start a project
+    confirmation:
+      reply_signals:
+      - project
+      - created
+      required_slots:
+      - name
+  confirmation_message: "Project {{name}} created."
+- id: create_task
+  workflow: create-task
+  input_variable: task_input
+  match:
+    intents:
+    - create a task
+    - add a task
+    - new task
+    confirmation:
+      reply_signals:
+      - task
+      - created
+      required_slots:
+      - title
+      - project_name
+  confirmation_message: "Task {{title}} added to {{project_name}}."
+- id: create_invoice
+  workflow: create-invoice
+  input_variable: invoice_input
+  match:
+    intents:
+    - create an invoice
+    - new invoice
+    - bill for project
+    confirmation:
+      reply_signals:
+      - invoice
+      - created
+      required_slots:
+      - project_name
+      - amount
+  confirmation_message: "Invoice created for {{project_name}} amount {{amount}}."
+conversation_slots:
+- id: name
+  labels:
+  - project
+  - project name
+  - name
+  kind: string
+- id: title
+  labels:
+  - task
+  - task title
+  - title
+  kind: string
+- id: project_name
+  labels:
+  - project
+  - for project
+  kind: string
+- id: amount
+  labels:
+  - amount
+  - invoice amount
+  - total
+  kind: string
+- id: status
+  labels:
+  - status
+  kind: string
+- id: due_date
+  labels:
+  - due date
+  - deadline
+  - by when
+  kind: date
+- id: description
+  labels:
+  - description
+  - details
+  kind: string
 permissions:
 - workflow.execute
 - storage.read

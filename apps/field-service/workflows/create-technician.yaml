@@ -1,0 +1,26 @@
+id: create-technician
+name: "Add technician"
+description: "Register a field technician"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "👤 Technician name?"
+  - id: ask_skill
+    type: ask
+    field: skill
+    message: "🔧 Primary skill?"
+  - id: run
+    type: tool
+    tool: entity.technician.create
+    execution: runtime
+    input_map:
+      name: name
+      skill: skill
+  - id: confirm
+    type: message
+    message: "✅ Technician {{name}} added."
+  - id: done
+    type: complete

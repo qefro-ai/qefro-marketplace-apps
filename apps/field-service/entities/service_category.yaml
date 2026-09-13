@@ -1,0 +1,14 @@
+id: service_category
+name: Service Category
+description: "Type of field service"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: description
+    type: string
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - inactive
