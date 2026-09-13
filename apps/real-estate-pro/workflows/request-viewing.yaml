@@ -20,10 +20,8 @@ steps:
   execution: runtime
   input_map:
     property_title: property_title
-    agent_name: agent_name
     date: date
     time: time
-    notes: notes
     status: $literal:scheduled
 - id: confirm
   type: message
