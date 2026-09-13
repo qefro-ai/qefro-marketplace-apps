@@ -27,6 +27,7 @@ steps:
     guest_count: guest_count
     date: date
     time: time
+    reservation_at: scheduled_at
     table_name: table_name
     notes: notes
     status: $literal:confirmed

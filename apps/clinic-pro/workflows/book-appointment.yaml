@@ -55,6 +55,7 @@ steps:
     practitioner_name: practitioner_name
     date: date
     time: time
+    scheduled_at: scheduled_at
     reason: reason
     notes: notes
     status: $literal:scheduled

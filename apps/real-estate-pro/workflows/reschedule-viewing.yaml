@@ -38,8 +38,9 @@ steps:
     id: id
     date: date
     time: time
+    scheduled_at: scheduled_at
 - id: confirm
   type: message
-  message: "🔄 Viewing {{id}} rescheduled to {{date}}."
+  message: "🔄 Viewing {{id}} rescheduled to {{date}} at {{time}}."
 - id: done
   type: complete

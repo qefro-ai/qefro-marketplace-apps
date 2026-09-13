@@ -14,6 +14,10 @@ steps:
   type: ask
   field: date
   message: "📅 Which date?"
+- id: ask_time
+  type: ask
+  field: time
+  message: "⏰ What time works best for you?"
 - id: run
   type: tool
   tool: entity.viewing.create
@@ -22,9 +26,10 @@ steps:
     property_title: property_title
     date: date
     time: time
+    scheduled_at: scheduled_at
     status: $literal:scheduled
 - id: confirm
   type: message
-  message: "✅ Viewing scheduled for {{property_title}} on {{date}}."
+  message: "✅ Viewing scheduled for {{property_title}} on {{date}} at {{time}}."
 - id: done
   type: complete
