@@ -32,7 +32,7 @@ steps:
       stock_quantity: stock_quantity
   - id: confirm
     type: message
-    message: "📊 Inventory updated for product {{id}}."
+    message: "📊 Inventory updated for {{name}}."
   - id: done
     type: complete
     message: ""

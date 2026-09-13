@@ -31,6 +31,6 @@ steps:
       status: $constants.completed
   - id: confirm
     type: message
-    message: "✅ Work order {{id}} completed."
+    message: "✅ Work order {{title}} completed."
   - id: done
     type: complete

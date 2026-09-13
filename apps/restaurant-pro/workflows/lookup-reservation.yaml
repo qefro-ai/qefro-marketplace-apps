@@ -30,7 +30,7 @@ steps:
 - id: confirm
   type: message
   message: |
-    📋 **Reservation {{id}}**
+    📋 **Reservation for {{guest_name}}**
     {{items_text}}
 
 - id: done

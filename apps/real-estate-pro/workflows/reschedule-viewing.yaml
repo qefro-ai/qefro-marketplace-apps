@@ -41,6 +41,6 @@ steps:
     scheduled_at: scheduled_at
 - id: confirm
   type: message
-  message: "🔄 Viewing {{id}} rescheduled to {{date}} at {{time}}."
+  message: "🔄 Viewing {{property_title}} rescheduled to {{date}} at {{time}}."
 - id: done
   type: complete

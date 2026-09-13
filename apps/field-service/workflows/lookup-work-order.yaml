@@ -28,7 +28,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      🔧 **Work Order {{id}}**
+      🔧 **Work Order {{title}}**
       {{items_text}}
 
   - id: done

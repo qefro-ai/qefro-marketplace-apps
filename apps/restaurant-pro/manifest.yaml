@@ -90,7 +90,7 @@ triggers:
       - cancelled
       required_slots:
       - id
-  confirmation_message: Reservation {{id}} cancelled.
+  confirmation_message: Reservation for {{guest_name}} cancelled.
 - id: lookup_reservation
   workflow: lookup-reservation
   input_variable: reservation_lookup
@@ -103,7 +103,7 @@ triggers:
       - reservation
       required_slots:
       - id
-  confirmation_message: Here is reservation {{id}}.
+  confirmation_message: Here is reservation for {{guest_name}}.
 - id: browse_menu
   workflow: browse-menu
   input_variable: menu_browse

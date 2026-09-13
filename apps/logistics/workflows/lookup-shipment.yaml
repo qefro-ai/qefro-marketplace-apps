@@ -28,7 +28,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📦 **Shipment {{id}}**
+      📦 **Shipment {{tracking_number}}**
       {{items_text}}
 
   - id: done

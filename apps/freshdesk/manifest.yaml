@@ -81,7 +81,7 @@ triggers:
       - updated
       required_slots:
       - id
-  confirmation_message: Ticket {{id}} updated.
+  confirmation_message: Ticket {{subject}} updated.
 - id: list_my_tickets
   workflow: list-my-tickets
   input_variable: my_ticket_list
@@ -106,7 +106,7 @@ triggers:
       - comment added
       required_slots:
       - id
-  confirmation_message: Comment added to ticket {{id}}.
+  confirmation_message: Comment added to {{subject}}.
 conversation_slots:
 - id: subject
   labels:

@@ -32,7 +32,7 @@ steps:
       body: body
   - id: confirm
     type: message
-    message: "💬 Comment added to ticket {{id}}."
+    message: "💬 Comment added to {{subject}}."
   - id: done
     type: complete
     message: ""

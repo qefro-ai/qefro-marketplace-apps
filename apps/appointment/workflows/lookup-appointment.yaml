@@ -28,7 +28,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📋 **Appointment {{id}}**
+      📋 **Appointment for {{person_name}}**
       {{items_text}}
 
   - id: done

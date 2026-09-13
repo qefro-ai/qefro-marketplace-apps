@@ -38,6 +38,6 @@ steps:
       time: time
   - id: confirm
     type: message
-    message: "🔄 Appointment {{id}} rescheduled to {{date}}."
+    message: "🔄 Appointment for {{person_name}} rescheduled to {{date}}."
   - id: done
     type: complete

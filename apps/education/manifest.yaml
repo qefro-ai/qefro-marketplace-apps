@@ -82,7 +82,7 @@ triggers:
       - completed
       required_slots:
       - id
-  confirmation_message: Session {{id}} completed.
+  confirmation_message: Session {{title}} completed.
 - id: lookup_enrollment
   workflow: lookup-enrollment
   input_variable: enroll_lookup
@@ -95,7 +95,7 @@ triggers:
       - enrollment
       required_slots:
       - id
-  confirmation_message: Here is enrollment {{id}}.
+  confirmation_message: Here is enrollment for {{student_name}}.
 conversation_slots:
 - id: learner_name
   labels:

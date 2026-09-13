@@ -99,7 +99,7 @@ triggers:
       required_slots:
       - id
       - date
-  confirmation_message: Viewing {{id}} rescheduled to {{date}}.
+  confirmation_message: Viewing {{property_title}} rescheduled to {{date}}.
 - id: cancel_viewing
   workflow: cancel-viewing
   input_variable: viewing_cancel
@@ -112,7 +112,7 @@ triggers:
       - cancelled
       required_slots:
       - id
-  confirmation_message: Viewing {{id}} cancelled.
+  confirmation_message: Viewing {{property_title}} cancelled.
 - id: search_properties
   workflow: search-properties
   input_variable: property_search

@@ -33,6 +33,6 @@ steps:
     status: $constants.cancelled
 - id: confirm
   type: message
-  message: "❌ Reservation {{id}} cancelled."
+  message: "❌ Reservation for {{guest_name}} cancelled."
 - id: done
   type: complete

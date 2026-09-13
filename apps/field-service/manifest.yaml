@@ -69,7 +69,7 @@ triggers:
       - updated
       required_slots:
       - id
-  confirmation_message: Work order {{id}} updated.
+  confirmation_message: Work order {{title}} updated.
 - id: complete_work_order
   workflow: complete-work-order
   input_variable: wo_complete
@@ -82,7 +82,7 @@ triggers:
       - completed
       required_slots:
       - id
-  confirmation_message: Work order {{id}} completed.
+  confirmation_message: Work order {{title}} completed.
 - id: lookup_work_order
   workflow: lookup-work-order
   input_variable: wo_lookup
@@ -95,7 +95,7 @@ triggers:
       - work order
       required_slots:
       - id
-  confirmation_message: Here is work order {{id}}.
+  confirmation_message: Here is work order {{title}}.
 conversation_slots:
 - id: site_name
   labels:

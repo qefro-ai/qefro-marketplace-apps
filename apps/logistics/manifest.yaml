@@ -69,7 +69,7 @@ triggers:
       required_slots:
       - id
       - status
-  confirmation_message: Shipment {{id}} is now {{status}}.
+  confirmation_message: Shipment {{tracking_number}} is now {{status}}.
 - id: cancel_shipment
   workflow: cancel-shipment
   input_variable: shipment_cancel
@@ -82,7 +82,7 @@ triggers:
       - cancelled
       required_slots:
       - id
-  confirmation_message: Shipment {{id}} cancelled.
+  confirmation_message: Shipment {{tracking_number}} cancelled.
 - id: lookup_shipment
   workflow: lookup-shipment
   input_variable: shipment_lookup
@@ -95,7 +95,7 @@ triggers:
       - shipment
       required_slots:
       - id
-  confirmation_message: Here is shipment {{id}}.
+  confirmation_message: Here is shipment {{tracking_number}}.
 conversation_slots:
 - id: origin
   labels:

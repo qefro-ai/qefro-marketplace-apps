@@ -41,6 +41,6 @@ steps:
     scheduled_at: scheduled_at
 - id: confirm
   type: message
-  message: "🔄 Appointment {{id}} rescheduled to {{date}}."
+  message: "🔄 Appointment for {{patient_name}} rescheduled to {{date}}."
 - id: done
   type: complete

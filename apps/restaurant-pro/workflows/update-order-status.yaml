@@ -35,6 +35,6 @@ steps:
     status: status
 - id: confirm
   type: message
-  message: "🔄 Order {{id}} updated to {{status}}."
+  message: "🔄 Order for table {{table_number}} updated to {{status}}."
 - id: done
   type: complete

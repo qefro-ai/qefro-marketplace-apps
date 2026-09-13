@@ -86,7 +86,7 @@ triggers:
       - refund
       required_slots:
       - id
-  confirmation_message: Refund created for payment {{id}}.
+  confirmation_message: Refund created for payment of {{amount}}.
 - id: create_payment_link
   workflow: create-payment-link
   input_variable: payment_link_input

@@ -33,6 +33,6 @@ steps:
     status: $constants.cancelled
 - id: confirm
   type: message
-  message: "❌ Viewing {{id}} cancelled."
+  message: "❌ Viewing {{property_title}} cancelled."
 - id: done
   type: complete

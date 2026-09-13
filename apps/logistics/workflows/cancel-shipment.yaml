@@ -31,6 +31,6 @@ steps:
       status: $constants.cancelled
   - id: confirm
     type: message
-    message: "❌ Shipment {{id}} cancelled."
+    message: "❌ Shipment {{tracking_number}} cancelled."
   - id: done
     type: complete

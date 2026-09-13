@@ -94,7 +94,7 @@ triggers:
       required_slots:
       - id
       - date
-  confirmation_message: Appointment {{id}} rescheduled to {{date}}.
+  confirmation_message: Appointment for {{patient_name}} rescheduled to {{date}}.
 - id: cancel_appointment
   workflow: cancel-appointment
   input_variable: appointment_cancel
@@ -107,7 +107,7 @@ triggers:
       - cancelled
       required_slots:
       - id
-  confirmation_message: Appointment {{id}} cancelled.
+  confirmation_message: Appointment for {{patient_name}} cancelled.
 - id: lookup_appointment
   workflow: lookup-appointment
   input_variable: appointment_lookup
@@ -120,7 +120,7 @@ triggers:
       - appointment
       required_slots:
       - id
-  confirmation_message: Here is appointment {{id}}.
+  confirmation_message: Here is appointment for {{patient_name}}.
 conversation_slots:
 - id: patient_name
   labels:

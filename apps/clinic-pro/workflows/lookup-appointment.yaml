@@ -30,7 +30,7 @@ steps:
 - id: confirm
   type: message
   message: |
-    📋 **Appointment {{id}}**
+    📋 **Appointment for {{patient_name}}**
     {{items_text}}
 
 - id: done

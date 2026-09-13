@@ -32,7 +32,7 @@ steps:
       amount: amount
   - id: confirm
     type: message
-    message: "💰 Refund created for payment {{id}}."
+    message: "💰 Refund created for payment of {{amount}}."
   - id: done
     type: complete
     message: ""

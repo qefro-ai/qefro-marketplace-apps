@@ -33,6 +33,6 @@ steps:
     status: $constants.cancelled
 - id: confirm
   type: message
-  message: "❌ Appointment {{id}} cancelled."
+  message: "❌ Appointment for {{patient_name}} cancelled."
 - id: done
   type: complete

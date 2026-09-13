@@ -37,7 +37,7 @@ steps:
       priority: priority
   - id: confirm
     type: message
-    message: "🔄 Ticket {{id}} updated."
+    message: "🔄 Ticket {{subject}} updated."
   - id: done
     type: complete
     message: ""

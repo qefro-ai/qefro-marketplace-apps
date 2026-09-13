@@ -32,6 +32,6 @@ steps:
       status: status
   - id: confirm
     type: message
-    message: "🔄 Shipment {{id}} is now {{status}}."
+    message: "🔄 Shipment {{tracking_number}} is now {{status}}."
   - id: done
     type: complete

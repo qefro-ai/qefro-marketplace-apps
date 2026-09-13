@@ -37,6 +37,6 @@ steps:
       status: status
   - id: confirm
     type: message
-    message: "🔄 Work order {{id}} updated."
+    message: "🔄 Work order {{title}} updated."
   - id: done
     type: complete
