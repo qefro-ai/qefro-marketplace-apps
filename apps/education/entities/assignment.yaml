@@ -5,6 +5,9 @@ fields:
   - name: title
     type: string
     required: true
+  - name: course_id
+    type: relation
+    ref_entity: course
   - name: course_title
     type: string
   - name: status

@@ -6,12 +6,18 @@ allocate_code:
   prefix: WO-
   start: 1001
 fields:
+  - name: site_id
+    type: relation
+    ref_entity: site
   - name: site_name
     type: string
     required: true
   - name: summary
     type: string
     required: true
+  - name: technician_id
+    type: relation
+    ref_entity: technician
   - name: technician_name
     type: string
   - name: scheduled_date

@@ -2,6 +2,9 @@ id: availability_slot
 name: "Availability slot"
 description: "Open window for bookings"
 fields:
+  - name: staff_id
+    type: relation
+    ref_entity: staff_member
   - name: staff_name
     type: string
     required: true

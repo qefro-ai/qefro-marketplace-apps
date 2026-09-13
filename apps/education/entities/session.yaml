@@ -5,6 +5,9 @@ allocate_code:
   prefix: SES-
   start: 1001
 fields:
+  - name: course_id
+    type: relation
+    ref_entity: course
   - name: course_title
     type: string
     required: true

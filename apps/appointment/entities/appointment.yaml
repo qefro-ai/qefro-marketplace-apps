@@ -9,9 +9,15 @@ fields:
   - name: guest_name
     type: string
     required: true
+  - name: service_id
+    type: relation
+    ref_entity: service
   - name: service_name
     type: string
     required: true
+  - name: staff_id
+    type: relation
+    ref_entity: staff_member
   - name: staff_name
     type: string
   - name: date
