@@ -1,6 +1,6 @@
 id: real-estate-pro
 name: Real Estate Pro
-version: 1.1.14
+version: 1.1.15
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no
   SDK, no custom server)

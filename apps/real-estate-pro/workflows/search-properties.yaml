@@ -25,6 +25,23 @@ steps:
   type: ask
   field: city
   message: "📍 Which city or area should I search in?"
+  choices:
+  - id: Mumbai
+    label: Mumbai
+  - id: Delhi
+    label: Delhi
+  - id: Bangalore
+    label: Bangalore
+  - id: Hyderabad
+    label: Hyderabad
+  - id: Chennai
+    label: Chennai
+  - id: Kolkata
+    label: Kolkata
+  - id: Pune
+    label: Pune
+  - id: Goa
+    label: Goa
 - id: run
   type: tool
   tool: entity.property.list
