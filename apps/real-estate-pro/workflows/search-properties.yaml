@@ -37,6 +37,11 @@ steps:
   message: |
     🔍 **Matching Properties**
     {{items_text}}
+  choices:
+  - id: request_viewing
+    label: Schedule a viewing
+  - id: search_properties
+    label: Search again
 
 - id: done
   type: complete
