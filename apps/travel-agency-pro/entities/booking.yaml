@@ -12,12 +12,12 @@ fields:
   description: Booking owner (Customer Hub person)
   ref_entity: person
 - name: traveler
-  type: string
+  type: relation
   required: true
   description: Traveler reference
   ref_entity: traveler
 - name: travel_package
-  type: string
+  type: relation
   required: true
   description: Travel package reference
   ref_entity: travel_package
@@ -50,7 +50,7 @@ fields:
   type: string
   description: Booking notes
 - name: assigned_agent
-  type: string
+  type: relation
   description: Assigned staff agent
   ref_entity: agent
 - name: code

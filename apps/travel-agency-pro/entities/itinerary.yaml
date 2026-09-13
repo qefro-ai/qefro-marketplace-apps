@@ -12,7 +12,7 @@ fields:
   description: Itinerary owner (Customer Hub person)
   ref_entity: person
 - name: booking
-  type: string
+  type: relation
   required: true
   description: Parent booking reference
   ref_entity: booking

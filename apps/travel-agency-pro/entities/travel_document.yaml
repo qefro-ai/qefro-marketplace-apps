@@ -6,12 +6,12 @@ allocate_code:
   start: 1001
 fields:
 - name: traveler
-  type: string
+  type: relation
   required: true
   description: Traveler reference
   ref_entity: traveler
 - name: booking
-  type: string
+  type: relation
   description: Related booking reference
   ref_entity: booking
 - name: document_type

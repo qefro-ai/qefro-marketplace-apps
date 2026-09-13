@@ -6,10 +6,29 @@ surfaces:
 trigger:
   type: conversation
 steps:
-- id: ask_property_title
+- id: list_properties
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  output: properties
+  input_map:
+    filter.status: $literal:listed
+    limit: $literal:20
+- id: ask_property
   type: ask
-  field: property_title
+  field: property_id
   message: "🏠 Which property?"
+  choices_from: properties
+  title_field: title
+  value_field: id
+  chip_prefix: property
+- id: get_property
+  type: tool
+  tool: entity.property.get
+  execution: runtime
+  output: property
+  input_map:
+    id: property_id
 - id: ask_date
   type: ask
   field: date
@@ -23,7 +42,8 @@ steps:
   tool: entity.viewing.create
   execution: runtime
   input_map:
-    property_title: property_title
+    property_id: property_id
+    property_title: property.title
     date: date
     time: time
     scheduled_at: scheduled_at

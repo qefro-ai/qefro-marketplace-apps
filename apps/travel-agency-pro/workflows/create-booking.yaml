@@ -8,10 +8,31 @@ trigger:
   type: conversation
 
 steps:
+- id: list_packages
+  type: tool
+  tool: entity.travel_package.list
+  execution: runtime
+  output: packages
+  input_map:
+    filter.status: $literal:active
+    limit: $literal:20
+
 - id: ask_package
   type: ask
   field: package_code
   message: "✈️ Which package would you like to book?"
+  choices_from: packages
+  title_field: name
+  value_field: code
+  chip_prefix: package
+
+- id: get_package
+  type: tool
+  tool: entity.travel_package.get
+  execution: runtime
+  output: package
+  input_map:
+    id: package_code
 
 - id: ask_date
   type: ask
@@ -22,11 +43,6 @@ steps:
   type: ask
   field: travelers_count
   message: "👤 How many travelers?"
-
-- id: ask_name
-  type: ask
-  field: traveler_name
-  message: "👤 Please provide the lead traveler's name."
 
 - id: create_traveler
   type: tool
@@ -55,7 +71,7 @@ steps:
     ✅ **Booking Created!**
 
     📋 **Reference:** {{booking.booking_reference}}
-    ✈️ **Package:** {{package_code}}
+    ✈️ **Package:** {{package.name}}
     📅 **Travel Date:** {{travel_date}}
     👤 **Travelers:** {{travelers_count}}
     📋 **Status:** Pending

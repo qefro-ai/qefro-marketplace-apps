@@ -6,9 +6,14 @@ allocate_code:
   prefix: VW-
   start: 1001
 fields:
+- name: property_id
+  type: relation
+  description: Linked property (Customer Hub)
+  ref_entity: property
 - name: property_title
   type: string
   required: true
+  description: Display title (auto-filled from property.title if available)
 - name: lead_name
   type: string
   description: Display name (auto-filled from Person.name if available)

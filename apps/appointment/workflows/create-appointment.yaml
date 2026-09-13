@@ -4,14 +4,41 @@ description: "Book an appointment through Qefro Runtime"
 trigger:
   type: conversation
 steps:
-  - id: ask_service_name
+  - id: list_services
+    type: tool
+    tool: entity.service.list
+    execution: runtime
+    output: services
+    input_map:
+      filter.status: $literal:active
+      limit: $literal:20
+  - id: list_staff
+    type: tool
+    tool: entity.staff_member.list
+    execution: runtime
+    output: staff
+    input_map:
+      limit: $literal:20
+  - id: ask_service
     type: ask
     field: service_name
     message: "📅 Which service should we book?"
+    choices_from: services
+    title_field: name
+    value_field: name
+    chip_prefix: service
   - id: ask_date
     type: ask
     field: date
     message: "📅 Which date?"
+  - id: ask_staff
+    type: ask
+    field: staff_name
+    message: "👤 Which staff member?"
+    choices_from: staff
+    title_field: name
+    value_field: name
+    chip_prefix: staff
   - id: ask_guest_name
     type: ask
     field: guest_name

@@ -4,14 +4,26 @@ description: "Create an enrollment through Qefro Runtime"
 trigger:
   type: conversation
 steps:
+  - id: list_courses
+    type: tool
+    tool: entity.course.list
+    execution: runtime
+    output: courses
+    input_map:
+      filter.status: $literal:open
+      limit: $literal:20
   - id: ask_learner_name
     type: ask
     field: learner_name
     message: "🎓 Learner name?"
-  - id: ask_course_title
+  - id: ask_course
     type: ask
     field: course_title
     message: "🎓 Which course?"
+    choices_from: courses
+    title_field: title
+    value_field: title
+    chip_prefix: course
   - id: run
     type: tool
     tool: entity.enrollment.create
