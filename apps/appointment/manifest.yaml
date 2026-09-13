@@ -1,6 +1,6 @@
 id: appointment
 name: Appointments
-version: 0.1.4
+version: 0.1.5
 hosting: runtime
 description: Services, staff, availability, and bookings as a native Qefro business
   application

@@ -1,6 +1,6 @@
 id: field-service
 name: Field Service
-version: 0.1.4
+version: 0.1.5
 hosting: runtime
 description: Sites, technicians, parts, and work orders as a native Qefro business
   application
