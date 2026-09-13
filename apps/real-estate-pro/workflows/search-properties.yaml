@@ -21,27 +21,21 @@ steps:
     label: Plot / Land
   - id: commercial
     label: Commercial
+- id: fetch_for_cities
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  output: properties
+  input_map:
+    filter.property_type: property_type
 - id: ask_city
   type: ask
   field: city
   message: "📍 Which city or area should I search in?"
-  choices:
-  - id: Mumbai
-    label: Mumbai
-  - id: Delhi
-    label: Delhi
-  - id: Bangalore
-    label: Bangalore
-  - id: Hyderabad
-    label: Hyderabad
-  - id: Chennai
-    label: Chennai
-  - id: Kolkata
-    label: Kolkata
-  - id: Pune
-    label: Pune
-  - id: Goa
-    label: Goa
+  choices_from: properties
+  title_field: city
+  value_field: city
+  chip_prefix: city
 - id: run
   type: tool
   tool: entity.property.list
