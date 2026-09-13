@@ -1,0 +1,422 @@
+- id: patient_form
+  type: form
+  title: Create patient
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: email
+      label: Email
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-patient
+- id: appointment_form
+  type: form
+  title: Book appointment
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: practitioner_name
+      label: Practitioner
+      type: text
+      required: false
+    - name: date
+      label: Date
+      type: date
+      required: true
+    - name: time
+      label: Time
+      type: time
+      required: false
+    - name: reason
+      label: Reason
+      type: text
+      required: false
+    submit_label: Book
+    action:
+      trigger: book-appointment
+- id: practitioner_form
+  type: form
+  title: Add practitioner
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: specialty
+      label: Specialty
+      type: text
+      required: false
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: email
+      label: Email
+      type: text
+      required: false
+    submit_label: Add
+    action:
+      trigger: create-practitioner
+- id: slot_form
+  type: form
+  title: Open slot
+  options:
+    fields:
+    - name: practitioner_name
+      label: Practitioner
+      type: text
+      required: true
+    - name: start_at
+      label: Start (ISO datetime)
+      type: text
+      required: true
+    - name: end_at
+      label: End (ISO datetime)
+      type: text
+      required: true
+    - name: location
+      label: Location
+      type: text
+      required: false
+    submit_label: Open slot
+    action:
+      trigger: create-slot
+- id: visit_form
+  type: form
+  title: Create visit
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: practitioner_name
+      label: Practitioner
+      type: text
+      required: false
+    - name: date
+      label: Date
+      type: date
+      required: true
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-visit
+- id: prescription_form
+  type: form
+  title: Create prescription
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: medication
+      label: Medication
+      type: text
+      required: true
+    - name: dosage
+      label: Dosage
+      type: text
+      required: false
+    - name: frequency
+      label: Frequency
+      type: text
+      required: false
+    - name: duration
+      label: Duration
+      type: text
+      required: false
+    - name: instructions
+      label: Instructions
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-prescription
+- id: invoice_form
+  type: form
+  title: Create invoice
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: due_at
+      label: Due date
+      type: date
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-invoice
+- id: payment_form
+  type: form
+  title: Record payment
+  options:
+    fields:
+    - name: patient_name
+      label: Patient name
+      type: text
+      required: true
+    - name: invoice_code
+      label: Invoice code
+      type: text
+      required: true
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    submit_label: Record
+    action:
+      trigger: record-payment
+- id: appointments_status
+  type: status
+  title: Appointments
+  source: appointments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: patient_name
+    empty_title: No appointments yet
+- id: patients_table
+  type: table
+  title: Patients
+  source: patients
+  options:
+    rows_path: items
+    empty_title: No patients yet
+    columns:
+    - key: name
+      header: Name
+    - key: phone
+      header: Phone
+    - key: status
+      header: Status
+- id: appointments_table
+  type: table
+  title: Appointments
+  source: appointments
+  options:
+    rows_path: items
+    empty_title: No appointments yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: date
+      header: Date
+    - key: status
+      header: Status
+    - key: reason
+      header: Reason
+- id: practitioners_table
+  type: table
+  title: Practitioners
+  source: practitioners
+  options:
+    rows_path: items
+    empty_title: No practitioners yet
+    columns:
+    - key: name
+      header: Name
+    - key: specialty
+      header: Specialty
+    - key: status
+      header: Status
+- id: slots_table
+  type: table
+  title: Open slots
+  source: slots
+  options:
+    rows_path: items
+    empty_title: No slots yet
+    columns:
+    - key: practitioner_name
+      header: Practitioner
+    - key: start_at
+      header: Start
+    - key: end_at
+      header: End
+    - key: status
+      header: Status
+- id: visits_table
+  type: table
+  title: Visits
+  source: visits
+  options:
+    rows_path: items
+    empty_title: No visits yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: date
+      header: Date
+    - key: status
+      header: Status
+- id: treatments_table
+  type: table
+  title: Treatments
+  source: treatments
+  options:
+    rows_path: items
+    empty_title: No treatments yet
+    columns:
+    - key: name
+      header: Name
+    - key: status
+      header: Status
+    - key: patient_name
+      header: Patient
+- id: prescriptions_table
+  type: table
+  title: Prescriptions
+  source: prescriptions
+  options:
+    rows_path: items
+    empty_title: No prescriptions yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: medication
+      header: Medication
+    - key: status
+      header: Status
+- id: invoices_table
+  type: table
+  title: Invoices
+  source: invoices
+  options:
+    rows_path: items
+    empty_title: No invoices yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: payments_table
+  type: table
+  title: Payments
+  source: payments
+  options:
+    rows_path: items
+    empty_title: No payments yet
+    columns:
+    - key: patient_name
+      header: Patient
+    - key: invoice_code
+      header: Invoice
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: intro
+  type: markdown
+  title: Clinic Pro
+  options:
+    content: Patients, appointments, visits, and billing — open a list and tap New
+      to add records.
+- id: metric_patient
+  type: metric
+  title: Patients
+  source: patients
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: patients
+- id: metric_appointment
+  type: metric
+  title: Appointments
+  source: appointments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: appointments
+- id: metric_visit
+  type: metric
+  title: Visits
+  source: visits
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: visits
+- id: metric_invoice
+  type: metric
+  title: Invoices
+  source: invoices
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: invoices
+- id: appointment_dash_status
+  type: status
+  title: Appointments status
+  source: appointments
+  options:
+    rows_path: items
+    status_field: status
+    label_field: patient_name
+    empty_title: No appointments yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    navigate_to: appointments
+    action_label: View all
+- id: appointment_dash_table
+  type: table
+  title: Recent Appointments
+  source: appointments
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: patient_name
+      header: Patient Name
+    - key: practitioner_name
+      header: Practitioner Name
+    - key: slot_code
+      header: Slot Code
+    - key: scheduled_at
+      header: Scheduled At
+    - key: date
+      header: Date
+    navigate_to: appointments
+    action_label: View all
+    empty_title: No appointments yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list

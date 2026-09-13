@@ -1,0 +1,51 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_property
+    span: 3
+  - widget: metric_lead
+    span: 3
+  - widget: metric_viewing
+    span: 3
+  - widget: metric_deal
+    span: 3
+  - widget: viewing_dash_status
+    span: 4
+  - widget: viewing_dash_table
+    span: 8
+- id: agents
+  title: Agents
+  entity: agent
+- id: deals
+  title: Deals
+  entity: deal
+- id: leads
+  title: Leads
+  entity: lead
+- id: offers
+  title: Offers
+  entity: offer
+- id: properties
+  title: Properties
+  entity: property
+- id: documents
+  title: Documents
+  entity: property_document
+- id: units
+  title: Units
+  entity: property_unit
+- id: viewings
+  title: Viewings
+  entity: viewing
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

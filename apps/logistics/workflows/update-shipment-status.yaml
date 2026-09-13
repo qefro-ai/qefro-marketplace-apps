@@ -1,0 +1,37 @@
+id: update-shipment-status
+name: "Update shipment status"
+description: "Advance shipment state"
+trigger:
+  type: conversation
+steps:
+  - id: list_shipments
+    type: tool
+    tool: entity.shipment.list
+    execution: runtime
+    output: shipments
+    input_map:
+      limit: $literal:20
+  - id: ask_id
+    type: ask
+    field: id
+    message: "🔄 Which shipment would you like to update?"
+    choices_from: shipments
+    title_field: tracking_number
+    value_field: id
+    chip_prefix: shipment
+  - id: ask_status
+    type: ask
+    field: status
+    message: "🔄 New status (in_transit, delivered, exception)?"
+  - id: run
+    type: tool
+    tool: entity.shipment.update
+    execution: runtime
+    input_map:
+      id: id
+      status: status
+  - id: confirm
+    type: message
+    message: "🔄 Shipment {{tracking_number}} is now {{status}}."
+  - id: done
+    type: complete

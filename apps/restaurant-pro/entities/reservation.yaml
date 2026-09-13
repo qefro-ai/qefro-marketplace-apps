@@ -1,0 +1,44 @@
+id: reservation
+scope: customer
+name: Reservation
+description: Table reservation bound to Person
+allocate_code:
+  prefix: R-
+  start: 1001
+fields:
+- name: guest_name
+  type: string
+  required: true
+- name: table_name
+  type: string
+- name: guest_count
+  type: integer
+  required: true
+- name: reservation_at
+  type: datetime
+- name: date
+  type: date
+  required: true
+- name: time
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - pending
+  - confirmed
+  - seated
+  - cancelled
+  - completed
+  - no_show
+- name: notes
+  type: string
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+status_events:
+  confirmed: reservation.updated
+  seated: reservation.updated
+  cancelled: reservation.cancelled
+  completed: reservation.updated
+  no_show: reservation.updated

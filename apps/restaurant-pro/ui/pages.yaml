@@ -1,0 +1,60 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_reservation
+    span: 3
+  - widget: metric_table
+    span: 3
+  - widget: metric_order
+    span: 3
+  - widget: metric_menu_item
+    span: 3
+  - widget: reservation_dash_status
+    span: 4
+  - widget: reservation_dash_table
+    span: 8
+- id: customers
+  title: Customers
+  entity: customer
+- id: dining_sessions
+  title: Dining sessions
+  entity: dining_session
+- id: menu_categories
+  title: Menu categories
+  entity: menu_category
+- id: menu_items
+  title: Menu
+  entity: menu_item
+- id: orders
+  title: Orders
+  entity: order
+- id: order_items
+  title: Order items
+  entity: order_item
+- id: payments
+  title: Payments
+  entity: payment
+- id: reservations
+  title: Reservations
+  entity: reservation
+- id: restaurants
+  title: Restaurant
+  entity: restaurant
+- id: staff
+  title: Staff
+  entity: staff_member
+- id: tables
+  title: Tables
+  entity: table
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

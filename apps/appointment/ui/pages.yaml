@@ -1,0 +1,33 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_appointment
+    span: 12
+  - widget: appointment_dash_status
+    span: 4
+  - widget: appointment_dash_table
+    span: 8
+- id: appointments
+  title: Appointments
+  entity: appointment
+- id: availability
+  title: Availability
+  entity: availability_slot
+- id: services
+  title: Services
+  entity: service
+- id: staff
+  title: Staff
+  entity: staff_member
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

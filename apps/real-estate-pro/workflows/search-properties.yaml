@@ -1,0 +1,59 @@
+id: search-properties
+name: Search properties
+description: List properties for staff or public browsing
+surfaces:
+- customer
+trigger:
+  type: conversation
+steps:
+- id: ask_type
+  type: ask
+  field: property_type
+  message: "🔍 What type of property are you looking for?"
+  choices:
+  - id: apartment
+    label: Apartment
+  - id: house
+    label: Villa / House
+  - id: condo
+    label: Condo
+  - id: land
+    label: Plot / Land
+  - id: commercial
+    label: Commercial
+- id: fetch_for_cities
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  output: properties
+  input_map:
+    filter.property_type: property_type
+- id: ask_city
+  type: ask
+  field: city
+  message: "📍 Which city or area should I search in?"
+  choices_from: properties
+  title_field: city
+  value_field: city
+  chip_prefix: city
+- id: run
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  input_map:
+    filter.property_type: property_type
+    filter.city: city
+- id: confirm
+  type: message
+  message: |
+    🔍 **Matching Properties**
+    {{items_text}}
+  choices:
+  - id: request_viewing
+    label: Schedule a viewing
+  - id: search_properties
+    label: Search again
+
+- id: done
+  type: complete
+  message: ""

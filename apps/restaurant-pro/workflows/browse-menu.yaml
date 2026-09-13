@@ -1,0 +1,22 @@
+id: browse-menu
+name: Browse menu
+description: List active menu items
+surfaces:
+- customer
+trigger:
+  type: conversation
+steps:
+- id: run
+  type: tool
+  tool: entity.menu_item.list
+  execution: runtime
+  input_map: {}
+- id: confirm
+  type: message
+  message: |
+    🍽️ **Current Menu**
+    {{items_text}}
+
+- id: done
+  type: complete
+  message: ""

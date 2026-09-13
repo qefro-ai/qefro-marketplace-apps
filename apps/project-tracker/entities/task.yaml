@@ -1,0 +1,7 @@
+id: task
+name: Task
+fields:
+  title: { type: string, required: true }
+  project_id: { type: string, required: true }
+  status: { type: enum, enum_values: [todo, doing, done], required: true }
+  due_date: { type: string }

@@ -1,0 +1,158 @@
+id: stripe
+name: Stripe
+version: 0.1.2
+hosting: runtime
+description: Customers, products, prices, payment links, checkout, invoices, subscriptions,
+  payments, and refunds as a metadata Marketplace App
+category: commerce
+tags:
+- stripe
+- payments
+- runtime
+channels:
+- widget
+- whatsapp
+connections:
+- stripe
+http_tools:
+- list_customers
+- get_customer
+- list_my_customers
+- list_products
+- get_product
+- list_prices
+- list_payment_links
+- create_payment_link
+- create_checkout_session
+- list_invoices
+- get_invoice
+- list_my_invoices
+- list_subscriptions
+- create_subscription
+- list_payments
+- get_payment
+- create_refund
+- list_refunds
+entities:
+- customer
+- product
+- price
+- payment_link
+- checkout_session
+- invoice
+- subscription
+- payment
+- refund
+flows:
+- create-payment-link
+- create-subscription
+- refund-payment
+- list-my-invoices
+events:
+- customer.created
+- payment.created
+- payment.succeeded
+- payment.failed
+- refund.created
+- subscription.created
+- subscription.updated
+- subscription.cancelled
+- invoice.paid
+- checkout.completed
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: create_payment_link
+  workflow: create-payment-link
+  input_variable: payment_link_input
+  match:
+    intents:
+    - create a payment link
+    - make a stripe link
+    - share a payment link
+    confirmation:
+      reply_signals:
+      - payment link
+      required_slots:
+      - price_id
+  confirmation_message: Payment link created for {{price_id}}.
+- id: create_subscription
+  workflow: create-subscription
+  input_variable: subscription_input
+  match:
+    intents:
+    - create a subscription
+    - start a subscription
+    confirmation:
+      reply_signals:
+      - subscription
+      required_slots:
+      - stripe_customer
+      - price_id
+  confirmation_message: Subscription created for {{stripe_customer}}.
+- id: refund_payment
+  workflow: refund-payment
+  input_variable: refund_input
+  match:
+    intents:
+    - refund a payment
+    - issue a refund
+    confirmation:
+      reply_signals:
+      - refund
+      required_slots:
+      - payment_intent
+  confirmation_message: Refund created for {{payment_intent}}.
+- id: list_my_invoices
+  workflow: list-my-invoices
+  input_variable: my_invoice_list
+  match:
+    intents:
+    - show my invoices
+    - my invoices
+    - list my invoices
+    confirmation:
+      reply_signals:
+      - your invoices
+      required_slots: []
+  confirmation_message: Here are your invoices.
+conversation_slots:
+- id: price_id
+  labels:
+  - price
+  - price id
+  kind: string
+- id: quantity
+  labels:
+  - quantity
+  - units
+  kind: integer
+- id: stripe_customer
+  labels:
+  - stripe customer
+  - customer id
+  kind: string
+- id: payment_intent
+  labels:
+  - payment
+  - payment intent
+  kind: string
+- id: success_url
+  labels:
+  - success url
+  - return url
+  kind: string
+ui:
+  name: Stripe

@@ -1,0 +1,36 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_order
+    span: 12
+  - widget: order_dash_status
+    span: 4
+  - widget: order_dash_table
+    span: 8
+- id: categories
+  title: Categories
+  entity: category
+- id: coupons
+  title: Coupons
+  entity: coupon
+- id: customers
+  title: Customers
+  entity: customer
+- id: orders
+  title: Orders
+  entity: order
+- id: products
+  title: Products
+  entity: product
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

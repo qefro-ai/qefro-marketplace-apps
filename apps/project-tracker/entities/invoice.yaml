@@ -1,0 +1,7 @@
+id: invoice
+name: Invoice
+fields:
+  project_id: { type: string, required: true }
+  amount: { type: number, required: true }
+  status: { type: enum, enum_values: [draft, sent, paid], required: true }
+  issued_at: { type: string }

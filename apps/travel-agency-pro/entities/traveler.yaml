@@ -1,0 +1,31 @@
+id: traveler
+scope: customer
+name: Traveler
+description: Travel-specific information about a person
+allocate_code:
+  prefix: TVL-
+  start: 1001
+fields:
+- name: person_id
+  type: person
+  required: true
+  description: Customer Hub person reference
+  ref_entity: person
+- name: date_of_birth
+  type: date
+  description: Date of birth
+- name: nationality
+  type: string
+  description: Nationality
+- name: passport_number
+  type: string
+  description: Passport number
+- name: passport_expiry
+  type: date
+  description: Passport expiry date
+- name: notes
+  type: string
+  description: Additional notes
+- name: code
+  type: string
+  description: Auto-allocated traveler code

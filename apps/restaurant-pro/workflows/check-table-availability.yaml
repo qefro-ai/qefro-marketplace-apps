@@ -1,0 +1,22 @@
+id: check-table-availability
+name: Check table availability
+description: List tables and availability status
+surfaces:
+- customer
+trigger:
+  type: conversation
+steps:
+- id: run
+  type: tool
+  tool: entity.table.list
+  execution: runtime
+  input_map: {}
+- id: confirm
+  type: message
+  message: |
+    🍳 **Tables & Availability**
+    {{items_text}}
+
+- id: done
+  type: complete
+  message: ""

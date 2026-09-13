@@ -1,0 +1,3 @@
+- id: items
+  type: entity
+  target: item

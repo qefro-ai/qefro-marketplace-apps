@@ -1,0 +1,43 @@
+id: update-ticket
+name: "Update ticket"
+description: "Update ticket status through generic Runtime HTTP"
+trigger:
+  type: conversation
+steps:
+  - id: list_tickets
+    type: tool
+    tool: entity.ticket.list
+    execution: runtime
+    output: tickets
+    input_map:
+      limit: $literal:20
+  - id: ask_id
+    type: ask
+    field: id
+    message: "🎫 Which ticket would you like to update?"
+    choices_from: tickets
+    title_field: subject
+    value_field: id
+    chip_prefix: ticket
+  - id: ask_status
+    type: ask
+    field: status
+    message: "🔄 New status code?"
+  - id: ask_priority
+    type: ask
+    field: priority
+    message: "🔄 New priority code?"
+  - id: run
+    type: tool
+    tool: update_ticket
+    execution: http
+    input_map:
+      id: id
+      status: status
+      priority: priority
+  - id: confirm
+    type: message
+    message: "🔄 Ticket {{subject}} updated."
+  - id: done
+    type: complete
+    message: ""

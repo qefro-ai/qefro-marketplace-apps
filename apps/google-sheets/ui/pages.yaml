@@ -1,0 +1,34 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_row
+    span: 4
+  - widget: metric_sheet
+    span: 4
+  - widget: metric_spreadsheet
+    span: 4
+  - widget: row_dash_status
+    span: 4
+  - widget: row_dash_table
+    span: 8
+- id: rows
+  title: Rows
+  entity: row
+- id: sheets
+  title: Sheets
+  entity: sheet
+- id: spreadsheets
+  title: Spreadsheets
+  entity: spreadsheet
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

@@ -1,0 +1,34 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_message_template
+    span: 4
+  - widget: metric_outbound_message
+    span: 4
+  - widget: metric_wa_contact
+    span: 4
+  - widget: message_template_dash_status
+    span: 4
+  - widget: message_template_dash_table
+    span: 8
+- id: templates
+  title: Templates
+  entity: message_template
+- id: outbound
+  title: Outbound
+  entity: outbound_message
+- id: wa_contacts
+  title: WA contacts
+  entity: wa_contact
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

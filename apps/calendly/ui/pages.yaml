@@ -1,0 +1,34 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_event_type
+    span: 4
+  - widget: metric_invitee
+    span: 4
+  - widget: metric_scheduled_event
+    span: 4
+  - widget: event_type_dash_status
+    span: 4
+  - widget: event_type_dash_table
+    span: 8
+- id: event_types
+  title: Event types
+  entity: event_type
+- id: invitees
+  title: Invitees
+  entity: invitee
+- id: scheduled_events
+  title: Scheduled
+  entity: scheduled_event
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

@@ -1,0 +1,59 @@
+id: create-work-order
+name: "Create work order"
+description: "Open a field job through Qefro Runtime"
+trigger:
+  type: conversation
+steps:
+  - id: list_sites
+    type: tool
+    tool: entity.site.list
+    execution: runtime
+    output: sites
+    input_map:
+      limit: $literal:20
+  - id: list_technicians
+    type: tool
+    tool: entity.technician.list
+    execution: runtime
+    output: technicians
+    input_map:
+      limit: $literal:20
+  - id: ask_site
+    type: ask
+    field: site_name
+    message: "🔧 Which site?"
+    choices_from: sites
+    title_field: name
+    value_field: name
+    chip_prefix: site
+  - id: ask_summary
+    type: ask
+    field: summary
+    message: "🔧 What needs to be done?"
+  - id: ask_technician
+    type: ask
+    field: technician_name
+    message: "👤 Which technician?"
+    choices_from: technicians
+    title_field: name
+    value_field: name
+    chip_prefix: tech
+  - id: ask_scheduled_date
+    type: ask
+    field: scheduled_date
+    message: "🔧 Which date?"
+  - id: run
+    type: tool
+    tool: entity.work_order.create
+    execution: runtime
+    input_map:
+      site_name: site_name
+      summary: summary
+      scheduled_date: scheduled_date
+      technician_name: technician_name
+      status: $literal:open
+  - id: confirm
+    type: message
+    message: "✅ Work order created for {{site_name}}."
+  - id: done
+    type: complete

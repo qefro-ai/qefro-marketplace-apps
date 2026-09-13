@@ -1,0 +1,33 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_work_order
+    span: 12
+  - widget: work_order_dash_status
+    span: 4
+  - widget: work_order_dash_table
+    span: 8
+- id: parts
+  title: Parts
+  entity: part
+- id: sites
+  title: Sites
+  entity: site
+- id: technicians
+  title: Technicians
+  entity: technician
+- id: work_orders
+  title: Work orders
+  entity: work_order
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

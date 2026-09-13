@@ -422,7 +422,8 @@ class PackageConventionTests(unittest.TestCase):
         for required in (
             "shopify-runtime",
             "restaurant-pro-runtime",
-            "real-estate-runtime",
+            "real-estate-pro-runtime",
+            "clinic-pro-runtime",
             "http-catalog-runtime",
         ):
             self.assertIn(required, names)
@@ -558,8 +559,10 @@ class NewAppCoverageTests(unittest.TestCase):
         "appointment-runtime",
         "field-service-runtime",
         "education-runtime",
-        "clinic-runtime",
+        "clinic-pro-runtime",
         "logistics-runtime",
+        "restaurant-pro-runtime",
+        "real-estate-pro-runtime",
     ]
 
     def test_phase_apps_exist(self):

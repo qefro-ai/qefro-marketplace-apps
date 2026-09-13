@@ -1,0 +1,101 @@
+id: slack
+name: Slack
+version: 0.1.2
+hosting: runtime
+description: Channels, users, send message, and channel events as a metadata Marketplace
+  App
+category: collaboration
+tags:
+- slack
+- notifications
+- runtime
+channels:
+- widget
+- whatsapp
+connections:
+- slack
+http_tools:
+- list_channels
+- list_users
+- send_message
+- get_channel_history
+entities:
+- channel
+- slack_user
+- slack_message
+flows:
+- send-message
+- list-channels
+- list-users
+events:
+- channel.message
+- channel.created
+- notification.created
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: send_message
+  workflow: send-message
+  input_variable: slack_message
+  match:
+    intents:
+    - send a slack message
+    - notify slack
+    - post to slack
+    confirmation:
+      reply_signals:
+      - message sent
+      required_slots:
+      - channel
+      - text
+  confirmation_message: Message sent to {{channel}}.
+- id: list_channels
+  workflow: list-channels
+  input_variable: channel_list
+  match:
+    intents:
+    - list slack channels
+    - show channels
+    confirmation:
+      reply_signals:
+      - channels
+      required_slots: []
+  confirmation_message: Here are the channels.
+- id: list_users
+  workflow: list-users
+  input_variable: user_list
+  match:
+    intents:
+    - list slack users
+    - who is on slack
+    confirmation:
+      reply_signals:
+      - users
+      required_slots: []
+  confirmation_message: Here are the users.
+conversation_slots:
+- id: channel
+  labels:
+  - channel
+  - channel id
+  kind: string
+- id: text
+  labels:
+  - message
+  - text
+  - notification
+  kind: string
+ui:
+  name: Slack

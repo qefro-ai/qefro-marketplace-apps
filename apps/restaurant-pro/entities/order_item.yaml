@@ -1,0 +1,17 @@
+id: order_item
+name: Order item
+description: Line item on an order
+fields:
+- name: order_code
+  type: string
+  required: true
+- name: menu_item_name
+  type: string
+  required: true
+- name: quantity
+  type: integer
+  required: true
+- name: unit_price
+  type: float
+- name: notes
+  type: string

@@ -1,0 +1,34 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_channel
+    span: 4
+  - widget: metric_slack_message
+    span: 4
+  - widget: metric_slack_user
+    span: 4
+  - widget: channel_dash_status
+    span: 4
+  - widget: channel_dash_table
+    span: 8
+- id: channels
+  title: Channels
+  entity: channel
+- id: messages
+  title: Messages
+  entity: slack_message
+- id: slack_users
+  title: Users
+  entity: slack_user
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

@@ -1,0 +1,38 @@
+id: lookup-reservation
+name: Lookup reservation
+description: Fetch one reservation by id
+surfaces:
+- customer
+trigger:
+  type: conversation
+steps:
+- id: list_reservations
+  type: tool
+  tool: entity.reservation.list
+  execution: runtime
+  output: reservations
+  input_map:
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "📅 Which reservation would you like to view?"
+  choices_from: reservations
+  title_field: guest_name
+  value_field: id
+  chip_prefix: reservation
+- id: run
+  type: tool
+  tool: entity.reservation.get
+  execution: runtime
+  input_map:
+    id: id
+- id: confirm
+  type: message
+  message: |
+    📋 **Reservation for {{guest_name}}**
+    {{items_text}}
+
+- id: done
+  type: complete
+  message: ""

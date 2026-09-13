@@ -1,0 +1,21 @@
+id: restaurant
+name: Restaurant
+description: Restaurant location profile
+fields:
+- name: name
+  type: string
+  required: true
+- name: phone
+  type: phone
+- name: email
+  type: email
+- name: address
+  type: string
+- name: opening_hours
+  type: string
+- name: status
+  type: enum
+  enum_values:
+  - open
+  - closed
+  - temporarily_closed

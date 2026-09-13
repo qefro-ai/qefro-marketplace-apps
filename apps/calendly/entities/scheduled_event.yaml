@@ -1,0 +1,22 @@
+id: scheduled_event
+scope: customer
+name: "Scheduled event"
+description: "Booked event"
+allocate_code:
+  prefix: B-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: start
+    type: datetime
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - canceled
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

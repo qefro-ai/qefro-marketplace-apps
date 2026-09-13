@@ -1,0 +1,11 @@
+id: create-task
+name: Create Task
+trigger:
+  type: manual
+surfaces: [portal]
+steps:
+  - id: save
+    type: tool
+    tool: entity.task.create
+    input:
+      document: "{{ input }}"

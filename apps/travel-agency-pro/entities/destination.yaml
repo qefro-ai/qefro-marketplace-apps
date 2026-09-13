@@ -1,0 +1,37 @@
+id: destination
+name: Destination
+description: A travel destination location
+allocate_code:
+  prefix: DST-
+  start: 1001
+fields:
+- name: name
+  type: string
+  required: true
+  description: Destination name
+- name: description
+  type: string
+  description: Destination description
+- name: country
+  type: string
+  required: true
+  description: Country
+- name: city
+  type: string
+  description: City
+- name: state
+  type: string
+  description: State or region
+- name: image
+  type: image
+  description: Destination image
+- name: status
+  type: enum
+  required: true
+  description: Destination status
+  enum_values:
+  - active
+  - inactive
+- name: code
+  type: string
+  description: Auto-allocated destination code

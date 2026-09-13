@@ -32,12 +32,12 @@ how you build a Marketplace App.
 | [`apps/whatsapp-business-runtime`](./apps/whatsapp-business-runtime) | `whatsapp-business-runtime` | Messaging | Generic HTTP (Cloud API; not ACS WhatsApp ingest) |
 | [`apps/calendly-runtime`](./apps/calendly-runtime) | `calendly-runtime` | Scheduling | Generic HTTP |
 | [`apps/slack-runtime`](./apps/slack-runtime) | `slack-runtime` | Collaboration | Generic HTTP |
-| [`apps/restaurant-pro-runtime`](./apps/restaurant-pro-runtime) | `restaurant-pro-runtime` | Hospitality | `entity.*` managed storage |
-| [`apps/real-estate-runtime`](./apps/real-estate-runtime) | `real-estate-runtime` | Real estate | `entity.*` managed storage |
+| [`apps/restaurant-pro-runtime`](./apps/restaurant-pro-runtime) | `restaurant-pro-runtime` | Hospitality (Pro) | `entity.*` managed storage |
+| [`apps/real-estate-pro-runtime`](./apps/real-estate-pro-runtime) | `real-estate-pro-runtime` | Real estate (Pro) | `entity.*` managed storage |
 | [`apps/appointment-runtime`](./apps/appointment-runtime) | `appointment-runtime` | Booking | `entity.*` managed storage |
 | [`apps/field-service-runtime`](./apps/field-service-runtime) | `field-service-runtime` | Field service | `entity.*` managed storage |
 | [`apps/education-runtime`](./apps/education-runtime) | `education-runtime` | Education | `entity.*` managed storage |
-| [`apps/clinic-runtime`](./apps/clinic-runtime) | `clinic-runtime` | Clinic ops | `entity.*` managed storage |
+| [`apps/clinic-pro-runtime`](./apps/clinic-pro-runtime) | `clinic-pro-runtime` | Clinic ops (Pro) | `entity.*` managed storage |
 | [`apps/logistics-runtime`](./apps/logistics-runtime) | `logistics-runtime` | Logistics | `entity.*` managed storage |
 | [`apps/http-catalog-runtime`](./apps/http-catalog-runtime) | `http-catalog-runtime` | HTTP fixture | Generic HTTP (non-Shopify catalog) |
 

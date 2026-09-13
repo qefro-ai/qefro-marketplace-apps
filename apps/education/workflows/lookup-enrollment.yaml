@@ -1,0 +1,36 @@
+id: lookup-enrollment
+name: "Lookup enrollment"
+description: "Fetch one enrollment"
+trigger:
+  type: conversation
+steps:
+  - id: list_enrollments
+    type: tool
+    tool: entity.enrollment.list
+    execution: runtime
+    output: enrollments
+    input_map:
+      limit: $literal:20
+  - id: ask_id
+    type: ask
+    field: id
+    message: "📋 Which enrollment would you like to view?"
+    choices_from: enrollments
+    title_field: student_name
+    value_field: id
+    chip_prefix: enrollment
+  - id: run
+    type: tool
+    tool: entity.enrollment.get
+    execution: runtime
+    input_map:
+      id: id
+  - id: confirm
+    type: message
+    message: |
+      🎓 **Enrollment for {{student_name}}**
+      {{items_text}}
+
+  - id: done
+    type: complete
+    message: ""

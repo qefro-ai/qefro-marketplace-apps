@@ -1,0 +1,41 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_deal
+    span: 6
+  - widget: metric_lead
+    span: 6
+  - widget: deal_dash_status
+    span: 4
+  - widget: deal_dash_table
+    span: 8
+- id: accounts
+  title: Accounts
+  entity: account
+- id: activities
+  title: Activities
+  entity: activity
+- id: crm_contacts
+  title: Contacts list
+  entity: contact
+- id: deals
+  title: Deals
+  entity: deal
+- id: leads
+  title: Leads
+  entity: lead
+- id: notes
+  title: Notes
+  entity: note
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

@@ -1,0 +1,33 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_shipment
+    span: 12
+  - widget: shipment_dash_status
+    span: 4
+  - widget: shipment_dash_table
+    span: 8
+- id: consignments
+  title: Consignments
+  entity: consignment
+- id: shipments
+  title: Shipments
+  entity: shipment
+- id: stops
+  title: Stops
+  entity: stop
+- id: vehicles
+  title: Vehicles
+  entity: vehicle
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

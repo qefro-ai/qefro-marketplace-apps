@@ -1,0 +1,13 @@
+id: invitee
+scope: customer
+name: Invitee
+description: "Event invitee bound to Person"
+fields:
+  - name: name
+    type: string
+  - name: email
+    type: email
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity"

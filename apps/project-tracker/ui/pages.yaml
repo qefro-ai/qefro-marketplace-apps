@@ -1,0 +1,34 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_project
+    span: 4
+  - widget: metric_task
+    span: 4
+  - widget: metric_invoice
+    span: 4
+  - widget: task_dash_status
+    span: 4
+  - widget: task_dash_table
+    span: 8
+- id: invoices
+  title: Invoices
+  entity: invoice
+- id: projects
+  title: Projects
+  entity: project
+- id: tasks
+  title: Tasks
+  entity: task
+- id: roles
+  title: Roles
+  host: roles
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations

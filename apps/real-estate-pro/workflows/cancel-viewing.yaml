@@ -1,0 +1,38 @@
+id: cancel-viewing
+name: Cancel viewing
+description: Cancel a viewing by status update
+surfaces:
+- customer
+trigger:
+  type: conversation
+constants:
+  cancelled: cancelled
+steps:
+- id: list_viewings
+  type: tool
+  tool: entity.viewing.list
+  execution: runtime
+  output: viewings
+  input_map:
+    filter.status: $literal:scheduled
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "❌ Which viewing would you like to cancel?"
+  choices_from: viewings
+  title_field: property_title
+  value_field: id
+  chip_prefix: viewing
+- id: run
+  type: tool
+  tool: entity.viewing.update
+  execution: runtime
+  input_map:
+    id: id
+    status: $constants.cancelled
+- id: confirm
+  type: message
+  message: "❌ Viewing {{property_title}} cancelled."
+- id: done
+  type: complete

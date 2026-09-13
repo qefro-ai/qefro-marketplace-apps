@@ -1,0 +1,54 @@
+- id: dashboard
+  title: Dashboard
+  layout: dashboard-grid
+  widgets:
+  - widget: intro
+    span: 12
+  - widget: metric_checkout_session
+    span: 3
+  - widget: metric_customer
+    span: 3
+  - widget: metric_invoice
+    span: 3
+  - widget: metric_payment
+    span: 3
+  - widget: checkout_session_dash_status
+    span: 4
+  - widget: checkout_session_dash_table
+    span: 8
+- id: checkouts
+  title: Checkouts
+  entity: checkout_session
+- id: customers
+  title: Customers
+  entity: customer
+- id: invoices
+  title: Invoices
+  entity: invoice
+- id: payments
+  title: Payments
+  entity: payment
+- id: payment_links
+  title: Payment links
+  entity: payment_link
+- id: prices
+  title: Prices
+  entity: price
+- id: products
+  title: Products
+  entity: product
+- id: refunds
+  title: Refunds
+  entity: refund
+- id: subscriptions
+  title: Subscriptions
+  entity: subscription
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

@@ -1,0 +1,40 @@
+id: update-order-status
+name: Update order status
+description: Advance or change order status
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: list_orders
+  type: tool
+  tool: entity.order.list
+  execution: runtime
+  output: orders
+  input_map:
+    filter.status: $literal:pending
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "📋 Which order would you like to update?"
+  choices_from: orders
+  title_field: table_number
+  value_field: id
+  chip_prefix: order
+- id: ask_status
+  type: ask
+  field: status
+  message: "🔄 New status?"
+- id: run
+  type: tool
+  tool: entity.order.update
+  execution: runtime
+  input_map:
+    id: id
+    status: status
+- id: confirm
+  type: message
+  message: "🔄 Order for table {{table_number}} updated to {{status}}."
+- id: done
+  type: complete

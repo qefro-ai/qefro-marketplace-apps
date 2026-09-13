@@ -1,0 +1,345 @@
+- id: property_form
+  type: form
+  title: List property
+  options:
+    fields:
+    - name: title
+      label: Title
+      type: text
+      required: true
+    - name: city
+      label: City
+      type: text
+      required: false
+    - name: price
+      label: Price
+      type: number
+      required: false
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: bedrooms
+      label: Bedrooms
+      type: number
+      required: false
+    - name: description
+      label: Description
+      type: textarea
+      required: false
+    - name: image_url
+      label: Photo
+      type: image
+      required: false
+    submit_label: List property
+    action:
+      trigger: create-property
+- id: lead_form
+  type: form
+  title: Create lead
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: phone
+      label: Phone
+      type: text
+      required: false
+    - name: email
+      label: Email
+      type: text
+      required: false
+    - name: source
+      label: Source
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-lead
+- id: viewing_form
+  type: form
+  title: Request viewing
+  options:
+    fields:
+    - name: property_title
+      label: Property
+      type: text
+      required: true
+    - name: lead_name
+      label: Lead name
+      type: text
+      required: true
+    - name: agent_name
+      label: Agent
+      type: text
+      required: false
+    - name: date
+      label: Date
+      type: date
+      required: true
+    - name: time
+      label: Time
+      type: time
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Schedule
+    action:
+      trigger: request-viewing
+- id: offer_form
+  type: form
+  title: Create offer
+  options:
+    fields:
+    - name: property_title
+      label: Property
+      type: text
+      required: true
+    - name: lead_name
+      label: Lead name
+      type: text
+      required: true
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    submit_label: Submit
+    action:
+      trigger: create-offer
+- id: deal_form
+  type: form
+  title: Create deal
+  options:
+    fields:
+    - name: property_title
+      label: Property
+      type: text
+      required: true
+    - name: lead_name
+      label: Lead name
+      type: text
+      required: true
+    - name: agent_name
+      label: Agent
+      type: text
+      required: false
+    - name: amount
+      label: Amount
+      type: text
+      required: false
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-deal
+- id: viewings_status
+  type: status
+  title: Viewings
+  source: viewings
+  options:
+    rows_path: items
+    status_field: status
+    label_field: property_title
+    empty_title: No viewings yet
+- id: properties_table
+  type: table
+  title: Properties
+  source: properties
+  options:
+    rows_path: items
+    empty_title: No properties yet
+    columns:
+    - key: image_url
+      header: Photo
+      format: image
+    - key: title
+      header: Title
+    - key: city
+      header: City
+    - key: price
+      header: Price
+    - key: status
+      header: Status
+- id: leads_table
+  type: table
+  title: Leads
+  source: leads
+  options:
+    rows_path: items
+    empty_title: No leads yet
+    columns:
+    - key: name
+      header: Name
+    - key: status
+      header: Status
+    - key: assigned_agent_name
+      header: Agent
+- id: viewings_table
+  type: table
+  title: Viewings
+  source: viewings
+  options:
+    rows_path: items
+    empty_title: No viewings yet
+    columns:
+    - key: property_title
+      header: Property
+    - key: lead_name
+      header: Lead
+    - key: date
+      header: Date
+    - key: status
+      header: Status
+- id: offers_table
+  type: table
+  title: Offers
+  source: offers
+  options:
+    rows_path: items
+    empty_title: No offers yet
+    columns:
+    - key: property_title
+      header: Property
+    - key: lead_name
+      header: Lead
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: deals_table
+  type: table
+  title: Deals
+  source: deals
+  options:
+    rows_path: items
+    empty_title: No deals yet
+    columns:
+    - key: property_title
+      header: Property
+    - key: lead_name
+      header: Lead
+    - key: amount
+      header: Amount
+    - key: status
+      header: Status
+- id: agents_table
+  type: table
+  title: Agents
+  source: agents
+  options:
+    rows_path: items
+    empty_title: No agents yet
+    columns:
+    - key: name
+      header: Name
+    - key: email
+      header: Email
+    - key: status
+      header: Status
+- id: documents_table
+  type: table
+  title: Documents
+  source: documents
+  options:
+    rows_path: items
+    empty_title: No documents yet
+    columns:
+    - key: name
+      header: Name
+    - key: document_type
+      header: Type
+    - key: property_code
+      header: Property
+    - key: status
+      header: Status
+- id: intro
+  type: markdown
+  title: Real Estate Pro
+  options:
+    content: Properties, leads, viewings, and deals — open a list and tap New to add
+      records.
+- id: metric_property
+  type: metric
+  title: Properties
+  source: properties
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: properties
+- id: metric_lead
+  type: metric
+  title: Leads
+  source: leads
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: leads
+- id: metric_viewing
+  type: metric
+  title: Viewings
+  source: viewings
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: viewings
+- id: metric_deal
+  type: metric
+  title: Deals
+  source: deals
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: deals
+- id: viewing_dash_status
+  type: status
+  title: Viewings status
+  source: viewings
+  options:
+    rows_path: items
+    status_field: status
+    label_field: property_title
+    empty_title: No viewings yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    navigate_to: viewings
+    action_label: View all
+- id: viewing_dash_table
+  type: table
+  title: Recent Viewings
+  source: viewings
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: property_title
+      header: Property Title
+    - key: lead_name
+      header: Lead Name
+    - key: agent_name
+      header: Agent Name
+    - key: scheduled_at
+      header: Scheduled At
+    - key: date
+      header: Date
+    navigate_to: viewings
+    action_label: View all
+    empty_title: No viewings yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list

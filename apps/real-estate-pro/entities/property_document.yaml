@@ -1,0 +1,19 @@
+id: property_document
+name: Property document
+description: Document attached to a property
+fields:
+- name: property_code
+  type: string
+  required: true
+- name: document_type
+  type: string
+- name: name
+  type: string
+  required: true
+- name: url
+  type: url
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - archived

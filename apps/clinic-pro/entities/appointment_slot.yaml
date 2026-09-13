@@ -1,0 +1,25 @@
+id: appointment_slot
+name: Appointment slot
+description: Bookable practitioner time window
+fields:
+- name: practitioner_name
+  type: string
+  required: true
+- name: start_at
+  type: datetime
+  required: true
+- name: end_at
+  type: datetime
+  required: true
+- name: status
+  type: enum
+  enum_values:
+  - open
+  - held
+  - booked
+  - blocked
+- name: location
+  type: string
+status_events:
+  booked: appointment.updated
+  blocked: appointment.updated
