@@ -54,6 +54,11 @@ fields:
 - name: image_url
   type: image
   description: Primary property photo (uploaded via solution UI media)
+- name: images
+  type: image
+  multiple: true
+  max_items: 10
+  description: Property photographs
 status_events:
   listed: property.status_changed
   under_offer: property.status_changed
