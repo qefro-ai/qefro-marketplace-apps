@@ -226,3 +226,4 @@ conversation_slots:
   kind: string
 ui:
   name: Real Estate Pro
+  navigation_layout: sidebar
