@@ -29,14 +29,49 @@ steps:
   output: property
   input_map:
     id: property_id
+- id: list_dates
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: available_dates
+  input_map:
+    kind: $literal:dates
+    property_id: property_id
 - id: ask_date
   type: ask
   field: date
-  message: "📅 Which date?"
+  message: "📅 Choose a date"
+  choices_from: available_dates
+  title_field: label
+  value_field: value
+  chip_prefix: date
+- id: list_slots
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: available_slots
+  input_map:
+    kind: $literal:slots
+    date: date
+    property_id: property_id
 - id: ask_time
   type: ask
   field: time
-  message: "⏰ What time works best for you?"
+  message: "⏰ Choose a time"
+  choices_from: available_slots
+  title_field: label
+  value_field: time
+  chip_prefix: time
+- id: validate_slot
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: slot_check
+  input_map:
+    kind: $literal:validate
+    date: date
+    time: time
+    property_id: property_id
 - id: run
   type: tool
   tool: entity.viewing.create

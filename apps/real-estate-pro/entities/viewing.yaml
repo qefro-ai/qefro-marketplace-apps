@@ -45,3 +45,18 @@ status_events:
   completed: viewing.updated
   cancelled: viewing.cancelled
   no_show: viewing.updated
+# Structural capability only. Operating values (timezone, duration, hours,
+# closed days, date window, blocking statuses) live in settings/business.yaml
+# and are overlaid per workspace installation.
+#
+# resource.field: property_id means one viewing at a time per property.
+# If multiple agents may independently show the same property, declare
+# resource.field: agent_id (or a composite) in this app metadata — do not
+# guess it in platform code.
+availability:
+  booking:
+    datetime_field: scheduled_at
+  capacity:
+    mode: exclusive
+    resource:
+      field: property_id

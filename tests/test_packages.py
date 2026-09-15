@@ -70,6 +70,9 @@ KNOWN_FIELD_TYPES = {
     "enum",
     "json",
     "person",
+    "image",
+    "media",
+    "relation",
 }
 KNOWN_STEP_TYPES = {
     "ask",
@@ -619,6 +622,65 @@ class NewAppCoverageTests(unittest.TestCase):
                     flow = load_yaml(path)
                     tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
                     self.assertTrue(all(t.startswith("entity.") for t in tools if t))
+
+
+class RealEstateAvailabilitySettingsTests(unittest.TestCase):
+    def test_viewing_contract_is_structural_only(self):
+        viewing = load_yaml(APPS / "real-estate-pro" / "entities" / "viewing.yaml")
+        avail = viewing["availability"]
+        self.assertEqual(avail["booking"]["datetime_field"], "scheduled_at")
+        self.assertNotIn("duration_minutes", avail["booking"])
+        self.assertEqual(avail["capacity"]["mode"], "exclusive")
+        self.assertEqual(avail["capacity"]["resource"]["field"], "property_id")
+        for operating in (
+            "timezone",
+            "working_hours",
+            "closed_days",
+            "date_window_days",
+            "blocking_statuses",
+        ):
+            self.assertNotIn(operating, avail)
+
+    def test_operating_values_live_in_app_settings(self):
+        manifest = load_yaml(APPS / "real-estate-pro" / "manifest.yaml")
+        schema = load_yaml(APPS / "real-estate-pro" / "settings" / "business.yaml")["settings"]
+        keys = [s["key"] if isinstance(s, dict) else s for s in manifest["settings"]]
+        expected = {
+            "timezone",
+            "duration_minutes",
+            "start_time",
+            "end_time",
+            "closed_days",
+            "date_window_days",
+            "blocking_statuses",
+        }
+        self.assertEqual(set(keys), expected)
+        self.assertEqual(set(schema), expected)
+        self.assertEqual(schema["timezone"]["default"], "Asia/Kolkata")
+        self.assertEqual(schema["duration_minutes"]["default"], 30)
+        self.assertEqual(schema["start_time"]["default"], "09:00")
+        self.assertEqual(schema["end_time"]["default"], "18:00")
+        self.assertEqual(schema["closed_days"]["default"], "sunday")
+        self.assertEqual(schema["date_window_days"]["default"], 5)
+
+    def test_request_viewing_uses_availability_runtime(self):
+        flow = load_yaml(APPS / "real-estate-pro" / "workflows" / "request-viewing.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertEqual(tools.count("entity.viewing.availability"), 3)
+        self.assertIn("entity.viewing.create", tools)
+        self.assertNotIn("storage.insert_booking", tools)
+        asks = {s["field"]: s for s in flow["steps"] if s.get("type") == "ask"}
+        self.assertEqual(asks["date"]["choices_from"], "available_dates")
+        self.assertEqual(asks["time"]["choices_from"], "available_slots")
+
+    def test_reschedule_viewing_uses_availability_runtime(self):
+        flow = load_yaml(APPS / "real-estate-pro" / "workflows" / "reschedule-viewing.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertEqual(tools.count("entity.viewing.availability"), 3)
+        self.assertIn("entity.viewing.update", tools)
+        asks = {s["field"]: s for s in flow["steps"] if s.get("type") == "ask"}
+        self.assertEqual(asks["date"]["choices_from"], "available_dates")
+        self.assertEqual(asks["time"]["choices_from"], "available_slots")
 
 
 if __name__ == "__main__":
