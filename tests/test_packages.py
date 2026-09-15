@@ -215,6 +215,13 @@ class PackageConventionTests(unittest.TestCase):
                             self.assertTrue(field.get("enum_values"))
                         if field["type"] == "person":
                             self.assertEqual(field.get("ref_entity", "person"), "person")
+                        if "unique" in field:
+                            self.assertIsInstance(field["unique"], bool)
+                            if field["unique"]:
+                                self.assertNotIn(
+                                    field["type"],
+                                    {"person", "relation", "image", "media", "json"},
+                                )
                     self.assertEqual(len(names), len(set(names)))
 
     def test_customer_tools_bind_hub_identity_and_ownership(self):
@@ -681,6 +688,120 @@ class RealEstateAvailabilitySettingsTests(unittest.TestCase):
         asks = {s["field"]: s for s in flow["steps"] if s.get("type") == "ask"}
         self.assertEqual(asks["date"]["choices_from"], "available_dates")
         self.assertEqual(asks["time"]["choices_from"], "available_slots")
+
+
+class PaymentsCollectionProTests(unittest.TestCase):
+    APP = APPS / "payments-collection-pro"
+
+    def test_package_is_entity_native_collections_app(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertEqual(manifest["id"], "payments-collection-pro")
+        self.assertEqual(manifest["hosting"], "runtime")
+        self.assertFalse(manifest.get("http_tools"))
+        self.assertFalse(manifest.get("connections"))
+        self.assertFalse(manifest.get("agent"))
+        self.assertEqual(
+            manifest["entities"],
+            ["invoice", "payment", "collection_case", "follow_up"],
+        )
+        self.assertEqual(
+            sorted(manifest["flows"]),
+            [
+                "create-collection-case",
+                "create-invoice",
+                "log-follow-up",
+                "mark-promise-to-pay",
+                "record-payment",
+            ],
+        )
+        self.assertFalse((self.APP / "entities" / "customer.yaml").exists())
+        self.assertFalse((self.APP / "tools").exists())
+
+    def test_person_identity_uses_hub_person_type(self):
+        for name in ("invoice", "payment", "collection_case", "follow_up"):
+            entity = load_yaml(self.APP / "entities" / f"{name}.yaml")
+            self.assertEqual(entity["scope"], "customer")
+            person = next(f for f in entity["fields"] if f["name"] == "person_id")
+            self.assertEqual(person["type"], "person")
+            self.assertEqual(person["ref_entity"], "person")
+
+        invoice = load_yaml(self.APP / "entities" / "invoice.yaml")
+        number = next(f for f in invoice["fields"] if f["name"] == "invoice_number")
+        self.assertTrue(number.get("unique"))
+
+    def test_relations_use_relation_primitive(self):
+        payment = load_yaml(self.APP / "entities" / "payment.yaml")
+        case = load_yaml(self.APP / "entities" / "collection_case.yaml")
+        follow = load_yaml(self.APP / "entities" / "follow_up.yaml")
+        invoice_id = next(f for f in payment["fields"] if f["name"] == "invoice_id")
+        self.assertEqual(invoice_id["type"], "relation")
+        self.assertEqual(invoice_id["ref_entity"], "invoice")
+        case_invoice = next(f for f in case["fields"] if f["name"] == "invoice_id")
+        self.assertEqual(case_invoice["type"], "relation")
+        self.assertEqual(case_invoice["ref_entity"], "invoice")
+        case_id = next(f for f in follow["fields"] if f["name"] == "collection_case_id")
+        self.assertEqual(case_id["type"], "relation")
+        self.assertEqual(case_id["ref_entity"], "collection_case")
+
+    def test_status_events_are_facts(self):
+        invoice = load_yaml(self.APP / "entities" / "invoice.yaml")
+        payment = load_yaml(self.APP / "entities" / "payment.yaml")
+        case = load_yaml(self.APP / "entities" / "collection_case.yaml")
+        follow = load_yaml(self.APP / "entities" / "follow_up.yaml")
+        self.assertEqual(invoice["status_events"]["issued"], "invoice.created")
+        self.assertEqual(invoice["status_events"]["overdue"], "invoice.overdue")
+        self.assertEqual(payment["status_events"]["received"], "payment.received")
+        self.assertEqual(payment["status_events"]["failed"], "payment.failed")
+        self.assertEqual(case["status_events"]["promise_to_pay"], "promise_to_pay.created")
+        self.assertEqual(case["status_events"]["recovered"], "collection_case.recovered")
+        self.assertEqual(follow["status_events"]["completed"], "follow_up.completed")
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        declared = set(manifest["events"])
+        for events in (
+            invoice["status_events"].values(),
+            payment["status_events"].values(),
+            case["status_events"].values(),
+            follow["status_events"].values(),
+        ):
+            for event in events:
+                self.assertIn(event, declared)
+
+    def test_settings_match_install_schema(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        schema = load_yaml(self.APP / "settings" / "business.yaml")["settings"]
+        keys = [s["key"] if isinstance(s, dict) else s for s in manifest["settings"]]
+        expected = {
+            "currency",
+            "payment_terms_days",
+            "grace_period_days",
+            "default_collection_priority",
+            "follow_up_interval_days",
+            "escalation_after_days",
+        }
+        self.assertEqual(set(keys), expected)
+        self.assertEqual(set(schema), expected)
+        self.assertEqual(schema["currency"]["default"], "INR")
+        self.assertEqual(schema["payment_terms_days"]["default"], 30)
+        self.assertEqual(schema["grace_period_days"]["default"], 3)
+        self.assertEqual(schema["default_collection_priority"]["default"], "normal")
+        self.assertEqual(schema["follow_up_interval_days"]["default"], 3)
+        self.assertEqual(schema["escalation_after_days"]["default"], 14)
+
+    def test_flows_use_runtime_entity_tools(self):
+        expected = {
+            "create-invoice": ["entity.invoice.create"],
+            "record-payment": ["entity.invoice.list", "entity.payment.create", "entity.invoice.update"],
+            "create-collection-case": ["entity.invoice.list", "entity.collection_case.create"],
+            "mark-promise-to-pay": ["entity.collection_case.list", "entity.collection_case.update"],
+            "log-follow-up": ["entity.collection_case.list", "entity.follow_up.create"],
+        }
+        for flow_id, tools_expected in expected.items():
+            flow = load_yaml(self.APP / "workflows" / f"{flow_id}.yaml")
+            tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+            self.assertEqual(tools, tools_expected)
+            self.assertTrue(all(s.get("execution") == "runtime" for s in flow["steps"] if s.get("type") == "tool"))
+            self.assertEqual(flow["steps"][-1]["type"], "complete")
+            self.assertNotIn("storage.insert", str(tools))
 
 
 if __name__ == "__main__":

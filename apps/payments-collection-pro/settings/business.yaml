@@ -1,0 +1,33 @@
+# Workspace collection defaults — not entity structure and not a scheduler.
+# Staff apply these in Settings; date-based overdue/escalation is not computed by this package.
+settings:
+  currency:
+    type: string
+    required: true
+    default: INR
+    description: Default invoice and payment currency
+  payment_terms_days:
+    type: number
+    required: true
+    default: 30
+    description: Default number of days from issue date until due
+  grace_period_days:
+    type: number
+    required: true
+    default: 3
+    description: Days after due date before an invoice is treated as overdue
+  default_collection_priority:
+    type: string
+    required: true
+    default: normal
+    description: Default priority when opening a collection case (low, normal, high, critical)
+  follow_up_interval_days:
+    type: number
+    required: true
+    default: 3
+    description: Default days between collection follow-ups
+  escalation_after_days:
+    type: number
+    required: true
+    default: 14
+    description: Days after opening a case before escalation is due

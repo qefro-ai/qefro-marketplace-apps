@@ -1,0 +1,12 @@
+- id: invoices
+  type: entity
+  target: invoice
+- id: payments
+  type: entity
+  target: payment
+- id: collections
+  type: entity
+  target: collection_case
+- id: follow_ups
+  type: entity
+  target: follow_up

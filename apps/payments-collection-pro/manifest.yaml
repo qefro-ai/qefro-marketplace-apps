@@ -1,0 +1,275 @@
+id: payments-collection-pro
+name: Payments Collection Pro
+version: 1.0.0
+hosting: runtime
+description: Metadata-only outstanding-payments collection Marketplace App executed
+  by Qefro Runtime (no SDK, no custom server, not a payment gateway)
+category: commerce
+tags:
+- payments
+- collections
+- invoices
+- runtime
+- pro
+channels:
+- widget
+- whatsapp
+entities:
+- invoice
+- payment
+- collection_case
+- follow_up
+flows:
+- create-invoice
+- record-payment
+- create-collection-case
+- mark-promise-to-pay
+- log-follow-up
+events:
+- invoice.created
+- invoice.updated
+- invoice.overdue
+- payment.created
+- payment.received
+- payment.failed
+- collection_case.created
+- collection_case.updated
+- collection_case.escalated
+- collection_case.recovered
+- collection_case.closed
+- follow_up.created
+- follow_up.completed
+- promise_to_pay.created
+settings:
+- key: currency
+  type: string
+  default: INR
+  description: Default invoice and payment currency
+- key: payment_terms_days
+  type: number
+  default: 30
+  description: Default number of days from issue date until due
+- key: grace_period_days
+  type: number
+  default: 3
+  description: Days after due date before an invoice is treated as overdue
+- key: default_collection_priority
+  type: string
+  default: normal
+  description: Default priority when opening a collection case (low, normal, high, critical)
+- key: follow_up_interval_days
+  type: number
+  default: 3
+  description: Default days between collection follow-ups
+- key: escalation_after_days
+  type: number
+  default: 14
+  description: Days after opening a case before escalation is due
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: create_invoice
+  workflow: create-invoice
+  input_variable: invoice_input
+  match:
+    intents:
+    - create an invoice
+    - new invoice
+    - raise an invoice
+    - bill a customer
+    confirmation:
+      reply_signals:
+      - invoice
+      - created
+      required_slots:
+      - customer_name
+      - amount
+  confirmation_message: Invoice created for {{customer_name}} amount {{amount}}.
+- id: record_payment
+  workflow: record-payment
+  input_variable: payment_input
+  match:
+    intents:
+    - record a payment
+    - log a payment
+    - customer paid
+    - payment received
+    confirmation:
+      reply_signals:
+      - payment
+      - received
+      required_slots:
+      - amount
+  confirmation_message: Payment of {{amount}} recorded.
+- id: create_collection_case
+  workflow: create-collection-case
+  input_variable: collection_input
+  match:
+    intents:
+    - create a collection case
+    - open a collection case
+    - start collections
+    - chase this invoice
+    confirmation:
+      reply_signals:
+      - collection
+      - case
+      required_slots:
+      - id
+  confirmation_message: Collection case opened for invoice {{id}}.
+- id: mark_promise_to_pay
+  workflow: mark-promise-to-pay
+  input_variable: promise_input
+  match:
+    intents:
+    - mark promise to pay
+    - customer promised to pay
+    - promise to pay
+    confirmation:
+      reply_signals:
+      - promise
+      required_slots:
+      - id
+  confirmation_message: Collection case {{id}} marked promise to pay.
+- id: log_follow_up
+  workflow: log-follow-up
+  input_variable: follow_up_input
+  match:
+    intents:
+    - log a follow-up
+    - log follow up
+    - record a follow-up
+    - collection follow-up
+    confirmation:
+      reply_signals:
+      - follow-up
+      - follow up
+      required_slots:
+      - id
+  confirmation_message: Follow-up logged for collection case {{id}}.
+conversation_slots:
+- id: customer_name
+  labels:
+  - customer
+  - customer name
+  - payer
+  - name
+  kind: person_name
+  identity: person_name
+- id: name
+  labels:
+  - name
+  kind: person_name
+  identity: person_name
+- id: amount
+  labels:
+  - amount
+  - total
+  - outstanding
+  kind: string
+- id: currency
+  labels:
+  - currency
+  - INR
+  - USD
+  kind: string
+- id: invoice_number
+  labels:
+  - invoice
+  - invoice number
+  - invoice code
+  kind: string
+- id: payment_method
+  labels:
+  - payment method
+  - method
+  - cash
+  - upi
+  kind: string
+- id: issue_date
+  labels:
+  - issue date
+  - invoice date
+  kind: date
+- id: due_date
+  labels:
+  - due date
+  - due
+  kind: date
+- id: payment_date
+  labels:
+  - payment date
+  - paid on
+  kind: date
+- id: notes
+  labels:
+  - notes
+  - comment
+  kind: string
+- id: status
+  labels:
+  - status
+  kind: string
+- id: priority
+  labels:
+  - priority
+  kind: string
+- id: channel
+  labels:
+  - channel
+  - whatsapp
+  - email
+  - phone
+  kind: string
+- id: outcome
+  labels:
+  - outcome
+  - result
+  kind: string
+- id: assigned_to
+  labels:
+  - assigned to
+  - collector
+  - owner
+  kind: string
+- id: reference
+  labels:
+  - reference
+  - txn
+  - UTR
+  kind: string
+- id: outstanding_amount
+  labels:
+  - outstanding
+  - balance
+  kind: string
+- id: id
+  labels:
+  - invoice
+  - case
+  - payment
+  kind: string
+- id: phone
+  labels:
+  - phone
+  - mobile
+  kind: phone
+- id: email
+  labels:
+  - email
+  kind: email
+ui:
+  name: Payments Collection Pro
+  navigation_layout: sidebar

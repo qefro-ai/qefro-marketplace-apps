@@ -1,0 +1,92 @@
+id: record-payment
+name: Record payment
+description: Record a received payment against an invoice
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: list_invoices
+  type: tool
+  tool: entity.invoice.list
+  execution: runtime
+  output: invoices
+  input_map:
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "💰 Which invoice was paid?"
+  choices_from: invoices
+  title_field: customer_name
+  value_field: id
+  chip_prefix: invoice
+- id: ask_customer_name
+  type: ask
+  field: customer_name
+  message: "👤 Customer name?"
+- id: ask_amount
+  type: ask
+  field: amount
+  message: "💰 Payment amount?"
+- id: ask_payment_method
+  type: ask
+  field: payment_method
+  message: "💳 Payment method?"
+  choices:
+  - id: cash
+    label: Cash
+  - id: bank_transfer
+    label: Bank transfer
+  - id: upi
+    label: UPI
+  - id: card
+    label: Card
+  - id: cheque
+    label: Cheque
+  - id: other
+    label: Other
+- id: ask_reference
+  type: ask
+  field: reference
+  message: "🔖 Payment reference (UTR / cheque / none)?"
+- id: run
+  type: tool
+  tool: entity.payment.create
+  execution: runtime
+  input_map:
+    invoice_id: id
+    customer_name: customer_name
+    amount: amount
+    currency: currency
+    payment_date: payment_date
+    payment_method: payment_method
+    reference: reference
+    notes: notes
+    status: $literal:received
+- id: ask_invoice_status
+  type: ask
+  field: status
+  message: "📋 Invoice status after this payment?"
+  choices:
+  - id: paid
+    label: Paid
+  - id: partially_paid
+    label: Partially paid
+- id: ask_outstanding_amount
+  type: ask
+  field: outstanding_amount
+  message: "💰 Outstanding amount remaining (0 if settled)?"
+- id: update_invoice
+  type: tool
+  tool: entity.invoice.update
+  execution: runtime
+  input_map:
+    id: id
+    status: status
+    outstanding_amount: outstanding_amount
+- id: confirm
+  type: message
+  message: "✅ Payment recorded against invoice {{id}}."
+- id: done
+  type: complete

@@ -1,0 +1,65 @@
+id: create-collection-case
+name: Create collection case
+description: Open a collection case against an outstanding invoice
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: list_invoices
+  type: tool
+  tool: entity.invoice.list
+  execution: runtime
+  output: invoices
+  input_map:
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "📂 Which invoice needs collection?"
+  choices_from: invoices
+  title_field: customer_name
+  value_field: id
+  chip_prefix: invoice
+- id: ask_customer_name
+  type: ask
+  field: customer_name
+  message: "👤 Customer name?"
+- id: ask_outstanding_amount
+  type: ask
+  field: outstanding_amount
+  message: "💰 Outstanding amount?"
+- id: ask_priority
+  type: ask
+  field: priority
+  message: "⚡ Collection priority?"
+  choices:
+  - id: low
+    label: Low
+  - id: normal
+    label: Normal
+  - id: high
+    label: High
+  - id: critical
+    label: Critical
+- id: ask_assigned_to
+  type: ask
+  field: assigned_to
+  message: "👤 Assigned collector?"
+- id: run
+  type: tool
+  tool: entity.collection_case.create
+  execution: runtime
+  input_map:
+    invoice_id: id
+    customer_name: customer_name
+    outstanding_amount: outstanding_amount
+    priority: priority
+    assigned_to: assigned_to
+    notes: notes
+    status: $literal:open
+- id: confirm
+  type: message
+  message: "📂 Collection case opened for invoice {{id}}."
+- id: done
+  type: complete

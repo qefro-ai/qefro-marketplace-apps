@@ -1,0 +1,44 @@
+id: create-invoice
+name: Create invoice
+description: Create an outstanding customer invoice
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_customer_name
+  type: ask
+  field: customer_name
+  message: "👤 Customer name?"
+- id: ask_amount
+  type: ask
+  field: amount
+  message: "💰 Invoice amount?"
+- id: ask_currency
+  type: ask
+  field: currency
+  message: "💱 Currency?"
+- id: ask_due_date
+  type: ask
+  field: due_date
+  message: "📅 Due date?"
+- id: run
+  type: tool
+  tool: entity.invoice.create
+  execution: runtime
+  input_map:
+    customer_name: customer_name
+    amount: amount
+    currency: currency
+    issue_date: issue_date
+    due_date: due_date
+    invoice_number: invoice_number
+    notes: notes
+    paid_amount: $literal:0
+    outstanding_amount: amount
+    status: $literal:issued
+- id: confirm
+  type: message
+  message: "💰 Invoice created for {{customer_name}}."
+- id: done
+  type: complete

@@ -1,0 +1,263 @@
+- id: invoice_form
+  type: form
+  title: Create invoice
+  options:
+    fields:
+    - name: customer_name
+      label: Customer name
+      type: text
+      required: true
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: due_date
+      label: Due date
+      type: date
+      required: false
+    - name: invoice_number
+      label: Invoice number
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-invoice
+- id: payment_form
+  type: form
+  title: Record payment
+  options:
+    fields:
+    - name: customer_name
+      label: Customer name
+      type: text
+      required: false
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: payment_method
+      label: Method
+      type: text
+      required: false
+    - name: reference
+      label: Reference
+      type: text
+      required: false
+    - name: outstanding_amount
+      label: Outstanding remaining
+      type: text
+      required: false
+    submit_label: Record
+    action:
+      trigger: record-payment
+- id: collection_form
+  type: form
+  title: Open collection case
+  options:
+    fields:
+    - name: customer_name
+      label: Customer name
+      type: text
+      required: false
+    - name: outstanding_amount
+      label: Outstanding amount
+      type: text
+      required: true
+    - name: priority
+      label: Priority
+      type: text
+      required: false
+    - name: assigned_to
+      label: Assigned to
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Open case
+    action:
+      trigger: create-collection-case
+- id: promise_form
+  type: form
+  title: Mark promise to pay
+  options:
+    fields:
+    - name: next_follow_up_at
+      label: Follow up at
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Save
+    action:
+      trigger: mark-promise-to-pay
+- id: follow_up_form
+  type: form
+  title: Log follow-up
+  options:
+    fields:
+    - name: channel
+      label: Channel
+      type: text
+      required: true
+    - name: outcome
+      label: Outcome
+      type: text
+      required: true
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Log
+    action:
+      trigger: log-follow-up
+- id: invoices_table
+  type: table
+  title: Invoices
+  source: invoices
+  options:
+    rows_path: items
+    empty_title: No invoices yet
+    columns:
+    - key: invoice_number
+      header: Number
+    - key: customer_name
+      header: Customer
+    - key: outstanding_amount
+      header: Outstanding
+    - key: status
+      header: Status
+- id: payments_table
+  type: table
+  title: Payments
+  source: payments
+  options:
+    rows_path: items
+    empty_title: No payments yet
+    columns:
+    - key: customer_name
+      header: Customer
+    - key: amount
+      header: Amount
+    - key: payment_method
+      header: Method
+    - key: status
+      header: Status
+- id: collections_table
+  type: table
+  title: Collection cases
+  source: collections
+  options:
+    rows_path: items
+    empty_title: No collection cases yet
+    columns:
+    - key: customer_name
+      header: Customer
+    - key: outstanding_amount
+      header: Outstanding
+    - key: priority
+      header: Priority
+    - key: status
+      header: Status
+- id: follow_ups_table
+  type: table
+  title: Follow-ups
+  source: follow_ups
+  options:
+    rows_path: items
+    empty_title: No follow-ups yet
+    columns:
+    - key: customer_name
+      header: Customer
+    - key: channel
+      header: Channel
+    - key: outcome
+      header: Outcome
+    - key: status
+      header: Status
+- id: intro
+  type: markdown
+  title: Payments Collection Pro
+  options:
+    content: Outstanding invoices, payments, and collection follow-ups — open a list
+      and tap New to add records. Contacts stay on Customer Hub.
+- id: metric_invoice
+  type: metric
+  title: Invoices
+  source: invoices
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: invoices
+- id: metric_payment
+  type: metric
+  title: Payments
+  source: payments
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: payments
+- id: metric_collection
+  type: metric
+  title: Collections
+  source: collections
+  options:
+    aggregate: count
+    rows_path: items
+    label: Open cases
+    navigate_to: collections
+- id: metric_follow_up
+  type: metric
+  title: Follow-ups
+  source: follow_ups
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: follow_ups
+- id: collection_dash_status
+  type: status
+  title: Collections status
+  source: collections
+  options:
+    rows_path: items
+    status_field: status
+    label_field: customer_name
+    empty_title: No collection cases yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    navigate_to: collections
+    action_label: View all
+- id: collection_dash_table
+  type: table
+  title: Recent collection cases
+  source: collections
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: customer_name
+      header: Customer Name
+    - key: outstanding_amount
+      header: Outstanding Amount
+    - key: priority
+      header: Priority
+    - key: status
+      header: Status
+    navigate_to: collections
+    action_label: View all
+    empty_title: No collection cases yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list
