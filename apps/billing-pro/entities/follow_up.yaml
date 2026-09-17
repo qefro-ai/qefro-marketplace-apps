@@ -13,8 +13,9 @@ fields:
   required: true
 - name: person_id
   type: person
-  description: Optional Hub Person link when CSV/portal can persist it. Invoice.person_id is authoritative for identity.
+  description: Optional Hub Person link. Event-triggered creates copy it from the related invoice via inherit_from; callers cannot supply it.
   ref_entity: person
+  inherit_from: invoice_id
 - name: follow_up_date
   type: date
   required: true

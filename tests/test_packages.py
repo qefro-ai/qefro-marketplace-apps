@@ -815,6 +815,13 @@ class BillingProTests(unittest.TestCase):
         self.assertEqual(self._field(follow, "invoice_id")["ref_entity"], "invoice")
         self.assertFalse(any(f["name"] == "collection_case_id" for f in follow["fields"]))
         self.assertEqual(self._field(follow, "follow_up_date")["type"], "date")
+        person = self._field(follow, "person_id")
+        self.assertEqual(person.get("inherit_from"), "invoice_id")
+        caps = alloc.get("relation_caps") or []
+        self.assertEqual(len(caps), 1)
+        self.assertEqual(caps[0]["field"], "amount")
+        self.assertEqual(caps[0]["relation"], "payment_id")
+        self.assertEqual(caps[0]["parent_field"], "amount")
 
     def test_status_events_are_facts(self):
         invoice = self._entity("invoice")

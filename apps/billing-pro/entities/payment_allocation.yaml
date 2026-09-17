@@ -17,3 +17,7 @@ fields:
 - name: amount
   type: float
   required: true
+relation_caps:
+  - field: amount
+    relation: payment_id
+    parent_field: amount
