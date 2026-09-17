@@ -16,3 +16,6 @@ fields:
       - assigned
       - submitted
       - reviewed
+status_events:
+  submitted: assignment.submitted
+  reviewed: assignment.reviewed

@@ -25,3 +25,8 @@ fields:
 status_events:
   completed: session.completed
   cancelled: session.cancelled
+date_events:
+- field: date
+  event: session.due
+  when_status:
+  - scheduled
