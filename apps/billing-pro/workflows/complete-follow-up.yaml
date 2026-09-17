@@ -1,0 +1,37 @@
+id: complete-follow-up
+name: Complete follow-up
+description: Mark a payment follow-up as completed
+surfaces:
+- staff
+trigger:
+  type: conversation
+constants:
+  completed: completed
+steps:
+- id: list_follow_ups
+  type: tool
+  tool: entity.follow_up.list
+  execution: runtime
+  output: follow_ups
+  input_map:
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "✅ Which follow-up is done?"
+  choices_from: follow_ups
+  title_field: follow_up_date
+  value_field: id
+  chip_prefix: follow-up
+- id: run
+  type: tool
+  tool: entity.follow_up.update
+  execution: runtime
+  input_map:
+    id: id
+    status: $constants.completed
+- id: confirm
+  type: message
+  message: "✅ Follow-up {{id}} marked completed."
+- id: done
+  type: complete

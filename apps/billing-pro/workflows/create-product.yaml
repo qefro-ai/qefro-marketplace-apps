@@ -1,0 +1,60 @@
+id: create-product
+name: Create product
+description: Add a product or service to the catalog
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_name
+  type: ask
+  field: name
+  message: "📦 Product name?"
+- id: ask_sku
+  type: ask
+  field: sku
+  message: "🔖 SKU?"
+- id: ask_item_type
+  type: ask
+  field: item_type
+  message: "📋 Item type?"
+  choices:
+  - id: product
+    label: Product
+  - id: service
+    label: Service
+- id: ask_selling_price
+  type: ask
+  field: selling_price
+  message: "💰 Selling price?"
+- id: ask_currency
+  type: ask
+  field: currency
+  message: "💱 Currency?"
+- id: ask_unit
+  type: ask
+  field: unit
+  message: "📏 Unit (optional)?"
+- id: ask_tax_rate
+  type: ask
+  field: tax_rate
+  message: "🧾 Tax rate (optional)?"
+- id: run
+  type: tool
+  tool: entity.product.create
+  execution: runtime
+  input_map:
+    name: name
+    sku: sku
+    description: description
+    item_type: item_type
+    unit: unit
+    selling_price: selling_price
+    currency: currency
+    tax_rate: tax_rate
+    active: $literal:true
+- id: confirm
+  type: message
+  message: "📦 Product {{name}} created."
+- id: done
+  type: complete

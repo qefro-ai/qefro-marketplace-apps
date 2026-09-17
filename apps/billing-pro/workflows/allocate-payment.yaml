@@ -1,0 +1,55 @@
+id: allocate-payment
+name: Allocate payment
+description: Apply part of an existing payment to an invoice. Invoice totals update from generic allocation rollup.
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: list_payments
+  type: tool
+  tool: entity.payment.list
+  execution: runtime
+  output: payments
+  input_map:
+    limit: $literal:20
+- id: ask_payment_id
+  type: ask
+  field: payment_id
+  message: "💳 Which payment?"
+  choices_from: payments
+  title_field: payment_number
+  value_field: id
+  chip_prefix: payment
+- id: list_invoices
+  type: tool
+  tool: entity.invoice.list
+  execution: runtime
+  output: invoices
+  input_map:
+    limit: $literal:20
+- id: ask_invoice_id
+  type: ask
+  field: invoice_id
+  message: "💰 Which invoice should receive this amount?"
+  choices_from: invoices
+  title_field: invoice_number
+  value_field: id
+  chip_prefix: invoice
+- id: ask_amount
+  type: ask
+  field: amount
+  message: "💰 Amount to allocate?"
+- id: run
+  type: tool
+  tool: entity.payment_allocation.create
+  execution: runtime
+  input_map:
+    payment_id: payment_id
+    invoice_id: invoice_id
+    amount: amount
+- id: confirm
+  type: message
+  message: "✅ Allocated {{amount}} from payment {{payment_id}} to invoice {{invoice_id}}."
+- id: done
+  type: complete

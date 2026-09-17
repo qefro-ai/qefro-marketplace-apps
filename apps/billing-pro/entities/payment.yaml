@@ -1,0 +1,62 @@
+id: payment
+scope: customer
+name: Payment
+description: Recorded receipt bound to Customer Hub Person. Allocations apply this amount to invoices.
+allocate_code:
+  prefix: PAY-
+  start: 1001
+concurrency: optimistic
+delete:
+  mode: restrict
+fields:
+- name: payment_number
+  type: string
+  unique: true
+  import_synonyms:
+  - receipt no
+  - payment no
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+  required: true
+- name: payment_date
+  type: date
+  import_synonyms:
+  - paid on
+  - date
+- name: amount
+  type: float
+  required: true
+- name: currency
+  type: string
+  default_from_setting: currency
+  import_default: INR
+- name: method
+  type: enum
+  enum_values:
+  - cash
+  - bank_transfer
+  - card
+  - upi
+  - cheque
+  - other
+- name: reference
+  type: string
+  import_synonyms:
+  - utr
+  - cheque no
+- name: status
+  type: enum
+  enum_values:
+  - received
+  - pending
+  - failed
+  - reversed
+  default: received
+- name: notes
+  type: string
+status_events:
+  pending: payment.created
+  received: payment.received
+  reversed: payment.reversed

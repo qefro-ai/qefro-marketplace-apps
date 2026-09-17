@@ -1,0 +1,19 @@
+id: payment_allocation
+name: Payment allocation
+description: Amount of a payment applied to one invoice. One payment may split across invoices.
+allocate_code:
+  prefix: ALC-
+  start: 1001
+concurrency: optimistic
+fields:
+- name: payment_id
+  type: relation
+  ref_entity: payment
+  required: true
+- name: invoice_id
+  type: relation
+  ref_entity: invoice
+  required: true
+- name: amount
+  type: float
+  required: true

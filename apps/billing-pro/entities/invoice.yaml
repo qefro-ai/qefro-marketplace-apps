@@ -1,0 +1,138 @@
+id: invoice
+scope: customer
+name: Invoice
+description: Customer invoice bound to Customer Hub Person
+allocate_code:
+  prefix: INV-
+  start: 1001
+concurrency: optimistic
+delete:
+  mode: restrict
+fields:
+- name: invoice_number
+  type: string
+  unique: true
+  import_synonyms:
+  - invoice no
+  - invoice #
+  - invoice number
+- name: person_id
+  type: person
+  description: Existing Qefro Person identity (Customer Hub)
+  ref_entity: person
+  required: true
+- name: issue_date
+  type: date
+  import_synonyms:
+  - invoice date
+  - date
+- name: due_date
+  type: date
+  import_synonyms:
+  - due
+  - due date
+- name: status
+  type: enum
+  enum_values:
+  - draft
+  - issued
+  - partially_paid
+  - paid
+  - overdue
+  - cancelled
+  default: issued
+- name: currency
+  type: string
+  default_from_setting: currency
+  import_default: INR
+- name: subtotal
+  type: float
+- name: discount
+  type: float
+- name: tax
+  type: float
+- name: total_amount
+  type: float
+  import_synonyms:
+  - due amount
+  - invoice total
+  - grand total
+  - total
+  - amount
+- name: paid_amount
+  type: float
+  import_synonyms:
+  - amount paid
+  - paid
+- name: outstanding_amount
+  type: float
+  import_synonyms:
+  - balance
+  - remaining
+  - outstanding
+- name: notes
+  type: string
+status_events:
+  issued: invoice.issued
+  partially_paid: invoice.partially_paid
+  paid: invoice.paid
+  overdue: invoice.overdue
+  cancelled: invoice.cancelled
+computed:
+  # Empty child rollup does not overwrite an explicit total on the invoice's
+  # own create (CSV / conversation totals). Child mutations rewrite including 0.
+- field: subtotal
+  op: relation_sum
+  relation: invoice_item
+  foreign_key: invoice_id
+  sum_field: amount
+- field: total_amount
+  op: relation_sum
+  relation: invoice_item
+  foreign_key: invoice_id
+  sum_field: amount
+- field: paid_amount
+  op: relation_sum
+  relation: payment_allocation
+  foreign_key: invoice_id
+  sum_field: amount
+- field: outstanding_amount
+  op: subtract
+  left: total_amount
+  right: paid_amount
+- field: status
+  op: status_from_number
+  source: outstanding_amount
+  preserve:
+  - cancelled
+  - draft
+  zero: paid
+  positive: issued
+  partial:
+    field: paid_amount
+    status: partially_paid
+- field: status
+  op: status_from_date
+  date_field: due_date
+  past: overdue
+  preserve:
+  - cancelled
+  - draft
+  - paid
+  when_number_gt: outstanding_amount
+date_events:
+- field: due_date
+  event: invoice.overdue
+  when_status:
+  - issued
+  - partially_paid
+on_events:
+- event: invoice.paid
+  target: follow_up
+  match_field: invoice_id
+  match_from: id
+  where:
+    status: pending
+  set:
+    status: completed
+  limit: 50

@@ -1,0 +1,37 @@
+id: cancel-invoice
+name: Cancel invoice
+description: Cancel an invoice by status update (not delete). Restrict-delete keeps related line items and allocations.
+surfaces:
+- staff
+trigger:
+  type: conversation
+constants:
+  cancelled: cancelled
+steps:
+- id: list_invoices
+  type: tool
+  tool: entity.invoice.list
+  execution: runtime
+  output: invoices
+  input_map:
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "🚫 Which invoice should be cancelled?"
+  choices_from: invoices
+  title_field: invoice_number
+  value_field: id
+  chip_prefix: invoice
+- id: run
+  type: tool
+  tool: entity.invoice.update
+  execution: runtime
+  input_map:
+    id: id
+    status: $constants.cancelled
+- id: confirm
+  type: message
+  message: "🚫 Invoice {{id}} cancelled."
+- id: done
+  type: complete

@@ -2,21 +2,31 @@
   page: dashboard
   title: Dashboard
   icon: home
+- id: products
+  page: products
+  title: Products
+  icon: package
+  entity: product
 - id: invoices
   page: invoices
   title: Invoices
   icon: receipt
   entity: invoice
+- id: invoice_items
+  page: invoice_items
+  title: Invoice items
+  icon: list
+  entity: invoice_item
 - id: payments
   page: payments
   title: Payments
   icon: credit-card
   entity: payment
-- id: collections
-  page: collections
-  title: Collections
-  icon: clipboard
-  entity: collection_case
+- id: payment_allocations
+  page: payment_allocations
+  title: Allocations
+  icon: wallet
+  entity: payment_allocation
 - id: follow_ups
   page: follow_ups
   title: Follow-ups

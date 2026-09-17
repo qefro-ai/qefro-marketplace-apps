@@ -1,0 +1,30 @@
+# Workspace billing defaults — not entity structure and not a scheduler.
+# currency / default_tax_rate are consumed via field default_from_setting.
+# payment_terms_days and follow_up_interval_days are staff defaults; the runtime
+# does not compute due dates from them.
+settings:
+  currency:
+    type: string
+    required: true
+    default: INR
+    description: Default invoice and payment currency
+  invoice_prefix:
+    type: string
+    required: true
+    default: INV
+    description: Prefix staff use when numbering invoices
+  payment_terms_days:
+    type: number
+    required: true
+    default: 30
+    description: Default number of days from issue date until due
+  default_tax_rate:
+    type: number
+    required: false
+    default: 0
+    description: Default tax rate applied when creating products and invoices
+  follow_up_interval_days:
+    type: number
+    required: true
+    default: 3
+    description: Default days between payment follow-ups

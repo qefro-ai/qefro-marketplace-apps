@@ -1,6 +1,6 @@
 id: record-payment
 name: Record payment
-description: Record a received payment against an invoice
+description: Record a received payment and allocate it to an invoice. Invoice paid/outstanding/status come from generic computed rollups, not from staff arithmetic.
 surfaces:
 - staff
 trigger:
@@ -18,30 +18,26 @@ steps:
   field: id
   message: "💰 Which invoice was paid?"
   choices_from: invoices
-  title_field: customer_name
+  title_field: invoice_number
   value_field: id
   chip_prefix: invoice
-- id: ask_customer_name
-  type: ask
-  field: customer_name
-  message: "👤 Customer name?"
 - id: ask_amount
   type: ask
   field: amount
   message: "💰 Payment amount?"
-- id: ask_payment_method
+- id: ask_method
   type: ask
-  field: payment_method
+  field: method
   message: "💳 Payment method?"
   choices:
   - id: cash
     label: Cash
   - id: bank_transfer
     label: Bank transfer
-  - id: upi
-    label: UPI
   - id: card
     label: Card
+  - id: upi
+    label: UPI
   - id: cheque
     label: Cheque
   - id: other
@@ -50,43 +46,33 @@ steps:
   type: ask
   field: reference
   message: "🔖 Payment reference (UTR / cheque / none)?"
+- id: ask_payment_date
+  type: ask
+  field: payment_date
+  message: "📅 Payment date?"
 - id: run
   type: tool
   tool: entity.payment.create
   execution: runtime
+  output: payment
   input_map:
-    invoice_id: id
-    customer_name: customer_name
     amount: amount
     currency: currency
     payment_date: payment_date
-    payment_method: payment_method
+    method: method
     reference: reference
     notes: notes
     status: $literal:received
-- id: ask_invoice_status
-  type: ask
-  field: status
-  message: "📋 Invoice status after this payment?"
-  choices:
-  - id: paid
-    label: Paid
-  - id: partially_paid
-    label: Partially paid
-- id: ask_outstanding_amount
-  type: ask
-  field: outstanding_amount
-  message: "💰 Outstanding amount remaining (0 if settled)?"
-- id: update_invoice
+- id: allocate
   type: tool
-  tool: entity.invoice.update
+  tool: entity.payment_allocation.create
   execution: runtime
   input_map:
-    id: id
-    status: status
-    outstanding_amount: outstanding_amount
+    payment_id: payment.id
+    invoice_id: id
+    amount: amount
 - id: confirm
   type: message
-  message: "✅ Payment recorded against invoice {{id}}."
+  message: "✅ Payment of {{amount}} recorded and allocated to invoice {{id}}."
 - id: done
   type: complete

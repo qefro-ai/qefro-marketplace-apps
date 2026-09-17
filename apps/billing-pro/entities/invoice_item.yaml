@@ -1,0 +1,36 @@
+id: invoice_item
+name: Invoice item
+description: Line billed on an invoice. unit_price is a historical snapshot; later product price changes do not rewrite it.
+allocate_code:
+  prefix: ITM-
+  start: 1001
+concurrency: optimistic
+fields:
+- name: invoice_id
+  type: relation
+  ref_entity: invoice
+  required: true
+- name: product_id
+  type: relation
+  ref_entity: product
+- name: description
+  type: string
+- name: quantity
+  type: float
+  required: true
+- name: unit_price
+  type: float
+  required: true
+- name: discount
+  type: float
+- name: tax_rate
+  type: float
+  default_from_setting: default_tax_rate
+- name: amount
+  type: float
+computed:
+- field: amount
+  op: multiply
+  left: quantity
+  right: unit_price
+  minus: discount

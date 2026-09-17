@@ -1,12 +1,18 @@
+- id: products
+  type: entity
+  target: product
 - id: invoices
   type: entity
   target: invoice
+- id: invoice_items
+  type: entity
+  target: invoice_item
 - id: payments
   type: entity
   target: payment
-- id: collections
+- id: payment_allocations
   type: entity
-  target: collection_case
+  target: payment_allocation
 - id: follow_ups
   type: entity
   target: follow_up

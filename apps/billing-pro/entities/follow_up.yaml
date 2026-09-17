@@ -1,0 +1,42 @@
+id: follow_up
+name: Follow-up
+description: Operational payment follow-up linked to an invoice. Created by staff or by Event → FlowRunner on invoice.overdue. Not customer-scoped so the event actor can create it; Customer Hub identity lives on the invoice.
+allocate_code:
+  prefix: FU-
+  start: 1001
+delete:
+  mode: soft
+fields:
+- name: invoice_id
+  type: relation
+  ref_entity: invoice
+  required: true
+- name: person_id
+  type: person
+  description: Optional Hub Person link when CSV/portal can persist it. Invoice.person_id is authoritative for identity.
+  ref_entity: person
+- name: follow_up_date
+  type: date
+  required: true
+  import_synonyms:
+  - due at
+  - follow up date
+  - reminder date
+- name: status
+  type: enum
+  enum_values:
+  - pending
+  - completed
+  - cancelled
+  default: pending
+- name: notes
+  type: string
+status_events:
+  pending: follow_up.created
+  completed: follow_up.completed
+  cancelled: follow_up.cancelled
+date_events:
+- field: follow_up_date
+  event: follow_up.due
+  when_status:
+  - pending

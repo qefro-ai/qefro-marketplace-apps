@@ -1,0 +1,46 @@
+id: product
+name: Product
+description: Reusable catalog product or service. Invoice items snapshot price at bill time.
+allocate_code:
+  prefix: PRD-
+  start: 1001
+delete:
+  mode: restrict
+fields:
+- name: name
+  type: string
+  required: true
+- name: sku
+  type: string
+  unique: true
+  required: true
+  import_synonyms:
+  - product code
+  - item code
+  - sku
+- name: description
+  type: string
+- name: item_type
+  type: enum
+  enum_values:
+  - product
+  - service
+  default: product
+- name: unit
+  type: string
+- name: selling_price
+  type: float
+  required: true
+  import_synonyms:
+  - unit price
+  - price
+- name: currency
+  type: string
+  default_from_setting: currency
+  import_default: INR
+- name: tax_rate
+  type: float
+  default_from_setting: default_tax_rate
+- name: active
+  type: boolean
+  default: true

@@ -690,77 +690,150 @@ class RealEstateAvailabilitySettingsTests(unittest.TestCase):
         self.assertEqual(asks["time"]["choices_from"], "available_slots")
 
 
-class PaymentsCollectionProTests(unittest.TestCase):
-    APP = APPS / "payments-collection-pro"
+class BillingProTests(unittest.TestCase):
+    APP = APPS / "billing-pro"
 
-    def test_package_is_entity_native_collections_app(self):
+    def _entity(self, name: str):
+        return load_yaml(self.APP / "entities" / f"{name}.yaml")
+
+    def _field(self, entity: dict, name: str) -> dict:
+        return next(f for f in entity["fields"] if f["name"] == name)
+
+    def test_package_is_entity_native_billing_app(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertEqual(manifest["id"], "payments-collection-pro")
+        self.assertEqual(manifest["id"], "billing-pro")
         self.assertEqual(manifest["hosting"], "runtime")
+        self.assertEqual(manifest["category"], "commerce")
+        self.assertEqual(manifest["channels"], ["widget", "whatsapp"])
         self.assertFalse(manifest.get("http_tools"))
         self.assertFalse(manifest.get("connections"))
         self.assertFalse(manifest.get("agent"))
+        self.assertFalse(manifest.get("goal"))
+        self.assertNotIn("agent:", (self.APP / "manifest.yaml").read_text(encoding="utf-8"))
         self.assertEqual(
             manifest["entities"],
-            ["invoice", "payment", "collection_case", "follow_up"],
+            ["product", "invoice", "invoice_item", "payment", "payment_allocation", "follow_up"],
         )
         self.assertEqual(
             sorted(manifest["flows"]),
             [
-                "create-collection-case",
+                "allocate-payment",
+                "cancel-invoice",
+                "complete-follow-up",
+                "create-follow-up",
                 "create-invoice",
-                "log-follow-up",
-                "mark-promise-to-pay",
+                "create-product",
+                "on-invoice-overdue",
                 "record-payment",
             ],
         )
         self.assertFalse((self.APP / "entities" / "customer.yaml").exists())
+        self.assertFalse((self.APP / "entities" / "collection_case.yaml").exists())
         self.assertFalse((self.APP / "tools").exists())
+        self.assertFalse((self.APP / "src").exists())
+
+    def test_no_payments_collection_pro_package(self):
+        self.assertFalse((APPS / "payments-collection-pro").exists())
 
     def test_person_identity_uses_hub_person_type(self):
-        for name in ("invoice", "payment", "collection_case", "follow_up"):
-            entity = load_yaml(self.APP / "entities" / f"{name}.yaml")
+        for name in ("invoice", "payment"):
+            entity = self._entity(name)
             self.assertEqual(entity["scope"], "customer")
-            person = next(f for f in entity["fields"] if f["name"] == "person_id")
+            person = self._field(entity, "person_id")
             self.assertEqual(person["type"], "person")
             self.assertEqual(person["ref_entity"], "person")
+            self.assertTrue(person.get("required"))
+        follow = self._entity("follow_up")
+        self.assertNotEqual(follow.get("scope"), "customer")
+        person = self._field(follow, "person_id")
+        self.assertEqual(person["type"], "person")
+        self.assertEqual(person["ref_entity"], "person")
+        product = self._entity("product")
+        self.assertNotEqual(product.get("scope"), "customer")
+        self.assertFalse(any(f["name"] == "person_id" for f in product["fields"]))
+        invoice = self._entity("invoice")
+        self.assertFalse(any(f["name"] in {"customer_name", "phone", "email"} for f in invoice["fields"]))
 
-        invoice = load_yaml(self.APP / "entities" / "invoice.yaml")
-        number = next(f for f in invoice["fields"] if f["name"] == "invoice_number")
+    def test_unique_sku_and_invoice_number(self):
+        sku = self._field(self._entity("product"), "sku")
+        self.assertTrue(sku.get("unique"))
+        self.assertEqual(sku["type"], "string")
+        number = self._field(self._entity("invoice"), "invoice_number")
         self.assertTrue(number.get("unique"))
+        self.assertEqual(number["type"], "string")
+        pay_no = self._field(self._entity("payment"), "payment_number")
+        self.assertTrue(pay_no.get("unique"))
+
+    def test_invoice_and_payment_fields(self):
+        invoice = self._entity("invoice")
+        names = {f["name"] for f in invoice["fields"]}
+        self.assertTrue(
+            {
+                "invoice_number",
+                "person_id",
+                "issue_date",
+                "due_date",
+                "status",
+                "currency",
+                "subtotal",
+                "discount",
+                "tax",
+                "total_amount",
+                "paid_amount",
+                "outstanding_amount",
+                "notes",
+            }.issubset(names)
+        )
+        self.assertEqual(
+            self._field(invoice, "status")["enum_values"],
+            ["draft", "issued", "partially_paid", "paid", "overdue", "cancelled"],
+        )
+        payment = self._entity("payment")
+        self.assertEqual(
+            self._field(payment, "method")["enum_values"],
+            ["cash", "bank_transfer", "card", "upi", "cheque", "other"],
+        )
+        self.assertEqual(
+            self._field(payment, "status")["enum_values"],
+            ["received", "pending", "failed", "reversed"],
+        )
+        self.assertFalse(any(f["name"] == "invoice_id" for f in payment["fields"]))
 
     def test_relations_use_relation_primitive(self):
-        payment = load_yaml(self.APP / "entities" / "payment.yaml")
-        case = load_yaml(self.APP / "entities" / "collection_case.yaml")
-        follow = load_yaml(self.APP / "entities" / "follow_up.yaml")
-        invoice_id = next(f for f in payment["fields"] if f["name"] == "invoice_id")
+        item = self._entity("invoice_item")
+        alloc = self._entity("payment_allocation")
+        follow = self._entity("follow_up")
+        invoice_id = self._field(item, "invoice_id")
         self.assertEqual(invoice_id["type"], "relation")
         self.assertEqual(invoice_id["ref_entity"], "invoice")
-        case_invoice = next(f for f in case["fields"] if f["name"] == "invoice_id")
-        self.assertEqual(case_invoice["type"], "relation")
-        self.assertEqual(case_invoice["ref_entity"], "invoice")
-        case_id = next(f for f in follow["fields"] if f["name"] == "collection_case_id")
-        self.assertEqual(case_id["type"], "relation")
-        self.assertEqual(case_id["ref_entity"], "collection_case")
+        product_id = self._field(item, "product_id")
+        self.assertEqual(product_id["type"], "relation")
+        self.assertEqual(product_id["ref_entity"], "product")
+        self.assertEqual(self._field(alloc, "payment_id")["ref_entity"], "payment")
+        self.assertEqual(self._field(alloc, "invoice_id")["ref_entity"], "invoice")
+        self.assertEqual(self._field(follow, "invoice_id")["type"], "relation")
+        self.assertEqual(self._field(follow, "invoice_id")["ref_entity"], "invoice")
+        self.assertFalse(any(f["name"] == "collection_case_id" for f in follow["fields"]))
+        self.assertEqual(self._field(follow, "follow_up_date")["type"], "date")
 
     def test_status_events_are_facts(self):
-        invoice = load_yaml(self.APP / "entities" / "invoice.yaml")
-        payment = load_yaml(self.APP / "entities" / "payment.yaml")
-        case = load_yaml(self.APP / "entities" / "collection_case.yaml")
-        follow = load_yaml(self.APP / "entities" / "follow_up.yaml")
-        self.assertEqual(invoice["status_events"]["issued"], "invoice.created")
+        invoice = self._entity("invoice")
+        payment = self._entity("payment")
+        follow = self._entity("follow_up")
+        self.assertEqual(invoice["status_events"]["issued"], "invoice.issued")
+        self.assertEqual(invoice["status_events"]["paid"], "invoice.paid")
+        self.assertEqual(invoice["status_events"]["cancelled"], "invoice.cancelled")
         self.assertEqual(invoice["status_events"]["overdue"], "invoice.overdue")
         self.assertEqual(payment["status_events"]["received"], "payment.received")
-        self.assertEqual(payment["status_events"]["failed"], "payment.failed")
-        self.assertEqual(case["status_events"]["promise_to_pay"], "promise_to_pay.created")
-        self.assertEqual(case["status_events"]["recovered"], "collection_case.recovered")
+        self.assertEqual(payment["status_events"]["reversed"], "payment.reversed")
         self.assertEqual(follow["status_events"]["completed"], "follow_up.completed")
         manifest = load_yaml(self.APP / "manifest.yaml")
         declared = set(manifest["events"])
+        self.assertIn("payment_allocation.created", declared)
+        self.assertIn("product.created", declared)
         for events in (
             invoice["status_events"].values(),
             payment["status_events"].values(),
-            case["status_events"].values(),
             follow["status_events"].values(),
         ):
             for event in events:
@@ -772,28 +845,36 @@ class PaymentsCollectionProTests(unittest.TestCase):
         keys = [s["key"] if isinstance(s, dict) else s for s in manifest["settings"]]
         expected = {
             "currency",
+            "invoice_prefix",
             "payment_terms_days",
-            "grace_period_days",
-            "default_collection_priority",
+            "default_tax_rate",
             "follow_up_interval_days",
-            "escalation_after_days",
         }
         self.assertEqual(set(keys), expected)
         self.assertEqual(set(schema), expected)
         self.assertEqual(schema["currency"]["default"], "INR")
+        self.assertEqual(schema["invoice_prefix"]["default"], "INV")
         self.assertEqual(schema["payment_terms_days"]["default"], 30)
-        self.assertEqual(schema["grace_period_days"]["default"], 3)
-        self.assertEqual(schema["default_collection_priority"]["default"], "normal")
+        self.assertEqual(schema["default_tax_rate"]["default"], 0)
         self.assertEqual(schema["follow_up_interval_days"]["default"], 3)
-        self.assertEqual(schema["escalation_after_days"]["default"], 14)
 
     def test_flows_use_runtime_entity_tools(self):
         expected = {
+            "create-product": ["entity.product.create"],
             "create-invoice": ["entity.invoice.create"],
-            "record-payment": ["entity.invoice.list", "entity.payment.create", "entity.invoice.update"],
-            "create-collection-case": ["entity.invoice.list", "entity.collection_case.create"],
-            "mark-promise-to-pay": ["entity.collection_case.list", "entity.collection_case.update"],
-            "log-follow-up": ["entity.collection_case.list", "entity.follow_up.create"],
+            "record-payment": [
+                "entity.invoice.list",
+                "entity.payment.create",
+                "entity.payment_allocation.create",
+            ],
+            "create-follow-up": ["entity.invoice.list", "entity.follow_up.create"],
+            "complete-follow-up": ["entity.follow_up.list", "entity.follow_up.update"],
+            "allocate-payment": [
+                "entity.payment.list",
+                "entity.invoice.list",
+                "entity.payment_allocation.create",
+            ],
+            "cancel-invoice": ["entity.invoice.list", "entity.invoice.update"],
         }
         for flow_id, tools_expected in expected.items():
             flow = load_yaml(self.APP / "workflows" / f"{flow_id}.yaml")
@@ -801,7 +882,101 @@ class PaymentsCollectionProTests(unittest.TestCase):
             self.assertEqual(tools, tools_expected)
             self.assertTrue(all(s.get("execution") == "runtime" for s in flow["steps"] if s.get("type") == "tool"))
             self.assertEqual(flow["steps"][-1]["type"], "complete")
+            self.assertEqual(flow.get("surfaces"), ["staff"])
+            self.assertEqual(flow["trigger"]["type"], "conversation")
             self.assertNotIn("storage.insert", str(tools))
+            text = str(flow)
+            self.assertNotIn("person_id:", text)
+            if flow_id in {"record-payment", "allocate-payment"}:
+                self.assertNotIn("entity.invoice.update", tools)
+
+    def test_ui_hosts_and_dashboard_metrics(self):
+        pages = load_yaml(self.APP / "ui" / "pages.yaml")
+        hosts = {page.get("id"): page.get("host") for page in pages}
+        self.assertEqual(hosts.get("contacts"), "contacts")
+        self.assertEqual(hosts.get("automations"), "automations")
+        entities = {page.get("id"): page.get("entity") for page in pages}
+        self.assertEqual(entities.get("products"), "product")
+        self.assertEqual(entities.get("invoices"), "invoice")
+        self.assertEqual(entities.get("payments"), "payment")
+        self.assertEqual(entities.get("follow_ups"), "follow_up")
+        widgets = {w["id"]: w for w in load_yaml(self.APP / "ui" / "widgets.yaml")}
+        self.assertEqual(widgets["metric_total_invoiced"]["options"]["aggregate"], "sum")
+        self.assertEqual(widgets["metric_total_invoiced"]["options"]["field"], "total_amount")
+        self.assertEqual(widgets["metric_total_paid"]["options"]["field"], "paid_amount")
+        self.assertEqual(widgets["metric_outstanding"]["options"]["field"], "outstanding_amount")
+        self.assertEqual(widgets["metric_follow_up"]["options"]["filter"]["status"], "pending")
+        self.assertEqual(widgets["metric_overdue"]["options"]["filter"]["status"], "overdue")
+        self.assertEqual(widgets["metric_overdue"]["options"]["aggregate"], "count")
+
+    def test_consumes_generic_platform_capabilities(self):
+        invoice = self._entity("invoice")
+        ops = {c["op"] for c in invoice["computed"]}
+        self.assertIn("relation_sum", ops)
+        self.assertIn("subtract", ops)
+        self.assertIn("status_from_number", ops)
+        self.assertEqual(invoice["date_events"][0]["event"], "invoice.overdue")
+        self.assertEqual(invoice["on_events"][0]["event"], "invoice.paid")
+        self.assertEqual(invoice["on_events"][0]["target"], "follow_up")
+        self.assertEqual(invoice["on_events"][0]["set"]["status"], "completed")
+        self.assertEqual(self._field(invoice, "currency").get("default_from_setting"), "currency")
+        self.assertEqual(invoice.get("concurrency"), "optimistic")
+        self.assertEqual((invoice.get("delete") or {}).get("mode"), "restrict")
+        item = self._entity("invoice_item")
+        self.assertEqual(item["computed"][0]["op"], "multiply")
+        follow = self._entity("follow_up")
+        self.assertEqual(follow["date_events"][0]["event"], "follow_up.due")
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("invoice.paid", manifest["events"])
+        self.assertIn("follow_up.due", manifest["events"])
+        self.assertNotIn("agent", manifest)
+
+    def test_event_triggered_overdue_flow(self):
+        flow = load_yaml(self.APP / "workflows" / "on-invoice-overdue.yaml")
+        self.assertEqual(flow["trigger"]["type"], "event")
+        self.assertEqual(flow["trigger"]["event"], "invoice.overdue")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertEqual(tools, ["entity.invoice.get", "entity.follow_up.create"])
+        self.assertTrue(all(s.get("execution") == "runtime" for s in flow["steps"] if s.get("type") == "tool"))
+        self.assertEqual(flow["steps"][-1]["type"], "complete")
+        text = (self.APP / "workflows" / "on-invoice-overdue.yaml").read_text(encoding="utf-8")
+        self.assertNotIn("person_id:", text)
+        self.assertNotIn("notify", [s.get("type") for s in flow["steps"]])
+        self.assertNotIn("entity.whatsapp", str(tools))
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("on-invoice-overdue", manifest["flows"])
+        self.assertIn("invoice.overdue", manifest["events"])
+
+    def test_csv_identity_fields_are_person_not_customer_entity(self):
+        invoice = self._entity("invoice")
+        self.assertTrue(any(f["type"] == "person" for f in invoice["fields"]))
+        self.assertTrue(self._field(invoice, "invoice_number").get("unique"))
+        self.assertEqual(invoice["allocate_code"]["prefix"], "INV-")
+        self.assertIn("total_amount", {f["name"] for f in invoice["fields"]})
+        self.assertIn("outstanding_amount", {f["name"] for f in invoice["fields"]})
+
+    def test_permissions_and_architecture_constraints(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertEqual(
+            manifest["permissions"],
+            [
+                "workflow.execute",
+                "storage.read",
+                "storage.write",
+                "storage.update",
+                "storage.delete",
+            ],
+        )
+        for path in list((self.APP / "entities").glob("*.yaml")) + list(
+            (self.APP / "workflows").glob("*.yaml")
+        ):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotRegex(text, r"if\s+solution\s*==")
+            self.assertNotRegex(text, r"if\s+entity\s*==")
+            self.assertNotIn("collection_case", text)
+            self.assertNotIn("BillingScheduler", text)
+            self.assertNotIn("CollectionScheduler", text)
+            self.assertNotIn("billing_chat", text)
 
 
 if __name__ == "__main__":

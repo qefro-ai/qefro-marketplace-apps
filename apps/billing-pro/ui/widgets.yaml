@@ -1,0 +1,310 @@
+- id: product_form
+  type: form
+  title: New product
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: sku
+      label: SKU
+      type: text
+      required: true
+    - name: item_type
+      label: Type
+      type: text
+      required: false
+    - name: selling_price
+      label: Selling price
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: unit
+      label: Unit
+      type: text
+      required: false
+    - name: tax_rate
+      label: Tax rate
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-product
+- id: invoice_form
+  type: form
+  title: New invoice
+  options:
+    fields:
+    - name: total_amount
+      label: Total
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: issue_date
+      label: Issue date
+      type: date
+      required: false
+    - name: due_date
+      label: Due date
+      type: date
+      required: false
+    - name: invoice_number
+      label: Invoice number
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-invoice
+- id: payment_form
+  type: form
+  title: Record payment
+  options:
+    fields:
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: method
+      label: Method
+      type: text
+      required: false
+    - name: reference
+      label: Reference
+      type: text
+      required: false
+    - name: payment_date
+      label: Payment date
+      type: date
+      required: false
+    submit_label: Record
+    action:
+      trigger: record-payment
+- id: follow_up_form
+  type: form
+  title: New follow-up
+  options:
+    fields:
+    - name: follow_up_date
+      label: Follow-up date
+      type: date
+      required: true
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-follow-up
+- id: complete_follow_up_form
+  type: form
+  title: Complete follow-up
+  options:
+    fields:
+    - name: id
+      label: Follow-up
+      type: text
+      required: true
+    submit_label: Complete
+    action:
+      trigger: complete-follow-up
+- id: allocate_form
+  type: form
+  title: Allocate payment
+  options:
+    fields:
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    submit_label: Allocate
+    action:
+      trigger: allocate-payment
+- id: products_table
+  type: table
+  title: Products
+  source: products
+  options:
+    rows_path: items
+    empty_title: No products yet
+    columns:
+    - key: name
+      header: Name
+    - key: sku
+      header: SKU
+    - key: selling_price
+      header: Price
+    - key: item_type
+      header: Type
+    - key: active
+      header: Active
+- id: invoices_table
+  type: table
+  title: Invoices
+  source: invoices
+  options:
+    rows_path: items
+    empty_title: No invoices yet
+    columns:
+    - key: invoice_number
+      header: Number
+    - key: total_amount
+      header: Total
+    - key: paid_amount
+      header: Paid
+    - key: outstanding_amount
+      header: Outstanding
+    - key: due_date
+      header: Due
+    - key: status
+      header: Status
+- id: payments_table
+  type: table
+  title: Payments
+  source: payments
+  options:
+    rows_path: items
+    empty_title: No payments yet
+    columns:
+    - key: payment_number
+      header: Number
+    - key: amount
+      header: Amount
+    - key: method
+      header: Method
+    - key: payment_date
+      header: Date
+    - key: status
+      header: Status
+- id: follow_ups_table
+  type: table
+  title: Follow-ups
+  source: follow_ups
+  options:
+    rows_path: items
+    empty_title: No follow-ups yet
+    columns:
+    - key: follow_up_date
+      header: Date
+    - key: status
+      header: Status
+    - key: notes
+      header: Notes
+- id: intro
+  type: markdown
+  title: Billing Pro
+  options:
+    content: Create invoices, record payments, and follow up on unpaid bills. Contacts
+      stay on Customer Hub. WhatsApp reminders are configured on Automations from
+      invoice.overdue, follow_up.created, and follow_up.due — Billing Pro does not
+      send WhatsApp itself.
+- id: metric_total_invoiced
+  type: metric
+  title: Total invoiced
+  source: invoices
+  options:
+    aggregate: sum
+    field: total_amount
+    format: currency
+    rows_path: items
+    label: Total
+    navigate_to: invoices
+- id: metric_total_paid
+  type: metric
+  title: Total paid
+  source: invoices
+  options:
+    aggregate: sum
+    field: paid_amount
+    format: currency
+    rows_path: items
+    label: Paid
+    navigate_to: invoices
+- id: metric_outstanding
+  type: metric
+  title: Outstanding
+  source: invoices
+  options:
+    aggregate: sum
+    field: outstanding_amount
+    format: currency
+    rows_path: items
+    label: Outstanding
+    navigate_to: invoices
+- id: metric_follow_up
+  type: metric
+  title: Follow-ups
+  source: follow_ups
+  options:
+    aggregate: count
+    filter:
+      status: pending
+    rows_path: items
+    label: Pending
+    navigate_to: follow_ups
+- id: metric_overdue
+  type: metric
+  title: Overdue
+  source: invoices
+  options:
+    aggregate: count
+    filter:
+      status: overdue
+    rows_path: items
+    label: Overdue
+    navigate_to: invoices
+- id: metric_payments_today
+  type: metric
+  title: Payments today
+  source: payments
+  options:
+    aggregate: today
+    date_field: payment_date
+    rows_path: items
+    label: Today
+    navigate_to: payments
+- id: invoice_dash_status
+  type: status
+  title: Invoice status
+  source: invoices
+  options:
+    rows_path: items
+    status_field: status
+    label_field: invoice_number
+    empty_title: No invoices yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    navigate_to: invoices
+    action_label: View all
+- id: invoice_dash_table
+  type: table
+  title: Recent invoices
+  source: invoices
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: invoice_number
+      header: Number
+    - key: total_amount
+      header: Total
+    - key: outstanding_amount
+      header: Outstanding
+    - key: due_date
+      header: Due
+    - key: status
+      header: Status
+    navigate_to: invoices
+    action_label: View all
+    empty_title: No invoices yet
+    empty_subtitle: Open the list and tap New to add your first record.
+    empty_action_label: Open list

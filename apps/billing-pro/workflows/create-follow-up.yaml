@@ -1,0 +1,45 @@
+id: create-follow-up
+name: Create follow-up
+description: Schedule a payment follow-up against an unpaid or partial invoice
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: list_invoices
+  type: tool
+  tool: entity.invoice.list
+  execution: runtime
+  output: invoices
+  input_map:
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "📞 Which invoice needs a follow-up?"
+  choices_from: invoices
+  title_field: invoice_number
+  value_field: id
+  chip_prefix: invoice
+- id: ask_follow_up_date
+  type: ask
+  field: follow_up_date
+  message: "📅 Follow-up date?"
+- id: ask_notes
+  type: ask
+  field: notes
+  message: "📝 Follow-up notes?"
+- id: run
+  type: tool
+  tool: entity.follow_up.create
+  execution: runtime
+  input_map:
+    invoice_id: id
+    follow_up_date: follow_up_date
+    notes: notes
+    status: $literal:pending
+- id: confirm
+  type: message
+  message: "📞 Follow-up created for invoice {{id}} on {{follow_up_date}}."
+- id: done
+  type: complete
