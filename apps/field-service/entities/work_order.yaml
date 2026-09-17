@@ -35,5 +35,13 @@ fields:
     ref_entity: person
     description: "Existing Qefro Person identity"
 status_events:
+  assigned: work_order.assigned
+  in_progress: work_order.updated
   completed: work_order.completed
   cancelled: work_order.cancelled
+date_events:
+- field: scheduled_date
+  event: work_order.due
+  when_status:
+  - open
+  - assigned

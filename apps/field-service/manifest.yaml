@@ -1,6 +1,6 @@
 id: field-service
 name: Field Service
-version: 1.0.0
+version: 1.0.1
 hosting: runtime
 description: Sites, technicians, parts, and work orders as a native Qefro business
   application
@@ -36,6 +36,7 @@ events:
 - technician.created
 - customer.created
 - work_order.assigned
+- work_order.due
 - part.created
 permissions:
 - workflow.execute
