@@ -1,6 +1,6 @@
 id: logistics
 name: Logistics
-version: 1.0.0
+version: 1.0.1
 hosting: runtime
 description: Vehicles, consignments, shipments, and stops as a native Qefro logistics
   application
@@ -30,6 +30,7 @@ flows:
 events:
 - shipment.created
 - shipment.updated
+- shipment.completed
 - shipment.cancelled
 - consignment.created
 - vehicle.created

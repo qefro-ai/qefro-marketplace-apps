@@ -18,3 +18,5 @@ fields:
       - arrived
       - completed
       - skipped
+status_events:
+  completed: stop.completed
