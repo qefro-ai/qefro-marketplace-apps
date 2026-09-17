@@ -1,6 +1,6 @@
 id: project-tracker
 name: Project Tracker
-version: 1.1.0
+version: 1.2.0
 hosting: runtime
 description: Sample project / task / invoice app for ZIP install genericity tests
 category: productivity
@@ -11,7 +11,7 @@ tags:
 - fixture
 channels:
 - widget
-- chat
+- whatsapp
 entities:
 - project
 - task
@@ -118,7 +118,14 @@ permissions:
 - storage.write
 - storage.update
 - storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
 - runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
 ui:
   name: Project Tracker
 role_templates:

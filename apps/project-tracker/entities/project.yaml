@@ -1,7 +1,17 @@
 id: project
 name: Project
 fields:
-  title: { type: string, required: true }
-  status: { type: enum, enum_values: [active, on_hold, done], required: true }
-  budget: { type: number }
-  owner: { type: string }
+- name: title
+  type: string
+  required: true
+- name: status
+  type: enum
+  enum_values:
+  - active
+  - on_hold
+  - done
+  required: true
+- name: budget
+  type: float
+- name: owner
+  type: string

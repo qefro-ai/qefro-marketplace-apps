@@ -1,11 +1,39 @@
 id: create-invoice
 name: Create Invoice
 trigger:
-  type: manual
-surfaces: [portal]
+  type: conversation
+surfaces:
+- staff
 steps:
-  - id: save
-    type: tool
-    tool: entity.invoice.create
-    input:
-      document: "{{ input }}"
+- id: list_projects
+  type: tool
+  tool: entity.project.list
+  execution: runtime
+  output: projects
+  input_map:
+    limit: $literal:20
+- id: ask_project
+  type: ask
+  field: project_id
+  message: "Bill which project?"
+  choices_from: projects
+  title_field: title
+  value_field: id
+  chip_prefix: project
+- id: ask_amount
+  type: ask
+  field: amount
+  message: "Invoice amount?"
+- id: save
+  type: tool
+  tool: entity.invoice.create
+  execution: runtime
+  input_map:
+    project_id: project_id
+    amount: amount
+    status: $literal:draft
+- id: confirm
+  type: message
+  message: "Invoice created for amount {{amount}}."
+- id: done
+  type: complete
