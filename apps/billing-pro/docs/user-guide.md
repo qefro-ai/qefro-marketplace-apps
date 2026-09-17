@@ -40,7 +40,7 @@ After install, complete these:
 - [ ] Add or import products
 - [ ] Connect WhatsApp
 - [ ] Configure follow-up automation (WhatsApp reminder)
-- [ ] Create your first invoice
+- [ ] Create your first invoice, or take a sale on **POS**
 - [ ] Record a payment
 
 You're ready. Billing Pro will track outstanding payments and automatically follow up with customers.
@@ -49,7 +49,7 @@ You're ready. Billing Pro will track outstanding payments and automatically foll
 
 1. **Morning.** Open the Dashboard. Check **Outstanding** and **Overdue**.
 2. **Follow-ups.** Open Follow-ups. Call, message, or let WhatsApp reminders go out for pending items.
-3. **Record payments.** When a customer pays, open Payments (or Command Chat) and record it. Apply it to the right invoice.
+3. **Record payments.** When a customer pays, open Payments (or Command Chat) and record it. Apply it to the right invoice. Walk-up sales can go through **POS** instead.
 4. **Overdue.** Past-due unpaid invoices become overdue and get a follow-up. You do not have to create those by hand.
 5. **Reminders.** If Automations is set up, Qefro sends the WhatsApp reminder when a follow-up is due.
 
@@ -67,6 +67,23 @@ Currency and tax default from your settings if you leave them blank.
 **Edit** a product any time. To stop using it without deleting history, set **Active** to no (archive). Do not delete a product that already appears on invoices.
 
 **CSV import:** on Products, use **Import Data**. Map columns such as name, sku / product code, price / unit price. SKU must be unique.
+
+## POS
+
+POS is the fast cashier screen for the same Billing records: **product → invoice → payment**. It does not have its own stock, receipts store, WhatsApp, or follow-up engine.
+
+1. Open **POS**.
+2. Search by product name or SKU (`/` or Ctrl+K). Click a product (or press Enter on the first match) to add it.
+3. Adjust quantity with + / −.
+4. Pick the **customer** from Contacts (add them there first if they are new). Walk-in sales still need a Hub contact — Billing invoices are always bound to a Person.
+5. Choose **Cash**, **UPI**, **Card**, or **Other**.
+6. Payment amount defaults to the cart total. Type a smaller amount for a partial payment, or **0** for credit (invoice stays unpaid).
+7. **Complete sale.** Billing Pro creates an issued invoice, line items (price snapshotted from the catalog), and — if you collected money — a payment allocated to that invoice.
+8. The receipt shows invoice number, time, customer, lines, total, paid, outstanding, method, and status. **Print**, **New sale**, or **View invoice**.
+
+Keyboard: `/` or Ctrl+K search, Enter add, +/− quantity, Esc, Ctrl+Enter complete.
+
+POS does not send WhatsApp. Unpaid credit invoices follow the usual overdue → follow-up path.
 
 ## Invoices
 

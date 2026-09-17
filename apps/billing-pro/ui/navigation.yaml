@@ -2,40 +2,44 @@
   page: dashboard
   title: Dashboard
   icon: home
-- id: guide
-  page: guide
-  title: How this works
-  icon: file-text
-- id: products
-  page: products
-  title: Products
-  icon: package
-  entity: product
+- id: pos
+  page: pos
+  title: POS
+  icon: clipboard
 - id: invoices
   page: invoices
   title: Invoices
   icon: receipt
   entity: invoice
-- id: invoice_items
-  page: invoice_items
-  title: Invoice items
-  icon: list
-  entity: invoice_item
 - id: payments
   page: payments
   title: Payments
   icon: credit-card
   entity: payment
-- id: payment_allocations
-  page: payment_allocations
-  title: Allocations
-  icon: wallet
-  entity: payment_allocation
+- id: products
+  page: products
+  title: Products
+  icon: package
+  entity: product
 - id: follow_ups
   page: follow_ups
   title: Follow-ups
   icon: activity
   entity: follow_up
+- id: guide
+  page: guide
+  title: How this works
+  icon: file-text
+- id: invoice_items
+  page: invoice_items
+  title: Invoice items
+  icon: list
+  entity: invoice_item
+- id: payment_allocations
+  page: payment_allocations
+  title: Allocations
+  icon: wallet
+  entity: payment_allocation
 - id: contacts
   page: contacts
   title: Contacts

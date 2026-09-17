@@ -1,6 +1,6 @@
 # Billing Pro
 
-Create invoices, track who has paid, and follow up on unpaid bills. Optional WhatsApp reminders go through Qefro Automations after you connect WhatsApp.
+Create invoices, take counter sales on POS, track who has paid, and follow up on unpaid bills. Optional WhatsApp reminders go through Qefro Automations after you connect WhatsApp.
 
 Not an accounting ERP and not a payment gateway — you record payments you already received.
 
@@ -9,11 +9,11 @@ Not an accounting ERP and not a payment gateway — you record payments you alre
 ## What it does
 
 ```text
-CREATE INVOICE → TRACK PAYMENT → SEE WHAT IS OUTSTANDING
-    → FOLLOW UP → CUSTOMER PAYS → STOP FOLLOW-UP
+PRODUCT → INVOICE → PAYMENT → FOLLOW-UP
+(POS is the fast cashier path for the same records)
 ```
 
-1. Create an invoice (and catalog products / line items).
+1. Create an invoice (and catalog products / line items), or complete a sale on **POS**.
 2. Record payments and split them across invoices when needed.
 3. See outstanding balances on the Dashboard.
 4. Overdue unpaid invoices get a follow-up automatically.
@@ -43,20 +43,21 @@ Then connect **WhatsApp** under Channels, and set up follow-up automation.
 - [ ] Add or import products
 - [ ] Connect WhatsApp
 - [ ] Configure follow-up automation
-- [ ] Create your first invoice
+- [ ] Create your first invoice, or take a sale on **POS**
 - [ ] Record a payment
 
 You're ready. Billing Pro will track outstanding payments and automatically follow up with customers.
 
 ## Daily workflow
 
-Morning: Dashboard unpaid / overdue → work **Follow-ups** → record payments as they arrive → overdue invoices get follow-ups → Qefro sends WhatsApp if Automations is on.
+Morning: Dashboard unpaid / overdue → work **Follow-ups** → record payments as they arrive → overdue invoices get follow-ups → Qefro sends WhatsApp if Automations is on. Walk-up sales go through **POS**.
 
 ## Guide
 
 | Topic | In the guide |
 | --- | --- |
 | Products, tax, CSV, archive | [Products](docs/user-guide.md#products) |
+| Counter sale on POS (cart, cash/UPI/card, receipt) | [POS](docs/user-guide.md#pos) |
 | First invoice (2 × Product A ₹500 = ₹1,000), draft vs issued | [Invoices](docs/user-guide.md#invoices) |
 | Fully paid / partial / why payment is separate | [Payments](docs/user-guide.md#payments) |
 | Overdue → follow-up → WhatsApp → pay → stop | [Follow-ups](docs/user-guide.md#follow-ups) |

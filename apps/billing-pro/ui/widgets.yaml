@@ -1,3 +1,49 @@
+- id: pos_checkout
+  type: cart_checkout
+  title: Point of sale
+  options:
+    catalog_entity: product
+    catalog_title_field: name
+    catalog_price_field: selling_price
+    catalog_sku_field: sku
+    catalog_filter:
+      active: true
+    line_entity: invoice_item
+    line_parent_field: invoice_id
+    line_catalog_field: product_id
+    line_qty_field: quantity
+    line_price_field: unit_price
+    line_description_field: description
+    document_entity: invoice
+    document_status: issued
+    document_status_field: status
+    document_person_field: person_id
+    document_total_field: total_amount
+    document_paid_field: paid_amount
+    document_outstanding_field: outstanding_amount
+    document_number_field: invoice_number
+    document_issue_field: issue_date
+    document_due_field: due_date
+    document_currency_field: currency
+    document_page: invoices
+    person_required: true
+    payment_entity: payment
+    payment_amount_field: amount
+    payment_method_field: method
+    payment_status: received
+    payment_status_field: status
+    payment_date_field: payment_date
+    payment_person_field: person_id
+    payment_currency_field: currency
+    payment_methods:
+    - cash
+    - upi
+    - card
+    - other
+    allocation_entity: payment_allocation
+    allocation_document_field: invoice_id
+    allocation_payment_field: payment_id
+    allocation_amount_field: amount
 - id: product_form
   type: form
   title: New product
@@ -218,12 +264,12 @@
       3. Add or import products
       4. Connect WhatsApp
       5. Configure follow-up automation on Automations
-      6. Create your first invoice
+      6. Create your first invoice — or take a counter sale on **POS**
       7. Record a payment
 
       You're ready. Billing Pro will track outstanding payments and automatically follow up with customers.
 
-      **Today:** unpaid and overdue on this dashboard → Follow-ups → record payments as they come in. Overdue invoices get a follow-up. WhatsApp reminders are set on Automations (this app does not send WhatsApp by itself).
+      **Today:** unpaid and overdue on this dashboard → Follow-ups → record payments as they come in. Overdue invoices get a follow-up. WhatsApp reminders are set on Automations (this app does not send WhatsApp by itself). Use **POS** for walk-up sales (product → invoice → payment).
 - id: metric_total_invoiced
   type: metric
   title: Total invoiced
@@ -340,12 +386,12 @@
       3. Add or import products
       4. Connect WhatsApp
       5. Configure follow-up automation
-      6. Create your first invoice
+      6. Create your first invoice — or take a counter sale on **POS**
       7. Record a payment
 
       You're ready. Billing Pro will track outstanding payments and automatically follow up with customers.
 
-      **Daily:** morning Dashboard (unpaid / overdue) → Follow-ups → record payments → overdue bills get a follow-up → WhatsApp if Automations is on.
+      **Daily:** morning Dashboard (unpaid / overdue) → Follow-ups → record payments → overdue bills get a follow-up → WhatsApp if Automations is on. Counter sales go through **POS** (same invoices and payments).
 - id: guide_products
   type: markdown
   title: Products
@@ -367,6 +413,8 @@
       2. Set due date. Optional invoice number (or INV-1001 is assigned).
       3. Invoice items → New. Product A, quantity 2, unit price 500.
       4. Invoice total becomes ₹1,000.
+
+      **POS (counter sale):** open **POS**, search products (name or SKU), add to cart, pick a Contact, choose Cash / UPI / Card / Other, Complete sale. That creates the same invoice, line items, and payment as the screens above. Full amount → paid. Partial → outstanding. ₹0 → unpaid credit (follow-up still uses the existing overdue path). No WhatsApp from POS.
 
       **Draft** is a working copy. **Issued** is waiting for payment. **Paid / partially paid / overdue** update when you record payments — you do not type “paid” to collect.
 

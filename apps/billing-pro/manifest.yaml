@@ -1,9 +1,9 @@
 id: billing-pro
 name: Billing Pro
-version: 1.0.0
+version: 1.1.0
 hosting: runtime
-description: Create invoices, track unpaid bills, and follow up with customers — including
-  WhatsApp reminders after you connect WhatsApp.
+description: Create invoices, take counter sales on POS, track unpaid bills, and follow
+  up with customers — including WhatsApp reminders after you connect WhatsApp.
 category: commerce
 tags:
 - billing

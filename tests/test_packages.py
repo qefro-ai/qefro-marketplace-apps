@@ -907,7 +907,20 @@ class BillingProTests(unittest.TestCase):
         self.assertEqual(entities.get("invoices"), "invoice")
         self.assertEqual(entities.get("payments"), "payment")
         self.assertEqual(entities.get("follow_ups"), "follow_up")
+        pages_by_id = {page["id"]: page for page in pages}
+        self.assertEqual(pages_by_id["pos"]["widgets"][0]["widget"], "pos_checkout")
         widgets = {w["id"]: w for w in load_yaml(self.APP / "ui" / "widgets.yaml")}
+        pos = widgets["pos_checkout"]
+        self.assertEqual(pos["type"], "cart_checkout")
+        self.assertEqual(pos["options"]["catalog_entity"], "product")
+        self.assertEqual(pos["options"]["line_entity"], "invoice_item")
+        self.assertEqual(pos["options"]["document_entity"], "invoice")
+        self.assertEqual(pos["options"]["payment_entity"], "payment")
+        self.assertEqual(pos["options"]["allocation_entity"], "payment_allocation")
+        self.assertTrue(pos["options"]["person_required"])
+        self.assertEqual(pos["options"]["payment_methods"], ["cash", "upi", "card", "other"])
+        nav_ids = [item["id"] for item in load_yaml(self.APP / "ui" / "navigation.yaml")]
+        self.assertEqual(nav_ids[:6], ["dashboard", "pos", "invoices", "payments", "products", "follow_ups"])
         self.assertEqual(widgets["metric_total_invoiced"]["options"]["aggregate"], "sum")
         self.assertEqual(widgets["metric_total_invoiced"]["options"]["field"], "total_amount")
         self.assertEqual(widgets["metric_total_paid"]["options"]["field"], "paid_amount")
@@ -984,6 +997,9 @@ class BillingProTests(unittest.TestCase):
             self.assertNotIn("BillingScheduler", text)
             self.assertNotIn("CollectionScheduler", text)
             self.assertNotIn("billing_chat", text)
+            self.assertNotIn("pos_agent", text)
+        self.assertFalse((self.APP / "entities" / "sale.yaml").exists())
+        self.assertFalse((self.APP / "entities" / "order.yaml").exists())
 
 
 if __name__ == "__main__":
