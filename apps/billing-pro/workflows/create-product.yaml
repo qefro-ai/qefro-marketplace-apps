@@ -1,6 +1,6 @@
 id: create-product
 name: Create product
-description: Add a product or service to the catalog
+description: Add a product or service you sell (name, SKU, price).
 surfaces:
 - staff
 trigger:

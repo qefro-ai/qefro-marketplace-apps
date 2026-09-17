@@ -1,6 +1,6 @@
 id: create-invoice
 name: Create invoice
-description: Create a customer invoice. Line items are added on the generic Invoice items page; totals roll up from items when they exist.
+description: Create a customer invoice. Add line items on Invoice items so the total adds up.
 surfaces:
 - staff
 trigger:

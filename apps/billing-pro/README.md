@@ -1,131 +1,81 @@
-# billing-pro
+# Billing Pro
 
-Metadata-only Qefro Marketplace App. Not an accounting ERP and not a payment gateway.
+Create invoices, track who has paid, and follow up on unpaid bills. Optional WhatsApp reminders go through Qefro Automations after you connect WhatsApp.
 
-- **App id:** `billing-pro`
-- **Hosting:** `runtime`
-- **Architecture:** Marketplace package → metadata → Qefro Runtime → EntityService / FlowRunner / RuntimeAdapter
-- **Not included:** SDK backend, custom connector, custom REST API, payment gateway, accounting engine, Billing scheduler, Billing WhatsApp sender, Goal/Agent metadata
+Not an accounting ERP and not a payment gateway — you record payments you already received.
+
+**Full guide:** [docs/user-guide.md](docs/user-guide.md)
 
 ## What it does
 
-1. Create invoices (and catalog products / invoice line items).
-2. Track payments and split them across invoices via payment allocations.
-3. Track outstanding balances from generic computed rollups.
-4. Follow up on unpaid / partial bills.
-5. Use existing Qefro CRM Automation + WhatsApp to remind the customer.
-6. Stop follow-up after the invoice is paid (`on_events` completes pending follow-ups).
-
-Core journey:
-
 ```text
-CREATE INVOICE → TRACK PAYMENT → IDENTIFY OUTSTANDING
+CREATE INVOICE → TRACK PAYMENT → SEE WHAT IS OUTSTANDING
     → FOLLOW UP → CUSTOMER PAYS → STOP FOLLOW-UP
 ```
 
-1. Invoice created (`issued`). Line-item totals roll up when items exist; CSV/conversation totals are kept when there are no items yet.
-2. Staff record a payment → allocation → invoice `paid_amount` / `outstanding_amount` / `partially_paid` or `paid`.
-3. Unpaid past `due_date` → `invoice.overdue` (date watch + status). Event → FlowRunner `on-invoice-overdue` creates a pending follow-up.
-4. Staff can also create a follow-up when the customer says they will pay later.
-5. `follow_up.due` (date watch) is a fact for CRM Automation to send WhatsApp. Billing Pro does not send WhatsApp.
-6. When outstanding reaches zero, `invoice.paid` completes pending follow-ups.
+1. Create an invoice (and catalog products / line items).
+2. Record payments and split them across invoices when needed.
+3. See outstanding balances on the Dashboard.
+4. Overdue unpaid invoices get a follow-up automatically.
+5. WhatsApp reminders are configured on **Automations** (Billing Pro does not send WhatsApp itself).
+6. When the invoice is paid, pending follow-ups complete.
 
-## Entities
+**Example:** INV-1005 is unpaid on the due date → it becomes overdue → a follow-up is created → WhatsApp reminder (if set up) → you record the payment → paid, reminders stop.
 
-| Entity | Role |
+## Install
+
+Marketplace → **Billing Pro** → choose workspace → fill settings.
+
+| Setting | Meaning |
 | --- | --- |
-| `product` | Catalog item or service (`sku` unique) |
-| `invoice` | Customer invoice bound to Customer Hub `person_id` |
-| `invoice_item` | Line on an invoice (`unit_price` is a snapshot) |
-| `payment` | Recorded receipt bound to Customer Hub `person_id` |
-| `payment_allocation` | Amount of a payment applied to an invoice |
-| `follow_up` | Follow-up against an invoice (`follow_up_date`) |
+| Currency | Default for invoices and payments (for example INR) |
+| Invoice prefix | Start of invoice numbers (INV → INV-1001) |
+| Payment terms (days) | Days from issue until due |
+| Default tax rate | Default on new products and invoices |
+| Follow-up interval (days) | Typical days between reminders |
 
-There is no Customer entity and no Collection Case. Identity is Customer Hub Person (`person_id`, `type: person`). Invoice and Payment are `scope: customer`. Follow-up is an operational record created by staff or Event → FlowRunner; the invoice relation is the customer link.
+Then connect **WhatsApp** under Channels, and set up follow-up automation.
 
-## Tools (Runtime EntityService)
+## First-run checklist
 
-Staff operations use generic `entity.<name>.{create,list,get,update,delete,restore,aggregate}` capabilities.
-There is no HTTP `tools/` folder.
+- [ ] Configure business currency
+- [ ] Configure invoice settings
+- [ ] Add or import products
+- [ ] Connect WhatsApp
+- [ ] Configure follow-up automation
+- [ ] Create your first invoice
+- [ ] Record a payment
 
-Command Chat uses generic capability advertisement (entity list/get/aggregate projection and flow triggers). This package does not ship chat UI or `agent:` / `goal:` metadata.
+You're ready. Billing Pro will track outstanding payments and automatically follow up with customers.
 
-Never trust `person_id`, `customer_id`, `email`, or `phone` supplied by the LLM/client.
-Runtime injects `person_id` on create for customer-scoped entities (portal staff pick Person in generic CRUD).
+## Daily workflow
 
-## Workflows
+Morning: Dashboard unpaid / overdue → work **Follow-ups** → record payments as they arrive → overdue invoices get follow-ups → Qefro sends WhatsApp if Automations is on.
 
-- `create-product`, `create-invoice`, `record-payment`
-- `create-follow-up`, `complete-follow-up`
-- `allocate-payment`, `cancel-invoice`
-- `on-invoice-overdue` (`trigger.type: event`, `event: invoice.overdue`)
+## Guide
 
-`record-payment` creates a Payment and a Payment Allocation. It does not ask staff for invoice totals; computed fields are authoritative.
-
-## Computed fields
-
-| Invoice field | Source |
+| Topic | In the guide |
 | --- | --- |
-| `subtotal` / `total_amount` | `relation_sum` of `invoice_item.amount` (empty children do not wipe an explicit create/CSV total) |
-| `paid_amount` | `relation_sum` of `payment_allocation.amount` |
-| `outstanding_amount` | `total_amount - paid_amount` |
-| `status` | `status_from_number` + `status_from_date` (`paid` / `partially_paid` / `issued` / `overdue`; `draft` and `cancelled` preserved) |
+| Products, tax, CSV, archive | [Products](docs/user-guide.md#products) |
+| First invoice (2 × Product A ₹500 = ₹1,000), draft vs issued | [Invoices](docs/user-guide.md#invoices) |
+| Fully paid / partial / why payment is separate | [Payments](docs/user-guide.md#payments) |
+| Overdue → follow-up → WhatsApp → pay → stop | [Follow-ups](docs/user-guide.md#follow-ups) |
+| Connect WA, Automations, Follow-up due, template, test | [WhatsApp reminders](docs/user-guide.md#whatsapp-reminders) |
+| 500 unpaid invoices CSV | [Import data](docs/user-guide.md#import-data) |
+| “Customer paid 5000 for INV-1005” | [Command Chat](docs/user-guide.md#command-chat) |
+| Paid too early, person not saving, reminder not sending | [Troubleshooting](docs/user-guide.md#troubleshooting) |
 
-Invoice-item `amount` = `quantity * unit_price - discount`.
+In the app: **How this works** in the sidebar, and the Dashboard intro.
 
-## Business Events
+## Import sample
 
-- `product.created` / `.updated`
-- `invoice.created` / `.issued` / `.updated` / `.partially_paid` / `.paid` / `.cancelled` / `.overdue`
-- `payment.created` / `.received` / `.reversed`
-- `payment_allocation.created`
-- `follow_up.created` / `.completed` / `.cancelled` / `.due`
+[docs/examples/unpaid-invoices.sample.csv](docs/examples/unpaid-invoices.sample.csv) — headers `invoice_number,name,phone,due_amount,due_date`. Map name/phone to Contacts; `due_amount` to Total.
 
-## Automation (generic host — configure on Automations)
+## Command Chat
 
-| Event | Suggested actions |
-| --- | --- |
-| `invoice.created` | CRM activity |
-| `invoice.overdue` | CRM activity (Event → FlowRunner also creates a follow-up) |
-| `follow_up.created` / `follow_up.due` | CRM activity + WhatsApp reminder |
-| `payment.received` | CRM activity + payment confirmation |
-| `invoice.paid` | CRM activity (pending follow-ups are completed via `on_events`) |
+UI screens stay available. You can also say:
 
-Message templates can use generic entity values (customer name, invoice number, outstanding, due date). Do not hardcode Billing fields into the WhatsApp channel.
-
-## CSV import
-
-Use generic Entity CSV Import on Invoice. Typical headers:
-
-| CSV header | Maps to |
-| --- | --- |
-| Name / Phone / Email | Customer Hub Person (not a Customer entity) |
-| Invoice number | `invoice_number` (unique) |
-| Invoice date | `issue_date` |
-| Due date | `due_date` |
-| Due Amount / Total | `total_amount` |
-| Amount paid / Paid | `paid_amount` |
-| Outstanding / Balance | `outstanding_amount` |
-
-Identity is resolved to Customer Hub Person. There is no Receivable entity. Workspace isolation is the generic importer's. CSV cannot set tenant/workspace/person authority keys.
-
-## Settings
-
-Workspace install settings: `currency`, `invoice_prefix`, `payment_terms_days`, `default_tax_rate`, `follow_up_interval_days`. `currency` and `default_tax_rate` are create defaults via `default_from_setting`.
-
-## Customer vs staff surfaces
-
-- **Staff:** portal navigation (Dashboard, Products, Invoices, Payments, Follow-ups, Contacts, Automations)
-- **Customer:** Hub Person identity on customer-scoped records
-
-## Architecture
-
-```text
-billing-pro (YAML metadata)
-        ↓
-Qefro Marketplace Runtime
-        ↓
-EntityService / FlowRunner / RuntimeAdapter
-        ↓
-managed storage · events · Event → FlowRunner · Automations host · WhatsApp channel · UI host
-```
+- Create a product called Design hours, SKU DES-01, price 2000
+- Raise an invoice for 10000 due next Friday
+- Customer paid 5000 UPI for INV-1005
+- Follow up later — they’ll pay on Friday

@@ -1,6 +1,6 @@
 id: payment_allocation
 name: Payment allocation
-description: Amount of a payment applied to one invoice. One payment may split across invoices.
+description: How much of a payment goes to one invoice. One receipt can cover several invoices.
 allocate_code:
   prefix: ALC-
   start: 1001

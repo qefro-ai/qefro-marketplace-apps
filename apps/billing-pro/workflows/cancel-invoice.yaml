@@ -1,6 +1,6 @@
 id: cancel-invoice
 name: Cancel invoice
-description: Cancel an invoice by status update (not delete). Restrict-delete keeps related line items and allocations.
+description: Cancel an invoice without deleting it. Line items and payments stay.
 surfaces:
 - staff
 trigger:

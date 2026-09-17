@@ -2,8 +2,8 @@ id: billing-pro
 name: Billing Pro
 version: 1.0.0
 hosting: runtime
-description: Metadata-only invoicing and payment-follow-up Marketplace App executed
-  by Qefro Runtime (no SDK, no custom server, not an accounting ERP)
+description: Create invoices, track unpaid bills, and follow up with customers — including
+  WhatsApp reminders after you connect WhatsApp.
 category: commerce
 tags:
 - billing
@@ -49,27 +49,35 @@ events:
 - follow_up.completed
 - follow_up.cancelled
 - follow_up.due
+onboarding:
+- configure_currency
+- configure_invoice_settings
+- add_products
+- connect_whatsapp
+- configure_follow_up_automation
+- create_first_invoice
+- record_a_payment
 settings:
 - key: currency
   type: string
   default: INR
-  description: Default invoice and payment currency
+  description: Currency you bill in (for example INR). New invoices and payments use this.
 - key: invoice_prefix
   type: string
   default: INV
-  description: Prefix staff use when numbering invoices
+  description: Letters at the start of invoice numbers (INV becomes INV-1001).
 - key: payment_terms_days
   type: number
   default: 30
-  description: Default number of days from issue date until due
+  description: How many days after the invoice date until payment is due.
 - key: default_tax_rate
   type: number
   default: 0
-  description: Default tax rate applied when creating products and invoices
+  description: Tax rate used when you create products and invoices (0 if you add tax yourself).
 - key: follow_up_interval_days
   type: number
   default: 3
-  description: Default days between payment follow-ups
+  description: Typical days to wait between payment reminders.
 permissions:
 - workflow.execute
 - storage.read

@@ -7,24 +7,24 @@ settings:
     type: string
     required: true
     default: INR
-    description: Default invoice and payment currency
+    description: Currency you bill in (for example INR). New invoices and payments use this.
   invoice_prefix:
     type: string
     required: true
     default: INV
-    description: Prefix staff use when numbering invoices
+    description: Letters at the start of invoice numbers (INV becomes INV-1001).
   payment_terms_days:
     type: number
     required: true
     default: 30
-    description: Default number of days from issue date until due
+    description: How many days after the invoice date until payment is due.
   default_tax_rate:
     type: number
     required: false
     default: 0
-    description: Default tax rate applied when creating products and invoices
+    description: Tax rate used when you create products and invoices (0 if you add tax yourself).
   follow_up_interval_days:
     type: number
     required: true
     default: 3
-    description: Default days between payment follow-ups
+    description: Typical days to wait between payment reminders.

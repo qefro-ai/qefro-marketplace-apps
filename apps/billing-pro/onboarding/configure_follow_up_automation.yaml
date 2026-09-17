@@ -1,0 +1,5 @@
+id: configure_follow_up_automation
+title: Configure follow-up automation
+action: configure
+required: false
+description: On Automations, when Follow-up due, send WhatsApp. Test it, then enable. Reminders stop after the invoice is paid.

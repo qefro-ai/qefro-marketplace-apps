@@ -1,0 +1,5 @@
+id: record_a_payment
+title: Record a payment
+action: configure
+required: true
+description: When money comes in, record the payment and apply it to the invoice. Partial amounts stay outstanding.

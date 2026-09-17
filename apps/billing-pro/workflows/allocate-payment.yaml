@@ -1,6 +1,6 @@
 id: allocate-payment
 name: Allocate payment
-description: Apply part of an existing payment to an invoice. Invoice totals update from generic allocation rollup.
+description: Apply part of a payment to an invoice (split one receipt across bills).
 surfaces:
 - staff
 trigger:

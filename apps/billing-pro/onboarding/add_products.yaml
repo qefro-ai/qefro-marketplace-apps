@@ -1,0 +1,5 @@
+id: add_products
+title: Add or import products
+action: upload
+required: true
+description: Open Products and add what you sell, or Import Data from CSV (name, SKU, price).

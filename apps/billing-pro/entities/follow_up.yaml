@@ -1,6 +1,6 @@
 id: follow_up
 name: Follow-up
-description: Operational payment follow-up linked to an invoice. Created by staff or by Event → FlowRunner on invoice.overdue. Not customer-scoped so the event actor can create it; Customer Hub identity lives on the invoice.
+description: A reminder to collect an unpaid invoice. Overdue invoices create these automatically. When the invoice is paid, pending follow-ups complete.
 allocate_code:
   prefix: FU-
   start: 1001
@@ -13,7 +13,7 @@ fields:
   required: true
 - name: person_id
   type: person
-  description: Optional Hub Person link. Event-triggered creates copy it from the related invoice via inherit_from; callers cannot supply it.
+  description: Contact copied from the invoice when a follow-up is created automatically.
   ref_entity: person
   inherit_from: invoice_id
 - name: follow_up_date

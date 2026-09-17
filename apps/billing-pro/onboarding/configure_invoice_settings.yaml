@@ -1,0 +1,5 @@
+id: configure_invoice_settings
+title: Configure invoice settings
+action: configure
+required: true
+description: Set invoice prefix (INV), payment terms in days, default tax rate, and follow-up interval.

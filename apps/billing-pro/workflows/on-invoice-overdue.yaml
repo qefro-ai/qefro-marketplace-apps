@@ -1,6 +1,6 @@
 id: on-invoice-overdue
 name: Create follow-up when invoice is overdue
-description: Event → FlowRunner subscriber. invoice.overdue starts this installed flow; it loads the invoice and creates a pending follow-up. Channel reminders are configured on Automations from follow_up.created / follow_up.due.
+description: When an invoice becomes overdue, create a follow-up so you can remind the customer. WhatsApp reminders are set on Automations.
 surfaces:
 - staff
 enabled: true

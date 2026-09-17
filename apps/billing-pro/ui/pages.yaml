@@ -20,6 +20,24 @@
     span: 4
   - widget: invoice_dash_table
     span: 8
+- id: guide
+  title: How this works
+  layout: dashboard-grid
+  widgets:
+  - widget: guide_getting_started
+    span: 12
+  - widget: guide_products
+    span: 12
+  - widget: guide_invoices
+    span: 12
+  - widget: guide_payments
+    span: 12
+  - widget: guide_follow_ups
+    span: 12
+  - widget: guide_whatsapp
+    span: 12
+  - widget: guide_more
+    span: 12
 - id: products
   title: Products
   entity: product

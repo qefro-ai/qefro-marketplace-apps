@@ -1,6 +1,6 @@
 id: record-payment
 name: Record payment
-description: Record a received payment and allocate it to an invoice. Invoice paid/outstanding/status come from generic computed rollups, not from staff arithmetic.
+description: Record money received and apply it to an invoice. The invoice paid and outstanding amounts update for you.
 surfaces:
 - staff
 trigger:

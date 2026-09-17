@@ -2,6 +2,10 @@
   page: dashboard
   title: Dashboard
   icon: home
+- id: guide
+  page: guide
+  title: How this works
+  icon: file-text
 - id: products
   page: products
   title: Products

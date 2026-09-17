@@ -1,6 +1,6 @@
 id: create-follow-up
 name: Create follow-up
-description: Schedule a payment follow-up against an unpaid or partial invoice
+description: Remind yourself to collect an unpaid or partial invoice.
 surfaces:
 - staff
 trigger:

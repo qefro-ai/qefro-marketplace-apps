@@ -1,7 +1,7 @@
 id: invoice
 scope: customer
 name: Invoice
-description: Customer invoice bound to Customer Hub Person
+description: A bill you send to a customer. Pick the contact from Contacts. Paid, unpaid, and overdue update as you record payments.
 allocate_code:
   prefix: INV-
   start: 1001
@@ -18,7 +18,7 @@ fields:
   - invoice number
 - name: person_id
   type: person
-  description: Existing Qefro Person identity (Customer Hub)
+  description: Customer from Contacts. Add them under Contacts first if they are new.
   ref_entity: person
   required: true
 - name: issue_date

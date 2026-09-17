@@ -1,0 +1,6 @@
+id: connect_whatsapp
+title: Connect WhatsApp
+action: channel.enable
+channel: whatsapp
+required: false
+description: Connect WhatsApp for this workspace so overdue follow-ups can send payment reminders.

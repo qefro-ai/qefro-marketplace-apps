@@ -1,6 +1,6 @@
 id: complete-follow-up
 name: Complete follow-up
-description: Mark a payment follow-up as completed
+description: Mark a payment follow-up as done.
 surfaces:
 - staff
 trigger:

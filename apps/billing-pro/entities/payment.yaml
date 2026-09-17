@@ -1,7 +1,7 @@
 id: payment
 scope: customer
 name: Payment
-description: Recorded receipt bound to Customer Hub Person. Allocations apply this amount to invoices.
+description: Money you received. Record the payment, then apply it to one or more invoices.
 allocate_code:
   prefix: PAY-
   start: 1001
@@ -17,7 +17,7 @@ fields:
   - payment no
 - name: person_id
   type: person
-  description: Existing Qefro Person identity (Customer Hub)
+  description: Customer from Contacts. Add them under Contacts first if they are new.
   ref_entity: person
   required: true
 - name: payment_date

@@ -1,0 +1,5 @@
+id: configure_currency
+title: Configure business currency
+action: configure
+required: true
+description: Set the currency you bill in (for example INR). New invoices and payments use this by default.

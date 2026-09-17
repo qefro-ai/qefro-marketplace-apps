@@ -1,6 +1,6 @@
 id: invoice_item
 name: Invoice item
-description: Line billed on an invoice. unit_price is a historical snapshot; later product price changes do not rewrite it.
+description: One line on an invoice. Example — 2 × Product A at ₹500 = ₹1,000. Changing the product later does not rewrite this price.
 allocate_code:
   prefix: ITM-
   start: 1001

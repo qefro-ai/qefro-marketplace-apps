@@ -1,6 +1,6 @@
 id: product
 name: Product
-description: Reusable catalog product or service. Invoice items snapshot price at bill time.
+description: A product or service you sell. Add these once, then pick them on invoices. Price on an invoice is kept even if you change the catalog later.
 allocate_code:
   prefix: PRD-
   start: 1001
