@@ -1,3 +1,9 @@
+- id: pos
+  title: POS
+  layout: dashboard-grid
+  widgets:
+  - widget: pos_checkout
+    span: 12
 - id: dashboard
   title: Dashboard
   layout: dashboard-grid

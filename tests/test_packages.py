@@ -1002,5 +1002,93 @@ class BillingProTests(unittest.TestCase):
         self.assertFalse((self.APP / "entities" / "order.yaml").exists())
 
 
+class RestaurantProTests(unittest.TestCase):
+    APP = APPS / "restaurant-pro"
+
+    def _entity(self, name: str):
+        return load_yaml(self.APP / "entities" / f"{name}.yaml")
+
+    def _field(self, entity: dict, name: str) -> dict:
+        return next(f for f in entity["fields"] if f["name"] == name)
+
+    def test_package_is_independent_of_billing_pro(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertEqual(manifest["id"], "restaurant-pro")
+        self.assertEqual(manifest["hosting"], "runtime")
+        self.assertNotIn("billing-pro", str(manifest))
+        self.assertNotIn("invoice", manifest.get("entities") or [])
+        self.assertFalse((self.APP / "entities" / "invoice.yaml").exists())
+        self.assertFalse((self.APP / "entities" / "invoice_item.yaml").exists())
+        self.assertFalse((self.APP / "entities" / "payment_allocation.yaml").exists())
+        self.assertFalse((self.APP / "entities" / "product.yaml").exists())
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("billing-pro", text)
+            self.assertNotRegex(text, r"if\s+solution\s*==")
+
+    def test_menu_item_uses_generic_image_field(self):
+        item = self._entity("menu_item")
+        image = self._field(item, "image")
+        self.assertEqual(image["type"], "image")
+        field_names = [f["name"] for f in item["fields"]]
+        self.assertNotIn("food_image", field_names)
+        self.assertNotIn("image_url", field_names)
+        self.assertEqual(self._field(item, "availability")["enum_values"], ["available", "sold_out", "seasonal"])
+
+    def test_order_total_uses_generic_computed_relation(self):
+        order = self._entity("order")
+        self.assertEqual(order["computed"][0]["op"], "relation_sum")
+        self.assertEqual(order["computed"][0]["relation"], "order_item")
+        self.assertEqual(order["computed"][0]["foreign_key"], "order_id")
+        self.assertEqual(order["computed"][0]["sum_field"], "amount")
+        item = self._entity("order_item")
+        self.assertEqual(self._field(item, "order_id")["type"], "relation")
+        self.assertEqual(self._field(item, "menu_item_id")["type"], "relation")
+        self.assertEqual(item["computed"][0]["op"], "multiply")
+        self.assertEqual(item["computed"][0]["left"], "quantity")
+        self.assertEqual(item["computed"][0]["right"], "unit_price")
+        self.assertIn("unit_price", [f["name"] for f in item["fields"]])
+
+    def test_person_remains_optional_for_walk_in(self):
+        order = self._entity("order")
+        person = self._field(order, "person_id")
+        self.assertEqual(person["type"], "person")
+        self.assertNotEqual(person.get("required"), True)
+        payment = self._entity("payment")
+        self.assertNotEqual(self._field(payment, "person_id").get("required"), True)
+
+    def test_payment_methods_come_from_metadata(self):
+        payment = self._entity("payment")
+        self.assertEqual(self._field(payment, "method")["enum_values"], ["cash", "card", "upi"])
+        self.assertEqual(self._field(payment, "order_code").get("required"), True)
+
+    def test_pos_binds_restaurant_entities_on_cart_checkout(self):
+        pages = {page["id"]: page for page in load_yaml(self.APP / "ui" / "pages.yaml")}
+        self.assertEqual(pages["pos"]["widgets"][0]["widget"], "pos_checkout")
+        widgets = {w["id"]: w for w in load_yaml(self.APP / "ui" / "widgets.yaml")}
+        pos = widgets["pos_checkout"]
+        self.assertEqual(pos["type"], "cart_checkout")
+        options = pos["options"]
+        self.assertEqual(options["catalog_entity"], "menu_item")
+        self.assertEqual(options["line_entity"], "order_item")
+        self.assertEqual(options["document_entity"], "order")
+        self.assertEqual(options["payment_entity"], "payment")
+        self.assertNotIn("allocation_entity", options)
+        self.assertFalse(options.get("person_required"))
+        self.assertEqual(options["catalog_category_field"], "category_name")
+        self.assertEqual(options["catalog_unavailable_values"], ["sold_out"])
+        self.assertEqual(options["payment_methods"], ["cash", "card", "upi"])
+        nav_ids = [item["id"] for item in load_yaml(self.APP / "ui" / "navigation.yaml")]
+        self.assertIn("pos", nav_ids)
+        self.assertEqual(nav_ids[1], "pos")
+
+    def test_existing_order_workflow_unchanged(self):
+        flow = load_yaml(self.APP / "workflows" / "create-order.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertEqual(tools, ["entity.order.create"])
+        self.assertEqual(flow["steps"][-1]["type"], "complete")
+        self.assertNotIn("entity.invoice.create", tools)
+
+
 if __name__ == "__main__":
     unittest.main()

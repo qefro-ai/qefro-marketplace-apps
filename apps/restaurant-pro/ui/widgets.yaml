@@ -1,3 +1,55 @@
+- id: pos_checkout
+  type: cart_checkout
+  title: Restaurant POS
+  options:
+    catalog_entity: menu_item
+    catalog_title_field: name
+    catalog_price_field: price
+    catalog_category_field: category_name
+    catalog_category_entity: menu_category
+    catalog_availability_field: availability
+    catalog_unavailable_values:
+    - sold_out
+    catalog_filter:
+      status: active
+    line_entity: order_item
+    line_parent_field: order_id
+    line_parent_code_field: order_code
+    line_catalog_field: menu_item_id
+    line_qty_field: quantity
+    line_price_field: unit_price
+    line_description_field: menu_item_name
+    document_entity: order
+    document_status: pending
+    document_status_field: status
+    document_person_field: person_id
+    document_total_field: total_amount
+    document_number_field: code
+    document_currency_field: currency
+    document_guest_field: guest_name
+    document_table_field: table_name
+    document_page: orders
+    person_required: false
+    table_entity: table
+    table_label_field: name
+    payment_entity: payment
+    payment_amount_field: amount
+    payment_method_field: method
+    payment_status: completed
+    payment_status_field: status
+    payment_date_field: paid_at
+    payment_person_field: person_id
+    payment_currency_field: currency
+    payment_document_field: order_code
+    payment_document_id_field: order_id
+    payment_guest_field: guest_name
+    payment_methods:
+    - cash
+    - card
+    - upi
+    submit_label: Complete order
+    new_label: New order
+    cart_title: Current order
 - id: reservation_form
   type: form
   title: Book table

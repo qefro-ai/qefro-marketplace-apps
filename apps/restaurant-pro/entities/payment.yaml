@@ -1,11 +1,14 @@
 id: payment
 scope: customer
 name: Payment
-description: Order payment
+description: Payment for a Restaurant Order
 allocate_code:
   prefix: PAY-
   start: 1001
 fields:
+- name: order_id
+  type: relation
+  ref_entity: order
 - name: order_code
   type: string
   required: true
@@ -16,6 +19,12 @@ fields:
   required: true
 - name: currency
   type: string
+- name: method
+  type: enum
+  enum_values:
+  - cash
+  - card
+  - upi
 - name: status
   type: enum
   enum_values:

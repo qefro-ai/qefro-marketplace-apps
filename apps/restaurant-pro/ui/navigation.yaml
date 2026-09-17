@@ -2,6 +2,10 @@
   page: dashboard
   title: Dashboard
   icon: home
+- id: pos
+  page: pos
+  title: POS
+  icon: clipboard
 - id: customers
   page: customers
   title: Customers

@@ -14,8 +14,9 @@ fields:
   required: true
 - name: currency
   type: string
-- name: image_url
-  type: url
+- name: image
+  type: image
+  description: Menu item photo uploaded via the generic solution media field
 - name: availability
   type: enum
   enum_values:
