@@ -28,3 +28,6 @@
 - id: travel_documents
   type: entity
   target: travel_document
+- id: agents
+  type: entity
+  target: agent

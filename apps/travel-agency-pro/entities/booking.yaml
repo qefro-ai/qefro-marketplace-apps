@@ -62,3 +62,9 @@ status_events:
   confirmed: booking.confirmed
   cancelled: booking.cancelled
   completed: booking.completed
+computed:
+- field: total_amount
+  op: relation_sum
+  relation: booking_item
+  foreign_key: booking
+  sum_field: total_price

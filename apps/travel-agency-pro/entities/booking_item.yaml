@@ -54,3 +54,8 @@ fields:
 - name: code
   type: string
   description: Auto-allocated item code
+computed:
+- field: total_price
+  op: multiply
+  left: quantity
+  right: unit_price
