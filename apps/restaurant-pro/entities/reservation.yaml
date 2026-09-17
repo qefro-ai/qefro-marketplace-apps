@@ -9,6 +9,9 @@ fields:
 - name: guest_name
   type: string
   required: true
+- name: table_id
+  type: relation
+  ref_entity: table
 - name: table_name
   type: string
 - name: guest_count
@@ -42,3 +45,10 @@ status_events:
   cancelled: reservation.cancelled
   completed: reservation.updated
   no_show: reservation.updated
+availability:
+  booking:
+    datetime_field: reservation_at
+  capacity:
+    mode: exclusive
+    resource:
+      field: table_id

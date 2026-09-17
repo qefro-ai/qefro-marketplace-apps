@@ -5,13 +5,15 @@ description: Payment for a Restaurant Order
 allocate_code:
   prefix: PAY-
   start: 1001
+concurrency: optimistic
 fields:
 - name: order_id
   type: relation
   ref_entity: order
+  required: true
 - name: order_code
   type: string
-  required: true
+  description: Optional denormalized parent code for display. Relation is order_id.
 - name: guest_name
   type: string
 - name: amount
@@ -38,7 +40,12 @@ fields:
   type: person
   description: Existing Qefro Person identity (Customer Hub)
   ref_entity: person
+  inherit_from: order_id
 status_events:
   completed: payment.created
   failed: payment.created
   refunded: payment.created
+relation_caps:
+- field: amount
+  relation: order_id
+  parent_field: total_amount

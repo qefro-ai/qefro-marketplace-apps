@@ -14,10 +14,72 @@ steps:
   type: ask
   field: guest_count
   message: "👥 Party size?"
+- id: list_tables
+  type: tool
+  tool: entity.table.list
+  execution: runtime
+  output: tables
+  input_map:
+    filter.status: $literal:available
+    limit: $literal:20
+- id: ask_table
+  type: ask
+  field: table_id
+  message: "🍽️ Which table?"
+  choices_from: tables
+  title_field: name
+  value_field: id
+  chip_prefix: table
+- id: get_table
+  type: tool
+  tool: entity.table.get
+  execution: runtime
+  output: table
+  input_map:
+    id: table_id
+- id: list_dates
+  type: tool
+  tool: entity.reservation.availability
+  execution: runtime
+  output: available_dates
+  input_map:
+    kind: $literal:dates
+    table_id: table_id
 - id: ask_date
   type: ask
   field: date
-  message: "📅 Which date?"
+  message: "📅 Choose a date"
+  choices_from: available_dates
+  title_field: label
+  value_field: value
+  chip_prefix: date
+- id: list_slots
+  type: tool
+  tool: entity.reservation.availability
+  execution: runtime
+  output: available_slots
+  input_map:
+    kind: $literal:slots
+    date: date
+    table_id: table_id
+- id: ask_time
+  type: ask
+  field: time
+  message: "⏰ Choose a time"
+  choices_from: available_slots
+  title_field: label
+  value_field: time
+  chip_prefix: time
+- id: validate_slot
+  type: tool
+  tool: entity.reservation.availability
+  execution: runtime
+  output: slot_check
+  input_map:
+    kind: $literal:validate
+    date: date
+    time: time
+    table_id: table_id
 - id: run
   type: tool
   tool: entity.reservation.create
@@ -28,11 +90,12 @@ steps:
     date: date
     time: time
     reservation_at: scheduled_at
-    table_name: table_name
+    table_id: table_id
+    table_name: table.name
     notes: notes
     status: $literal:confirmed
 - id: confirm
   type: message
-  message: "✅ Reservation booked for {{guest_count}} on {{date}}."
+  message: "✅ Reservation booked for {{guest_count}} at {{table_name}} on {{date}} at {{time}}."
 - id: done
   type: complete

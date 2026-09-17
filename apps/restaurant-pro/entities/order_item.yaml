@@ -1,13 +1,15 @@
 id: order_item
 name: Order item
 description: Line item on an order. Unit price is the amount charged at sale time.
+concurrency: optimistic
 fields:
 - name: order_id
   type: relation
   ref_entity: order
+  required: true
 - name: order_code
   type: string
-  required: true
+  description: Optional denormalized parent code for display. Relation is order_id.
 - name: menu_item_id
   type: relation
   ref_entity: menu_item

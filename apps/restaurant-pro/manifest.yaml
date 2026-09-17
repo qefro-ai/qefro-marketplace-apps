@@ -1,6 +1,6 @@
 id: restaurant-pro
 name: Restaurant Pro
-version: 1.3.0
+version: 1.3.1
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro
   Runtime (no SDK, no custom server)
@@ -68,6 +68,35 @@ capabilities:
 - workflow.trigger
 - storage.read
 - storage.write
+settings:
+- key: timezone
+  type: string
+  default: Asia/Kolkata
+  description: IANA timezone for reservation slots
+- key: duration_minutes
+  type: number
+  default: 90
+  description: Typical table hold in minutes
+- key: start_time
+  type: string
+  default: "11:00"
+  description: Opening time (HH:MM, 24-hour)
+- key: end_time
+  type: string
+  default: "23:00"
+  description: Closing time (HH:MM, 24-hour)
+- key: closed_days
+  type: string
+  default: ""
+  description: Comma-separated weekdays the restaurant is closed
+- key: date_window_days
+  type: number
+  default: 14
+  description: How many days ahead to offer reservation slots
+- key: blocking_statuses
+  type: string
+  default: pending,confirmed,seated
+  description: Reservation statuses that occupy a table slot
 triggers:
 - id: book_table
   workflow: book-table

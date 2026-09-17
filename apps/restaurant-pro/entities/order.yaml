@@ -5,6 +5,9 @@ description: Dining or takeaway order bound to Person
 allocate_code:
   prefix: O-
   start: 1001
+delete:
+  mode: restrict
+concurrency: optimistic
 fields:
 - name: code
   type: string
