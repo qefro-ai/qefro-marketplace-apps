@@ -430,11 +430,11 @@ class PackageConventionTests(unittest.TestCase):
     def test_existing_reference_apps_still_present(self):
         names = {p.name for p in app_dirs()}
         for required in (
-            "shopify-runtime",
-            "restaurant-pro-runtime",
-            "real-estate-pro-runtime",
-            "clinic-pro-runtime",
-            "http-catalog-runtime",
+            "shopify",
+            "restaurant-pro",
+            "real-estate-pro",
+            "clinic-pro",
+            "http-catalog",
         ):
             self.assertIn(required, names)
 
@@ -556,23 +556,23 @@ class PackageConventionTests(unittest.TestCase):
 
 class NewAppCoverageTests(unittest.TestCase):
     EXPECTED = [
-        "stripe-runtime",
-        "razorpay-runtime",
-        "woocommerce-runtime",
-        "google-calendar-runtime",
-        "google-sheets-runtime",
-        "freshdesk-runtime",
-        "zoho-crm-runtime",
-        "whatsapp-business-runtime",
-        "calendly-runtime",
-        "slack-runtime",
-        "appointment-runtime",
-        "field-service-runtime",
-        "education-runtime",
-        "clinic-pro-runtime",
-        "logistics-runtime",
-        "restaurant-pro-runtime",
-        "real-estate-pro-runtime",
+        "stripe",
+        "razorpay",
+        "woocommerce",
+        "google-calendar",
+        "google-sheets",
+        "freshdesk",
+        "zoho-crm",
+        "whatsapp-business",
+        "calendly",
+        "slack",
+        "appointment",
+        "field-service",
+        "education",
+        "clinic-pro",
+        "logistics",
+        "restaurant-pro",
+        "real-estate-pro",
     ]
 
     def test_phase_apps_exist(self):
@@ -591,7 +591,7 @@ class NewAppCoverageTests(unittest.TestCase):
                 self.assertTrue(manifest.get("http_tools"))
                 self.assertTrue(manifest.get("connections"))
                 conn = load_yaml(next((app / "connections").glob("*.yaml")))
-                if name not in {"google-sheets-runtime"}:
+                if name not in {"google-sheets"}:
                     self.assertTrue((conn.get("webhooks") or {}).get("topics"))
                 tools = [load_yaml(p) for p in (app / "tools").glob("*.yaml")]
                 surfaces = {
@@ -601,11 +601,11 @@ class NewAppCoverageTests(unittest.TestCase):
                 }
                 self.assertIn("staff", surfaces)
                 if name in {
-                    "stripe-runtime",
-                    "razorpay-runtime",
-                    "woocommerce-runtime",
-                    "freshdesk-runtime",
-                    "calendly-runtime",
+                    "stripe",
+                    "razorpay",
+                    "woocommerce",
+                    "freshdesk",
+                    "calendly",
                 }:
                     self.assertIn("customer", surfaces)
 
@@ -1043,6 +1043,8 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(order["computed"][0]["sum_field"], "amount")
         item = self._entity("order_item")
         self.assertEqual(self._field(item, "order_id")["type"], "relation")
+        self.assertEqual(self._field(item, "order_id").get("required"), True)
+        self.assertNotEqual(self._field(item, "order_code").get("required"), True)
         self.assertEqual(self._field(item, "menu_item_id")["type"], "relation")
         self.assertEqual(item["computed"][0]["op"], "multiply")
         self.assertEqual(item["computed"][0]["left"], "quantity")
@@ -1060,7 +1062,9 @@ class RestaurantProTests(unittest.TestCase):
     def test_payment_methods_come_from_metadata(self):
         payment = self._entity("payment")
         self.assertEqual(self._field(payment, "method")["enum_values"], ["cash", "card", "upi"])
-        self.assertEqual(self._field(payment, "order_code").get("required"), True)
+        self.assertEqual(self._field(payment, "order_id")["type"], "relation")
+        self.assertEqual(self._field(payment, "order_id").get("required"), True)
+        self.assertNotEqual(self._field(payment, "order_code").get("required"), True)
 
     def test_pos_binds_restaurant_entities_on_cart_checkout(self):
         pages = {page["id"]: page for page in load_yaml(self.APP / "ui" / "pages.yaml")}
@@ -1088,6 +1092,215 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(tools, ["entity.order.create"])
         self.assertEqual(flow["steps"][-1]["type"], "complete")
         self.assertNotIn("entity.invoice.create", tools)
+
+    def test_reservation_uses_generic_availability(self):
+        reservation = self._entity("reservation")
+        avail = reservation["availability"]
+        self.assertEqual(avail["booking"]["datetime_field"], "reservation_at")
+        self.assertEqual(avail["capacity"]["mode"], "exclusive")
+        self.assertEqual(avail["capacity"]["resource"]["field"], "table_id")
+        self.assertEqual(self._field(reservation, "table_id")["type"], "relation")
+        self.assertEqual(self._field(reservation, "table_id")["ref_entity"], "table")
+        flow = load_yaml(self.APP / "workflows" / "book-table.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertEqual(tools.count("entity.reservation.availability"), 3)
+        self.assertIn("entity.reservation.create", tools)
+
+    def test_payment_uses_relation_caps_and_person_inherit(self):
+        payment = self._entity("payment")
+        self.assertEqual(payment["relation_caps"][0]["relation"], "order_id")
+        self.assertEqual(payment["relation_caps"][0]["parent_field"], "total_amount")
+        self.assertEqual(self._field(payment, "person_id").get("inherit_from"), "order_id")
+        self.assertTrue(self._field(payment, "order_id").get("required"))
+        self.assertEqual(self._entity("order").get("concurrency"), "optimistic")
+
+
+class CompatibilityContractTests(unittest.TestCase):
+    """Every Marketplace App against the current metadata contract."""
+
+    PLATFORM_REF = {"person"}
+
+    def test_every_package_is_audited(self):
+        names = {p.name for p in app_dirs()}
+        self.assertGreaterEqual(len(names), 22)
+        for required in (
+            "appointment",
+            "billing-pro",
+            "calendly",
+            "clinic-pro",
+            "education",
+            "field-service",
+            "freshdesk",
+            "google-calendar",
+            "google-sheets",
+            "http-catalog",
+            "logistics",
+            "project-tracker",
+            "razorpay",
+            "real-estate-pro",
+            "restaurant-pro",
+            "shopify",
+            "slack",
+            "stripe",
+            "travel-agency-pro",
+            "whatsapp-business",
+            "woocommerce",
+            "zoho-crm",
+        ):
+            self.assertIn(required, names)
+
+    def test_no_agent_or_goal_metadata(self):
+        for app in app_dirs():
+            with self.subTest(app=app.name):
+                text = (app / "manifest.yaml").read_text(encoding="utf-8")
+                self.assertNotIn("\nagent:", text)
+                manifest = load_yaml(app / "manifest.yaml")
+                self.assertFalse(manifest.get("agent"))
+                self.assertFalse(manifest.get("goal"))
+
+    def test_entity_fields_are_canonical_lists(self):
+        for app in app_dirs():
+            entity_ids = {p.stem for p in (app / "entities").glob("*.yaml")}
+            for path in sorted((app / "entities").glob("*.yaml")):
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    entity = load_yaml(path)
+                    fields = entity.get("fields")
+                    self.assertIsInstance(fields, list, f"{path} fields must be a list")
+                    self.assertTrue(fields)
+                    for field in fields:
+                        self.assertIsInstance(field, dict)
+                        self.assertIn(field["type"], KNOWN_FIELD_TYPES)
+                        if field["type"] == "relation":
+                            ref = field.get("ref_entity")
+                            self.assertTrue(ref)
+                            if ref not in self.PLATFORM_REF:
+                                self.assertIn(
+                                    ref,
+                                    entity_ids,
+                                    f"{path} relation {field['name']} refs missing entity {ref}",
+                                )
+                        if field["type"] == "person":
+                            self.assertEqual(field.get("ref_entity", "person"), "person")
+                    if entity.get("scope") == "customer":
+                        self.assertTrue(any(f.get("type") == "person" for f in fields))
+
+    def test_status_events_are_declared_on_the_manifest(self):
+        for app in app_dirs():
+            manifest = load_yaml(app / "manifest.yaml")
+            declared = set(manifest.get("events") or [])
+            for path in sorted((app / "entities").glob("*.yaml")):
+                entity = load_yaml(path)
+                events = entity.get("status_events") or {}
+                date_events = entity.get("date_events") or []
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    for event in events.values():
+                        self.assertIn(event, declared, f"{path} status event {event} missing from manifest")
+                    for spec in date_events:
+                        self.assertIn(spec["event"], declared)
+
+    def test_flows_use_supported_triggers(self):
+        allowed = {"conversation", "event", "schedule", "webhook"}
+        for app in app_dirs():
+            for path in sorted((app / "workflows").glob("*.yaml")):
+                with self.subTest(path=str(path.relative_to(ROOT))):
+                    flow = load_yaml(path)
+                    trigger = flow.get("trigger") or {}
+                    self.assertIn(trigger.get("type"), allowed)
+                    if trigger.get("type") == "event":
+                        self.assertTrue(trigger.get("event"))
+
+    def test_restaurant_and_billing_remain_independent(self):
+        restaurant = APPS / "restaurant-pro"
+        billing = APPS / "billing-pro"
+        r_manifest = load_yaml(restaurant / "manifest.yaml")
+        b_manifest = load_yaml(billing / "manifest.yaml")
+        self.assertNotEqual(r_manifest["id"], b_manifest["id"])
+        self.assertNotIn("invoice", r_manifest.get("entities") or [])
+        self.assertNotIn("menu_item", b_manifest.get("entities") or [])
+        self.assertNotIn("payment_allocation", r_manifest.get("entities") or [])
+        for path in restaurant.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("billing-pro", text)
+            self.assertNotIn("invoice_item", text)
+        for path in billing.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("restaurant-pro", text)
+            self.assertNotIn("menu_item", text)
+            self.assertNotIn("order_item", text)
+
+
+class AppointmentAvailabilityTests(unittest.TestCase):
+    APP = APPS / "appointment"
+
+    def test_appointment_contract_is_structural_only(self):
+        appointment = load_yaml(self.APP / "entities" / "appointment.yaml")
+        avail = appointment["availability"]
+        self.assertEqual(avail["booking"]["datetime_field"], "scheduled_at")
+        self.assertEqual(avail["capacity"]["mode"], "exclusive")
+        self.assertEqual(avail["capacity"]["resource"]["field"], "staff_id")
+        for operating in ("timezone", "working_hours", "closed_days", "date_window_days", "blocking_statuses"):
+            self.assertNotIn(operating, avail)
+
+    def test_create_and_reschedule_use_availability_runtime(self):
+        create = load_yaml(self.APP / "workflows" / "create-appointment.yaml")
+        reschedule = load_yaml(self.APP / "workflows" / "reschedule-appointment.yaml")
+        create_tools = [s.get("tool") for s in create["steps"] if s.get("type") == "tool"]
+        reschedule_tools = [s.get("tool") for s in reschedule["steps"] if s.get("type") == "tool"]
+        self.assertEqual(create_tools.count("entity.appointment.availability"), 3)
+        self.assertEqual(reschedule_tools.count("entity.appointment.availability"), 3)
+
+
+class ClinicProTests(unittest.TestCase):
+    APP = APPS / "clinic-pro"
+
+    def test_appointment_uses_generic_availability(self):
+        appointment = load_yaml(self.APP / "entities" / "appointment.yaml")
+        avail = appointment["availability"]
+        self.assertEqual(avail["booking"]["datetime_field"], "scheduled_at")
+        self.assertEqual(avail["capacity"]["resource"]["field"], "practitioner_id")
+        self.assertEqual(
+            next(f for f in appointment["fields"] if f["name"] == "practitioner_id")["type"],
+            "relation",
+        )
+        flow = load_yaml(self.APP / "workflows" / "book-appointment.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertEqual(tools.count("entity.appointment.availability"), 3)
+        self.assertNotIn("entity.invoice.create", tools)
+
+    def test_invoice_uses_date_watch_not_custom_scheduler(self):
+        invoice = load_yaml(self.APP / "entities" / "invoice.yaml")
+        self.assertEqual(invoice["date_events"][0]["event"], "invoice.overdue")
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("invoice.overdue", manifest["events"])
+        self.assertNotIn("agent", manifest)
+
+
+class TravelAgencyProTests(unittest.TestCase):
+    APP = APPS / "travel-agency-pro"
+
+    def test_assigned_agent_targets_in_app_entity(self):
+        booking = load_yaml(self.APP / "entities" / "booking.yaml")
+        agent_field = next(f for f in booking["fields"] if f["name"] == "assigned_agent")
+        self.assertEqual(agent_field["type"], "relation")
+        self.assertEqual(agent_field["ref_entity"], "agent")
+        self.assertTrue((self.APP / "entities" / "agent.yaml").exists())
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("agent", manifest["entities"])
+
+    def test_totals_use_generic_computed_fields(self):
+        booking = load_yaml(self.APP / "entities" / "booking.yaml")
+        item = load_yaml(self.APP / "entities" / "booking_item.yaml")
+        payment = load_yaml(self.APP / "entities" / "payment.yaml")
+        self.assertEqual(booking["computed"][0]["op"], "relation_sum")
+        self.assertEqual(item["computed"][0]["op"], "multiply")
+        self.assertEqual(payment["relation_caps"][0]["relation"], "booking")
+
+
+class BillingProImageTests(unittest.TestCase):
+    def test_product_uses_generic_image_field(self):
+        product = load_yaml(APPS / "billing-pro" / "entities" / "product.yaml")
+        image = next(f for f in product["fields"] if f["name"] == "image")
+        self.assertEqual(image["type"], "image")
 
 
 if __name__ == "__main__":
