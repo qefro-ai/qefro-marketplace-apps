@@ -6,14 +6,26 @@ allocate_code:
   prefix: DL-
   start: 1001
 fields:
+- name: property_id
+  type: relation
+  ref_entity: property
 - name: property_title
   type: string
   required: true
+- name: lead_id
+  type: relation
+  ref_entity: lead
 - name: lead_name
   type: string
   required: true
+- name: agent_id
+  type: relation
+  ref_entity: agent
 - name: agent_name
   type: string
+- name: offer_id
+  type: relation
+  ref_entity: offer
 - name: offer_code
   type: string
 - name: amount

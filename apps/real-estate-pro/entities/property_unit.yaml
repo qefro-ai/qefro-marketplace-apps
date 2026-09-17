@@ -2,6 +2,9 @@ id: property_unit
 name: Property unit
 description: Unit within a multi-unit property
 fields:
+- name: property_id
+  type: relation
+  ref_entity: property
 - name: property_code
   type: string
   required: true

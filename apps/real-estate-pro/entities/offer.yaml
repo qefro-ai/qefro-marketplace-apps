@@ -6,9 +6,15 @@ allocate_code:
   prefix: OF-
   start: 1001
 fields:
+- name: property_id
+  type: relation
+  ref_entity: property
 - name: property_title
   type: string
   required: true
+- name: lead_id
+  type: relation
+  ref_entity: lead
 - name: lead_name
   type: string
   required: true
