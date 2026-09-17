@@ -1,6 +1,6 @@
 id: appointment
 name: Appointments
-version: 1.0.0
+version: 1.1.0
 hosting: runtime
 description: Services, staff, availability, and bookings as a native Qefro business
   application
@@ -33,6 +33,7 @@ events:
 - appointment.updated
 - appointment.cancelled
 - appointment.confirmed
+- appointment.completed
 - appointment.no_show
 - booking.created
 - service.created
@@ -53,6 +54,35 @@ capabilities:
 - workflow.trigger
 - storage.read
 - storage.write
+settings:
+- key: timezone
+  type: string
+  default: Asia/Kolkata
+  description: IANA timezone for appointment slots
+- key: duration_minutes
+  type: number
+  default: 30
+  description: Appointment duration in minutes
+- key: start_time
+  type: string
+  default: "09:00"
+  description: Opening time (HH:MM, 24-hour)
+- key: end_time
+  type: string
+  default: "18:00"
+  description: Closing time (HH:MM, 24-hour)
+- key: closed_days
+  type: string
+  default: sunday
+  description: Comma-separated weekdays the office is closed
+- key: date_window_days
+  type: number
+  default: 14
+  description: How many days ahead to offer appointment slots
+- key: blocking_statuses
+  type: string
+  default: scheduled,confirmed
+  description: Appointment statuses that occupy a staff slot
 triggers:
 - id: book_appointment
   workflow: create-appointment

@@ -20,6 +20,8 @@ fields:
     ref_entity: staff_member
   - name: staff_name
     type: string
+  - name: scheduled_at
+    type: datetime
   - name: date
     type: date
     required: true
@@ -41,3 +43,10 @@ status_events:
   confirmed: appointment.confirmed
   cancelled: appointment.cancelled
   completed: appointment.completed
+availability:
+  booking:
+    datetime_field: scheduled_at
+  capacity:
+    mode: exclusive
+    resource:
+      field: staff_id
