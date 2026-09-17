@@ -20,6 +20,9 @@ fields:
   - sku
 - name: description
   type: string
+- name: image
+  type: image
+  description: Catalog photo shown in POS and product pages
 - name: item_type
   type: enum
   enum_values:
