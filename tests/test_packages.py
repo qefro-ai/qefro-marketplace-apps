@@ -56,6 +56,41 @@ IDENTITY_OVERRIDE_KEYS = {
     "organization_id",
 }
 PLACEHOLDER_RE = re.compile(r"\{([^{}]+)\}")
+CRM_AUTOMATION_ACTION_TYPES = {
+    "send_whatsapp",
+    "send_email",
+    "add_tag",
+    "remove_tag",
+    "change_contact_status",
+    "assign_user",
+    "create_followup",
+    "create_task",
+    "notify_team",
+    "delay",
+    "delegate_to_agent",
+    "send_webhook",
+}
+TEMPLATE_FORBIDDEN_KEYS = FORBIDDEN_CONNECTION_KEYS | {
+    "headers",
+    "header",
+    "destination_url",
+    "endpoint",
+    "signing_secret",
+    "tenant_id",
+    "workspace_id",
+    "installation_id",
+    "organization_id",
+    "person_id",
+    "customer_id",
+    "code",
+    "script",
+    "javascript",
+    "cel",
+    "expr",
+    "expression",
+    "connection_id",
+    "connection",
+}
 KNOWN_FIELD_TYPES = {
     "string",
     "integer",
@@ -1314,6 +1349,141 @@ class BillingProImageTests(unittest.TestCase):
         product = load_yaml(APPS / "billing-pro" / "entities" / "product.yaml")
         image = next(f for f in product["fields"] if f["name"] == "image")
         self.assertEqual(image["type"], "image")
+
+
+def _walk_forbidden_template_keys(node, path=""):
+    found = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            lowered = str(key).lower()
+            if lowered in TEMPLATE_FORBIDDEN_KEYS:
+                found.append(f"{path}.{key}" if path else key)
+            found.extend(_walk_forbidden_template_keys(value, f"{path}.{key}" if path else key))
+    elif isinstance(node, list):
+        for i, value in enumerate(node):
+            found.extend(_walk_forbidden_template_keys(value, f"{path}[{i}]"))
+    elif isinstance(node, str):
+        lowered = node.lower()
+        if "://" in lowered or lowered.startswith("http:") or "javascript:" in lowered:
+            found.append(path or "string")
+    return found
+
+
+def validate_automation_templates(manifest, entities_by_id):
+    """Fail closed. Returns a list of error strings."""
+    errors = []
+    templates = manifest.get("automation_templates") or []
+    if templates and not isinstance(templates, list):
+        return ["automation_templates must be a list"]
+    seen = set()
+    declared_events = set(manifest.get("events") or [])
+    for idx, tpl in enumerate(templates):
+        tid = (tpl or {}).get("id") or ""
+        if not tid:
+            errors.append(f"automation_templates[{idx}] missing id")
+            continue
+        if tid in seen:
+            errors.append(f"duplicate automation_templates id {tid}")
+        seen.add(tid)
+        extra = set((tpl or {}).keys()) - {"id", "name", "description", "trigger", "actions"}
+        if extra:
+            errors.append(f"{tid}: unknown fields {sorted(extra)}")
+        event = ((tpl or {}).get("trigger") or {}).get("event")
+        if not event:
+            errors.append(f"{tid}: trigger.event required")
+        elif event not in declared_events:
+            errors.append(f"{tid}: event {event} is not declared")
+        actions = (tpl or {}).get("actions") or []
+        if not actions:
+            errors.append(f"{tid}: actions required")
+        for action in actions:
+            forbidden = _walk_forbidden_template_keys(action)
+            if forbidden:
+                errors.append(f"{tid}: forbidden {forbidden}")
+            atype = (action or {}).get("type")
+            if atype not in CRM_AUTOMATION_ACTION_TYPES:
+                errors.append(f"{tid}: unknown action type {atype}")
+            if atype == "send_webhook":
+                if any(k in (action or {}) for k in ("url", "headers", "secret", "connection_id", "authorization")):
+                    errors.append(f"{tid}: send_webhook must not declare destination/secrets")
+                mapping = (action or {}).get("payload_mapping") or (action or {}).get("payload")
+                if not mapping:
+                    errors.append(f"{tid}: send_webhook requires payload_mapping")
+                for row in mapping or []:
+                    param = (row or {}).get("event_parameter") or ""
+                    if param.startswith("contact.") or param.startswith("data."):
+                        continue
+                    if "." in param:
+                        entity_id, field = param.split(".", 1)
+                        if field in {"id", "code", "status", "name", "amount", "total", "total_amount"}:
+                            continue
+                        entity = entities_by_id.get(entity_id) or {}
+                        names = {f["name"] for f in entity.get("fields") or []}
+                        if field not in names:
+                            errors.append(f"{tid}: unknown field {param}")
+                        if field in {"person_id", "tenant_id", "workspace_id", "installation_id", "customer_id"}:
+                            errors.append(f"{tid}: authority field {field}")
+    return errors
+
+
+class AutomationTemplateTests(unittest.TestCase):
+    def test_installed_app_examples_are_valid(self):
+        expected = {
+            "billing-pro": {"overdue_invoice_reminder", "send_invoice_created_webhook"},
+            "restaurant-pro": {"notify_team_order_created"},
+            "real-estate-pro": {"follow_up_lead_created"},
+        }
+        for app_id, ids in expected.items():
+            app = APPS / app_id
+            manifest = load_yaml(app / "manifest.yaml")
+            entities = {
+                p.stem: load_yaml(p) for p in (app / "entities").glob("*.yaml")
+            }
+            errors = validate_automation_templates(manifest, entities)
+            self.assertEqual(errors, [], errors)
+            got = {t["id"] for t in manifest.get("automation_templates") or []}
+            self.assertEqual(got, ids)
+
+    def test_rejects_secrets_and_urls(self):
+        manifest = {
+            "events": ["invoice.created"],
+            "automation_templates": [
+                {
+                    "id": "bad",
+                    "name": "Bad",
+                    "trigger": {"event": "invoice.created"},
+                    "actions": [
+                        {
+                            "type": "send_webhook",
+                            "url": "https://evil.test/hook",
+                            "secret": "shh",
+                            "payload_mapping": [
+                                {"output_key": "status", "event_parameter": "invoice.status"}
+                            ],
+                        }
+                    ],
+                }
+            ],
+        }
+        errors = validate_automation_templates(manifest, {})
+        self.assertTrue(errors)
+        self.assertTrue(any("send_webhook" in e or "forbidden" in e or "url" in e.lower() for e in errors))
+
+    def test_rejects_unknown_event_and_action(self):
+        manifest = {
+            "events": ["invoice.created"],
+            "automation_templates": [
+                {
+                    "id": "bad",
+                    "name": "Bad",
+                    "trigger": {"event": "not.an.event"},
+                    "actions": [{"type": "run_javascript", "code": "1+1"}],
+                }
+            ],
+        }
+        errors = validate_automation_templates(manifest, {})
+        self.assertTrue(any("not.an.event" in e for e in errors))
+        self.assertTrue(any("run_javascript" in e or "forbidden" in e for e in errors))
 
 
 if __name__ == "__main__":

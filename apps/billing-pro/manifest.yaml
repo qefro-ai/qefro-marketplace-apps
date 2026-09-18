@@ -1,6 +1,6 @@
 id: billing-pro
 name: Billing Pro
-version: 1.1.3
+version: 1.1.4
 hosting: runtime
 description: Create invoices, take counter sales on POS, track unpaid bills, and follow
   up with customers — including WhatsApp reminders after you connect WhatsApp.
@@ -49,6 +49,30 @@ events:
 - follow_up.completed
 - follow_up.cancelled
 - follow_up.due
+automation_templates:
+- id: overdue_invoice_reminder
+  name: Remind customers about overdue invoices
+  description: Create a follow-up when an invoice becomes overdue so you can collect payment.
+  trigger:
+    event: invoice.overdue
+  actions:
+  - type: create_followup
+    due_in_hours: 24
+    note: Collect payment on an overdue invoice
+- id: send_invoice_created_webhook
+  name: Send invoice-created to my system
+  description: POST mapped invoice fields to a workspace HTTPS destination you choose. The destination is not part of this template.
+  trigger:
+    event: invoice.created
+  actions:
+  - type: send_webhook
+    payload_mapping:
+    - output_key: invoice_number
+      event_parameter: invoice.invoice_number
+    - output_key: status
+      event_parameter: invoice.status
+    - output_key: total_amount
+      event_parameter: invoice.total_amount
 onboarding:
 - configure_currency
 - configure_invoice_settings
