@@ -49,12 +49,16 @@ fields:
   import_default: INR
 - name: subtotal
   type: float
+  format: currency
 - name: discount
   type: float
+  format: currency
 - name: tax
   type: float
+  format: currency
 - name: total_amount
   type: float
+  format: currency
   import_synonyms:
   - due amount
   - invoice total
@@ -63,11 +67,13 @@ fields:
   - amount
 - name: paid_amount
   type: float
+  format: currency
   import_synonyms:
   - amount paid
   - paid
 - name: outstanding_amount
   type: float
+  format: currency
   import_synonyms:
   - balance
   - remaining
@@ -145,3 +151,26 @@ views:
 - type: tile
   title_field: invoice_number
   status_field: status
+ui:
+  style: modern
+  list:
+    default_view: table
+    empty_state:
+      title: No invoices yet
+      description: Create an invoice to bill a customer from Contacts.
+      action_label: New invoice
+  detail:
+    layout: split
+    hero:
+      title_field: invoice_number
+      subtitle_field: person_id
+      status_field: status
+    metrics:
+    - total_amount
+    - paid_amount
+    - outstanding_amount
+    related:
+      order:
+      - invoice_item
+      - payment_allocation
+      - follow_up

@@ -1,7 +1,8 @@
-primary: '#1d4ed8'
-secondary: '#1e3a8a'
-accent: '#2563eb'
-background: '#eff6ff'
+primary: '#2a4a62'
+secondary: '#3d5a73'
+accent: '#6b8a9e'
+background: '#f7f8fa'
 surface: '#ffffff'
-text: '#1e3a8a'
+text: '#1c2a33'
+radius: '16px'
 navigation_layout: sidebar

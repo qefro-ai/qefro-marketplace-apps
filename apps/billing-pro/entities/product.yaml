@@ -33,6 +33,7 @@ fields:
   type: string
 - name: selling_price
   type: float
+  format: currency
   required: true
   import_synonyms:
   - unit price
@@ -50,5 +51,25 @@ fields:
 title_field: name
 views:
 - type: table
+  columns:
+  - name
+  - sku
+  - selling_price
+  - active
 - type: tile
   title_field: name
+ui:
+  style: modern
+  list:
+    default_view: tile
+    empty_state:
+      title: No products yet
+      description: Add a product or service to pick on invoices and POS.
+      action_label: New product
+  detail:
+    layout: stack
+    hero:
+      title_field: name
+      image_field: image
+    metrics:
+    - selling_price

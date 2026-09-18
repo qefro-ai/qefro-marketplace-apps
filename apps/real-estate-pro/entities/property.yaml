@@ -41,6 +41,7 @@ fields:
   type: float
 - name: price
   type: float
+  format: currency
 - name: currency
   type: string
 - name: bedrooms
@@ -68,6 +69,31 @@ title_field: title
 status_field: status
 views:
 - type: table
+  columns:
+  - title
+  - city
+  - price
+  - status
 - type: tile
   title_field: title
   status_field: status
+ui:
+  style: modern
+  list:
+    default_view: tile
+    empty_state:
+      title: No listings yet
+      description: Add a property to start showing inventory.
+      action_label: New property
+  detail:
+    layout: split
+    hero:
+      title_field: title
+      subtitle_field: city
+      status_field: status
+      image_field: image_url
+    metrics:
+    - price
+    - bedrooms
+    - bathrooms
+    - area

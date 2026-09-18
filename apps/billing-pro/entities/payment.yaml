@@ -27,6 +27,7 @@ fields:
   - date
 - name: amount
   type: float
+  format: currency
   required: true
 - name: currency
   type: string
