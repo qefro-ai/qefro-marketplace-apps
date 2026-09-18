@@ -1,6 +1,7 @@
 id: create-customer
 name: "Add customer"
-description: "Register a restaurant customer"
+description: "DEPRECATED. Do not create restaurant Customer records. Use Customer Hub Contacts."
+enabled: false
 trigger:
   type: conversation
 steps:

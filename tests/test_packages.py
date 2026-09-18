@@ -788,6 +788,9 @@ class BillingProTests(unittest.TestCase):
             self._field(invoice, "status")["enum_values"],
             ["draft", "issued", "partially_paid", "paid", "overdue", "cancelled"],
         )
+        self.assertEqual(self._field(invoice, "issue_date").get("default"), "current_date")
+        self.assertTrue(self._field(invoice, "person_id").get("required"))
+        self.assertEqual(self._field(invoice, "person_id").get("label"), "Customer")
         payment = self._entity("payment")
         self.assertEqual(
             self._field(payment, "method")["enum_values"],
@@ -1058,6 +1061,16 @@ class RestaurantProTests(unittest.TestCase):
         self.assertNotEqual(person.get("required"), True)
         payment = self._entity("payment")
         self.assertNotEqual(self._field(payment, "person_id").get("required"), True)
+
+    def test_customers_page_is_hub_person_not_duplicate_identity(self):
+        pages = {page["id"]: page for page in load_yaml(self.APP / "ui" / "pages.yaml")}
+        self.assertEqual(pages["customers"]["host"], "contacts")
+        self.assertNotEqual(pages["customers"].get("entity"), "customer")
+        customer = self._entity("customer")
+        self.assertIn("DEPRECATED", customer["description"])
+        flow = load_yaml(self.APP / "workflows" / "create-customer.yaml")
+        self.assertIs(flow.get("enabled"), False)
+        self.assertIn("entity.customer.create", str(flow))
 
     def test_payment_methods_come_from_metadata(self):
         payment = self._entity("payment")

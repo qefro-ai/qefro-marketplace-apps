@@ -10,7 +10,6 @@
   page: customers
   title: Customers
   icon: users
-  entity: customer
 - id: dining_sessions
   page: dining_sessions
   title: Dining sessions

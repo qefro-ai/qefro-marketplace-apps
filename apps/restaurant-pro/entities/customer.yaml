@@ -1,7 +1,7 @@
 id: customer
 scope: customer
 name: Customer
-description: Restaurant guest bound to Customer Hub Person
+description: DEPRECATED. Do not create new restaurant Customer records. Customer identity is Customer Hub Person (Contacts). Kept so existing rows remain readable.
 allocate_code:
   prefix: C-
   start: 1001

@@ -24,7 +24,7 @@
     span: 8
 - id: customers
   title: Customers
-  entity: customer
+  host: contacts
 - id: dining_sessions
   title: Dining sessions
   entity: dining_session

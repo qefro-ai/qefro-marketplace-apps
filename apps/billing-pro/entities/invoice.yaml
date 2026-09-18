@@ -21,8 +21,10 @@ fields:
   description: Customer from Contacts. Add them under Contacts first if they are new.
   ref_entity: person
   required: true
+  label: Customer
 - name: issue_date
   type: date
+  default: current_date
   import_synonyms:
   - invoice date
   - date
