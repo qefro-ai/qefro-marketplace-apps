@@ -64,3 +64,10 @@ status_events:
   under_offer: property.status_changed
   sold: property.status_changed
   withdrawn: property.status_changed
+title_field: title
+status_field: status
+views:
+- type: table
+- type: tile
+  title_field: title
+  status_field: status

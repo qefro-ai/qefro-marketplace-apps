@@ -47,3 +47,8 @@ fields:
 - name: active
   type: boolean
   default: true
+title_field: name
+views:
+- type: table
+- type: tile
+  title_field: name

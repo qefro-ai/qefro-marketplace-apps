@@ -31,3 +31,10 @@ fields:
 status_events:
   active: menu_item.updated
   inactive: menu_item.updated
+title_field: name
+status_field: status
+views:
+- type: table
+- type: tile
+  title_field: name
+  status_field: status

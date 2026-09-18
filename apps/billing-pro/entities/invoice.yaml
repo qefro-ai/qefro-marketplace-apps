@@ -136,3 +136,10 @@ on_events:
   set:
     status: completed
   limit: 50
+title_field: invoice_number
+status_field: status
+views:
+- type: table
+- type: tile
+  title_field: invoice_number
+  status_field: status
