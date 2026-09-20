@@ -40,7 +40,7 @@ fields:
 status_events:
   confirmed: order.updated
   preparing: order.updated
-  ready: order.updated
+  ready: order.ready
   completed: order.completed
   cancelled: order.cancelled
 computed:

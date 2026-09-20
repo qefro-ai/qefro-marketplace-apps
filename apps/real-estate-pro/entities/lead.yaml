@@ -32,6 +32,7 @@ fields:
   type: person
   description: Existing Qefro Person identity (Customer Hub)
   ref_entity: person
+  required: true
 status_events:
   contacted: lead.updated
   qualified: lead.updated

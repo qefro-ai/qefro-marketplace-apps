@@ -37,6 +37,7 @@ fields:
   type: person
   description: Existing Qefro Person identity (Customer Hub)
   ref_entity: person
+  inherit_from: lead_id
 status_events:
   under_review: offer.updated
   accepted: offer.updated

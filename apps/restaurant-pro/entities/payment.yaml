@@ -42,9 +42,19 @@ fields:
   ref_entity: person
   inherit_from: order_id
 status_events:
-  completed: payment.created
+  completed: payment.received
   failed: payment.created
   refunded: payment.created
+on_events:
+- event: payment.received
+  target: order
+  match_field: id
+  match_from: order_id
+  where:
+    status: pending
+  set:
+    status: completed
+  limit: 50
 relation_caps:
 - field: amount
   relation: order_id

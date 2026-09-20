@@ -3,6 +3,10 @@ name: Book table
 description: Create a reservation via EntityService
 surfaces:
 - customer
+whatsapp_flow:
+  category: APPOINTMENT_BOOKING
+  title: Book a table
+  cta: Book
 trigger:
   type: conversation
 steps:

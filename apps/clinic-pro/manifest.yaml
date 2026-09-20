@@ -1,6 +1,6 @@
 id: clinic-pro
 name: Clinic Pro
-version: 1.2.0
+version: 1.2.3
 hosting: runtime
 description: Metadata-only clinic management Marketplace App executed by Qefro Runtime
   (no SDK, no custom server)
@@ -65,6 +65,35 @@ capabilities:
 - workflow.trigger
 - storage.read
 - storage.write
+automation_templates:
+- id: follow_up_patient_created
+  name: Follow-up when a patient is created
+  description: Create a Hub CRM follow-up when a new patient is added.
+  trigger:
+    event: patient.created
+  actions:
+  - type: create_followup
+    due_in_hours: 24
+    note: Follow up with the new patient
+- id: appointment_booked_whatsapp
+  name: WhatsApp when an appointment is booked
+  description: Message the workspace Person with the appointment date and time. Requires an approved WhatsApp template named appointment_reminder on this workspace.
+  trigger:
+    event: appointment.created
+  actions:
+  - type: send_whatsapp
+    template: appointment_reminder
+    parameters:
+    - "{{person.name}}"
+    - "{{entity.date}}"
+    - "{{entity.time}}"
+    - "{{entity.practitioner_name}}"
+    body: |
+      Hi {{person.name}},
+
+      Your appointment is scheduled for {{entity.date}} {{entity.time}}.
+
+      Please arrive 10 minutes early.
 settings:
 - key: timezone
   type: string

@@ -1114,6 +1114,18 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(self._field(payment, "order_id").get("required"), True)
         self.assertNotEqual(self._field(payment, "order_code").get("required"), True)
 
+    def test_payment_received_completes_pending_order(self):
+        payment = self._entity("payment")
+        self.assertEqual(payment["status_events"]["completed"], "payment.received")
+        rule = payment["on_events"][0]
+        self.assertEqual(rule["event"], "payment.received")
+        self.assertEqual(rule["target"], "order")
+        self.assertEqual(rule["match_field"], "id")
+        self.assertEqual(rule["match_from"], "order_id")
+        self.assertEqual(rule["set"]["status"], "completed")
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("payment.received", manifest["events"])
+
     def test_pos_binds_restaurant_entities_on_cart_checkout(self):
         pages = {page["id"]: page for page in load_yaml(self.APP / "ui" / "pages.yaml")}
         self.assertEqual(pages["pos"]["widgets"][0]["widget"], "pos_checkout")
@@ -1153,6 +1165,32 @@ class RestaurantProTests(unittest.TestCase):
         tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
         self.assertEqual(tools.count("entity.reservation.availability"), 3)
         self.assertIn("entity.reservation.create", tools)
+
+    def test_whatsapp_flow_overlay_is_thin_and_generic(self):
+        allowed = {
+            "SIGN_UP",
+            "SIGN_IN",
+            "APPOINTMENT_BOOKING",
+            "LEAD_GENERATION",
+            "CONTACT_US",
+            "CUSTOMER_SUPPORT",
+            "SURVEY",
+            "OTHER",
+        }
+        samples = [
+            APPS / "restaurant-pro" / "workflows" / "book-table.yaml",
+            APPS / "clinic-pro" / "workflows" / "book-appointment.yaml",
+            APPS / "real-estate-pro" / "workflows" / "request-viewing.yaml",
+        ]
+        for path in samples:
+            flow = load_yaml(path)
+            overlay = flow.get("whatsapp_flow") or {}
+            self.assertIn(overlay.get("category"), allowed)
+            self.assertNotIn("tenant_id", overlay)
+            self.assertNotIn("workspace_id", overlay)
+            self.assertNotIn("access_token", overlay)
+            self.assertNotIn("endpoint", overlay)
+            self.assertNotIn("url", overlay)
 
     def test_payment_uses_relation_caps_and_person_inherit(self):
         payment = self._entity("payment")
@@ -1403,6 +1441,12 @@ def validate_automation_templates(manifest, entities_by_id):
             atype = (action or {}).get("type")
             if atype not in CRM_AUTOMATION_ACTION_TYPES:
                 errors.append(f"{tid}: unknown action type {atype}")
+            if atype == "send_whatsapp":
+                if any(k in (action or {}) for k in ("phone", "to", "from", "wa_id")):
+                    errors.append(f"{tid}: send_whatsapp must not declare a recipient address")
+                tpl = (action or {}).get("template")
+                if tpl is not None and not re.fullmatch(r"[a-z0-9_]+", str(tpl)):
+                    errors.append(f"{tid}: template must be a Meta template name")
             if atype == "send_webhook":
                 if any(k in (action or {}) for k in ("url", "headers", "secret", "connection_id", "authorization")):
                     errors.append(f"{tid}: send_webhook must not declare destination/secrets")
@@ -1430,8 +1474,9 @@ class AutomationTemplateTests(unittest.TestCase):
     def test_installed_app_examples_are_valid(self):
         expected = {
             "billing-pro": {"overdue_invoice_reminder", "send_invoice_created_webhook"},
-            "restaurant-pro": {"notify_team_order_created"},
+            "restaurant-pro": {"notify_team_order_created", "order_ready_whatsapp"},
             "real-estate-pro": {"follow_up_lead_created"},
+            "clinic-pro": {"follow_up_patient_created", "appointment_booked_whatsapp"},
         }
         for app_id, ids in expected.items():
             app = APPS / app_id
@@ -1484,6 +1529,28 @@ class AutomationTemplateTests(unittest.TestCase):
         errors = validate_automation_templates(manifest, {})
         self.assertTrue(any("not.an.event" in e for e in errors))
         self.assertTrue(any("run_javascript" in e or "forbidden" in e for e in errors))
+
+    def test_rejects_invalid_whatsapp_template_and_recipient(self):
+        manifest = {
+            "events": ["invoice.overdue"],
+            "automation_templates": [
+                {
+                    "id": "bad_tpl",
+                    "name": "Bad",
+                    "trigger": {"event": "invoice.overdue"},
+                    "actions": [
+                        {
+                            "type": "send_whatsapp",
+                            "template": "Invoice Overdue!",
+                            "phone": "+15551212",
+                        }
+                    ],
+                }
+            ],
+        }
+        errors = validate_automation_templates(manifest, {})
+        self.assertTrue(any("Meta template name" in e for e in errors))
+        self.assertTrue(any("recipient" in e for e in errors))
 
 
 if __name__ == "__main__":

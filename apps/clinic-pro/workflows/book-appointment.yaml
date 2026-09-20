@@ -3,6 +3,10 @@ name: Book appointment
 description: Customer/staff book an appointment via EntityService
 surfaces:
 - customer
+whatsapp_flow:
+  category: APPOINTMENT_BOOKING
+  title: Book appointment
+  cta: Book
 trigger:
   type: conversation
 steps:

@@ -3,6 +3,10 @@ name: Request viewing
 description: Schedule a property viewing bound to Person
 surfaces:
 - customer
+whatsapp_flow:
+  category: APPOINTMENT_BOOKING
+  title: Request viewing
+  cta: Request
 trigger:
   type: conversation
 steps:

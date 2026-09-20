@@ -41,6 +41,7 @@ fields:
   type: person
   description: Existing Qefro Person identity (Customer Hub)
   ref_entity: person
+  required: true
 status_events:
   inactive: patient.updated
   archived: patient.updated
