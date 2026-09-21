@@ -153,22 +153,6 @@
       header: Email
     - key: status
       header: Status
-- id: students_table
-  type: table
-  title: Students
-  source: students
-  options:
-    rows_path: items
-    empty_title: No students yet
-    columns:
-    - key: name
-      header: Name
-    - key: email
-      header: Email
-    - key: phone
-      header: Phone
-    - key: status
-      header: Status
 - id: intro
   type: markdown
   title: Education

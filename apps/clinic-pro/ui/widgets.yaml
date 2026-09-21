@@ -3,16 +3,16 @@
   title: Create patient
   options:
     fields:
-    - name: name
-      label: Name
-      type: text
-      required: true
-    - name: phone
-      label: Phone
+    - name: date_of_birth
+      label: Date of birth
+      type: date
+      required: false
+    - name: blood_group
+      label: Blood group
       type: text
       required: false
-    - name: email
-      label: Email
+    - name: emergency_contact
+      label: Emergency contact
       type: text
       required: false
     - name: notes
@@ -219,10 +219,10 @@
     rows_path: items
     empty_title: No patients yet
     columns:
-    - key: name
-      header: Name
-    - key: phone
-      header: Phone
+    - key: code
+      header: Code
+    - key: blood_group
+      header: Blood group
     - key: status
       header: Status
 - id: appointments_table

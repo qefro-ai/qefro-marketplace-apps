@@ -1,6 +1,6 @@
 id: real-estate-pro
 name: Real Estate Pro
-version: 1.1.24
+version: 1.2.3
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no
   SDK, no custom server)
@@ -20,7 +20,6 @@ entities:
 - lead
 - viewing
 - offer
-- deal
 - property_document
 flows:
 - search-properties
@@ -30,7 +29,6 @@ flows:
 - create-property
 - create-lead
 - create-offer
-- create-deal
 events:
 - property.created
 - property.updated
@@ -42,9 +40,7 @@ events:
 - viewing.cancelled
 - offer.created
 - offer.updated
-- deal.created
-- deal.updated
-- deal.closed
+- offer.closed
 automation_templates:
 - id: follow_up_lead_created
   name: Follow-up when lead created
@@ -55,6 +51,25 @@ automation_templates:
   - type: create_followup
     due_in_hours: 24
     note: Follow up with the new lead
+- id: viewing_booked_whatsapp
+  name: WhatsApp when a viewing is booked
+  description: Message the workspace Person with the property, date, and time. Requires an approved WhatsApp template named viewing_reminder on this workspace.
+  trigger:
+    event: viewing.created
+  actions:
+  - type: send_whatsapp
+    template: viewing_reminder
+    parameters:
+    - "{{person.name}}"
+    - "{{entity.property_title}}"
+    - "{{entity.date}}"
+    - "{{entity.time}}"
+    body: |
+      Hi {{person.name}},
+
+      Your viewing of {{entity.property_title}} is scheduled for {{entity.date}} at {{entity.time}}.
+
+      Please arrive a few minutes early.
 settings:
 - key: timezone
   type: string

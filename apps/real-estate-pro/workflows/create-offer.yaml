@@ -1,19 +1,34 @@
 id: create-offer
 name: Create offer
-description: Submit an offer on a property
+description: Submit an offer on a property for the Hub Person
 surfaces:
 - staff
 trigger:
   type: conversation
 steps:
-- id: ask_property_title
+- id: list_properties
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  output: properties
+  input_map:
+    filter.status: $literal:listed
+    limit: $literal:20
+- id: ask_property
   type: ask
-  field: property_title
+  field: property_id
   message: "🏠 Which property?"
-- id: ask_lead_name
-  type: ask
-  field: lead_name
-  message: "👤 Lead name?"
+  choices_from: properties
+  title_field: title
+  value_field: id
+  chip_prefix: property
+- id: get_property
+  type: tool
+  tool: entity.property.get
+  execution: runtime
+  output: property
+  input_map:
+    id: property_id
 - id: ask_amount
   type: ask
   field: amount
@@ -23,10 +38,11 @@ steps:
   tool: entity.offer.create
   execution: runtime
   input_map:
-    property_title: property_title
-    lead_name: lead_name
+    property_id: property_id
+    property_title: property.title
     amount: amount
     currency: currency
+    status: $literal:submitted
 - id: confirm
   type: message
   message: "✅ Offer submitted for {{property_title}}."

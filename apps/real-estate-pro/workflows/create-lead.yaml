@@ -1,32 +1,30 @@
 id: create-lead
 name: Create lead
-description: Capture a new lead
+description: Open a pipeline record for an existing Customer Hub Person
 surfaces:
 - staff
 trigger:
   type: conversation
 steps:
-- id: ask_name
+- id: ask_source
   type: ask
-  field: name
-  message: "👤 Lead name?"
-- id: ask_phone
+  field: source
+  message: "📎 Lead source?"
+- id: ask_notes
   type: ask
-  field: phone
-  message: "📞 Phone?"
+  field: notes
+  message: "📝 Notes (optional)?"
 - id: run
   type: tool
   tool: entity.lead.create
   execution: runtime
   input_map:
-    name: name
-    email: email
-    phone: phone
     source: source
     notes: notes
     assigned_agent_name: assigned_agent_name
+    status: $literal:new
 - id: confirm
   type: message
-  message: "✅ Lead {{name}} created."
+  message: "✅ Pipeline lead created."
 - id: done
   type: complete

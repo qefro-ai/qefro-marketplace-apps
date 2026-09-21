@@ -10,6 +10,38 @@ whatsapp_flow:
 trigger:
   type: conversation
 steps:
+- id: ask_type
+  type: ask
+  field: property_type
+  message: "What type of property are you looking for?"
+  choices:
+  - id: apartment
+    label: Apartment
+  - id: house
+    label: Villa / House
+  - id: condo
+    label: Condo
+  - id: land
+    label: Plot / Land
+  - id: commercial
+    label: Commercial
+- id: fetch_for_cities
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  output: properties
+  input_map:
+    filter.property_type: property_type
+    filter.status: $literal:listed
+    limit: $literal:20
+- id: ask_city
+  type: ask
+  field: city
+  message: "Which city or area should I search in?"
+  choices_from: properties
+  title_field: city
+  value_field: city
+  chip_prefix: city
 - id: list_properties
   type: tool
   tool: entity.property.list
@@ -17,11 +49,13 @@ steps:
   output: properties
   input_map:
     filter.status: $literal:listed
+    filter.property_type: property_type
+    filter.city: city
     limit: $literal:20
 - id: ask_property
   type: ask
   field: property_id
-  message: "🏠 Which property?"
+  message: "Which property?"
   choices_from: properties
   title_field: title
   value_field: id
@@ -44,7 +78,7 @@ steps:
 - id: ask_date
   type: ask
   field: date
-  message: "📅 Choose a date"
+  message: "Choose a date"
   choices_from: available_dates
   title_field: label
   value_field: value
@@ -61,7 +95,7 @@ steps:
 - id: ask_time
   type: ask
   field: time
-  message: "⏰ Choose a time"
+  message: "Choose a time"
   choices_from: available_slots
   title_field: label
   value_field: time

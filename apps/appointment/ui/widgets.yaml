@@ -58,26 +58,6 @@
     submit_label: Add staff
     action:
       trigger: create-staff-member
-- id: customer_form
-  type: form
-  title: New customer
-  options:
-    fields:
-    - name: name
-      label: Name
-      type: text
-      required: true
-    - name: phone
-      label: Phone
-      type: text
-      required: false
-    - name: email
-      label: Email
-      type: text
-      required: false
-    submit_label: Add customer
-    action:
-      trigger: create-customer
 - id: availability_form
   type: form
   title: New availability slot
@@ -169,38 +149,6 @@
       header: Staff
     - key: date
       header: Date
-    - key: status
-      header: Status
-- id: customers_table
-  type: table
-  title: Customers
-  source: customers
-  options:
-    rows_path: items
-    empty_title: No customers yet
-    columns:
-    - key: name
-      header: Name
-    - key: phone
-      header: Phone
-    - key: email
-      header: Email
-    - key: status
-      header: Status
-- id: locations_table
-  type: table
-  title: Locations
-  source: locations
-  options:
-    rows_path: items
-    empty_title: No locations yet
-    columns:
-    - key: name
-      header: Name
-    - key: address
-      header: Address
-    - key: phone
-      header: Phone
     - key: status
       header: Status
 - id: availability_table

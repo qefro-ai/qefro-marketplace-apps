@@ -1,0 +1,39 @@
+id: menu_item
+name: Menu item
+description: Catalog fixture — restaurant-shaped product. Runtime consumes mapping only.
+fields:
+- name: name
+  type: string
+  required: true
+- name: description
+  type: string
+- name: price
+  type: float
+- name: currency
+  type: string
+- name: photo_url
+  type: image
+- name: status
+  type: enum
+  enum_values:
+  - available
+  - sold_out
+catalog:
+  enabled: true
+  type: product
+  mapping:
+    title: name
+    description: description
+    price: price
+    currency: currency
+    image: photo_url
+    availability: status
+  publish_when:
+    field: status
+    in:
+    - available
+  availability:
+    in_stock:
+    - available
+    out_of_stock:
+    - sold_out

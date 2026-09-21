@@ -43,10 +43,6 @@
       label: Reference
       type: text
       required: true
-    - name: customer_name
-      label: Customer name
-      type: text
-      required: true
     - name: weight
       label: Weight (kg)
       type: number
@@ -107,8 +103,8 @@
     columns:
     - key: reference
       header: Ref
-    - key: customer_name
-      header: Customer
+    - key: weight
+      header: Weight
 - id: vehicles_table
   type: table
   title: Vehicles

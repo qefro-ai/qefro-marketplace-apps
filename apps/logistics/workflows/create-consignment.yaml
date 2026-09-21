@@ -8,10 +8,6 @@ steps:
     type: ask
     field: reference
     message: "📦 Consignment reference?"
-  - id: ask_customer_name
-    type: ask
-    field: customer_name
-    message: "👤 Customer name?"
   - id: ask_weight
     type: ask
     field: weight
@@ -22,10 +18,9 @@ steps:
     execution: runtime
     input_map:
       reference: reference
-      customer_name: customer_name
       weight: weight
   - id: confirm
     type: message
-    message: "📦 Consignment {{reference}} created for {{customer_name}}."
+    message: "📦 Consignment {{reference}} created."
   - id: done
     type: complete

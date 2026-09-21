@@ -714,6 +714,10 @@ class RealEstateAvailabilitySettingsTests(unittest.TestCase):
         asks = {s["field"]: s for s in flow["steps"] if s.get("type") == "ask"}
         self.assertEqual(asks["date"]["choices_from"], "available_dates")
         self.assertEqual(asks["time"]["choices_from"], "available_slots")
+        self.assertEqual(asks["property_id"]["title_field"], "title")
+        self.assertEqual(asks["property_id"]["value_field"], "id")
+        self.assertEqual(asks["city"]["choices_from"], "properties")
+        self.assertEqual(asks["property_type"]["choices"][0]["id"], "apartment")
 
     def test_reschedule_viewing_uses_availability_runtime(self):
         flow = load_yaml(APPS / "real-estate-pro" / "workflows" / "reschedule-viewing.yaml")
@@ -723,6 +727,119 @@ class RealEstateAvailabilitySettingsTests(unittest.TestCase):
         asks = {s["field"]: s for s in flow["steps"] if s.get("type") == "ask"}
         self.assertEqual(asks["date"]["choices_from"], "available_dates")
         self.assertEqual(asks["time"]["choices_from"], "available_slots")
+
+
+class RealEstateDomainTests(unittest.TestCase):
+    APP = APPS / "real-estate-pro"
+
+    def _entity(self, name: str):
+        return load_yaml(self.APP / "entities" / f"{name}.yaml")
+
+    def _field(self, entity: dict, name: str) -> dict:
+        return next(f for f in entity["fields"] if f["name"] == name)
+
+    def test_deal_entity_and_flow_are_gone(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertNotIn("deal", manifest["entities"])
+        self.assertNotIn("create-deal", manifest["flows"])
+        self.assertNotIn("deal.created", manifest.get("events") or [])
+        self.assertNotIn("deal.updated", manifest.get("events") or [])
+        self.assertNotIn("deal.closed", manifest.get("events") or [])
+        self.assertFalse((self.APP / "entities" / "deal.yaml").exists())
+        self.assertFalse((self.APP / "workflows" / "create-deal.yaml").exists())
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotRegex(text, r"\bentity\.deal\.")
+            self.assertNotIn("target: deal", text)
+            self.assertNotIn("entity: deal", text)
+            self.assertNotIn("create-deal", text)
+            self.assertNotIn("deal.closed", text)
+
+    def test_offer_is_canonical_commercial_lifecycle(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("offer", manifest["entities"])
+        self.assertIn("create-offer", manifest["flows"])
+        self.assertIn("offer.closed", manifest["events"])
+        offer = self._entity("offer")
+        self.assertEqual(offer["scope"], "customer")
+        person = self._field(offer, "person_id")
+        self.assertEqual(person["type"], "person")
+        self.assertEqual(person["ref_entity"], "person")
+        self.assertTrue(person.get("required"))
+        property_id = self._field(offer, "property_id")
+        self.assertEqual(property_id["type"], "relation")
+        self.assertEqual(property_id["ref_entity"], "property")
+        self.assertTrue(property_id.get("required"))
+        status = self._field(offer, "status")
+        for value in ("submitted", "under_contract", "closed", "fallen_through"):
+            self.assertIn(value, status["enum_values"])
+        self.assertTrue(any(f["name"] == "closed_at" for f in offer["fields"]))
+        self.assertEqual(self._field(offer, "agent_id")["type"], "relation")
+        self.assertEqual(self._field(offer, "agent_id")["ref_entity"], "agent")
+        self.assertEqual(offer["status_events"]["closed"], "offer.closed")
+        field_names = {f["name"] for f in offer["fields"]}
+        self.assertNotIn("offer_id", field_names)
+        self.assertNotIn("email", field_names)
+        self.assertNotIn("phone", field_names)
+        self.assertNotIn("lead_name", field_names)
+
+    def test_create_offer_uses_property_id_and_does_not_pass_identity(self):
+        flow = load_yaml(self.APP / "workflows" / "create-offer.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertIn("entity.property.list", tools)
+        self.assertIn("entity.offer.create", tools)
+        asks = {s["field"]: s for s in flow["steps"] if s.get("type") == "ask"}
+        self.assertEqual(asks["property_id"]["choices_from"], "properties")
+        self.assertEqual(asks["property_id"]["value_field"], "id")
+        create = next(s for s in flow["steps"] if s.get("tool") == "entity.offer.create")
+        mapping = create["input_map"]
+        self.assertEqual(mapping["property_id"], "property_id")
+        self.assertNotIn("person_id", mapping)
+        self.assertNotIn("email", mapping)
+        self.assertNotIn("phone", mapping)
+        self.assertNotIn("lead_name", mapping)
+
+    def test_lead_is_person_scoped_pipeline_not_identity(self):
+        lead = self._entity("lead")
+        self.assertEqual(lead["scope"], "customer")
+        person = self._field(lead, "person_id")
+        self.assertEqual(person["type"], "person")
+        self.assertTrue(person.get("required"))
+        names = {f["name"] for f in lead["fields"]}
+        self.assertNotIn("email", names)
+        self.assertNotIn("phone", names)
+        self.assertIn("source", names)
+        self.assertIn("status", names)
+        flow = load_yaml(self.APP / "workflows" / "create-lead.yaml")
+        create = next(s for s in flow["steps"] if s.get("tool") == "entity.lead.create")
+        self.assertNotIn("person_id", create["input_map"])
+        self.assertNotIn("email", create["input_map"])
+        self.assertNotIn("phone", create["input_map"])
+
+    def test_viewing_is_person_and_property_scoped(self):
+        viewing = self._entity("viewing")
+        self.assertTrue(self._field(viewing, "person_id").get("required"))
+        self.assertEqual(self._field(viewing, "person_id")["type"], "person")
+        property_id = self._field(viewing, "property_id")
+        self.assertEqual(property_id["type"], "relation")
+        self.assertEqual(property_id["ref_entity"], "property")
+        self.assertTrue(property_id.get("required"))
+        flow = load_yaml(self.APP / "workflows" / "request-viewing.yaml")
+        create = next(s for s in flow["steps"] if s.get("tool") == "entity.viewing.create")
+        self.assertEqual(create["input_map"]["property_id"], "property_id")
+        self.assertNotIn("person_id", create["input_map"])
+
+    def test_no_deal_ui_or_navigation(self):
+        nav = load_yaml(self.APP / "ui" / "navigation.yaml")
+        pages = load_yaml(self.APP / "ui" / "pages.yaml")
+        sources = load_yaml(self.APP / "ui" / "sources.yaml")
+        widgets = load_yaml(self.APP / "ui" / "widgets.yaml")
+        self.assertNotIn("deals", [item["id"] for item in nav])
+        self.assertNotIn("deals", [item["id"] for item in pages])
+        self.assertNotIn("deals", [item["id"] for item in sources])
+        self.assertNotIn("deal_form", [item["id"] for item in widgets])
+        self.assertNotIn("metric_deal", [item["id"] for item in widgets])
+        self.assertIn("offers", [item["id"] for item in nav])
 
 
 class BillingProTests(unittest.TestCase):
@@ -1153,6 +1270,24 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(flow["steps"][-1]["type"], "complete")
         self.assertNotIn("entity.invoice.create", tools)
 
+    def test_one_venue_per_workspace_no_branch_model(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertNotIn("branch", manifest.get("entities") or [])
+        self.assertFalse((self.APP / "entities" / "branch.yaml").exists())
+        self.assertFalse((self.APP / "entities" / "location.yaml").exists())
+        for name in ("table", "reservation", "order", "menu_item", "payment"):
+            entity = self._entity(name)
+            names = {f["name"] for f in entity["fields"]}
+            self.assertNotIn("restaurant_id", names)
+            self.assertNotIn("branch_id", names)
+            self.assertNotIn("venue_id", names)
+        table_location = self._field(self._entity("table"), "location")
+        self.assertEqual(table_location["type"], "string")
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("restaurant_id", text)
+            self.assertNotRegex(text, r"\bbranch_id\b")
+
     def test_reservation_uses_generic_availability(self):
         reservation = self._entity("reservation")
         avail = reservation["availability"]
@@ -1335,6 +1470,55 @@ class AppointmentAvailabilityTests(unittest.TestCase):
         self.assertEqual(create_tools.count("entity.appointment.availability"), 3)
         self.assertEqual(reschedule_tools.count("entity.appointment.availability"), 3)
 
+    def test_location_entity_and_flow_are_gone(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertNotIn("location", manifest["entities"])
+        self.assertNotIn("create-location", manifest.get("flows") or [])
+        self.assertFalse((self.APP / "entities" / "location.yaml").exists())
+        self.assertFalse((self.APP / "workflows" / "create-location.yaml").exists())
+        appointment = load_yaml(self.APP / "entities" / "appointment.yaml")
+        self.assertFalse(any(f["name"] in {"location_id", "location"} for f in appointment["fields"]))
+        nav = load_yaml(self.APP / "ui" / "navigation.yaml")
+        pages = load_yaml(self.APP / "ui" / "pages.yaml")
+        sources = load_yaml(self.APP / "ui" / "sources.yaml")
+        self.assertNotIn("locations", [item["id"] for item in nav])
+        self.assertNotIn("locations", [item["id"] for item in pages])
+        self.assertNotIn("locations", [item["id"] for item in sources])
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("create-location", text)
+            self.assertNotIn("target: location", text)
+            self.assertNotIn("entity: location", text)
+
+    def test_customer_entity_and_flow_are_gone(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertNotIn("customer", manifest["entities"])
+        self.assertNotIn("create-customer", manifest.get("flows") or [])
+        self.assertNotIn("customer.created", manifest.get("events") or [])
+        self.assertFalse((self.APP / "entities" / "customer.yaml").exists())
+        self.assertFalse((self.APP / "workflows" / "create-customer.yaml").exists())
+        appointment = load_yaml(self.APP / "entities" / "appointment.yaml")
+        self.assertFalse(any(f["name"] in {"customer_id", "customer"} for f in appointment["fields"]))
+        person = next(f for f in appointment["fields"] if f["name"] == "person_id")
+        self.assertEqual(person["type"], "person")
+        nav = load_yaml(self.APP / "ui" / "navigation.yaml")
+        pages = load_yaml(self.APP / "ui" / "pages.yaml")
+        sources = load_yaml(self.APP / "ui" / "sources.yaml")
+        widgets = load_yaml(self.APP / "ui" / "widgets.yaml")
+        self.assertNotIn("customers", [item["id"] for item in nav])
+        self.assertNotIn("customers", [item["id"] for item in pages])
+        self.assertNotIn("customers", [item["id"] for item in sources])
+        self.assertNotIn("customer_form", [item["id"] for item in widgets])
+        self.assertNotIn("customers_table", [item["id"] for item in widgets])
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("create-customer", text)
+            self.assertNotIn("entity.customer.", text)
+            self.assertNotIn("target: customer", text)
+            self.assertNotIn("entity: customer", text)
+            self.assertNotIn("customer.created", text)
+            self.assertNotIn("customer_id", text)
+
 
 class ClinicProTests(unittest.TestCase):
     APP = APPS / "clinic-pro"
@@ -1360,6 +1544,38 @@ class ClinicProTests(unittest.TestCase):
         self.assertIn("invoice.overdue", manifest["events"])
         self.assertNotIn("agent", manifest)
 
+    def test_patient_keeps_clinical_state_without_hub_identity_fields(self):
+        patient = load_yaml(self.APP / "entities" / "patient.yaml")
+        names = {f["name"] for f in patient["fields"]}
+        self.assertEqual(patient["scope"], "customer")
+        person = next(f for f in patient["fields"] if f["name"] == "person_id")
+        self.assertEqual(person["type"], "person")
+        self.assertTrue(person.get("required"))
+        for clinical in ("date_of_birth", "blood_group", "emergency_contact"):
+            self.assertIn(clinical, names)
+        for identity in ("name", "email", "phone"):
+            self.assertNotIn(identity, names)
+        flow = load_yaml(self.APP / "workflows" / "create-patient.yaml")
+        create = next(s for s in flow["steps"] if s.get("tool") == "entity.patient.create")
+        mapped = create["input_map"]
+        self.assertNotIn("name", mapped)
+        self.assertNotIn("email", mapped)
+        self.assertNotIn("phone", mapped)
+        self.assertNotIn("person_id", mapped)
+        for clinical in ("date_of_birth", "blood_group", "emergency_contact"):
+            self.assertIn(clinical, mapped)
+
+    def test_treatment_and_prescription_keep_visit_code_without_invented_fk(self):
+        for name in ("treatment", "prescription"):
+            entity = load_yaml(self.APP / "entities" / f"{name}.yaml")
+            names = {f["name"] for f in entity["fields"]}
+            self.assertIn("visit_code", names)
+            self.assertNotIn("visit_id", names)
+        visit = load_yaml(self.APP / "entities" / "visit.yaml")
+        self.assertEqual(visit["id"], "visit")
+        self.assertFalse(any(f["name"] == "vitals" for f in visit["fields"]))
+        self.assertFalse((self.APP / "entities" / "vitals.yaml").exists())
+
 
 class TravelAgencyProTests(unittest.TestCase):
     APP = APPS / "travel-agency-pro"
@@ -1380,6 +1596,244 @@ class TravelAgencyProTests(unittest.TestCase):
         self.assertEqual(booking["computed"][0]["op"], "relation_sum")
         self.assertEqual(item["computed"][0]["op"], "multiply")
         self.assertEqual(payment["relation_caps"][0]["relation"], "booking")
+
+    def test_itinerary_and_booking_item_both_remain(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("itinerary", manifest["entities"])
+        self.assertIn("booking_item", manifest["entities"])
+        self.assertTrue((self.APP / "entities" / "itinerary.yaml").exists())
+        self.assertTrue((self.APP / "entities" / "booking_item.yaml").exists())
+        itinerary = load_yaml(self.APP / "entities" / "itinerary.yaml")
+        item = load_yaml(self.APP / "entities" / "booking_item.yaml")
+        self.assertNotEqual(itinerary["id"], item["id"])
+        self.assertIn("booking", [f["name"] for f in itinerary["fields"]])
+
+
+class EducationStudentRemovalTests(unittest.TestCase):
+    APP = APPS / "education"
+
+    def test_student_entity_and_event_are_gone(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertNotIn("student", manifest["entities"])
+        self.assertNotIn("student.created", manifest.get("events") or [])
+        self.assertFalse((self.APP / "entities" / "student.yaml").exists())
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("entity.student.", text)
+            self.assertNotIn("target: student", text)
+            self.assertNotIn("entity: student", text)
+            self.assertNotIn("student.created", text)
+            self.assertNotIn("student_id", text)
+
+    def test_student_ui_is_gone(self):
+        nav = load_yaml(self.APP / "ui" / "navigation.yaml")
+        pages = load_yaml(self.APP / "ui" / "pages.yaml")
+        sources = load_yaml(self.APP / "ui" / "sources.yaml")
+        widgets = load_yaml(self.APP / "ui" / "widgets.yaml")
+        self.assertNotIn("students", [item["id"] for item in nav])
+        self.assertNotIn("students", [item["id"] for item in pages])
+        self.assertNotIn("students", [item["id"] for item in sources])
+        self.assertNotIn("students_table", [item["id"] for item in widgets])
+
+    def test_enrollment_remains_person_scoped(self):
+        enrollment = load_yaml(self.APP / "entities" / "enrollment.yaml")
+        self.assertEqual(enrollment["id"], "enrollment")
+        self.assertEqual(enrollment["scope"], "customer")
+        person = next(f for f in enrollment["fields"] if f["name"] == "person_id")
+        self.assertEqual(person["type"], "person")
+        self.assertEqual(person.get("ref_entity"), "person")
+        names = {f["name"] for f in enrollment["fields"]}
+        self.assertNotIn("student_id", names)
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("enrollment", manifest["entities"])
+        self.assertIn("enroll-student", manifest["flows"])
+
+    def test_enroll_student_still_creates_enrollment(self):
+        flow = load_yaml(self.APP / "workflows" / "enroll-student.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertIn("entity.enrollment.create", tools)
+        self.assertNotIn("entity.student.create", tools)
+        create = next(s for s in flow["steps"] if s.get("tool") == "entity.enrollment.create")
+        self.assertNotIn("person_id", create["input_map"])
+        self.assertNotIn("student_id", create["input_map"])
+
+    def test_other_education_entities_remain(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        for name in ("course", "session", "assignment", "instructor"):
+            self.assertIn(name, manifest["entities"])
+            self.assertTrue((self.APP / "entities" / f"{name}.yaml").exists())
+            entity = load_yaml(self.APP / "entities" / f"{name}.yaml")
+            self.assertFalse(any(f["name"] == "student_id" for f in entity["fields"]))
+
+    def test_no_student_runtime_branching_in_education_package(self):
+        self.assertFalse(list(self.APP.glob("**/*.rs")))
+        self.assertFalse((self.APP / "src").exists())
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotRegex(text, r"if\s+solution\s*==")
+            self.assertNotRegex(text, r"if\s+entity\s*==")
+
+
+class LogisticsUnresolvedRelationshipTests(unittest.TestCase):
+    APP = APPS / "logistics"
+
+    def test_keep_consignment_shipment_driver_warehouse(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        for entity in ("consignment", "shipment", "driver", "warehouse"):
+            self.assertIn(entity, manifest["entities"])
+            self.assertTrue((self.APP / "entities" / f"{entity}.yaml").exists())
+
+    def test_no_speculative_shipment_relationships(self):
+        shipment = load_yaml(self.APP / "entities" / "shipment.yaml")
+        names = {f["name"] for f in shipment["fields"]}
+        self.assertNotIn("consignment_id", names)
+        self.assertNotIn("driver_id", names)
+        self.assertNotIn("warehouse_id", names)
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("consignment_id", text)
+            self.assertNotIn("driver_id", text)
+            self.assertNotIn("warehouse_id", text)
+
+    def test_consignment_strips_duplicate_identity_name(self):
+        consignment = load_yaml(self.APP / "entities" / "consignment.yaml")
+        names = {f["name"] for f in consignment["fields"]}
+        self.assertIn("reference", names)
+        self.assertIn("weight", names)
+        self.assertIn("person_id", names)
+        self.assertNotIn("customer_name", names)
+        person = next(f for f in consignment["fields"] if f["name"] == "person_id")
+        self.assertEqual(person["type"], "person")
+        flow = load_yaml(self.APP / "workflows" / "create-consignment.yaml")
+        create = next(s for s in flow["steps"] if s.get("tool") == "entity.consignment.create")
+        self.assertNotIn("customer_name", create["input_map"])
+        self.assertNotIn("person_id", create["input_map"])
+
+
+class FieldServiceCustomerRemovalTests(unittest.TestCase):
+    APP = APPS / "field-service"
+
+    def test_customer_entity_and_event_are_gone(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertNotIn("customer", manifest["entities"])
+        self.assertNotIn("create-customer", manifest.get("flows") or [])
+        self.assertNotIn("customer.created", manifest.get("events") or [])
+        self.assertFalse((self.APP / "entities" / "customer.yaml").exists())
+        self.assertFalse((self.APP / "workflows" / "create-customer.yaml").exists())
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("entity.customer.", text)
+            self.assertNotIn("target: customer", text)
+            self.assertNotIn("entity: customer", text)
+            self.assertNotIn("customer.created", text)
+            self.assertNotIn("customer_id", text)
+
+    def test_customer_ui_is_gone(self):
+        nav = load_yaml(self.APP / "ui" / "navigation.yaml")
+        pages = load_yaml(self.APP / "ui" / "pages.yaml")
+        sources = load_yaml(self.APP / "ui" / "sources.yaml")
+        widgets = load_yaml(self.APP / "ui" / "widgets.yaml")
+        self.assertNotIn("customers", [item["id"] for item in nav])
+        self.assertNotIn("customers", [item["id"] for item in pages])
+        self.assertNotIn("customers", [item["id"] for item in sources])
+        self.assertNotIn("customer_form", [item["id"] for item in widgets])
+        self.assertNotIn("customers_table", [item["id"] for item in widgets])
+
+    def test_work_order_remains_person_scoped(self):
+        work_order = load_yaml(self.APP / "entities" / "work_order.yaml")
+        self.assertEqual(work_order["id"], "work_order")
+        self.assertEqual(work_order["scope"], "customer")
+        person = next(f for f in work_order["fields"] if f["name"] == "person_id")
+        self.assertEqual(person["type"], "person")
+        self.assertEqual(person.get("ref_entity"), "person")
+        names = {f["name"] for f in work_order["fields"]}
+        self.assertNotIn("customer_id", names)
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("work_order", manifest["entities"])
+        self.assertIn("create-work-order", manifest["flows"])
+
+    def test_other_field_service_entities_remain(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        for name in ("site", "technician", "part", "service_category"):
+            self.assertIn(name, manifest["entities"])
+            self.assertTrue((self.APP / "entities" / f"{name}.yaml").exists())
+            entity = load_yaml(self.APP / "entities" / f"{name}.yaml")
+            self.assertFalse(any(f["name"] == "customer_id" for f in entity["fields"]))
+
+    def test_no_customer_runtime_branching_in_field_service_package(self):
+        self.assertFalse(list(self.APP.glob("**/*.rs")))
+        self.assertFalse((self.APP / "src").exists())
+        for path in self.APP.rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotRegex(text, r"if\s+solution\s*==")
+            self.assertNotRegex(text, r"if\s+entity\s*==")
+
+
+class MarketplaceArchitectureTests(unittest.TestCase):
+    def test_no_app_specific_rust_or_solution_branching_in_packages(self):
+        for app in app_dirs():
+            with self.subTest(app=app.name):
+                self.assertFalse(list(app.glob("**/*.rs")))
+                self.assertFalse((app / "src").exists())
+                for path in app.rglob("*.yaml"):
+                    text = path.read_text(encoding="utf-8")
+                    self.assertNotRegex(text, r"if\s+solution\s*==")
+                    self.assertNotRegex(text, r"if\s+entity\s*==")
+
+
+class CatalogOverlayContractTests(unittest.TestCase):
+    """Entity `catalog:` overlays are metadata mappings, not runtime branches."""
+
+    FORBIDDEN = {
+        "access_token",
+        "verify_token",
+        "app_secret",
+        "endpoint",
+        "base_url",
+        "tenant_id",
+        "workspace_id",
+        "installation_id",
+        "person_id",
+        "waba_id",
+        "catalog_id",
+        "meta_flow_id",
+    }
+    FIXTURES = Path(__file__).resolve().parent / "fixtures" / "catalog"
+
+    def _assert_overlay(self, entity):
+        overlay = entity.get("catalog") or {}
+        self.assertTrue(overlay.get("enabled"))
+        self.assertIn(overlay.get("type"), ("product", "service"))
+        mapping = overlay.get("mapping") or {}
+        self.assertTrue(mapping.get("title"))
+        field_names = {f["name"] for f in entity.get("fields") or []}
+        for source in mapping.values():
+            self.assertIn(source, field_names)
+        for key in overlay:
+            self.assertNotIn(key, self.FORBIDDEN)
+
+    def test_four_app_fixtures_share_the_same_overlay_shape(self):
+        expected = {
+            "listing": "service",
+            "menu_item": "product",
+            "care_service": "service",
+            "job_service": "service",
+        }
+        for entity_id, catalog_type in expected.items():
+            path = self.FIXTURES / f"{entity_id}.yaml"
+            with self.subTest(entity=entity_id):
+                entity = load_yaml(path)
+                self.assertEqual(entity["id"], entity_id)
+                self._assert_overlay(entity)
+                self.assertEqual(entity["catalog"]["type"], catalog_type)
+
+    def test_real_estate_property_uses_catalog_overlay(self):
+        path = APPS / "real-estate-pro" / "entities" / "property.yaml"
+        entity = load_yaml(path)
+        self.assertEqual(entity["id"], "property")
+        self._assert_overlay(entity)
+        self.assertEqual(entity["catalog"]["type"], "service")
+        self.assertEqual(entity["catalog"]["mapping"]["title"], "title")
 
 
 class BillingProImageTests(unittest.TestCase):
@@ -1475,7 +1929,7 @@ class AutomationTemplateTests(unittest.TestCase):
         expected = {
             "billing-pro": {"overdue_invoice_reminder", "send_invoice_created_webhook"},
             "restaurant-pro": {"notify_team_order_created", "order_ready_whatsapp"},
-            "real-estate-pro": {"follow_up_lead_created"},
+            "real-estate-pro": {"follow_up_lead_created", "viewing_booked_whatsapp"},
             "clinic-pro": {"follow_up_patient_created", "appointment_booked_whatsapp"},
         }
         for app_id, ids in expected.items():

@@ -52,24 +52,6 @@
     submit_label: Create
     action:
       trigger: create-technician
-- id: customer_form
-  type: form
-  title: New customer
-  options:
-    fields:
-    - name: name
-      label: Name
-      type: text
-      required: true
-    - name: phone
-      label: Phone
-      type: text
-    - name: email
-      label: Email
-      type: text
-    submit_label: Create
-    action:
-      trigger: create-customer
 - id: wo_status
   type: status
   title: Work orders
@@ -135,22 +117,6 @@
       header: Name
     - key: quantity_on_hand
       header: Qty
-- id: customers_table
-  type: table
-  title: Customers
-  source: customers
-  options:
-    rows_path: items
-    empty_title: No customers yet
-    columns:
-    - key: name
-      header: Name
-    - key: phone
-      header: Phone
-    - key: email
-      header: Email
-    - key: status
-      header: Status
 - id: service_categories_table
   type: table
   title: Service Categories

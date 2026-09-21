@@ -1,43 +1,25 @@
-id: property
-name: Property
-description: Listable real-estate record. Catalog mapping is declared here; Qefro does not special-case this entity at runtime.
+id: listing
+name: Listing
+description: Catalog fixture — real-estate-shaped listing. Runtime consumes mapping only.
 fields:
 - name: title
   type: string
   required: true
 - name: description
   type: string
-- name: city
-  type: string
-- name: property_type
-  type: enum
-  enum_values:
-  - apartment
-  - house
-  - condo
-  - land
-  - commercial
-  - other
 - name: price
   type: float
 - name: currency
   type: string
-- name: bedrooms
-  type: integer
 - name: image_url
   type: image
 - name: status
   type: enum
   enum_values:
-  - draft
   - listed
+  - draft
   - sold
   - withdrawn
-  default: draft
-status_events:
-  listed: property.status_changed
-  sold: property.status_changed
-  withdrawn: property.status_changed
 catalog:
   enabled: true
   type: service

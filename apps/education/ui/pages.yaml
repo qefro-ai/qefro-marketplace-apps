@@ -31,9 +31,6 @@
 - id: sessions
   title: Sessions
   entity: session
-- id: students
-  title: Students
-  entity: student
 - id: contacts
   title: Contacts
   host: contacts

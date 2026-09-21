@@ -28,9 +28,6 @@
 - id: work_orders
   title: Work orders
   entity: work_order
-- id: customers
-  title: Customers
-  entity: customer
 - id: service_categories
   title: Categories
   entity: service_category

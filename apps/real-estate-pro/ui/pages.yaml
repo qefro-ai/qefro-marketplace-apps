@@ -10,7 +10,7 @@
     span: 3
   - widget: metric_viewing
     span: 3
-  - widget: metric_deal
+  - widget: metric_offer
     span: 3
   - widget: viewing_dash_status
     span: 4
@@ -19,9 +19,6 @@
 - id: agents
   title: Agents
   entity: agent
-- id: deals
-  title: Deals
-  entity: deal
 - id: leads
   title: Leads
   entity: lead

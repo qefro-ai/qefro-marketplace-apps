@@ -7,8 +7,9 @@ Native Qefro Marketplace App for field service.
 - **Execution:** `entity.*` via FlowRunner → RuntimeAdapter (managed storage)
 
 This is not a wrapper around an external API. Contacts stay on the platform
-Person model (`person_id`). CRM Automations are configured on the Automations
-host page and consume Business Events — they are not executed inline from tools.
+Person model (`person_id`). Work orders are Person-scoped. There is no Customer
+identity entity. CRM Automations are configured on the Automations host page
+and consume Business Events — they are not executed inline from tools.
 
 ## Business Events
 

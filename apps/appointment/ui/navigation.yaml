@@ -22,16 +22,6 @@
   title: Staff
   icon: user
   entity: staff_member
-- id: customers
-  page: customers
-  title: Customers
-  icon: users
-  entity: customer
-- id: locations
-  page: locations
-  title: Locations
-  icon: map
-  entity: location
 - id: contacts
   page: contacts
   title: Contacts

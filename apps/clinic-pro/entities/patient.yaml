@@ -1,18 +1,11 @@
 id: patient
 scope: customer
 name: Patient
-description: Clinic patient record bound to Customer Hub Person
+description: Clinical patient record bound to Customer Hub Person. Contact identity is Hub Person.
 allocate_code:
   prefix: PT-
   start: 1001
 fields:
-- name: name
-  type: string
-  required: true
-- name: email
-  type: email
-- name: phone
-  type: phone
 - name: date_of_birth
   type: date
 - name: gender

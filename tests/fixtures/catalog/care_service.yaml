@@ -1,0 +1,24 @@
+id: care_service
+name: Care service
+description: Catalog fixture — hospital/clinic-shaped service. Runtime consumes mapping only.
+fields:
+- name: name
+  type: string
+  required: true
+- name: summary
+  type: string
+- name: fee
+  type: float
+- name: currency
+  type: string
+- name: photo
+  type: image
+catalog:
+  enabled: true
+  type: service
+  mapping:
+    title: name
+    description: summary
+    price: fee
+    currency: currency
+    image: photo

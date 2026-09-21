@@ -13,6 +13,3 @@
 - id: instructors
   type: entity
   target: instructor
-- id: students
-  type: entity
-  target: student

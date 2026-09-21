@@ -27,11 +27,6 @@
   title: Sessions
   icon: calendar
   entity: session
-- id: students
-  page: students
-  title: Students
-  icon: users
-  entity: student
 - id: contacts
   page: contacts
   title: Contacts

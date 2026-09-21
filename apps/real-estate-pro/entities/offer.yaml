@@ -1,23 +1,30 @@
 id: offer
 scope: customer
 name: Offer
-description: Purchase or rental offer bound to Person
+description: Canonical commercial proposal and close record bound to Customer Hub Person and Property
 allocate_code:
   prefix: OF-
   start: 1001
 fields:
+- name: person_id
+  type: person
+  description: Customer from Contacts. Runtime injects Hub Person; LLM/user person_id is not authority.
+  ref_entity: person
+  required: true
+  label: Customer
+  inherit_from: lead_id
 - name: property_id
   type: relation
+  description: Property this offer is on
   ref_entity: property
+  required: true
 - name: property_title
   type: string
-  required: true
+  description: Display title (filled from property.title)
 - name: lead_id
   type: relation
+  description: Optional pipeline Lead for this Person. Not identity.
   ref_entity: lead
-- name: lead_name
-  type: string
-  required: true
 - name: amount
   type: float
   required: true
@@ -29,17 +36,29 @@ fields:
   - submitted
   - under_review
   - accepted
+  - under_contract
+  - closed
+  - fallen_through
   - rejected
   - withdrawn
+  default: submitted
 - name: submitted_at
   type: datetime
-- name: person_id
-  type: person
-  description: Existing Qefro Person identity (Customer Hub)
-  ref_entity: person
-  inherit_from: lead_id
+- name: closed_at
+  type: datetime
+  description: When the offer closed or fell through
+- name: agent_id
+  type: relation
+  description: Closing agent from the agent roster
+  ref_entity: agent
+- name: agent_name
+  type: string
+  description: Display name for the closing agent
 status_events:
   under_review: offer.updated
   accepted: offer.updated
   rejected: offer.updated
   withdrawn: offer.updated
+  under_contract: offer.updated
+  closed: offer.closed
+  fallen_through: offer.updated

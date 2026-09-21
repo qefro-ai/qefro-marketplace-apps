@@ -28,12 +28,6 @@
 - id: staff
   title: Staff
   entity: staff_member
-- id: customers
-  title: Customers
-  entity: customer
-- id: locations
-  title: Locations
-  entity: location
 - id: contacts
   title: Contacts
   host: contacts

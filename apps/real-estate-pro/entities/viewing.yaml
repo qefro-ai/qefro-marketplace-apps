@@ -1,22 +1,28 @@
 id: viewing
 scope: customer
 name: Viewing
-description: Property viewing appointment bound to Person
+description: Property viewing appointment bound to Customer Hub Person and Property
 allocate_code:
   prefix: VW-
   start: 1001
 fields:
+- name: person_id
+  type: person
+  description: Customer from Contacts. Runtime injects Hub Person; LLM/user person_id is not authority.
+  ref_entity: person
+  required: true
+  label: Customer
 - name: property_id
   type: relation
-  description: Linked property (Customer Hub)
+  description: Property being viewed. Must be a Property id, not a code or title.
   ref_entity: property
+  required: true
 - name: property_title
   type: string
-  required: true
-  description: Display title (auto-filled from property.title if available)
+  description: Display title (filled from property.title)
 - name: lead_name
   type: string
-  description: Display name (auto-filled from Person.name if available)
+  description: Display name auto-filled from Person. Not identity authority.
 - name: agent_name
   type: string
 - name: scheduled_at
@@ -36,10 +42,6 @@ fields:
   - no_show
 - name: notes
   type: string
-- name: person_id
-  type: person
-  description: Existing Qefro Person identity (Customer Hub)
-  ref_entity: person
 status_events:
   confirmed: viewing.updated
   completed: viewing.updated
