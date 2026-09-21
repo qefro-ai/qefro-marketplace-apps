@@ -11,11 +11,13 @@ fields:
   type: string
 - name: price
   type: float
+  format: currency
   required: true
 - name: currency
   type: string
-- name: image_url
-  type: url
+- name: image
+  type: image
+  description: Menu item photo uploaded via the generic solution media field
 - name: availability
   type: enum
   enum_values:
@@ -30,3 +32,32 @@ fields:
 status_events:
   active: menu_item.updated
   inactive: menu_item.updated
+title_field: name
+status_field: status
+views:
+- type: table
+  columns:
+  - name
+  - category_name
+  - price
+  - availability
+- type: tile
+  title_field: name
+  status_field: status
+ui:
+  style: modern
+  list:
+    default_view: tile
+    empty_state:
+      title: Menu is empty
+      description: Add dishes and drinks so they can be ordered.
+      action_label: New menu item
+  detail:
+    layout: stack
+    hero:
+      title_field: name
+      subtitle_field: category_name
+      status_field: status
+      image_field: image
+    metrics:
+    - price

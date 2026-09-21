@@ -1,31 +1,34 @@
 id: create-patient
 name: Create patient
-description: Staff creates a patient record
+description: Staff creates a clinical patient record for the Hub Person
 surfaces:
 - staff
 trigger:
   type: conversation
 steps:
-- id: ask_name
+- id: ask_dob
   type: ask
-  field: name
-  message: "👤 Patient name?"
-- id: ask_phone
+  field: date_of_birth
+  message: "🎂 Date of birth?"
+- id: ask_blood_group
   type: ask
-  field: phone
-  message: "📞 Phone number?"
+  field: blood_group
+  message: "🩸 Blood group?"
+- id: ask_emergency
+  type: ask
+  field: emergency_contact
+  message: "🚨 Emergency contact?"
 - id: run
   type: tool
   tool: entity.patient.create
   execution: runtime
   input_map:
-    name: name
-    email: email
-    phone: phone
     date_of_birth: date_of_birth
+    blood_group: blood_group
+    emergency_contact: emergency_contact
     notes: notes
 - id: confirm
   type: message
-  message: "✅ Patient {{name}} created."
+  message: "✅ Patient record created."
 - id: done
   type: complete

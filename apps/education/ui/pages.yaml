@@ -5,7 +5,13 @@
   - widget: intro
     span: 12
   - widget: metric_enrollment
-    span: 12
+    span: 3
+  - widget: metric_course
+    span: 3
+  - widget: metric_session
+    span: 3
+  - widget: metric_assignment
+    span: 3
   - widget: enrollment_dash_status
     span: 4
   - widget: enrollment_dash_table
@@ -19,6 +25,9 @@
 - id: enrollments
   title: Enrollments
   entity: enrollment
+- id: instructors
+  title: Instructors
+  entity: instructor
 - id: sessions
   title: Sessions
   entity: session

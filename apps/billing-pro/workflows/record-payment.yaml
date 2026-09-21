@@ -1,0 +1,78 @@
+id: record-payment
+name: Record payment
+description: Record money received and apply it to an invoice. The invoice paid and outstanding amounts update for you.
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: list_invoices
+  type: tool
+  tool: entity.invoice.list
+  execution: runtime
+  output: invoices
+  input_map:
+    limit: $literal:20
+- id: ask_id
+  type: ask
+  field: id
+  message: "💰 Which invoice was paid?"
+  choices_from: invoices
+  title_field: invoice_number
+  value_field: id
+  chip_prefix: invoice
+- id: ask_amount
+  type: ask
+  field: amount
+  message: "💰 Payment amount?"
+- id: ask_method
+  type: ask
+  field: method
+  message: "💳 Payment method?"
+  choices:
+  - id: cash
+    label: Cash
+  - id: bank_transfer
+    label: Bank transfer
+  - id: card
+    label: Card
+  - id: upi
+    label: UPI
+  - id: cheque
+    label: Cheque
+  - id: other
+    label: Other
+- id: ask_reference
+  type: ask
+  field: reference
+  message: "🔖 Payment reference (UTR / cheque / none)?"
+- id: ask_payment_date
+  type: ask
+  field: payment_date
+  message: "📅 Payment date?"
+- id: run
+  type: tool
+  tool: entity.payment.create
+  execution: runtime
+  output: payment
+  input_map:
+    amount: amount
+    currency: currency
+    payment_date: payment_date
+    method: method
+    reference: reference
+    notes: notes
+    status: $literal:received
+- id: allocate
+  type: tool
+  tool: entity.payment_allocation.create
+  execution: runtime
+  input_map:
+    payment_id: payment.id
+    invoice_id: id
+    amount: amount
+- id: confirm
+  type: message
+  message: "✅ Payment of {{amount}} recorded and allocated to invoice {{id}}."
+- id: done
+  type: complete

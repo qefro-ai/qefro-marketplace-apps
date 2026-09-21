@@ -1,6 +1,6 @@
 id: field-service
 name: Field Service
-version: 0.1.5
+version: 1.1.0
 hosting: runtime
 description: Sites, technicians, parts, and work orders as a native Qefro business
   application
@@ -17,16 +17,24 @@ entities:
 - technician
 - part
 - work_order
+- service_category
 flows:
 - create-work-order
 - update-work-order
 - complete-work-order
 - lookup-work-order
+- create-site
+- create-technician
 events:
 - work_order.created
 - work_order.updated
 - work_order.completed
 - work_order.cancelled
+- site.created
+- technician.created
+- work_order.assigned
+- work_order.due
+- part.created
 permissions:
 - workflow.execute
 - storage.read
@@ -103,6 +111,11 @@ conversation_slots:
   - location
   - address
   kind: string
+- id: name
+  labels:
+  - name
+  kind: person_name
+  identity: person_name
 - id: summary
   labels:
   - job
@@ -114,6 +127,31 @@ conversation_slots:
   - technician
   - engineer
   kind: string
+- id: address
+  labels:
+  - address
+  - location
+  kind: string
+- id: contact_name
+  labels:
+  - contact
+  - contact person
+  kind: string
+- id: skill
+  labels:
+  - skill
+  - trade
+  kind: string
+- id: email
+  labels:
+  - email
+  - e-mail
+  kind: email
+- id: phone
+  labels:
+  - phone
+  - telephone
+  kind: phone
 - id: scheduled_date
   labels:
   - date

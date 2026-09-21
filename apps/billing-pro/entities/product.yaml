@@ -1,0 +1,75 @@
+id: product
+name: Product
+description: A product or service you sell. Add these once, then pick them on invoices. Price on an invoice is kept even if you change the catalog later.
+allocate_code:
+  prefix: PRD-
+  start: 1001
+delete:
+  mode: restrict
+fields:
+- name: name
+  type: string
+  required: true
+- name: sku
+  type: string
+  unique: true
+  required: true
+  import_synonyms:
+  - product code
+  - item code
+  - sku
+- name: description
+  type: string
+- name: image
+  type: image
+  description: Catalog photo shown in POS and product pages
+- name: item_type
+  type: enum
+  enum_values:
+  - product
+  - service
+  default: product
+- name: unit
+  type: string
+- name: selling_price
+  type: float
+  format: currency
+  required: true
+  import_synonyms:
+  - unit price
+  - price
+- name: currency
+  type: string
+  default_from_setting: currency
+  import_default: INR
+- name: tax_rate
+  type: float
+  default_from_setting: default_tax_rate
+- name: active
+  type: boolean
+  default: true
+title_field: name
+views:
+- type: table
+  columns:
+  - name
+  - sku
+  - selling_price
+  - active
+- type: tile
+  title_field: name
+ui:
+  style: modern
+  list:
+    default_view: tile
+    empty_state:
+      title: No products yet
+      description: Add a product or service to pick on invoices and POS.
+      action_label: New product
+  detail:
+    layout: stack
+    hero:
+      title_field: name
+      image_field: image
+    metrics:
+    - selling_price

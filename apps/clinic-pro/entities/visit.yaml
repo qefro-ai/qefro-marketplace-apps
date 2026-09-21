@@ -6,6 +6,9 @@ allocate_code:
   prefix: V-
   start: 1001
 fields:
+- name: appointment_id
+  type: relation
+  ref_entity: appointment
 - name: appointment_code
   type: string
 - name: patient_name
@@ -34,6 +37,7 @@ fields:
   type: person
   description: Existing Qefro Person identity (Customer Hub)
   ref_entity: person
+  inherit_from: appointment_id
 status_events:
   in_progress: visit.updated
   completed: visit.updated

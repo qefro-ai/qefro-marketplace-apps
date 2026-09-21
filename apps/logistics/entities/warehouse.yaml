@@ -1,0 +1,21 @@
+id: warehouse
+name: Warehouse
+description: "Storage facility"
+allocate_code:
+  prefix: WH-
+  start: 1001
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: address
+    type: string
+    required: true
+  - name: capacity
+    type: integer
+  - name: status
+    type: enum
+    enum_values:
+      - active
+      - full
+      - maintenance

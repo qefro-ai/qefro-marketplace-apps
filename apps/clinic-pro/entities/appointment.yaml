@@ -9,6 +9,9 @@ fields:
 - name: patient_name
   type: string
   required: true
+- name: practitioner_id
+  type: relation
+  ref_entity: practitioner
 - name: practitioner_name
   type: string
 - name: slot_code
@@ -43,3 +46,10 @@ status_events:
   completed: appointment.completed
   cancelled: appointment.cancelled
   no_show: appointment.updated
+availability:
+  booking:
+    datetime_field: scheduled_at
+  capacity:
+    mode: exclusive
+    resource:
+      field: practitioner_id

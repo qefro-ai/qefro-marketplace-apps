@@ -9,6 +9,9 @@ fields:
 - name: guest_name
   type: string
   required: true
+- name: table_id
+  type: relation
+  ref_entity: table
 - name: table_name
   type: string
 - name: guest_count
@@ -42,3 +45,35 @@ status_events:
   cancelled: reservation.cancelled
   completed: reservation.updated
   no_show: reservation.updated
+availability:
+  booking:
+    datetime_field: reservation_at
+  capacity:
+    mode: exclusive
+    resource:
+      field: table_id
+title_field: guest_name
+status_field: status
+views:
+- type: table
+- type: tile
+  title_field: guest_name
+  status_field: status
+ui:
+  style: classic
+  list:
+    default_view: table
+    empty_state:
+      title: No reservations
+      description: Book a table for a guest already in Contacts.
+      action_label: New reservation
+  detail:
+    layout: split
+    hero:
+      title_field: guest_name
+      subtitle_field: person_id
+      status_field: status
+    metrics:
+    - guest_count
+    - reservation_at
+

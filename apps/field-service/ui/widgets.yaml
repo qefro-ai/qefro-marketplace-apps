@@ -18,6 +18,40 @@
     submit_label: Create
     action:
       trigger: create-work-order
+- id: site_form
+  type: form
+  title: New site
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: address
+      label: Address
+      type: text
+      required: true
+    - name: contact_name
+      label: Contact
+      type: text
+    submit_label: Create
+    action:
+      trigger: create-site
+- id: technician_form
+  type: form
+  title: New technician
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: skill
+      label: Skill
+      type: text
+    submit_label: Create
+    action:
+      trigger: create-technician
 - id: wo_status
   type: status
   title: Work orders
@@ -53,7 +87,9 @@
       header: Name
     - key: address
       header: Address
-- id: tech_table
+    - key: contact_name
+      header: Contact
+- id: technicians_table
   type: table
   title: Technicians
   source: technicians
@@ -65,6 +101,8 @@
       header: Name
     - key: skill
       header: Skill
+    - key: status
+      header: Status
 - id: parts_table
   type: table
   title: Parts
@@ -75,8 +113,24 @@
     columns:
     - key: sku
       header: SKU
+    - key: name
+      header: Name
     - key: quantity_on_hand
       header: Qty
+- id: service_categories_table
+  type: table
+  title: Service Categories
+  source: service_categories
+  options:
+    rows_path: items
+    empty_title: No categories yet
+    columns:
+    - key: name
+      header: Name
+    - key: description
+      header: Description
+    - key: status
+      header: Status
 - id: intro
   type: markdown
   title: Field Service
@@ -92,6 +146,33 @@
     rows_path: items
     label: Total
     navigate_to: work_orders
+- id: metric_site
+  type: metric
+  title: Sites
+  source: sites
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: sites
+- id: metric_technician
+  type: metric
+  title: Technicians
+  source: technicians
+  options:
+    aggregate: count
+    rows_path: items
+    label: Total
+    navigate_to: technicians
+- id: metric_part
+  type: metric
+  title: Parts
+  source: parts
+  options:
+    aggregate: count
+    rows_path: items
+    label: Parts
+    navigate_to: parts
 - id: work_order_dash_status
   type: status
   title: Work orders status

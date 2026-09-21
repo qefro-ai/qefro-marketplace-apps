@@ -46,3 +46,7 @@ status_events:
   paid: payment.status_changed
   failed: payment.updated
   refunded: payment.status_changed
+relation_caps:
+- field: amount
+  relation: booking
+  parent_field: total_amount

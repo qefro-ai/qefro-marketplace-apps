@@ -10,3 +10,6 @@
 - id: assignments
   type: entity
   target: assignment
+- id: instructors
+  type: entity
+  target: instructor

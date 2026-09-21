@@ -22,6 +22,16 @@
   title: Vehicles
   icon: clipboard
   entity: vehicle
+- id: drivers
+  page: drivers
+  title: Drivers
+  icon: user
+  entity: driver
+- id: warehouses
+  page: warehouses
+  title: Warehouses
+  icon: home
+  entity: warehouse
 - id: contacts
   page: contacts
   title: Contacts

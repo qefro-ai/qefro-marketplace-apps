@@ -7,11 +7,6 @@
   title: Agents
   icon: user
   entity: agent
-- id: deals
-  page: deals
-  title: Deals
-  icon: clipboard
-  entity: deal
 - id: leads
   page: leads
   title: Leads

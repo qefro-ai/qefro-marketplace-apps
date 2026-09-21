@@ -17,7 +17,7 @@ interpreted by the generic Runtime.
 
 | Entity | Role |
 | --- | --- |
-| `patient` | Patient demographics bound to Customer Hub `person_id` |
+| `patient` | Clinical record (DOB, blood group, emergency contact) bound to Customer Hub `person_id`. Contact identity is Hub Person. |
 | `practitioner` | Clinician roster |
 | `appointment_slot` | Bookable time windows |
 | `appointment` | Scheduled appointments with status transitions |

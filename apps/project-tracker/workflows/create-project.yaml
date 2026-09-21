@@ -1,11 +1,23 @@
 id: create-project
 name: Create Project
 trigger:
-  type: manual
-surfaces: [portal]
+  type: conversation
+surfaces:
+- staff
 steps:
-  - id: save
-    type: tool
-    tool: entity.project.create
-    input:
-      document: "{{ input }}"
+- id: ask_title
+  type: ask
+  field: title
+  message: "What is the project title?"
+- id: save
+  type: tool
+  tool: entity.project.create
+  execution: runtime
+  input_map:
+    title: title
+    status: $literal:active
+- id: confirm
+  type: message
+  message: "Project {{title}} created."
+- id: done
+  type: complete

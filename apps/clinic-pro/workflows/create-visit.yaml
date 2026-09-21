@@ -19,8 +19,8 @@ steps:
   field: patient_name
   message: "👤 Which patient?"
   choices_from: patients
-  title_field: name
-  value_field: name
+  title_field: code
+  value_field: code
   chip_prefix: patient
 - id: ask_date
   type: ask

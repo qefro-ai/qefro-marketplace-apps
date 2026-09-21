@@ -1,0 +1,17 @@
+id: driver
+name: Driver
+description: "Fleet driver"
+fields:
+  - name: name
+    type: string
+    required: true
+  - name: license_number
+    type: string
+  - name: phone
+    type: phone
+  - name: status
+    type: enum
+    enum_values:
+      - available
+      - on_route
+      - off_duty

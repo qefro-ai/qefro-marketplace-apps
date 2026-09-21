@@ -3,9 +3,45 @@ name: Request viewing
 description: Schedule a property viewing bound to Person
 surfaces:
 - customer
+whatsapp_flow:
+  category: APPOINTMENT_BOOKING
+  title: Request viewing
+  cta: Request
 trigger:
   type: conversation
 steps:
+- id: ask_type
+  type: ask
+  field: property_type
+  message: "What type of property are you looking for?"
+  choices:
+  - id: apartment
+    label: Apartment
+  - id: house
+    label: Villa / House
+  - id: condo
+    label: Condo
+  - id: land
+    label: Plot / Land
+  - id: commercial
+    label: Commercial
+- id: fetch_for_cities
+  type: tool
+  tool: entity.property.list
+  execution: runtime
+  output: properties
+  input_map:
+    filter.property_type: property_type
+    filter.status: $literal:listed
+    limit: $literal:20
+- id: ask_city
+  type: ask
+  field: city
+  message: "Which city or area should I search in?"
+  choices_from: properties
+  title_field: city
+  value_field: city
+  chip_prefix: city
 - id: list_properties
   type: tool
   tool: entity.property.list
@@ -13,11 +49,13 @@ steps:
   output: properties
   input_map:
     filter.status: $literal:listed
+    filter.property_type: property_type
+    filter.city: city
     limit: $literal:20
 - id: ask_property
   type: ask
   field: property_id
-  message: "🏠 Which property?"
+  message: "Which property?"
   choices_from: properties
   title_field: title
   value_field: id
@@ -29,14 +67,49 @@ steps:
   output: property
   input_map:
     id: property_id
+- id: list_dates
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: available_dates
+  input_map:
+    kind: $literal:dates
+    property_id: property_id
 - id: ask_date
   type: ask
   field: date
-  message: "📅 Which date?"
+  message: "Choose a date"
+  choices_from: available_dates
+  title_field: label
+  value_field: value
+  chip_prefix: date
+- id: list_slots
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: available_slots
+  input_map:
+    kind: $literal:slots
+    date: date
+    property_id: property_id
 - id: ask_time
   type: ask
   field: time
-  message: "⏰ What time works best for you?"
+  message: "Choose a time"
+  choices_from: available_slots
+  title_field: label
+  value_field: time
+  chip_prefix: time
+- id: validate_slot
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: slot_check
+  input_map:
+    kind: $literal:validate
+    date: date
+    time: time
+    property_id: property_id
 - id: run
   type: tool
   tool: entity.viewing.create

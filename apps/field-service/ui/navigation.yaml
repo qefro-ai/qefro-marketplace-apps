@@ -22,6 +22,11 @@
   title: Work orders
   icon: clipboard
   entity: work_order
+- id: service_categories
+  page: service_categories
+  title: Categories
+  icon: clipboard
+  entity: service_category
 - id: contacts
   page: contacts
   title: Contacts

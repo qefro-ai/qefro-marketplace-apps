@@ -1,0 +1,471 @@
+- id: pos_checkout
+  type: cart_checkout
+  title: Point of sale
+  options:
+    catalog_entity: product
+    catalog_title_field: name
+    catalog_price_field: selling_price
+    catalog_sku_field: sku
+    catalog_filter:
+      active: true
+    line_entity: invoice_item
+    line_parent_field: invoice_id
+    line_catalog_field: product_id
+    line_qty_field: quantity
+    line_price_field: unit_price
+    line_description_field: description
+    document_entity: invoice
+    document_status: issued
+    document_status_field: status
+    document_person_field: person_id
+    document_total_field: total_amount
+    document_paid_field: paid_amount
+    document_outstanding_field: outstanding_amount
+    document_number_field: invoice_number
+    document_issue_field: issue_date
+    document_due_field: due_date
+    document_currency_field: currency
+    document_page: invoices
+    person_required: true
+    payment_entity: payment
+    payment_amount_field: amount
+    payment_method_field: method
+    payment_status: received
+    payment_status_field: status
+    payment_date_field: payment_date
+    payment_person_field: person_id
+    payment_currency_field: currency
+    payment_methods:
+    - cash
+    - upi
+    - card
+    - other
+    allocation_entity: payment_allocation
+    allocation_document_field: invoice_id
+    allocation_payment_field: payment_id
+    allocation_amount_field: amount
+- id: product_form
+  type: form
+  title: New product
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: sku
+      label: SKU
+      type: text
+      required: true
+    - name: item_type
+      label: Type
+      type: text
+      required: false
+    - name: selling_price
+      label: Selling price
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: unit
+      label: Unit
+      type: text
+      required: false
+    - name: tax_rate
+      label: Tax rate
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-product
+- id: invoice_form
+  type: form
+  title: New invoice
+  options:
+    fields:
+    - name: total_amount
+      label: Total
+      type: text
+      required: true
+    - name: currency
+      label: Currency
+      type: text
+      required: false
+    - name: issue_date
+      label: Issue date
+      type: date
+      required: false
+    - name: due_date
+      label: Due date
+      type: date
+      required: false
+    - name: invoice_number
+      label: Invoice number
+      type: text
+      required: false
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-invoice
+- id: payment_form
+  type: form
+  title: Record payment
+  options:
+    fields:
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    - name: method
+      label: Method
+      type: text
+      required: false
+    - name: reference
+      label: Reference
+      type: text
+      required: false
+    - name: payment_date
+      label: Payment date
+      type: date
+      required: false
+    submit_label: Record
+    action:
+      trigger: record-payment
+- id: follow_up_form
+  type: form
+  title: New follow-up
+  options:
+    fields:
+    - name: follow_up_date
+      label: Follow-up date
+      type: date
+      required: true
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Create
+    action:
+      trigger: create-follow-up
+- id: complete_follow_up_form
+  type: form
+  title: Complete follow-up
+  options:
+    fields:
+    - name: id
+      label: Follow-up
+      type: text
+      required: true
+    submit_label: Complete
+    action:
+      trigger: complete-follow-up
+- id: allocate_form
+  type: form
+  title: Allocate payment
+  options:
+    fields:
+    - name: amount
+      label: Amount
+      type: text
+      required: true
+    submit_label: Allocate
+    action:
+      trigger: allocate-payment
+- id: products_table
+  type: table
+  title: Products
+  source: products
+  options:
+    rows_path: items
+    empty_title: No products yet
+    empty_subtitle: Add what you sell (name, SKU, price), or import a CSV. Then use them on invoices.
+    columns:
+    - key: name
+      header: Name
+    - key: sku
+      header: SKU
+    - key: selling_price
+      header: Price
+    - key: item_type
+      header: Type
+    - key: active
+      header: Active
+- id: invoices_table
+  type: table
+  title: Invoices
+  source: invoices
+  options:
+    rows_path: items
+    empty_title: No invoices yet
+    empty_subtitle: Create an invoice, pick a contact, add items (for example 2 × Product A at ₹500 = ₹1,000).
+    columns:
+    - key: invoice_number
+      header: Number
+    - key: total_amount
+      header: Total
+    - key: paid_amount
+      header: Paid
+    - key: outstanding_amount
+      header: Outstanding
+    - key: due_date
+      header: Due
+    - key: status
+      header: Status
+- id: payments_table
+  type: table
+  title: Payments
+  source: payments
+  options:
+    rows_path: items
+    empty_title: No payments yet
+    empty_subtitle: Record money you received, then apply it to an invoice. Partial payments stay outstanding.
+    columns:
+    - key: payment_number
+      header: Number
+    - key: amount
+      header: Amount
+    - key: method
+      header: Method
+    - key: payment_date
+      header: Date
+    - key: status
+      header: Status
+- id: follow_ups_table
+  type: table
+  title: Follow-ups
+  source: follow_ups
+  options:
+    rows_path: items
+    empty_title: No follow-ups yet
+    empty_subtitle: Overdue unpaid invoices create follow-ups. Connect WhatsApp and Automations to remind the customer.
+    columns:
+    - key: follow_up_date
+      header: Date
+    - key: status
+      header: Status
+    - key: notes
+      header: Notes
+- id: intro
+  type: markdown
+  title: How this works
+  options:
+    content: |
+      Create invoices, record payments, and follow up on unpaid bills. Open **How this works** in the sidebar for the full guide.
+
+      **First-run checklist**
+
+      1. Configure business currency
+      2. Configure invoice settings (prefix, terms, tax, follow-up interval)
+      3. Add or import products
+      4. Connect WhatsApp
+      5. Configure follow-up automation on Automations
+      6. Create your first invoice — or take a counter sale on **POS**
+      7. Record a payment
+
+      You're ready. Billing Pro will track outstanding payments and automatically follow up with customers.
+
+      **Today:** unpaid and overdue on this dashboard → Follow-ups → record payments as they come in. Overdue invoices get a follow-up. WhatsApp reminders are set on Automations (this app does not send WhatsApp by itself). Use **POS** for walk-up sales (product → invoice → payment).
+- id: metric_total_invoiced
+  type: metric
+  title: Total invoiced
+  source: invoices
+  options:
+    aggregate: sum
+    field: total_amount
+    format: currency
+    rows_path: items
+    label: Total
+    navigate_to: invoices
+- id: metric_total_paid
+  type: metric
+  title: Total paid
+  source: invoices
+  options:
+    aggregate: sum
+    field: paid_amount
+    format: currency
+    rows_path: items
+    label: Paid
+    navigate_to: invoices
+- id: metric_outstanding
+  type: metric
+  title: Outstanding
+  source: invoices
+  options:
+    aggregate: sum
+    field: outstanding_amount
+    format: currency
+    rows_path: items
+    label: Outstanding
+    navigate_to: invoices
+- id: metric_follow_up
+  type: metric
+  title: Follow-ups
+  source: follow_ups
+  options:
+    aggregate: count
+    filter:
+      status: pending
+    rows_path: items
+    label: Pending
+    navigate_to: follow_ups
+- id: metric_overdue
+  type: metric
+  title: Overdue
+  source: invoices
+  options:
+    aggregate: count
+    filter:
+      status: overdue
+    rows_path: items
+    label: Overdue
+    navigate_to: invoices
+- id: metric_payments_today
+  type: metric
+  title: Payments today
+  source: payments
+  options:
+    aggregate: today
+    date_field: payment_date
+    rows_path: items
+    label: Today
+    navigate_to: payments
+- id: invoice_dash_status
+  type: status
+  title: Invoice status
+  source: invoices
+  options:
+    rows_path: items
+    status_field: status
+    label_field: invoice_number
+    empty_title: No invoices yet
+    empty_subtitle: Open Invoices and create your first bill, or see How this works.
+    navigate_to: invoices
+    action_label: View all
+- id: invoice_dash_table
+  type: table
+  title: Recent invoices
+  source: invoices
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: invoice_number
+      header: Number
+    - key: total_amount
+      header: Total
+    - key: outstanding_amount
+      header: Outstanding
+    - key: due_date
+      header: Due
+    - key: status
+      header: Status
+    navigate_to: invoices
+    action_label: View all
+    empty_title: No invoices yet
+    empty_subtitle: Open Invoices, pick a contact, add items. How this works has a first-invoice example.
+    empty_action_label: Open list
+- id: guide_getting_started
+  type: markdown
+  title: Getting started
+  options:
+    content: |
+      Billing Pro tracks invoices and unpaid bills. It is not accounting software and not a payment gateway — you record money you already received.
+
+      **Install settings:** currency (INR), invoice prefix (INV), payment terms (days until due), default tax, follow-up interval.
+
+      **First-run checklist**
+
+      1. Configure business currency
+      2. Configure invoice settings
+      3. Add or import products
+      4. Connect WhatsApp
+      5. Configure follow-up automation
+      6. Create your first invoice — or take a counter sale on **POS**
+      7. Record a payment
+
+      You're ready. Billing Pro will track outstanding payments and automatically follow up with customers.
+
+      **Daily:** morning Dashboard (unpaid / overdue) → Follow-ups → record payments → overdue bills get a follow-up → WhatsApp if Automations is on. Counter sales go through **POS** (same invoices and payments).
+- id: guide_products
+  type: markdown
+  title: Products
+  options:
+    content: |
+      Products are what you sell. Open **Products** → New. Enter name, SKU (unique), price. Optional: description, product vs service, unit, tax.
+
+      Currency and tax default from settings. Edit anytime. To stop using a product, set Active to no — do not delete ones already on invoices.
+
+      **Import:** Products → Import Data. Map name, SKU / product code, price.
+- id: guide_invoices
+  type: markdown
+  title: Invoices
+  options:
+    content: |
+      **Example:** 2 × Product A at ₹500 = ₹1,000.
+
+      1. Invoices → New. Pick the customer (add them under Contacts if new).
+      2. Set due date. Optional invoice number (or INV-1001 is assigned).
+      3. Invoice items → New. Product A, quantity 2, unit price 500.
+      4. Invoice total becomes ₹1,000.
+
+      **POS (counter sale):** open **POS**, search products (name or SKU), add to cart, pick a Contact, choose Cash / UPI / Card / Other, Complete sale. That creates the same invoice, line items, and payment as the screens above. Full amount → paid. Partial → outstanding. ₹0 → unpaid credit (follow-up still uses the existing overdue path). No WhatsApp from POS.
+
+      **Draft** is a working copy. **Issued** is waiting for payment. **Paid / partially paid / overdue** update when you record payments — you do not type “paid” to collect.
+
+      Line prices are snapshotted. Changing the product later does not rewrite old invoices.
+- id: guide_payments
+  type: markdown
+  title: Payments
+  options:
+    content: |
+      A **payment** is money received. An **allocation** is how much of it applies to one invoice. They are separate so one UPI can cover two invoices, or one invoice can be paid in instalments.
+
+      | What happened | Invoice shows |
+      | --- | --- |
+      | Full amount recorded and applied | Paid |
+      | Part recorded and applied | Partially paid |
+      | Nothing received | Issued or Overdue |
+
+      Use Record payment. To split a receipt, record it once, then Allocations for each invoice.
+- id: guide_follow_ups
+  type: markdown
+  title: Follow-ups
+  options:
+    content: |
+      **INV-1005 is unpaid on the due date.** It becomes overdue. A follow-up is created. If WhatsApp + Automations are set up, the customer is reminded. You record the payment. The invoice shows paid. Follow-ups stop.
+
+      You can also create a follow-up when the customer says they will pay later (Follow-ups → New).
+- id: guide_whatsapp
+  type: markdown
+  title: WhatsApp reminders
+  options:
+    content: |
+      This app does not send WhatsApp itself.
+
+      1. Connect WhatsApp for the workspace (Channels).
+      2. Open **Automations**.
+      3. When **Follow-up due**, action **Send WhatsApp**.
+      4. Write a message or template (name, invoice, amount due).
+      5. Test, then enable.
+
+      After the invoice is paid, pending follow-ups complete so reminders stop.
+- id: guide_more
+  type: markdown
+  title: Import, Command Chat, troubleshooting
+  options:
+    content: |
+      **Import unpaid invoices.** CSV headers: invoice_number, name, phone, due_amount, due_date. Map name/phone to the contact; due_amount to Total. Identity uses name, phone, or email — not a person id.
+
+      **Command Chat** (screens still work): “Raise an invoice for 10000 due next Friday.” “Customer paid 5000 UPI for INV-1005.” “Follow up later — they’ll pay on Friday.”
+
+      **Invoice shows paid too early** — too much was allocated; check Payments / Allocations.
+      **Contact not saving** — pick an existing Contacts person, or add them first.
+      **Reminder not sending** — WhatsApp connected? Automation enabled? Trigger Follow-up due? Follow-up still pending? Use Test.
+      **Import mapping** — due_amount is Total, not Paid.
+

@@ -51,6 +51,12 @@
   icon: file-text
   entity: travel_document
 
+- id: agents
+  page: agents
+  title: Agents
+  icon: user
+  entity: agent
+
 - id: contacts
   page: contacts
   title: Contacts

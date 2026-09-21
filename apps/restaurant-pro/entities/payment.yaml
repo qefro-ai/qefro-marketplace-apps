@@ -1,14 +1,19 @@
 id: payment
 scope: customer
 name: Payment
-description: Order payment
+description: Payment for a Restaurant Order
 allocate_code:
   prefix: PAY-
   start: 1001
+concurrency: optimistic
 fields:
+- name: order_id
+  type: relation
+  ref_entity: order
+  required: true
 - name: order_code
   type: string
-  required: true
+  description: Optional denormalized parent code for display. Relation is order_id.
 - name: guest_name
   type: string
 - name: amount
@@ -16,6 +21,12 @@ fields:
   required: true
 - name: currency
   type: string
+- name: method
+  type: enum
+  enum_values:
+  - cash
+  - card
+  - upi
 - name: status
   type: enum
   enum_values:
@@ -29,7 +40,22 @@ fields:
   type: person
   description: Existing Qefro Person identity (Customer Hub)
   ref_entity: person
+  inherit_from: order_id
 status_events:
-  completed: payment.created
+  completed: payment.received
   failed: payment.created
   refunded: payment.created
+on_events:
+- event: payment.received
+  target: order
+  match_field: id
+  match_from: order_id
+  where:
+    status: pending
+  set:
+    status: completed
+  limit: 50
+relation_caps:
+- field: amount
+  relation: order_id
+  parent_field: total_amount

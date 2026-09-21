@@ -2,6 +2,9 @@ id: property_document
 name: Property document
 description: Document attached to a property
 fields:
+- name: property_id
+  type: relation
+  ref_entity: property
 - name: property_code
   type: string
   required: true

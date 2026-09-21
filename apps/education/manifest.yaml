@@ -1,6 +1,6 @@
 id: education
 name: Education
-version: 0.1.5
+version: 1.1.0
 hosting: runtime
 description: Courses, enrollments, sessions, and assignments as a native Qefro coaching
   application
@@ -17,16 +17,27 @@ entities:
 - enrollment
 - session
 - assignment
+- instructor
 flows:
 - enroll-student
 - schedule-session
 - complete-session
 - lookup-enrollment
+- create-course
+- create-instructor
+- create-assignment
 events:
 - enrollment.created
 - session.created
 - session.completed
+- session.cancelled
+- session.due
 - assignment.created
+- assignment.submitted
+- assignment.reviewed
+- course.created
+- course.updated
+- instructor.created
 permissions:
 - workflow.execute
 - storage.read
@@ -49,9 +60,12 @@ triggers:
     intents:
     - enroll a student
     - sign up for the course
+    - register a learner
+    - add enrollment
     confirmation:
       reply_signals:
       - enrolled
+      - enrollment
       required_slots:
       - learner_name
       - course_title
@@ -63,9 +77,12 @@ triggers:
     intents:
     - schedule a class
     - book a coaching session
+    - schedule session
+    - book a session
     confirmation:
       reply_signals:
       - scheduled
+      - session
       required_slots:
       - course_title
       - date
@@ -77,6 +94,7 @@ triggers:
     intents:
     - complete the session
     - mark class done
+    - finish session
     confirmation:
       reply_signals:
       - completed
@@ -90,12 +108,29 @@ triggers:
     intents:
     - find the enrollment
     - enrollment status
+    - check enrollment
+    - view enrollment
     confirmation:
       reply_signals:
       - enrollment
       required_slots:
       - id
   confirmation_message: Here is enrollment for {{student_name}}.
+- id: create_course
+  workflow: create-course
+  input_variable: course_input
+  match:
+    intents:
+    - create a course
+    - add a new course
+    - new course
+    confirmation:
+      reply_signals:
+      - course
+      - created
+      required_slots:
+      - title
+  confirmation_message: Course {{title}} created.
 conversation_slots:
 - id: learner_name
   labels:
@@ -104,11 +139,26 @@ conversation_slots:
   - name
   kind: person_name
   identity: person_name
+- id: name
+  labels:
+  - name
+  kind: person_name
+  identity: person_name
 - id: course_title
   labels:
   - course
   - program
   - class
+  kind: string
+- id: title
+  labels:
+  - title
+  kind: string
+- id: level
+  labels:
+  - level
+  - beginner
+  - advanced
   kind: string
 - id: date
   labels:
@@ -125,6 +175,20 @@ conversation_slots:
   - enrollment
   - session id
   kind: string
+- id: specialty
+  labels:
+  - specialty
+  - subject
+  kind: string
+- id: email
+  labels:
+  - email
+  kind: email
+- id: phone
+  labels:
+  - phone
+  - mobile
+  kind: phone
 - id: status
   labels:
   - status

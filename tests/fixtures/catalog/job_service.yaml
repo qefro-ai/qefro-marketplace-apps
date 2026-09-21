@@ -1,0 +1,21 @@
+id: job_service
+name: Job service
+description: Catalog fixture — field-service-shaped service. Runtime consumes mapping only.
+fields:
+- name: name
+  type: string
+  required: true
+- name: details
+  type: string
+- name: rate
+  type: float
+- name: currency
+  type: string
+catalog:
+  enabled: true
+  type: service
+  mapping:
+    title: name
+    description: details
+    price: rate
+    currency: currency

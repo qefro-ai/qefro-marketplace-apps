@@ -1,0 +1,5 @@
+id: create_first_invoice
+title: Create your first invoice
+action: configure
+required: true
+description: Pick a contact, add items (for example 2 × Product A at ₹500 = ₹1,000), and set a due date.

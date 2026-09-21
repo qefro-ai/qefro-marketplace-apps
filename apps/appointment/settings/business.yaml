@@ -1,0 +1,40 @@
+# Operating availability — workspace-scoped, not entity structure.
+# Per-service duration_minutes on the service entity is display metadata;
+# generated slots use this workspace duration until the runtime supports
+# overlaying duration from a related record.
+settings:
+  timezone:
+    type: string
+    required: true
+    default: Asia/Kolkata
+    description: IANA timezone for appointment slots
+  duration_minutes:
+    type: number
+    required: true
+    default: 30
+    description: Appointment duration in minutes
+  start_time:
+    type: string
+    required: true
+    default: "09:00"
+    description: Opening time (HH:MM, 24-hour)
+  end_time:
+    type: string
+    required: true
+    default: "18:00"
+    description: Closing time (HH:MM, 24-hour)
+  closed_days:
+    type: string
+    required: false
+    default: sunday
+    description: Comma-separated weekdays the office is closed
+  date_window_days:
+    type: number
+    required: true
+    default: 14
+    description: How many days ahead to offer appointment slots
+  blocking_statuses:
+    type: string
+    required: false
+    default: scheduled,confirmed
+    description: Appointment statuses that occupy a staff slot

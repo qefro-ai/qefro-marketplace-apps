@@ -49,6 +49,10 @@
   title: Travel Documents
   entity: travel_document
 
+- id: agents
+  title: Agents
+  entity: agent
+
 - id: contacts
   title: Contacts
   host: contacts

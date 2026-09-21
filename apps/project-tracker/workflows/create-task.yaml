@@ -1,11 +1,39 @@
 id: create-task
 name: Create Task
 trigger:
-  type: manual
-surfaces: [portal]
+  type: conversation
+surfaces:
+- staff
 steps:
-  - id: save
-    type: tool
-    tool: entity.task.create
-    input:
-      document: "{{ input }}"
+- id: list_projects
+  type: tool
+  tool: entity.project.list
+  execution: runtime
+  output: projects
+  input_map:
+    limit: $literal:20
+- id: ask_project
+  type: ask
+  field: project_id
+  message: "Which project?"
+  choices_from: projects
+  title_field: title
+  value_field: id
+  chip_prefix: project
+- id: ask_title
+  type: ask
+  field: title
+  message: "Task title?"
+- id: save
+  type: tool
+  tool: entity.task.create
+  execution: runtime
+  input_map:
+    title: title
+    project_id: project_id
+    status: $literal:todo
+- id: confirm
+  type: message
+  message: "Task {{title}} created."
+- id: done
+  type: complete

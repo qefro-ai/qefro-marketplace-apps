@@ -5,6 +5,9 @@ allocate_code:
   prefix: SES-
   start: 1001
 fields:
+  - name: course_id
+    type: relation
+    ref_entity: course
   - name: course_title
     type: string
     required: true
@@ -22,3 +25,8 @@ fields:
 status_events:
   completed: session.completed
   cancelled: session.cancelled
+date_events:
+- field: date
+  event: session.due
+  when_status:
+  - scheduled

@@ -1,0 +1,31 @@
+id: create-driver
+name: "Add driver"
+description: "Register a driver"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "👤 Driver name?"
+  - id: ask_license
+    type: ask
+    field: license_number
+    message: "🪪 License number?"
+  - id: ask_phone
+    type: ask
+    field: phone
+    message: "📞 Phone?"
+  - id: run
+    type: tool
+    tool: entity.driver.create
+    execution: runtime
+    input_map:
+      name: name
+      license_number: license_number
+      phone: phone
+  - id: confirm
+    type: message
+    message: "✅ Driver {{name}} registered."
+  - id: done
+    type: complete

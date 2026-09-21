@@ -1,0 +1,42 @@
+id: listing
+name: Listing
+description: Catalog fixture — real-estate-shaped listing. Runtime consumes mapping only.
+fields:
+- name: title
+  type: string
+  required: true
+- name: description
+  type: string
+- name: price
+  type: float
+- name: currency
+  type: string
+- name: image_url
+  type: image
+- name: status
+  type: enum
+  enum_values:
+  - listed
+  - draft
+  - sold
+  - withdrawn
+catalog:
+  enabled: true
+  type: service
+  mapping:
+    title: title
+    description: description
+    price: price
+    currency: currency
+    image: image_url
+    availability: status
+  publish_when:
+    field: status
+    in:
+    - listed
+  availability:
+    in_stock:
+    - listed
+    out_of_stock:
+    - sold
+    - withdrawn

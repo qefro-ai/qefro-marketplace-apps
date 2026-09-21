@@ -16,9 +16,6 @@
 - id: offers
   type: entity
   target: offer
-- id: deals
-  type: entity
-  target: deal
 - id: documents
   type: entity
   target: property_document

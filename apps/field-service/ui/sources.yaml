@@ -10,3 +10,6 @@
 - id: parts
   type: entity
   target: part
+- id: service_categories
+  type: entity
+  target: service_category

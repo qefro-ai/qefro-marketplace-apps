@@ -1,0 +1,38 @@
+id: invoice_item
+name: Invoice item
+description: One line on an invoice. Example — 2 × Product A at ₹500 = ₹1,000. Changing the product later does not rewrite this price.
+allocate_code:
+  prefix: ITM-
+  start: 1001
+concurrency: optimistic
+fields:
+- name: invoice_id
+  type: relation
+  ref_entity: invoice
+  required: true
+- name: product_id
+  type: relation
+  ref_entity: product
+- name: description
+  type: string
+- name: quantity
+  type: float
+  required: true
+- name: unit_price
+  type: float
+  format: currency
+  required: true
+- name: discount
+  type: float
+- name: tax_rate
+  type: float
+  default_from_setting: default_tax_rate
+- name: amount
+  type: float
+  format: currency
+computed:
+- field: amount
+  op: multiply
+  left: quantity
+  right: unit_price
+  minus: discount

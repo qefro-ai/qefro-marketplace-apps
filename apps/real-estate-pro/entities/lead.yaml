@@ -1,18 +1,20 @@
 id: lead
 scope: customer
 name: Lead
-description: Buyer/renter lead bound to Customer Hub Person
+description: Person-scoped sales pipeline record. Identity is Customer Hub Person, not this entity.
 allocate_code:
   prefix: L-
   start: 1001
 fields:
+- name: person_id
+  type: person
+  description: Customer from Contacts. Runtime injects Hub Person; LLM/user person_id is not authority.
+  ref_entity: person
+  required: true
+  label: Customer
 - name: name
   type: string
-  required: true
-- name: email
-  type: email
-- name: phone
-  type: phone
+  description: Display name auto-filled from Person. Not identity authority.
 - name: source
   type: string
 - name: status
@@ -24,14 +26,11 @@ fields:
   - nurturing
   - won
   - lost
+  default: new
 - name: assigned_agent_name
   type: string
 - name: notes
   type: string
-- name: person_id
-  type: person
-  description: Existing Qefro Person identity (Customer Hub)
-  ref_entity: person
 status_events:
   contacted: lead.updated
   qualified: lead.updated

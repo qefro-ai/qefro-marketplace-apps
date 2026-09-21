@@ -1,0 +1,43 @@
+id: follow_up
+name: Follow-up
+description: A reminder to collect an unpaid invoice. Overdue invoices create these automatically. When the invoice is paid, pending follow-ups complete.
+allocate_code:
+  prefix: FU-
+  start: 1001
+delete:
+  mode: soft
+fields:
+- name: invoice_id
+  type: relation
+  ref_entity: invoice
+  required: true
+- name: person_id
+  type: person
+  description: Contact copied from the invoice when a follow-up is created automatically.
+  ref_entity: person
+  inherit_from: invoice_id
+- name: follow_up_date
+  type: date
+  required: true
+  import_synonyms:
+  - due at
+  - follow up date
+  - reminder date
+- name: status
+  type: enum
+  enum_values:
+  - pending
+  - completed
+  - cancelled
+  default: pending
+- name: notes
+  type: string
+status_events:
+  pending: follow_up.created
+  completed: follow_up.completed
+  cancelled: follow_up.cancelled
+date_events:
+- field: follow_up_date
+  event: follow_up.due
+  when_status:
+  - pending

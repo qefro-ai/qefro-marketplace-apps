@@ -39,18 +39,6 @@
   title: Create lead
   options:
     fields:
-    - name: name
-      label: Name
-      type: text
-      required: true
-    - name: phone
-      label: Phone
-      type: text
-      required: false
-    - name: email
-      label: Email
-      type: text
-      required: false
     - name: source
       label: Source
       type: text
@@ -67,18 +55,6 @@
   title: Request viewing
   options:
     fields:
-    - name: property_title
-      label: Property
-      type: text
-      required: true
-    - name: lead_name
-      label: Lead name
-      type: text
-      required: true
-    - name: agent_name
-      label: Agent
-      type: text
-      required: false
     - name: date
       label: Date
       type: date
@@ -99,14 +75,6 @@
   title: Create offer
   options:
     fields:
-    - name: property_title
-      label: Property
-      type: text
-      required: true
-    - name: lead_name
-      label: Lead name
-      type: text
-      required: true
     - name: amount
       label: Amount
       type: text
@@ -118,34 +86,6 @@
     submit_label: Submit
     action:
       trigger: create-offer
-- id: deal_form
-  type: form
-  title: Create deal
-  options:
-    fields:
-    - name: property_title
-      label: Property
-      type: text
-      required: true
-    - name: lead_name
-      label: Lead name
-      type: text
-      required: true
-    - name: agent_name
-      label: Agent
-      type: text
-      required: false
-    - name: amount
-      label: Amount
-      type: text
-      required: false
-    - name: currency
-      label: Currency
-      type: text
-      required: false
-    submit_label: Create
-    action:
-      trigger: create-deal
 - id: viewings_status
   type: status
   title: Viewings
@@ -214,28 +154,12 @@
     columns:
     - key: property_title
       header: Property
-    - key: lead_name
-      header: Lead
     - key: amount
       header: Amount
     - key: status
       header: Status
-- id: deals_table
-  type: table
-  title: Deals
-  source: deals
-  options:
-    rows_path: items
-    empty_title: No deals yet
-    columns:
-    - key: property_title
-      header: Property
-    - key: lead_name
-      header: Lead
-    - key: amount
-      header: Amount
-    - key: status
-      header: Status
+    - key: closed_at
+      header: Closed
 - id: agents_table
   type: table
   title: Agents
@@ -270,7 +194,7 @@
   type: markdown
   title: Real Estate Pro
   options:
-    content: Properties, leads, viewings, and deals — open a list and tap New to add
+    content: Properties, leads, viewings, and offers — open a list and tap New to add
       records.
 - id: metric_property
   type: metric
@@ -299,15 +223,15 @@
     rows_path: items
     label: Total
     navigate_to: viewings
-- id: metric_deal
+- id: metric_offer
   type: metric
-  title: Deals
-  source: deals
+  title: Offers
+  source: offers
   options:
     aggregate: count
     rows_path: items
     label: Total
-    navigate_to: deals
+    navigate_to: offers
 - id: viewing_dash_status
   type: status
   title: Viewings status

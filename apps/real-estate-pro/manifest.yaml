@@ -1,6 +1,6 @@
 id: real-estate-pro
 name: Real Estate Pro
-version: 1.1.16
+version: 1.2.3
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no
   SDK, no custom server)
@@ -20,7 +20,6 @@ entities:
 - lead
 - viewing
 - offer
-- deal
 - property_document
 flows:
 - search-properties
@@ -30,7 +29,6 @@ flows:
 - create-property
 - create-lead
 - create-offer
-- create-deal
 events:
 - property.created
 - property.updated
@@ -42,9 +40,65 @@ events:
 - viewing.cancelled
 - offer.created
 - offer.updated
-- deal.created
-- deal.updated
-- deal.closed
+- offer.closed
+automation_templates:
+- id: follow_up_lead_created
+  name: Follow-up when lead created
+  description: Create a follow-up when a new lead is created.
+  trigger:
+    event: lead.created
+  actions:
+  - type: create_followup
+    due_in_hours: 24
+    note: Follow up with the new lead
+- id: viewing_booked_whatsapp
+  name: WhatsApp when a viewing is booked
+  description: Message the workspace Person with the property, date, and time. Requires an approved WhatsApp template named viewing_reminder on this workspace.
+  trigger:
+    event: viewing.created
+  actions:
+  - type: send_whatsapp
+    template: viewing_reminder
+    parameters:
+    - "{{person.name}}"
+    - "{{entity.property_title}}"
+    - "{{entity.date}}"
+    - "{{entity.time}}"
+    body: |
+      Hi {{person.name}},
+
+      Your viewing of {{entity.property_title}} is scheduled for {{entity.date}} at {{entity.time}}.
+
+      Please arrive a few minutes early.
+settings:
+- key: timezone
+  type: string
+  default: Asia/Kolkata
+  description: IANA timezone for viewing slots
+- key: duration_minutes
+  type: number
+  default: 30
+  description: Viewing duration in minutes
+- key: start_time
+  type: string
+  default: "09:00"
+  description: Opening time (HH:MM, 24-hour)
+- key: end_time
+  type: string
+  default: "18:00"
+  description: Closing time (HH:MM, 24-hour)
+- key: closed_days
+  type: string
+  default: sunday
+  description: Comma-separated weekdays the office is closed
+- key: date_window_days
+  type: number
+  default: 5
+  description: How many days ahead to offer viewing slots
+- key: blocking_statuses
+  type: string
+  default: scheduled,confirmed
+  description: Viewing statuses that occupy a time slot
 permissions:
 - workflow.execute
 - storage.read
@@ -197,3 +251,4 @@ conversation_slots:
   kind: string
 ui:
   name: Real Estate Pro
+  navigation_layout: sidebar

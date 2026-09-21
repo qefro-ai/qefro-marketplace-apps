@@ -12,6 +12,9 @@ fields:
   - name: destination
     type: string
     required: true
+  - name: vehicle_id
+    type: relation
+    ref_entity: vehicle
   - name: vehicle_label
     type: string
   - name: scheduled_date

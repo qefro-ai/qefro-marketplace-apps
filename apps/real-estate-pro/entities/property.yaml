@@ -1,14 +1,13 @@
 id: property
 name: Property
-description: Listable real-estate property
-allocate_code:
-  prefix: P-
-  start: 1001
+description: Listable real-estate record. Catalog mapping is declared here; Qefro does not special-case this entity at runtime.
 fields:
 - name: title
   type: string
   required: true
 - name: description
+  type: string
+- name: city
   type: string
 - name: property_type
   type: enum
@@ -19,43 +18,43 @@ fields:
   - land
   - commercial
   - other
-- name: status
-  type: enum
-  enum_values:
-  - draft
-  - listed
-  - under_offer
-  - sold
-  - withdrawn
-- name: address
-  type: string
-- name: city
-  type: string
-- name: state
-  type: string
-- name: country
-  type: string
-- name: latitude
-  type: float
-- name: longitude
-  type: float
 - name: price
   type: float
 - name: currency
   type: string
 - name: bedrooms
   type: integer
-- name: bathrooms
-  type: integer
-- name: area
-  type: float
-- name: area_unit
-  type: string
 - name: image_url
   type: image
-  description: Primary property photo (uploaded via solution UI media)
+- name: status
+  type: enum
+  enum_values:
+  - draft
+  - listed
+  - sold
+  - withdrawn
+  default: draft
 status_events:
   listed: property.status_changed
-  under_offer: property.status_changed
   sold: property.status_changed
   withdrawn: property.status_changed
+catalog:
+  enabled: true
+  type: service
+  mapping:
+    title: title
+    description: description
+    price: price
+    currency: currency
+    image: image_url
+    availability: status
+  publish_when:
+    field: status
+    in:
+    - listed
+  availability:
+    in_stock:
+    - listed
+    out_of_stock:
+    - sold
+    - withdrawn

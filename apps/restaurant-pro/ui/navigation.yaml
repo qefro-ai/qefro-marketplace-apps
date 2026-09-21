@@ -2,11 +2,14 @@
   page: dashboard
   title: Dashboard
   icon: home
+- id: pos
+  page: pos
+  title: POS
+  icon: clipboard
 - id: customers
   page: customers
   title: Customers
   icon: users
-  entity: customer
 - id: dining_sessions
   page: dining_sessions
   title: Dining sessions

@@ -1,0 +1,364 @@
+id: billing-pro
+name: Billing Pro
+version: 1.1.7
+hosting: runtime
+description: Create invoices, take counter sales on POS, track unpaid bills, and follow
+  up with customers — including WhatsApp reminders after you connect WhatsApp.
+category: commerce
+tags:
+- billing
+- invoices
+- payments
+- follow-up
+- runtime
+- pro
+channels:
+- widget
+- whatsapp
+entities:
+- product
+- invoice
+- invoice_item
+- payment
+- payment_allocation
+- follow_up
+flows:
+- create-product
+- create-invoice
+- record-payment
+- create-follow-up
+- complete-follow-up
+- allocate-payment
+- cancel-invoice
+- on-invoice-overdue
+events:
+- product.created
+- product.updated
+- invoice.created
+- invoice.issued
+- invoice.updated
+- invoice.partially_paid
+- invoice.paid
+- invoice.cancelled
+- invoice.overdue
+- payment.created
+- payment.received
+- payment.reversed
+- payment_allocation.created
+- follow_up.created
+- follow_up.completed
+- follow_up.cancelled
+- follow_up.due
+automation_templates:
+- id: overdue_invoice_reminder
+  name: WhatsApp overdue invoice reminder
+  description: Message the workspace Person when an invoice becomes overdue. The follow-up record is created by the invoice overdue flow, not this template.
+  trigger:
+    event: invoice.overdue
+  actions:
+  - type: send_whatsapp
+    template: invoice_overdue
+    parameters:
+    - "{{person.name}}"
+    - "{{entity.invoice_number}}"
+    - "{{entity.outstanding_amount}}"
+    - "{{entity.due_date}}"
+    body: |
+      Hi {{person.name}}, your invoice {{entity.invoice_number}} is overdue.
+
+      Amount due: {{entity.outstanding_amount}}
+      Due date: {{entity.due_date}}
+
+      Please make the payment at your earliest convenience.
+- id: send_invoice_created_webhook
+  name: Send invoice-created to my system
+  description: POST mapped invoice fields to a workspace HTTPS destination you choose. The destination is not part of this template.
+  trigger:
+    event: invoice.created
+  actions:
+  - type: send_webhook
+    payload_mapping:
+    - output_key: invoice_number
+      event_parameter: invoice.invoice_number
+    - output_key: status
+      event_parameter: invoice.status
+    - output_key: total_amount
+      event_parameter: invoice.total_amount
+onboarding:
+- configure_currency
+- configure_invoice_settings
+- add_products
+- connect_whatsapp
+- configure_follow_up_automation
+- create_first_invoice
+- record_a_payment
+settings:
+- key: currency
+  type: string
+  default: INR
+  description: Currency you bill in (for example INR). New invoices and payments use this.
+- key: invoice_prefix
+  type: string
+  default: INV
+  description: Letters at the start of invoice numbers (INV becomes INV-1001).
+- key: payment_terms_days
+  type: number
+  default: 30
+  description: How many days after the invoice date until payment is due.
+- key: default_tax_rate
+  type: number
+  default: 0
+  description: Tax rate used when you create products and invoices (0 if you add tax yourself).
+- key: follow_up_interval_days
+  type: number
+  default: 3
+  description: Typical days to wait between payment reminders.
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+triggers:
+- id: create_product
+  workflow: create-product
+  input_variable: product_input
+  match:
+    intents:
+    - create a product
+    - add a product
+    - new product
+    - add a service
+    confirmation:
+      reply_signals:
+      - product
+      - created
+      required_slots:
+      - name
+      - sku
+  confirmation_message: Product {{name}} created.
+- id: create_invoice
+  workflow: create-invoice
+  input_variable: invoice_input
+  match:
+    intents:
+    - create an invoice
+    - new invoice
+    - raise an invoice
+    - bill a customer
+    confirmation:
+      reply_signals:
+      - invoice
+      - created
+      required_slots:
+      - total_amount
+  confirmation_message: Invoice created for {{total_amount}}.
+- id: record_payment
+  workflow: record-payment
+  input_variable: payment_input
+  match:
+    intents:
+    - record a payment
+    - log a payment
+    - customer paid
+    - payment received
+    confirmation:
+      reply_signals:
+      - payment
+      - received
+      required_slots:
+      - amount
+  confirmation_message: Payment of {{amount}} recorded.
+- id: create_follow_up
+  workflow: create-follow-up
+  input_variable: follow_up_input
+  match:
+    intents:
+    - create a follow-up
+    - follow up later
+    - customer will pay later
+    - remind me to collect
+    confirmation:
+      reply_signals:
+      - follow-up
+      - follow up
+      required_slots:
+      - follow_up_date
+  confirmation_message: Follow-up created for {{follow_up_date}}.
+- id: complete_follow_up
+  workflow: complete-follow-up
+  input_variable: complete_follow_up_input
+  match:
+    intents:
+    - complete follow-up
+    - mark follow-up done
+    - follow-up completed
+    confirmation:
+      reply_signals:
+      - completed
+      required_slots:
+      - id
+  confirmation_message: Follow-up {{id}} completed.
+- id: allocate_payment
+  workflow: allocate-payment
+  input_variable: allocate_input
+  match:
+    intents:
+    - allocate a payment
+    - split this payment
+    - apply payment to invoice
+    confirmation:
+      reply_signals:
+      - allocated
+      required_slots:
+      - amount
+  confirmation_message: Payment allocated {{amount}}.
+- id: cancel_invoice
+  workflow: cancel-invoice
+  input_variable: cancel_input
+  match:
+    intents:
+    - cancel an invoice
+    - void this invoice
+    confirmation:
+      reply_signals:
+      - cancelled
+      required_slots:
+      - id
+  confirmation_message: Invoice {{id}} cancelled.
+conversation_slots:
+- id: name
+  labels:
+  - name
+  - product name
+  kind: string
+- id: sku
+  labels:
+  - sku
+  - product code
+  kind: string
+- id: item_type
+  labels:
+  - item type
+  - product
+  - service
+  kind: string
+- id: selling_price
+  labels:
+  - selling price
+  - price
+  kind: string
+- id: unit
+  labels:
+  - unit
+  kind: string
+- id: tax_rate
+  labels:
+  - tax
+  - tax rate
+  kind: string
+- id: total_amount
+  labels:
+  - total
+  - amount
+  - invoice total
+  kind: string
+- id: amount
+  labels:
+  - amount
+  - payment amount
+  kind: string
+- id: currency
+  labels:
+  - currency
+  - INR
+  - USD
+  kind: string
+- id: invoice_number
+  labels:
+  - invoice
+  - invoice number
+  - invoice code
+  kind: string
+- id: method
+  labels:
+  - payment method
+  - method
+  - cash
+  - upi
+  kind: string
+- id: issue_date
+  labels:
+  - issue date
+  - invoice date
+  kind: date
+- id: due_date
+  labels:
+  - due date
+  - due
+  kind: date
+- id: payment_date
+  labels:
+  - payment date
+  - paid on
+  kind: date
+- id: follow_up_date
+  labels:
+  - follow-up date
+  - follow up date
+  - Friday
+  - next week
+  kind: date
+- id: notes
+  labels:
+  - notes
+  - comment
+  kind: string
+- id: status
+  labels:
+  - status
+  kind: string
+- id: paid_amount
+  labels:
+  - paid
+  - paid amount
+  kind: string
+- id: outstanding_amount
+  labels:
+  - outstanding
+  - balance
+  kind: string
+- id: id
+  labels:
+  - invoice
+  - payment
+  - follow-up
+  kind: string
+- id: payment_id
+  labels:
+  - payment
+  kind: string
+- id: invoice_id
+  labels:
+  - invoice
+  kind: string
+- id: phone
+  labels:
+  - phone
+  - mobile
+  kind: phone
+- id: email
+  labels:
+  - email
+  kind: email
+ui:
+  name: Billing Pro
+  navigation_layout: sidebar

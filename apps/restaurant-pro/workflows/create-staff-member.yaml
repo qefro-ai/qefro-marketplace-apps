@@ -1,0 +1,31 @@
+id: create-staff-member
+name: "Add staff member"
+description: "Register a restaurant staff member"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "👤 Staff name?"
+  - id: ask_role
+    type: ask
+    field: role
+    message: "💼 Role (waiter, chef, manager)?"
+  - id: ask_phone
+    type: ask
+    field: phone
+    message: "📞 Phone?"
+  - id: run
+    type: tool
+    tool: entity.staff_member.create
+    execution: runtime
+    input_map:
+      name: name
+      role: role
+      phone: phone
+  - id: confirm
+    type: message
+    message: "✅ {{name}} added as {{role}}."
+  - id: done
+    type: complete

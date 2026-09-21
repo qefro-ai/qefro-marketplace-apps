@@ -1,0 +1,32 @@
+id: create-service
+name: "Add service"
+description: "Create a bookable service"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "📅 Service name?"
+  - id: ask_duration
+    type: ask
+    field: duration_minutes
+    message: "⏱️ Duration (minutes)?"
+  - id: ask_price
+    type: ask
+    field: price
+    message: "💰 Price?"
+  - id: run
+    type: tool
+    tool: entity.service.create
+    execution: runtime
+    input_map:
+      name: name
+      duration_minutes: duration_minutes
+      price: price
+      status: $literal:active
+  - id: confirm
+    type: message
+    message: "✅ Service {{name}} added ({{duration_minutes}} min)."
+  - id: done
+    type: complete

@@ -17,6 +17,11 @@
   title: Enrollments
   icon: users
   entity: enrollment
+- id: instructors
+  page: instructors
+  title: Instructors
+  icon: user
+  entity: instructor
 - id: sessions
   page: sessions
   title: Sessions

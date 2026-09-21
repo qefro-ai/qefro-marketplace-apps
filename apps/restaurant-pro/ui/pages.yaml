@@ -1,3 +1,9 @@
+- id: pos
+  title: POS
+  layout: dashboard-grid
+  widgets:
+  - widget: pos_checkout
+    span: 12
 - id: dashboard
   title: Dashboard
   layout: dashboard-grid
@@ -18,7 +24,7 @@
     span: 8
 - id: customers
   title: Customers
-  entity: customer
+  host: contacts
 - id: dining_sessions
   title: Dining sessions
   entity: dining_session

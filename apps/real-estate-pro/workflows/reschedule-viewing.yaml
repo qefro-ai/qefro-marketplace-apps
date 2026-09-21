@@ -22,14 +22,56 @@ steps:
   title_field: property_title
   value_field: id
   chip_prefix: viewing
+- id: get_viewing
+  type: tool
+  tool: entity.viewing.get
+  execution: runtime
+  output: viewing
+  input_map:
+    id: id
+- id: list_dates
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: available_dates
+  input_map:
+    kind: $literal:dates
+    property_id: viewing.property_id
 - id: ask_date
   type: ask
   field: date
-  message: "📅 New date?"
+  message: "📅 Choose a date"
+  choices_from: available_dates
+  title_field: label
+  value_field: value
+  chip_prefix: date
+- id: list_slots
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: available_slots
+  input_map:
+    kind: $literal:slots
+    date: date
+    property_id: viewing.property_id
 - id: ask_time
   type: ask
   field: time
-  message: "⏰ New time?"
+  message: "⏰ Choose a time"
+  choices_from: available_slots
+  title_field: label
+  value_field: time
+  chip_prefix: time
+- id: validate_slot
+  type: tool
+  tool: entity.viewing.availability
+  execution: runtime
+  output: slot_check
+  input_map:
+    kind: $literal:validate
+    date: date
+    time: time
+    property_id: viewing.property_id
 - id: run
   type: tool
   tool: entity.viewing.update

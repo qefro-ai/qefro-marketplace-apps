@@ -6,12 +6,18 @@ allocate_code:
   prefix: WO-
   start: 1001
 fields:
+  - name: site_id
+    type: relation
+    ref_entity: site
   - name: site_name
     type: string
     required: true
   - name: summary
     type: string
     required: true
+  - name: technician_id
+    type: relation
+    ref_entity: technician
   - name: technician_name
     type: string
   - name: scheduled_date
@@ -29,5 +35,13 @@ fields:
     ref_entity: person
     description: "Existing Qefro Person identity"
 status_events:
+  assigned: work_order.assigned
+  in_progress: work_order.updated
   completed: work_order.completed
   cancelled: work_order.cancelled
+date_events:
+- field: scheduled_date
+  event: work_order.due
+  when_status:
+  - open
+  - assigned

@@ -1,0 +1,32 @@
+id: create-instructor
+name: "Add instructor"
+description: "Register a new instructor"
+trigger:
+  type: conversation
+steps:
+  - id: ask_name
+    type: ask
+    field: name
+    message: "👤 Instructor name?"
+  - id: ask_email
+    type: ask
+    field: email
+    message: "📧 Email?"
+  - id: ask_specialty
+    type: ask
+    field: specialty
+    message: "📚 Specialty?"
+  - id: run
+    type: tool
+    tool: entity.instructor.create
+    execution: runtime
+    input_map:
+      name: name
+      email: email
+      phone: phone
+      specialty: specialty
+  - id: confirm
+    type: message
+    message: "✅ Instructor {{name}} added."
+  - id: done
+    type: complete

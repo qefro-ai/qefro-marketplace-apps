@@ -1,0 +1,47 @@
+id: create-invoice
+name: Create invoice
+description: Create a customer invoice. Add line items on Invoice items so the total adds up.
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_total_amount
+  type: ask
+  field: total_amount
+  message: "💰 Invoice total? (used when there are no line items yet)"
+- id: ask_currency
+  type: ask
+  field: currency
+  message: "💱 Currency?"
+- id: ask_issue_date
+  type: ask
+  field: issue_date
+  message: "📅 Issue date?"
+- id: ask_due_date
+  type: ask
+  field: due_date
+  message: "📅 Due date?"
+- id: ask_notes
+  type: ask
+  field: notes
+  message: "📝 Notes (optional)?"
+- id: run
+  type: tool
+  tool: entity.invoice.create
+  execution: runtime
+  input_map:
+    invoice_number: invoice_number
+    issue_date: issue_date
+    due_date: due_date
+    currency: currency
+    discount: discount
+    tax: tax
+    total_amount: total_amount
+    notes: notes
+    status: $literal:issued
+- id: confirm
+  type: message
+  message: "💰 Invoice created for {{total_amount}}. Add line items on Invoice items if needed."
+- id: done
+  type: complete

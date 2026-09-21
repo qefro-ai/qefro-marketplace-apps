@@ -10,3 +10,6 @@
 - id: slots
   type: entity
   target: availability_slot
+- id: availability
+  type: entity
+  target: availability_slot

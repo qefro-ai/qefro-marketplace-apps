@@ -1,0 +1,38 @@
+# Operating availability — workspace-scoped, not entity structure.
+# Changing these values changes generated date/time chips without YAML edits.
+settings:
+  timezone:
+    type: string
+    required: true
+    default: Asia/Kolkata
+    description: IANA timezone for viewing slots
+  duration_minutes:
+    type: number
+    required: true
+    default: 30
+    description: Viewing duration in minutes
+  start_time:
+    type: string
+    required: true
+    default: "09:00"
+    description: Opening time (HH:MM, 24-hour)
+  end_time:
+    type: string
+    required: true
+    default: "18:00"
+    description: Closing time (HH:MM, 24-hour)
+  closed_days:
+    type: string
+    required: false
+    default: sunday
+    description: Comma-separated weekdays the office is closed
+  date_window_days:
+    type: number
+    required: true
+    default: 5
+    description: How many days ahead to offer viewing slots
+  blocking_statuses:
+    type: string
+    required: false
+    default: scheduled,confirmed
+    description: Viewing statuses that occupy a time slot

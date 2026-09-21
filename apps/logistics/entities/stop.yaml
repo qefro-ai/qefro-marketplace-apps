@@ -3,7 +3,8 @@ name: Stop
 description: "Stop on a shipment"
 fields:
   - name: shipment_id
-    type: string
+    type: relation
+    ref_entity: shipment
     required: true
   - name: address
     type: string
@@ -17,3 +18,5 @@ fields:
       - arrived
       - completed
       - skipped
+status_events:
+  completed: stop.completed

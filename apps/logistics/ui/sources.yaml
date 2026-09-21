@@ -10,3 +10,9 @@
 - id: stops
   type: entity
   target: stop
+- id: drivers
+  type: entity
+  target: driver
+- id: warehouses
+  type: entity
+  target: warehouse

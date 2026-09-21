@@ -5,7 +5,13 @@
   - widget: intro
     span: 12
   - widget: metric_work_order
-    span: 12
+    span: 3
+  - widget: metric_site
+    span: 3
+  - widget: metric_technician
+    span: 3
+  - widget: metric_part
+    span: 3
   - widget: work_order_dash_status
     span: 4
   - widget: work_order_dash_table
@@ -22,6 +28,9 @@
 - id: work_orders
   title: Work orders
   entity: work_order
+- id: service_categories
+  title: Categories
+  entity: service_category
 - id: contacts
   title: Contacts
   host: contacts

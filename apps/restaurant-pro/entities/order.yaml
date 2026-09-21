@@ -5,7 +5,13 @@ description: Dining or takeaway order bound to Person
 allocate_code:
   prefix: O-
   start: 1001
+delete:
+  mode: restrict
+concurrency: optimistic
 fields:
+- name: code
+  type: string
+  unique: true
 - name: guest_name
   type: string
 - name: table_name
@@ -34,6 +40,14 @@ fields:
 status_events:
   confirmed: order.updated
   preparing: order.updated
-  ready: order.updated
+  ready: order.ready
   completed: order.completed
   cancelled: order.cancelled
+computed:
+  # Empty child rollup does not overwrite an explicit total on the order's
+  # own create. Child mutations rewrite including 0.
+- field: total_amount
+  op: relation_sum
+  relation: order_item
+  foreign_key: order_id
+  sum_field: amount

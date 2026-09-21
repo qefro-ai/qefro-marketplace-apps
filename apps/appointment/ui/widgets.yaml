@@ -22,6 +22,66 @@
     submit_label: Book
     action:
       trigger: create-appointment
+- id: service_form
+  type: form
+  title: New service
+  options:
+    fields:
+    - name: name
+      label: Service name
+      type: text
+      required: true
+    - name: duration_minutes
+      label: Duration (minutes)
+      type: number
+      required: true
+    - name: price
+      label: Price
+      type: number
+      required: false
+    submit_label: Add service
+    action:
+      trigger: create-service
+- id: staff_form
+  type: form
+  title: New staff member
+  options:
+    fields:
+    - name: name
+      label: Name
+      type: text
+      required: true
+    - name: role
+      label: Role
+      type: text
+      required: false
+    submit_label: Add staff
+    action:
+      trigger: create-staff-member
+- id: availability_form
+  type: form
+  title: New availability slot
+  options:
+    fields:
+    - name: staff_name
+      label: Staff member
+      type: text
+      required: true
+    - name: date
+      label: Date
+      type: date
+      required: true
+    - name: start_time
+      label: Start time
+      type: text
+      required: true
+    - name: end_time
+      label: End time
+      type: text
+      required: true
+    submit_label: Open slot
+    action:
+      trigger: create-availability-slot
 - id: appointments_status
   type: status
   title: Appointments
@@ -61,6 +121,8 @@
       header: Minutes
     - key: price
       header: Price
+    - key: status
+      header: Status
 - id: staff_table
   type: table
   title: Staff
@@ -73,6 +135,8 @@
       header: Name
     - key: role
       header: Role
+    - key: status
+      header: Status
 - id: slots_table
   type: table
   title: Availability
@@ -85,6 +149,24 @@
       header: Staff
     - key: date
       header: Date
+    - key: status
+      header: Status
+- id: availability_table
+  type: table
+  title: Availability
+  source: availability
+  options:
+    rows_path: items
+    empty_title: No availability yet
+    columns:
+    - key: staff_name
+      header: Staff
+    - key: date
+      header: Date
+    - key: start_time
+      header: Start
+    - key: end_time
+      header: End
     - key: status
       header: Status
 - id: intro
@@ -102,6 +184,33 @@
     rows_path: items
     label: Total
     navigate_to: appointments
+- id: metric_service
+  type: metric
+  title: Services
+  source: services
+  options:
+    aggregate: count
+    rows_path: items
+    label: Services
+    navigate_to: services
+- id: metric_staff
+  type: metric
+  title: Staff
+  source: staff
+  options:
+    aggregate: count
+    rows_path: items
+    label: Staff
+    navigate_to: staff
+- id: metric_availability
+  type: metric
+  title: Slots
+  source: availability
+  options:
+    aggregate: count
+    rows_path: items
+    label: Slots
+    navigate_to: availability
 - id: appointment_dash_status
   type: status
   title: Appointments status

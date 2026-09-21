@@ -1,0 +1,31 @@
+id: on-invoice-overdue
+name: Create follow-up when invoice is overdue
+description: When an invoice becomes overdue, create a follow-up so you can remind the customer. WhatsApp reminders are set on Automations.
+surfaces:
+- staff
+enabled: true
+trigger:
+  type: event
+  event: invoice.overdue
+steps:
+- id: load_invoice
+  type: tool
+  tool: entity.invoice.get
+  execution: runtime
+  output: invoice
+  input_map:
+    id: id
+- id: create_follow_up
+  type: tool
+  tool: entity.follow_up.create
+  execution: runtime
+  input_map:
+    invoice_id: id
+    follow_up_date: invoice.due_date
+    notes: $literal:Created when the invoice became overdue
+    status: $literal:pending
+- id: confirm
+  type: message
+  message: "📞 Follow-up created for overdue invoice {{id}}."
+- id: done
+  type: complete

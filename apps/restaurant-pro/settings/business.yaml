@@ -1,0 +1,37 @@
+# Operating availability — workspace-scoped, not entity structure.
+settings:
+  timezone:
+    type: string
+    required: true
+    default: Asia/Kolkata
+    description: IANA timezone for reservation slots
+  duration_minutes:
+    type: number
+    required: true
+    default: 90
+    description: Typical table hold in minutes
+  start_time:
+    type: string
+    required: true
+    default: "11:00"
+    description: Opening time (HH:MM, 24-hour)
+  end_time:
+    type: string
+    required: true
+    default: "23:00"
+    description: Closing time (HH:MM, 24-hour)
+  closed_days:
+    type: string
+    required: false
+    default: ""
+    description: Comma-separated weekdays the restaurant is closed
+  date_window_days:
+    type: number
+    required: true
+    default: 14
+    description: How many days ahead to offer reservation slots
+  blocking_statuses:
+    type: string
+    required: false
+    default: pending,confirmed,seated
+    description: Reservation statuses that occupy a table slot

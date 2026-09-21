@@ -1,0 +1,176 @@
+id: invoice
+scope: customer
+name: Invoice
+description: A bill you send to a customer. Pick the contact from Contacts. Paid, unpaid, and overdue update as you record payments.
+allocate_code:
+  prefix: INV-
+  start: 1001
+concurrency: optimistic
+delete:
+  mode: restrict
+fields:
+- name: invoice_number
+  type: string
+  unique: true
+  import_synonyms:
+  - invoice no
+  - invoice #
+  - invoice number
+- name: person_id
+  type: person
+  description: Customer from Contacts. Add them under Contacts first if they are new.
+  ref_entity: person
+  required: true
+  label: Customer
+- name: issue_date
+  type: date
+  default: current_date
+  import_synonyms:
+  - invoice date
+  - date
+- name: due_date
+  type: date
+  import_synonyms:
+  - due
+  - due date
+- name: status
+  type: enum
+  enum_values:
+  - draft
+  - issued
+  - partially_paid
+  - paid
+  - overdue
+  - cancelled
+  default: issued
+- name: currency
+  type: string
+  default_from_setting: currency
+  import_default: INR
+- name: subtotal
+  type: float
+  format: currency
+- name: discount
+  type: float
+  format: currency
+- name: tax
+  type: float
+  format: currency
+- name: total_amount
+  type: float
+  format: currency
+  import_synonyms:
+  - due amount
+  - invoice total
+  - grand total
+  - total
+  - amount
+- name: paid_amount
+  type: float
+  format: currency
+  import_synonyms:
+  - amount paid
+  - paid
+- name: outstanding_amount
+  type: float
+  format: currency
+  import_synonyms:
+  - balance
+  - remaining
+  - outstanding
+- name: notes
+  type: string
+status_events:
+  issued: invoice.issued
+  partially_paid: invoice.partially_paid
+  paid: invoice.paid
+  overdue: invoice.overdue
+  cancelled: invoice.cancelled
+computed:
+  # Empty child rollup does not overwrite an explicit total on the invoice's
+  # own create (CSV / conversation totals). Child mutations rewrite including 0.
+- field: subtotal
+  op: relation_sum
+  relation: invoice_item
+  foreign_key: invoice_id
+  sum_field: amount
+- field: total_amount
+  op: relation_sum
+  relation: invoice_item
+  foreign_key: invoice_id
+  sum_field: amount
+- field: paid_amount
+  op: relation_sum
+  relation: payment_allocation
+  foreign_key: invoice_id
+  sum_field: amount
+- field: outstanding_amount
+  op: subtract
+  left: total_amount
+  right: paid_amount
+- field: status
+  op: status_from_number
+  source: outstanding_amount
+  preserve:
+  - cancelled
+  - draft
+  zero: paid
+  positive: issued
+  partial:
+    field: paid_amount
+    status: partially_paid
+- field: status
+  op: status_from_date
+  date_field: due_date
+  past: overdue
+  preserve:
+  - cancelled
+  - draft
+  - paid
+  when_number_gt: outstanding_amount
+date_events:
+- field: due_date
+  event: invoice.overdue
+  when_status:
+  - issued
+  - partially_paid
+on_events:
+- event: invoice.paid
+  target: follow_up
+  match_field: invoice_id
+  match_from: id
+  where:
+    status: pending
+  set:
+    status: completed
+  limit: 50
+title_field: invoice_number
+status_field: status
+views:
+- type: table
+- type: tile
+  title_field: invoice_number
+  status_field: status
+ui:
+  style: modern
+  list:
+    default_view: table
+    empty_state:
+      title: No invoices yet
+      description: Create an invoice to bill a customer from Contacts.
+      action_label: New invoice
+  detail:
+    layout: split
+    hero:
+      title_field: invoice_number
+      subtitle_field: person_id
+      status_field: status
+    metrics:
+    - total_amount
+    - paid_amount
+    - outstanding_amount
+    related:
+      order:
+      - invoice_item
+      - payment_allocation
+      - follow_up
