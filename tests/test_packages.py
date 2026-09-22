@@ -716,6 +716,8 @@ class RealEstateAvailabilitySettingsTests(unittest.TestCase):
         self.assertEqual(asks["time"]["choices_from"], "available_slots")
         self.assertEqual(asks["property_id"]["title_field"], "title")
         self.assertEqual(asks["property_id"]["value_field"], "id")
+        self.assertEqual(asks["property_id"]["image_field"], "image_url")
+        self.assertEqual(asks["property_id"]["description_field"], "city")
         self.assertEqual(asks["city"]["choices_from"], "properties")
         self.assertEqual(asks["property_type"]["choices"][0]["id"], "apartment")
 
@@ -783,18 +785,23 @@ class RealEstateDomainTests(unittest.TestCase):
         self.assertNotIn("phone", field_names)
         self.assertNotIn("lead_name", field_names)
 
-    def test_create_offer_uses_property_id_and_does_not_pass_identity(self):
+    def test_create_offer_binds_the_viewing_customer(self):
         flow = load_yaml(self.APP / "workflows" / "create-offer.yaml")
         tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
         self.assertIn("entity.property.list", tools)
+        self.assertIn("entity.viewing.get", tools)
         self.assertIn("entity.offer.create", tools)
         asks = {s["field"]: s for s in flow["steps"] if s.get("type") == "ask"}
         self.assertEqual(asks["property_id"]["choices_from"], "properties")
         self.assertEqual(asks["property_id"]["value_field"], "id")
+        self.assertEqual(asks["viewing_id"]["choices_from"], "viewings")
         create = next(s for s in flow["steps"] if s.get("tool") == "entity.offer.create")
         mapping = create["input_map"]
         self.assertEqual(mapping["property_id"], "property_id")
-        self.assertNotIn("person_id", mapping)
+        # Staff command chat has no session customer. The person is the one
+        # already stored on the viewing, then checked against Customer Hub.
+        self.assertEqual(mapping["person_id"], "viewing.person_id")
+        self.assertEqual(mapping["currency"], "property.currency")
         self.assertNotIn("email", mapping)
         self.assertNotIn("phone", mapping)
         self.assertNotIn("lead_name", mapping)
