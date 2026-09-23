@@ -2,8 +2,7 @@ id: booking-status
 name: Booking Status
 description: Check the status of a travel booking
 surfaces:
-- customer
-
+- staff
 trigger:
   type: conversation
 

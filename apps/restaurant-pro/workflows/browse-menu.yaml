@@ -2,7 +2,7 @@ id: browse-menu
 name: Browse menu
 description: List active menu items
 surfaces:
-- customer
+- staff
 trigger:
   type: conversation
 steps:

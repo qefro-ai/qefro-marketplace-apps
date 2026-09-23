@@ -1,6 +1,8 @@
 id: lookup-enrollment
 name: "Lookup enrollment"
 description: "Fetch one enrollment"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

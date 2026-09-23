@@ -1,6 +1,8 @@
 id: read-rows
 name: "Read rows"
 description: "Read a sheet range through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

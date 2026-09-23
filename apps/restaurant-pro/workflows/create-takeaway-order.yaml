@@ -1,0 +1,62 @@
+id: create-takeaway-order
+name: Takeaway order
+description: Create a takeaway (pickup) order with menu selection
+surfaces:
+- customer
+whatsapp_flow:
+  category: OTHER
+  title: Order takeaway
+  cta: Order
+trigger:
+  type: conversation
+steps:
+- id: list_dishes
+  type: tool
+  tool: entity.menu_item.list
+  execution: runtime
+  output: dishes
+  input_map:
+    filter.status: $literal:active
+    limit: $literal:100
+- id: ask_menu
+  type: ask
+  field: menu_item_ids
+  message: "🍽️ Choose your items"
+  choices_from: dishes
+  title_field: name
+  value_field: id
+  description_field: price
+  image_field: image
+  multiple: true
+  group_by: category_name
+  chip_prefix: dish
+- id: ask_pickup_date
+  type: ask
+  field: pickup_date
+  input_type: date
+  message: "📅 Pickup date?"
+- id: ask_pickup_time
+  type: ask
+  field: pickup_time
+  input_type: time
+  message: "⏰ Pickup time?"
+- id: ask_guest_name
+  type: ask
+  field: guest_name
+  message: "👤 Name for pickup?"
+- id: run
+  type: tool
+  tool: entity.order.create
+  execution: runtime
+  input_map:
+    guest_name: guest_name
+    items: menu_item_ids
+    pickup_date: pickup_date
+    pickup_time: pickup_time
+    order_type: $literal:takeaway
+    status: $literal:pending
+- id: confirm
+  type: message
+  message: "✅ Takeaway order placed for {{guest_name}} on {{pickup_date}} at {{pickup_time}}."
+- id: done
+  type: complete

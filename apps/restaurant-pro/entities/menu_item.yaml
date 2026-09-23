@@ -2,8 +2,13 @@ id: menu_item
 name: Menu item
 description: Sellable menu item
 fields:
+- name: category_id
+  type: relation
+  description: Menu category this item belongs to
+  ref_entity: menu_category
 - name: category_name
   type: string
+  description: Display name (filled from menu_category.name)
 - name: name
   type: string
   required: true
@@ -29,6 +34,7 @@ fields:
   enum_values:
   - active
   - inactive
+  default: active
 status_events:
   active: menu_item.updated
   inactive: menu_item.updated
@@ -46,6 +52,9 @@ views:
   status_field: status
 ui:
   style: modern
+  form:
+    hidden:
+    - category_name
   list:
     default_view: tile
     empty_state:
@@ -61,3 +70,23 @@ ui:
       image_field: image
     metrics:
     - price
+catalog:
+  enabled: true
+  type: product
+  mapping:
+    title: name
+    description: description
+    price: price
+    currency: currency
+    image: image
+    availability: availability
+  publish_when:
+    field: status
+    in:
+    - active
+  availability:
+    in_stock:
+    - available
+    - seasonal
+    out_of_stock:
+    - sold_out

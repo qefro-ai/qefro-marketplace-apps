@@ -2,7 +2,7 @@ id: lookup-appointment
 name: Lookup appointment
 description: Fetch one appointment by id
 surfaces:
-- customer
+- staff
 trigger:
   type: conversation
 steps:

@@ -1,6 +1,8 @@
 id: cancel-event
 name: "Cancel event"
 description: "Cancel a calendar event through generic Runtime HTTP"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

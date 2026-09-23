@@ -1,6 +1,8 @@
 id: get-order
 name: "Get my order"
 description: "Look up one order for the authenticated Person"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

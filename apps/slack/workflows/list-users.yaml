@@ -1,6 +1,8 @@
 id: list-users
 name: "List users"
 description: "List Slack users through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

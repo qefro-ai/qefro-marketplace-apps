@@ -1,6 +1,8 @@
 id: list-deals
 name: "List deals"
 description: "Staff list deals through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

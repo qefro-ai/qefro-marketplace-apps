@@ -1,6 +1,8 @@
 id: list-my-customers
 name: "Find my customer record"
 description: "Show the authenticated customer's Razorpay customer records"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

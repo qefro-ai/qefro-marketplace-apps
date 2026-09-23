@@ -19,7 +19,7 @@ steps:
   field: id
   message: "📋 Which order would you like to update?"
   choices_from: orders
-  title_field: table_number
+  title_field: code
   value_field: id
   chip_prefix: order
 - id: ask_status
@@ -35,6 +35,6 @@ steps:
     status: status
 - id: confirm
   type: message
-  message: "🔄 Order for table {{table_number}} updated to {{status}}."
+  message: "🔄 Order {{code}} updated to {{status}}."
 - id: done
   type: complete

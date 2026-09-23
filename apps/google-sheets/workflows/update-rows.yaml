@@ -1,6 +1,8 @@
 id: update-rows
 name: "Update rows"
 description: "Update a sheet range through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

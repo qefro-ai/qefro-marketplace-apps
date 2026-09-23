@@ -1,6 +1,8 @@
 id: reschedule-appointment
 name: "Reschedule appointment"
 description: "Update appointment date/time through Qefro Runtime"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

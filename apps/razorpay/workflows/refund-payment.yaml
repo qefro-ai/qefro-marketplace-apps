@@ -1,6 +1,8 @@
 id: refund-payment
 name: "Refund payment"
 description: "Refund a Razorpay payment through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

@@ -1,6 +1,8 @@
 id: list-my-bookings
 name: "List my bookings"
 description: "Show the authenticated customer's Calendly bookings"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

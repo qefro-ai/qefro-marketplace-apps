@@ -1,6 +1,8 @@
 id: schedule-appointment
 name: "Schedule appointment"
 description: "Create a calendar event through generic Runtime HTTP"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

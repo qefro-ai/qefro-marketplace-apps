@@ -84,6 +84,27 @@ automation_templates:
       event_parameter: invoice.status
     - output_key: total_amount
       event_parameter: invoice.total_amount
+followup_sequences:
+- id: invoice_payment_followup
+  name: Invoice payment follow-up
+  description: Follow up with customers about unpaid invoices until they pay or reply.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: invoice_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: invoice_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: invoice_followup_3
+    delay:
+      unit: days
+      value: 7
 onboarding:
 - configure_currency
 - configure_invoice_settings

@@ -25,6 +25,28 @@ events:
 - task.created
 - task.completed
 - invoice.created
+
+followup_sequences:
+- id: task_completion_followup
+  name: Task completion follow-up
+  description: Follow up on overdue tasks until they are completed or the assignee replies.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: task_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: task_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: task_followup_3
+    delay:
+      unit: days
+      value: 7
 triggers:
 - id: create_project
   workflow: create-project

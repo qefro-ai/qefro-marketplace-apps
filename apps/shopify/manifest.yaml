@@ -1,6 +1,6 @@
 id: shopify
 name: Shopify
-version: 0.2.1
+version: 0.2.2
 hosting: runtime
 description: Products, customers, and orders as a metadata Marketplace App executed
   by Qefro Runtime HTTP
@@ -42,6 +42,29 @@ events:
 - order.cancelled
 - customer.created
 - customer.updated
+
+followup_sequences:
+- id: order_followup
+  name: Order follow-up
+  description: Follow up with customers after their order is fulfilled to collect feedback or offer support.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: order_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: order_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: order_followup_3
+    delay:
+      unit: days
+      value: 7
+
 permissions:
 - workflow.execute
 - storage.read

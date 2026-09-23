@@ -1,0 +1,39 @@
+id: create-offer
+name: Create offer
+description: Create a promotional offer for a customer (WhatsApp template offer_message)
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_title
+  type: ask
+  field: title
+  message: "🎁 Offer title?"
+- id: ask_message
+  type: ask
+  field: message
+  message: "📝 Offer message?"
+- id: ask_promo_code
+  type: ask
+  field: promo_code
+  message: "🏷️ Promo code? (optional)"
+- id: ask_valid_until
+  type: ask
+  field: valid_until
+  message: "📅 Valid until? (YYYY-MM-DD)"
+- id: run
+  type: tool
+  tool: entity.offer.create
+  execution: runtime
+  input_map:
+    title: title
+    message: message
+    promo_code: promo_code
+    valid_until: valid_until
+    status: $literal:active
+- id: confirm
+  type: message
+  message: "✅ Offer {{title}} created. WhatsApp template offer_message can notify the customer."
+- id: done
+  type: complete

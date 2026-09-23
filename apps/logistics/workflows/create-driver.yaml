@@ -1,6 +1,8 @@
 id: create-driver
 name: "Add driver"
 description: "Register a driver"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

@@ -1,6 +1,6 @@
 id: field-service
 name: Field Service
-version: 1.1.0
+version: 1.1.1
 hosting: runtime
 description: Sites, technicians, parts, and work orders as a native Qefro business
   application
@@ -35,6 +35,28 @@ events:
 - work_order.assigned
 - work_order.due
 - part.created
+
+followup_sequences:
+- id: work_order_followup
+  name: Work order follow-up
+  description: Follow up on overdue or unresolved work orders until they are completed or replied to.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: work_order_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: work_order_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: work_order_followup_3
+    delay:
+      unit: days
+      value: 7
 permissions:
 - workflow.execute
 - storage.read

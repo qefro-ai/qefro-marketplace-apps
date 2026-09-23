@@ -1,6 +1,8 @@
 id: reschedule-event
 name: "Reschedule event"
 description: "Update a calendar event through generic Runtime HTTP"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

@@ -2,8 +2,7 @@ id: modify-booking
 name: Modify Booking
 description: Modify an existing travel booking
 surfaces:
-- customer
-
+- staff
 trigger:
   type: conversation
 

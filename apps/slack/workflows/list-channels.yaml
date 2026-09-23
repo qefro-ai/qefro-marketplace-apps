@@ -1,6 +1,8 @@
 id: list-channels
 name: "List channels"
 description: "List Slack channels through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

@@ -1,6 +1,8 @@
 id: list-my-orders
 name: List my orders
 description: Show the authenticated customer's own orders through generic Runtime HTTP
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

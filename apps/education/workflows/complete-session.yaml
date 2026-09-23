@@ -1,6 +1,8 @@
 id: complete-session
 name: "Complete session"
 description: "Mark a session completed"
+surfaces:
+- staff
 trigger:
   type: conversation
 constants:

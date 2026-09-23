@@ -1,6 +1,6 @@
 id: create-order
 name: Create order
-description: Create a dining order
+description: Create a dine-in order for a table
 surfaces:
 - staff
 trigger:
@@ -10,23 +10,44 @@ steps:
   type: ask
   field: guest_name
   message: "👤 Guest name?"
-- id: ask_table_name
+- id: list_tables
+  type: tool
+  tool: entity.table.list
+  execution: runtime
+  output: tables
+  input_map:
+    limit: $literal:20
+- id: ask_table
   type: ask
-  field: table_name
-  message: "🍳 Table name?"
+  field: table_id
+  message: "🍳 Which table?"
+  choices_from: tables
+  title_field: name
+  value_field: id
+  chip_prefix: table
+- id: get_table
+  type: tool
+  tool: entity.table.get
+  execution: runtime
+  output: table
+  input_map:
+    id: table_id
 - id: run
   type: tool
   tool: entity.order.create
   execution: runtime
   input_map:
     guest_name: guest_name
-    table_name: table_name
+    table_id: table_id
+    table_name: table.name
+    order_type: $literal:dine_in
+    reservation_id: reservation_id
     reservation_code: reservation_code
     total_amount: total_amount
     currency: currency
     status: $literal:pending
 - id: confirm
   type: message
-  message: "🍽️ Order created for {{guest_name}}."
+  message: "🍽️ Dine-in order created for {{guest_name}} at {{table_name}}."
 - id: done
   type: complete

@@ -1,6 +1,8 @@
 id: create-subscription
 name: "Create subscription"
 description: "Create a Stripe subscription through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

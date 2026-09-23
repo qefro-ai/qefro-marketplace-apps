@@ -1,6 +1,6 @@
 id: logistics
 name: Logistics
-version: 1.1.0
+version: 1.1.1
 hosting: runtime
 description: Vehicles, consignments, shipments, and stops as a native Qefro logistics
   application
@@ -37,6 +37,28 @@ events:
 - driver.created
 - warehouse.created
 - stop.completed
+
+followup_sequences:
+- id: shipment_delivery_followup
+  name: Shipment delivery follow-up
+  description: Follow up with customers about delayed or undelivered shipments until delivery is confirmed or they reply.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: shipment_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: shipment_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: shipment_followup_3
+    delay:
+      unit: days
+      value: 7
 permissions:
 - workflow.execute
 - storage.read

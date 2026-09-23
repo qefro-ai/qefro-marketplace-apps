@@ -1,6 +1,6 @@
 id: education
 name: Education
-version: 1.1.0
+version: 1.1.1
 hosting: runtime
 description: Courses, enrollments, sessions, and assignments as a native Qefro coaching
   application
@@ -38,6 +38,28 @@ events:
 - course.created
 - course.updated
 - instructor.created
+
+followup_sequences:
+- id: session_attendance_followup
+  name: Session attendance follow-up
+  description: Follow up with students who missed a session until they reschedule or reply.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: session_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: session_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: session_followup_3
+    delay:
+      unit: days
+      value: 7
 permissions:
 - workflow.execute
 - storage.read

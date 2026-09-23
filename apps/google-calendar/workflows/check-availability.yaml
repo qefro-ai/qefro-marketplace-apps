@@ -1,6 +1,8 @@
 id: check-availability
 name: "Check availability"
 description: "Free-busy query through generic Runtime HTTP"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

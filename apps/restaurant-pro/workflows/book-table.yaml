@@ -10,14 +10,23 @@ whatsapp_flow:
 trigger:
   type: conversation
 steps:
-- id: ask_guest_name
-  type: ask
-  field: guest_name
-  message: "👤 Guest name?"
 - id: ask_guest_count
   type: ask
   field: guest_count
   message: "👥 Party size?"
+  choices:
+  - id: "1"
+    label: "1 person"
+  - id: "2"
+    label: "2 people"
+  - id: "3"
+    label: "3 people"
+  - id: "4"
+    label: "4 people"
+  - id: "5"
+    label: "5-6 people"
+  - id: "7"
+    label: "7+ people"
 - id: list_tables
   type: tool
   tool: entity.table.list
@@ -84,6 +93,10 @@ steps:
     date: date
     time: time
     table_id: table_id
+- id: ask_guest_name
+  type: ask
+  field: guest_name
+  message: "👤 Name for the reservation?"
 - id: run
   type: tool
   tool: entity.reservation.create

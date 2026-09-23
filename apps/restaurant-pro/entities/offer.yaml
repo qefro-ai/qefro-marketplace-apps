@@ -1,0 +1,75 @@
+id: offer
+scope: customer
+name: Offer
+description: Promotional offer message bound to a Customer Hub Person
+allocate_code:
+  prefix: OF-
+  start: 1001
+fields:
+- name: code
+  type: string
+  unique: true
+- name: title
+  type: string
+  required: true
+  description: Short offer headline shown in WhatsApp
+- name: message
+  type: string
+  required: true
+  description: Offer body copy
+- name: promo_code
+  type: string
+  description: Optional discount or promo code
+- name: valid_until
+  type: date
+  description: Last day the offer is valid
+- name: status
+  type: enum
+  enum_values:
+  - draft
+  - active
+  - sent
+  - expired
+  default: active
+- name: person_id
+  type: person
+  description: Customer who receives this offer (Customer Hub)
+  ref_entity: person
+  required: true
+  label: Customer
+status_events:
+  active: offer.updated
+  sent: offer.sent
+  expired: offer.updated
+title_field: title
+status_field: status
+views:
+- type: table
+  columns:
+  - code
+  - title
+  - promo_code
+  - valid_until
+  - status
+- type: tile
+  title_field: title
+  status_field: status
+ui:
+  style: modern
+  form:
+    hidden:
+    - code
+  list:
+    default_view: table
+    empty_state:
+      title: No offers yet
+      description: Create a promo offer and WhatsApp it to a customer.
+      action_label: New offer
+  detail:
+    layout: stack
+    hero:
+      title_field: title
+      subtitle_field: promo_code
+      status_field: status
+    metrics:
+    - valid_until

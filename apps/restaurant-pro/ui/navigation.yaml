@@ -40,6 +40,11 @@
   title: Payments
   icon: credit-card
   entity: payment
+- id: offers
+  page: offers
+  title: Offers
+  icon: clipboard
+  entity: offer
 - id: reservations
   page: reservations
   title: Reservations
@@ -71,4 +76,4 @@
 - id: roles
   page: roles
   title: Roles
-  icon: settings
+  icon: user

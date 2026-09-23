@@ -1,6 +1,6 @@
 id: appointment
 name: Appointments
-version: 1.3.0
+version: 1.3.1
 hosting: runtime
 description: Services, staff, availability, and bookings as a native Qefro business
   application
@@ -36,6 +36,28 @@ events:
 - service.created
 - staff_member.created
 - availability_slot.booked
+
+followup_sequences:
+- id: appointment_confirmation_followup
+  name: Appointment confirmation follow-up
+  description: Follow up with customers who haven't confirmed their appointment until they confirm or reply.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: appointment_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: appointment_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: appointment_followup_3
+    delay:
+      unit: days
+      value: 7
 permissions:
 - workflow.execute
 - storage.read

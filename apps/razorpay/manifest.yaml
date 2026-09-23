@@ -1,6 +1,6 @@
 id: razorpay
 name: Razorpay
-version: 0.1.3
+version: 0.1.4
 hosting: runtime
 description: Customers, orders, payments, refunds, invoices, and payment links as
   a metadata Marketplace App
@@ -46,6 +46,29 @@ events:
 - payment.failed
 - refund.created
 - invoice.paid
+
+followup_sequences:
+- id: payment_followup
+  name: Payment follow-up
+  description: Follow up with customers about failed or pending payments until they pay or reply.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: payment_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: payment_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: payment_followup_3
+    delay:
+      unit: days
+      value: 7
+
 permissions:
 - workflow.execute
 - storage.read

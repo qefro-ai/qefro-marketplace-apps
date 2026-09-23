@@ -1,6 +1,8 @@
 id: search-products
 name: Search products
 description: Find catalog products through generic Runtime HTTP (FlowRunner → RuntimeAdapter → HTTP executor)
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

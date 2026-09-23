@@ -1,6 +1,8 @@
 id: list-recent-orders
 name: List recent orders
 description: Staff shop-wide recent orders through generic Runtime HTTP (FlowRunner → RuntimeAdapter → HTTP executor)
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

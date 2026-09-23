@@ -1197,6 +1197,148 @@ class RestaurantProTests(unittest.TestCase):
         self.assertNotIn("image_url", field_names)
         self.assertEqual(self._field(item, "availability")["enum_values"], ["available", "sold_out", "seasonal"])
 
+    def test_menu_item_links_to_menu_category(self):
+        item = self._entity("menu_item")
+        category_id = self._field(item, "category_id")
+        self.assertEqual(category_id["type"], "relation")
+        self.assertEqual(category_id["ref_entity"], "menu_category")
+        self.assertEqual(self._field(item, "category_name")["type"], "string")
+        self.assertIn("category_name", (item.get("ui") or {}).get("form", {}).get("hidden") or [])
+        catalog = item.get("catalog") or {}
+        self.assertTrue(catalog.get("enabled"))
+        self.assertEqual(catalog.get("type"), "product")
+        self.assertEqual(catalog["mapping"]["title"], "name")
+        order = self._entity("order")
+        self.assertEqual(self._field(order, "table_id")["type"], "relation")
+        self.assertEqual(self._field(order, "table_id")["ref_entity"], "table")
+        self.assertEqual(self._field(order, "reservation_id")["type"], "relation")
+        self.assertEqual(self._field(order, "reservation_id")["ref_entity"], "reservation")
+        session = self._entity("dining_session")
+        self.assertEqual(self._field(session, "table_id")["type"], "relation")
+        self.assertEqual(self._field(session, "table_id")["ref_entity"], "table")
+        flow = load_yaml(self.APP / "workflows" / "create-order.yaml")
+        ask_table = next(s for s in flow["steps"] if s.get("id") == "ask_table")
+        self.assertEqual(ask_table["field"], "table_id")
+        self.assertEqual(ask_table["choices_from"], "tables")
+        self.assertEqual(ask_table["value_field"], "id")
+
+    def test_takeaway_order_has_no_table(self):
+        order = self._entity("order")
+        order_type = self._field(order, "order_type")
+        self.assertEqual(order_type["type"], "enum")
+        self.assertEqual(order_type["enum_values"], ["dine_in", "takeaway"])
+        self.assertEqual(order_type.get("default"), "dine_in")
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("create-takeaway-order", manifest["flows"])
+        flow = load_yaml(self.APP / "workflows" / "create-takeaway-order.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertIn("entity.menu_item.list", tools)
+        self.assertIn("entity.order.create", tools)
+        create = next(s for s in flow["steps"] if s.get("tool") == "entity.order.create")
+        self.assertEqual(create["input_map"]["order_type"], "$literal:takeaway")
+        self.assertNotIn("table_id", create["input_map"])
+        dine_in = load_yaml(self.APP / "workflows" / "create-order.yaml")
+        dine_create = next(s for s in dine_in["steps"] if s.get("tool") == "entity.order.create")
+        self.assertEqual(dine_create["input_map"]["order_type"], "$literal:dine_in")
+        widgets = {w["id"]: w for w in load_yaml(self.APP / "ui" / "widgets.yaml")}
+        pos = widgets["pos_checkout"]["options"]
+        self.assertEqual(pos["document_type_field"], "order_type")
+        self.assertEqual(pos["document_type_default"], "dine_in")
+        self.assertEqual(pos["document_table_when"], "dine_in")
+        self.assertEqual(pos["document_notes_field"], "notes")
+        self.assertIn("takeaway_order_form", widgets)
+        trigger_ids = [t["id"] for t in manifest.get("triggers") or []]
+        self.assertIn("takeaway_order", trigger_ids)
+
+    def test_separate_book_table_and_takeaway_whatsapp_flows(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertEqual(manifest["version"], "1.7.5")
+        self.assertNotIn("book-or-takeaway", manifest["flows"])
+        self.assertIn("book-table", manifest["flows"])
+        self.assertIn("create-takeaway-order", manifest["flows"])
+        trigger_ids = [t["id"] for t in manifest.get("triggers") or []]
+        self.assertNotIn("book_or_takeaway", trigger_ids)
+        self.assertIn("book_table", trigger_ids)
+        self.assertIn("takeaway_order", trigger_ids)
+
+        # book-table: linear, customer surface, APPOINTMENT_BOOKING
+        table_flow = load_yaml(self.APP / "workflows" / "book-table.yaml")
+        self.assertIn("customer", table_flow["surfaces"])
+        table_overlay = table_flow.get("whatsapp_flow") or {}
+        self.assertEqual(table_overlay["category"], "APPOINTMENT_BOOKING")
+        table_steps = {s["id"]: s for s in table_flow["steps"]}
+        self.assertIn("ask_guest_count", table_steps)
+        self.assertIn("ask_table", table_steps)
+        self.assertIn("ask_date", table_steps)
+        self.assertIn("ask_time", table_steps)
+        self.assertIn("ask_guest_name", table_steps)
+        # No when conditions (linear)
+        for step in table_flow["steps"]:
+            self.assertIsNone(step.get("when"))
+
+        # create-takeaway-order: linear, customer surface, OTHER
+        takeaway_flow = load_yaml(self.APP / "workflows" / "create-takeaway-order.yaml")
+        self.assertIn("customer", takeaway_flow["surfaces"])
+        takeaway_overlay = takeaway_flow.get("whatsapp_flow") or {}
+        self.assertEqual(takeaway_overlay["category"], "OTHER")
+        takeaway_steps = {s["id"]: s for s in takeaway_flow["steps"]}
+        self.assertIn("ask_menu", takeaway_steps)
+        menu = takeaway_steps["ask_menu"]
+        self.assertEqual(menu["field"], "menu_item_ids")
+        self.assertEqual(menu["choices_from"], "dishes")
+        self.assertEqual(menu["image_field"], "image")
+        self.assertEqual(menu["description_field"], "price")
+        self.assertEqual(menu["group_by"], "category_name")
+        self.assertTrue(menu["multiple"])
+        self.assertIn("ask_pickup_date", takeaway_steps)
+        self.assertEqual(takeaway_steps["ask_pickup_date"].get("input_type"), "date")
+        self.assertIn("ask_pickup_time", takeaway_steps)
+        self.assertEqual(takeaway_steps["ask_pickup_time"].get("input_type"), "time")
+        self.assertIn("ask_guest_name", takeaway_steps)
+        # No when conditions (linear)
+        for step in takeaway_flow["steps"]:
+            self.assertIsNone(step.get("when"))
+
+        # order entity has pickup fields
+        order = self._entity("order")
+        self.assertEqual(self._field(order, "pickup_date")["type"], "date")
+        self.assertEqual(self._field(order, "pickup_time")["type"], "string")
+
+    def test_offer_message_whatsapp_template(self):
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        self.assertIn("offer", manifest["entities"])
+        self.assertIn("create-offer", manifest["flows"])
+        self.assertIn("offer.created", manifest["events"])
+        self.assertIn("offer.sent", manifest["events"])
+        offer = self._entity("offer")
+        self.assertEqual(offer["scope"], "customer")
+        self.assertEqual(self._field(offer, "person_id")["type"], "person")
+        self.assertTrue(self._field(offer, "person_id").get("required"))
+        self.assertEqual(self._field(offer, "title")["type"], "string")
+        self.assertEqual(self._field(offer, "message")["type"], "string")
+        templates = {t["id"]: t for t in manifest.get("automation_templates") or []}
+        tpl = templates["offer_message_whatsapp"]
+        self.assertEqual(tpl["trigger"]["event"], "offer.created")
+        action = tpl["actions"][0]
+        self.assertEqual(action["type"], "send_whatsapp")
+        self.assertEqual(action["template"], "offer_message")
+        self.assertEqual(
+            action["parameters"],
+            [
+                "{{person.name}}",
+                "{{entity.title}}",
+                "{{entity.message}}",
+                "{{entity.promo_code}}",
+                "{{entity.valid_until}}",
+            ],
+        )
+        self.assertIn("{{entity.title}}", action["body"])
+        nav = load_yaml(self.APP / "ui" / "navigation.yaml")
+        self.assertIn("offers", [item["id"] for item in nav])
+        flow = load_yaml(self.APP / "workflows" / "create-offer.yaml")
+        tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
+        self.assertIn("entity.offer.create", tools)
+
     def test_order_total_uses_generic_computed_relation(self):
         order = self._entity("order")
         self.assertEqual(order["computed"][0]["op"], "relation_sum")
@@ -1273,7 +1415,7 @@ class RestaurantProTests(unittest.TestCase):
     def test_existing_order_workflow_unchanged(self):
         flow = load_yaml(self.APP / "workflows" / "create-order.yaml")
         tools = [s.get("tool") for s in flow["steps"] if s.get("type") == "tool"]
-        self.assertEqual(tools, ["entity.order.create"])
+        self.assertEqual(tools, ["entity.table.list", "entity.table.get", "entity.order.create"])
         self.assertEqual(flow["steps"][-1]["type"], "complete")
         self.assertNotIn("entity.invoice.create", tools)
 
@@ -1321,6 +1463,7 @@ class RestaurantProTests(unittest.TestCase):
         }
         samples = [
             APPS / "restaurant-pro" / "workflows" / "book-table.yaml",
+            APPS / "restaurant-pro" / "workflows" / "create-takeaway-order.yaml",
             APPS / "clinic-pro" / "workflows" / "book-appointment.yaml",
             APPS / "real-estate-pro" / "workflows" / "request-viewing.yaml",
         ]
@@ -1935,7 +2078,11 @@ class AutomationTemplateTests(unittest.TestCase):
     def test_installed_app_examples_are_valid(self):
         expected = {
             "billing-pro": {"overdue_invoice_reminder", "send_invoice_created_webhook"},
-            "restaurant-pro": {"notify_team_order_created", "order_ready_whatsapp"},
+            "restaurant-pro": {
+                "notify_team_order_created",
+                "order_ready_whatsapp",
+                "offer_message_whatsapp",
+            },
             "real-estate-pro": {"follow_up_lead_created", "viewing_booked_whatsapp"},
             "clinic-pro": {"follow_up_patient_created", "appointment_booked_whatsapp"},
         }

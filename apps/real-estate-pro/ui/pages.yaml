@@ -16,6 +16,12 @@
     span: 4
   - widget: viewing_dash_table
     span: 8
+  - widget: chart_properties_by_type
+    span: 6
+  - widget: chart_properties_by_status
+    span: 6
+  - widget: chart_viewings_over_time
+    span: 12
 - id: agents
   title: Agents
   entity: agent

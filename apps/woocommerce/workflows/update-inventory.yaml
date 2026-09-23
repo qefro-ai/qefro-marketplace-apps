@@ -1,6 +1,8 @@
 id: update-inventory
 name: "Update inventory"
 description: "Staff stock update through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

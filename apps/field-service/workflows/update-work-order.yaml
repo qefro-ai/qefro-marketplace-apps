@@ -1,6 +1,8 @@
 id: update-work-order
 name: "Update work order"
 description: "Assign or edit a work order"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:
