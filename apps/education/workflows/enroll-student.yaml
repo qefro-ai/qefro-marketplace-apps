@@ -1,6 +1,8 @@
 id: enroll-student
 name: "Enroll student"
 description: "Create an enrollment through Qefro Runtime"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

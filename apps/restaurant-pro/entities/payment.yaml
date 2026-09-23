@@ -59,3 +59,7 @@ relation_caps:
 - field: amount
   relation: order_id
   parent_field: total_amount
+ui:
+  form:
+    hidden:
+    - order_code

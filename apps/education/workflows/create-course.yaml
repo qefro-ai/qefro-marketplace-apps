@@ -1,6 +1,8 @@
 id: create-course
 name: "Create course"
 description: "Add a new course"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

@@ -1,6 +1,8 @@
 id: list-my-tickets
 name: "List my tickets"
 description: "Show the authenticated customer's tickets"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

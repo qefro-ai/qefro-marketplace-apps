@@ -1,6 +1,8 @@
 id: update-shipment-status
 name: "Update shipment status"
 description: "Advance shipment state"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

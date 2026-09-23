@@ -1,6 +1,8 @@
 id: schedule-session
 name: "Schedule session"
 description: "Create a class session"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

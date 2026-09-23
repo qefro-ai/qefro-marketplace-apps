@@ -1,6 +1,6 @@
 id: google-calendar
 name: Google Calendar
-version: 0.1.3
+version: 0.1.4
 hosting: runtime
 description: Calendars, events, scheduling, and free-busy as a metadata Marketplace
   App
@@ -35,6 +35,29 @@ events:
 - event.updated
 - event.cancelled
 - booking.created
+
+followup_sequences:
+- id: event_followup
+  name: Event follow-up
+  description: Follow up with attendees after a calendar event for feedback or next steps.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: event_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: event_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: event_followup_3
+    delay:
+      unit: days
+      value: 7
+
 permissions:
 - workflow.execute
 - storage.read

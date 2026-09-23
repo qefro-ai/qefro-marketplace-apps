@@ -1,6 +1,8 @@
 id: send-message
 name: "Send message"
 description: "Post to Slack through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

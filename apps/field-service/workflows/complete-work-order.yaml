@@ -1,6 +1,8 @@
 id: complete-work-order
 name: "Complete work order"
 description: "Mark a job completed"
+surfaces:
+- staff
 trigger:
   type: conversation
 constants:

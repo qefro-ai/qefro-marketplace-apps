@@ -59,6 +59,8 @@ steps:
   choices_from: properties
   title_field: title
   value_field: id
+  description_field: city
+  image_field: image_url
   chip_prefix: property
 - id: get_property
   type: tool

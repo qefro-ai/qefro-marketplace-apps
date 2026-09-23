@@ -15,7 +15,7 @@ fields:
   ref_entity: menu_item
 - name: menu_item_name
   type: string
-  required: true
+  description: Display name (filled from menu_item.name)
 - name: quantity
   type: integer
   required: true
@@ -30,3 +30,9 @@ computed:
   op: multiply
   left: quantity
   right: unit_price
+ui:
+  form:
+    hidden:
+    - menu_item_name
+    - order_code
+    - amount

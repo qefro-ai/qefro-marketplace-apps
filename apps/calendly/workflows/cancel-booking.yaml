@@ -1,6 +1,8 @@
 id: cancel-booking
 name: "Cancel booking"
 description: "Cancel a scheduled event through generic Runtime HTTP"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

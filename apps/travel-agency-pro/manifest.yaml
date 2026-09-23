@@ -70,6 +70,28 @@ events:
 - travel_document.created
 - travel_document.updated
 
+followup_sequences:
+- id: booking_followup
+  name: Booking follow-up
+  description: Follow up with travelers about pending or unconfirmed bookings until they confirm or reply.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: booking_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: booking_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: booking_followup_3
+    delay:
+      unit: days
+      value: 7
+
 permissions:
 - workflow.execute
 - storage.read

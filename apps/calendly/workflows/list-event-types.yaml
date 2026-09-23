@@ -1,6 +1,8 @@
 id: list-event-types
 name: "List event types"
 description: "List Calendly event types through generic Runtime HTTP"
+surfaces:
+- customer
 trigger:
   type: conversation
 steps:

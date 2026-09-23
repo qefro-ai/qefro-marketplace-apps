@@ -2,8 +2,6 @@ id: table
 name: Table
 description: Dining table
 fields:
-- name: restaurant_name
-  type: string
 - name: name
   type: string
   required: true
@@ -12,6 +10,7 @@ fields:
   required: true
 - name: location
   type: string
+  description: Floor area or section (e.g. patio, window)
 - name: status
   type: enum
   enum_values:
@@ -19,7 +18,10 @@ fields:
   - held
   - occupied
   - out_of_service
+  default: available
 status_events:
   held: reservation.updated
   occupied: reservation.updated
   available: reservation.updated
+title_field: name
+status_field: status

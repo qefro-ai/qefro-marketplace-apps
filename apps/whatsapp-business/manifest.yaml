@@ -1,6 +1,6 @@
 id: whatsapp-business
 name: WhatsApp Business
-version: 0.1.2
+version: 0.1.3
 hosting: runtime
 description: Cloud API contacts, templates, outbound messages, and message events
   as a metadata Marketplace App

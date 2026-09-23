@@ -1,6 +1,6 @@
 id: http-catalog
 name: Catalog API
-version: 0.1.3
+version: 0.1.4
 hosting: runtime
 description: Search and fetch catalog items through generic Runtime HTTP tools
 category: commerce

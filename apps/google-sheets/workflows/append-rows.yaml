@@ -1,6 +1,8 @@
 id: append-rows
 name: "Append rows"
 description: "Append a row through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

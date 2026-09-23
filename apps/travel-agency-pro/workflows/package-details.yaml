@@ -2,8 +2,7 @@ id: package-details
 name: Package Details
 description: Show details of a specific travel package
 surfaces:
-- customer
-
+- staff
 trigger:
   type: conversation
 

@@ -1,6 +1,6 @@
 id: google-sheets
 name: Google Sheets
-version: 0.1.3
+version: 0.1.4
 hosting: runtime
 description: Spreadsheets, sheets, and row read/append/update as a metadata Marketplace
   App

@@ -1,6 +1,8 @@
 id: list-templates
 name: "List templates"
 description: "List Cloud API templates through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

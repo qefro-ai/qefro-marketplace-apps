@@ -267,3 +267,33 @@
     empty_title: No viewings yet
     empty_subtitle: Open the list and tap New to add your first record.
     empty_action_label: Open list
+- id: chart_properties_by_type
+  type: chart
+  title: Properties by type
+  source: properties
+  options:
+    kind: bar
+    aggregate: count
+    group_by: property_type
+    empty_title: No property data available.
+    empty_subtitle: List a property to see the type breakdown.
+- id: chart_properties_by_status
+  type: chart
+  title: Properties by status
+  source: properties
+  options:
+    kind: bar
+    aggregate: count
+    group_by: status
+    empty_title: No property data available.
+- id: chart_viewings_over_time
+  type: chart
+  title: Viewings over time
+  source: viewings
+  options:
+    kind: line
+    aggregate: count
+    group_by: date
+    time_bucket: month
+    empty_title: No viewing data available.
+    empty_subtitle: Schedule a viewing to see the timeline.

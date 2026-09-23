@@ -2,8 +2,7 @@ id: request-quote
 name: Request Quote
 description: Request a pricing quote for a travel package
 surfaces:
-- customer
-
+- staff
 trigger:
   type: conversation
 

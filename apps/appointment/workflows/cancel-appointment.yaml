@@ -1,6 +1,8 @@
 id: cancel-appointment
 name: "Cancel appointment"
 description: "Mark an appointment cancelled through Qefro Runtime"
+surfaces:
+- customer
 trigger:
   type: conversation
 constants:

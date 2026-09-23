@@ -22,6 +22,10 @@
     span: 4
   - widget: reservation_dash_table
     span: 8
+  - widget: chart_orders_by_status
+    span: 6
+  - widget: chart_orders_over_time
+    span: 6
 - id: customers
   title: Customers
   host: contacts
@@ -43,6 +47,9 @@
 - id: payments
   title: Payments
   entity: payment
+- id: offers
+  title: Offers
+  entity: offer
 - id: reservations
   title: Reservations
   entity: reservation

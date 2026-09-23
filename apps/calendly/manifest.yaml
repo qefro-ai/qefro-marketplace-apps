@@ -1,6 +1,6 @@
 id: calendly
 name: Calendly
-version: 0.1.2
+version: 0.1.3
 hosting: runtime
 description: Event types, scheduled events, invitees, and cancellations as a metadata
   Marketplace App
@@ -34,6 +34,29 @@ events:
 - booking.created
 - booking.cancelled
 - event_type.created
+
+followup_sequences:
+- id: booking_followup
+  name: Booking follow-up
+  description: Follow up with invitees after their booking to collect feedback or schedule the next session.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: booking_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: booking_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: booking_followup_3
+    delay:
+      unit: days
+      value: 7
+
 permissions:
 - workflow.execute
 - storage.read

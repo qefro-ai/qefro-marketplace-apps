@@ -1,6 +1,6 @@
 id: clinic-pro
 name: Clinic Pro
-version: 1.3.0
+version: 1.3.1
 hosting: runtime
 description: Metadata-only clinic management Marketplace App executed by Qefro Runtime
   (no SDK, no custom server)
@@ -94,6 +94,28 @@ automation_templates:
       Your appointment is scheduled for {{entity.date}} {{entity.time}}.
 
       Please arrive 10 minutes early.
+
+followup_sequences:
+- id: patient_appointment_followup
+  name: Patient appointment follow-up
+  description: Follow up with patients who missed or haven't confirmed their appointment until they respond.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: patient_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: patient_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: patient_followup_3
+    delay:
+      unit: days
+      value: 7
 settings:
 - key: timezone
   type: string

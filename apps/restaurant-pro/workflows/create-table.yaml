@@ -1,6 +1,8 @@
 id: create-table
 name: "Add table"
 description: "Register a dining table"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

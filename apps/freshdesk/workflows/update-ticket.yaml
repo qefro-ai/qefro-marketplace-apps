@@ -1,6 +1,8 @@
 id: update-ticket
 name: "Update ticket"
 description: "Update ticket status through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

@@ -12,12 +12,38 @@ fields:
 - name: code
   type: string
   unique: true
+- name: order_type
+  type: enum
+  description: Dine-in (table) or takeaway (pickup)
+  enum_values:
+  - dine_in
+  - takeaway
+  default: dine_in
 - name: guest_name
   type: string
+- name: table_id
+  type: relation
+  description: Table for dine-in orders. Leave empty for takeaway.
+  ref_entity: table
 - name: table_name
   type: string
+  description: Display name (filled from table.name)
+- name: reservation_id
+  type: relation
+  description: Optional reservation this order is linked to
+  ref_entity: reservation
 - name: reservation_code
   type: string
+  description: Display code (filled from reservation.code)
+- name: notes
+  type: string
+  description: Pickup notes or special instructions
+- name: pickup_date
+  type: date
+  description: Requested pickup date for takeaway orders
+- name: pickup_time
+  type: string
+  description: Requested pickup time for takeaway orders (HH:MM)
 - name: status
   type: enum
   enum_values:
@@ -51,3 +77,43 @@ computed:
   relation: order_item
   foreign_key: order_id
   sum_field: amount
+title_field: code
+status_field: status
+views:
+- type: table
+  columns:
+  - code
+  - order_type
+  - guest_name
+  - table_name
+  - pickup_date
+  - status
+  - total_amount
+- type: tile
+  title_field: code
+  status_field: status
+ui:
+  style: modern
+  form:
+    hidden:
+    - table_name
+    - reservation_code
+    - code
+    - total_amount
+  list:
+    default_view: table
+    empty_state:
+      title: No orders yet
+      description: Create a dine-in or takeaway order from POS or New order.
+      action_label: New order
+  detail:
+    layout: split
+    hero:
+      title_field: code
+      subtitle_field: guest_name
+      status_field: status
+    metrics:
+    - total_amount
+    - order_type
+    - pickup_date
+    - pickup_time

@@ -1,6 +1,6 @@
 id: restaurant-pro
 name: Restaurant Pro
-version: 1.7.4
+version: 1.7.5
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro
   Runtime (no SDK, no custom server)
@@ -118,6 +118,29 @@ automation_templates:
       Use promo code {{entity.promo_code}} when placing your order to claim this discount. This special offer is valid until {{entity.valid_until}}.
 
       Reply BOOK to reserve a table or TAKEAWAY to order pickup. We look forward to welcoming you soon!
+
+followup_sequences:
+- id: reservation_followup
+  name: Reservation follow-up
+  description: Follow up with guests who missed their reservation to rebook or collect feedback.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: reservation_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: reservation_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: reservation_followup_3
+    delay:
+      unit: days
+      value: 7
+
 permissions:
 - workflow.execute
 - storage.read

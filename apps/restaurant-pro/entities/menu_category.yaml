@@ -12,5 +12,25 @@ fields:
   enum_values:
   - active
   - hidden
+  default: active
 - name: sort_order
   type: integer
+title_field: name
+status_field: status
+views:
+- type: table
+  columns:
+  - name
+  - sort_order
+  - status
+- type: tile
+  title_field: name
+  status_field: status
+ui:
+  style: modern
+  list:
+    default_view: table
+    empty_state:
+      title: No categories yet
+      description: Create categories like Starters or Mains, then pick them on menu items.
+      action_label: New category

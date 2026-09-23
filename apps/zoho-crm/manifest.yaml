@@ -1,6 +1,6 @@
 id: zoho-crm
 name: Zoho CRM
-version: 0.1.2
+version: 0.1.3
 hosting: runtime
 description: Leads, contacts, accounts, deals, notes, and activities as a metadata
   Marketplace App
@@ -41,6 +41,29 @@ events:
 - contact.created
 - deal.created
 - deal.updated
+
+followup_sequences:
+- id: lead_followup
+  name: Lead follow-up
+  description: Follow up with new leads until they respond or are qualified.
+  channel: whatsapp
+  steps:
+  - id: step_1
+    template: lead_followup_1
+    delay:
+      unit: hours
+      value: 24
+  - id: step_2
+    template: lead_followup_2
+    delay:
+      unit: days
+      value: 3
+  - id: step_3
+    template: lead_followup_3
+    delay:
+      unit: days
+      value: 7
+
 permissions:
 - workflow.execute
 - storage.read

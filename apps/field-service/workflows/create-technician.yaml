@@ -1,6 +1,8 @@
 id: create-technician
 name: "Add technician"
 description: "Register a field technician"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

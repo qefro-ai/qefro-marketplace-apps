@@ -1,6 +1,8 @@
 id: send-text-message
 name: "Send text message"
 description: "Send a WhatsApp text through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

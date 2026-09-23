@@ -1,6 +1,8 @@
 id: lookup-work-order
 name: "Lookup work order"
 description: "Fetch one work order"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

@@ -28,6 +28,10 @@
     document_currency_field: currency
     document_guest_field: guest_name
     document_table_field: table_name
+    document_notes_field: notes
+    document_type_field: order_type
+    document_type_default: dine_in
+    document_table_when: dine_in
     document_page: orders
     person_required: false
     table_entity: table
@@ -71,7 +75,7 @@
       label: Time
       type: time
       required: false
-    - name: table_name
+    - name: table_id
       label: Table
       type: text
       required: false
@@ -84,14 +88,14 @@
       trigger: book-table
 - id: order_form
   type: form
-  title: Create order
+  title: Create dine-in order
   options:
     fields:
     - name: guest_name
       label: Guest name
       type: text
       required: false
-    - name: table_name
+    - name: table_id
       label: Table
       type: text
       required: false
@@ -106,6 +110,22 @@
     submit_label: Create
     action:
       trigger: create-order
+- id: takeaway_order_form
+  type: form
+  title: Takeaway order
+  options:
+    fields:
+    - name: guest_name
+      label: Name for pickup
+      type: text
+      required: true
+    - name: notes
+      label: Notes
+      type: text
+      required: false
+    submit_label: Start takeaway
+    action:
+      trigger: create-takeaway-order
 - id: reservations_status
   type: status
   title: Reservations
@@ -169,6 +189,10 @@
     rows_path: items
     empty_title: No orders yet
     columns:
+    - key: code
+      header: Code
+    - key: order_type
+      header: Type
     - key: guest_name
       header: Guest
     - key: table_name
@@ -209,8 +233,8 @@
   type: markdown
   title: Restaurant Pro
   options:
-    content: Reservations, tables, menu, and orders — open a list and tap New to add
-      records.
+    content: Reservations, dine-in, takeaway, menu, and orders — open POS for checkout,
+      or tap New on a list to add records.
 - id: metric_reservation
   type: metric
   title: Reservations
@@ -247,6 +271,26 @@
     rows_path: items
     label: Total
     navigate_to: menu_items
+- id: chart_orders_by_status
+  type: chart
+  title: Orders by status
+  source: orders
+  options:
+    kind: bar
+    aggregate: count
+    group_by: status
+    empty_title: No order data available.
+    empty_subtitle: Create an order to see the status breakdown.
+- id: chart_orders_over_time
+  type: chart
+  title: Orders over time
+  source: orders
+  options:
+    kind: line
+    aggregate: count
+    group_by: created_at
+    time_bucket: month
+    empty_title: No order data available.
 - id: reservation_dash_status
   type: status
   title: Reservations status

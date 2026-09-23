@@ -1,6 +1,8 @@
 id: send-template-message
 name: "Send template message"
 description: "Send a WhatsApp template through generic Runtime HTTP"
+surfaces:
+- staff
 trigger:
   type: conversation
 steps:

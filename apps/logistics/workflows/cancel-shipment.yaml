@@ -1,6 +1,8 @@
 id: cancel-shipment
 name: "Cancel shipment"
 description: "Cancel a shipment"
+surfaces:
+- staff
 trigger:
   type: conversation
 constants:
