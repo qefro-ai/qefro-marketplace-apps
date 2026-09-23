@@ -113,7 +113,7 @@ settings:
   receipt_footer_line1:
     type: string
     required: false
-    default: Thank you!
+    default: "Thank you!"
     description: First footer line on receipt
   receipt_footer_line2:
     type: string
@@ -148,12 +148,12 @@ settings:
   receipt_title:
     type: string
     required: false
-    default: RECEIPT
+    default: "RECEIPT"
     description: Receipt title shown at top
   receipt_currency:
     type: string
     required: false
-    default: INR
+    default: "INR"
     description: Currency code for amounts
   receipt_show_receipt_number:
     type: boolean
@@ -173,7 +173,7 @@ settings:
   receipt_tax_label:
     type: string
     required: false
-    default: Tax
+    default: "Tax"
     description: Tax label/name (e.g., GST, VAT)
   receipt_tax_rate:
     type: number
@@ -210,3 +210,4 @@ settings:
     required: false
     default: false
     description: Auto-print after order completion
+
