@@ -35,3 +35,178 @@ settings:
     required: false
     default: pending,confirmed,seated
     description: Reservation statuses that occupy a table slot
+  receipt_business_name:
+    type: string
+    required: false
+    default: ""
+    description: Business name shown on receipt header (overrides workspace name)
+  receipt_address:
+    type: string
+    required: false
+    default: ""
+    description: Address line shown on receipt
+  receipt_phone:
+    type: string
+    required: false
+    default: ""
+    description: Phone number shown on receipt
+  receipt_logo_url:
+    type: string
+    required: false
+    default: ""
+    description: Logo URL shown at top of receipt
+  receipt_paper_size:
+    type: string
+    required: false
+    default: receipt
+    description: "Receipt paper size: receipt (80mm), 80mm, or 58mm"
+  receipt_show_logo:
+    type: boolean
+    required: false
+    default: true
+    description: Show logo on receipt
+  receipt_show_address:
+    type: boolean
+    required: false
+    default: true
+    description: Show address on receipt
+  receipt_show_phone:
+    type: boolean
+    required: false
+    default: true
+    description: Show phone on receipt
+  receipt_show_date:
+    type: boolean
+    required: false
+    default: true
+    description: Show date and time on receipt
+  receipt_show_order_type:
+    type: boolean
+    required: false
+    default: true
+    description: Show order type (dine-in, takeaway) on receipt
+  receipt_show_table:
+    type: boolean
+    required: false
+    default: true
+    description: Show table name on receipt
+  receipt_show_customer:
+    type: boolean
+    required: false
+    default: true
+    description: Show customer name on receipt
+  receipt_show_paid:
+    type: boolean
+    required: false
+    default: true
+    description: Show paid amount on receipt
+  receipt_show_balance:
+    type: boolean
+    required: false
+    default: true
+    description: Show outstanding balance on receipt
+  receipt_show_payment_method:
+    type: boolean
+    required: false
+    default: true
+    description: Show payment method next to paid amount
+  receipt_footer_line1:
+    type: string
+    required: false
+    default: Thank you!
+    description: First footer line on receipt
+  receipt_footer_line2:
+    type: string
+    required: false
+    default: ""
+    description: Second footer line on receipt
+  receipt_footer_line3:
+    type: string
+    required: false
+    default: ""
+    description: Third footer line on receipt
+  receipt_email:
+    type: string
+    required: false
+    default: ""
+    description: Email shown on receipt
+  receipt_website:
+    type: string
+    required: false
+    default: ""
+    description: Website shown on receipt
+  receipt_tax_registration_number:
+    type: string
+    required: false
+    default: ""
+    description: Tax registration number (e.g., GSTIN) shown on receipt
+  receipt_registration_number:
+    type: string
+    required: false
+    default: ""
+    description: Additional registration number shown on receipt
+  receipt_title:
+    type: string
+    required: false
+    default: RECEIPT
+    description: Receipt title shown at top
+  receipt_currency:
+    type: string
+    required: false
+    default: INR
+    description: Currency code for amounts
+  receipt_show_receipt_number:
+    type: boolean
+    required: false
+    default: true
+    description: Show receipt number on receipt
+  receipt_show_order_number:
+    type: boolean
+    required: false
+    default: true
+    description: Show order number on receipt
+  receipt_tax_enabled:
+    type: boolean
+    required: false
+    default: true
+    description: Enable tax calculation on receipt
+  receipt_tax_label:
+    type: string
+    required: false
+    default: Tax
+    description: Tax label/name (e.g., GST, VAT)
+  receipt_tax_rate:
+    type: number
+    required: false
+    default: 0
+    description: Tax rate percentage (e.g., 18 for 18%)
+  receipt_tax_inclusive:
+    type: boolean
+    required: false
+    default: true
+    description: Prices include tax
+  receipt_show_tax_breakdown:
+    type: boolean
+    required: false
+    default: true
+    description: Show tax breakdown on receipt
+  receipt_footer_contact:
+    type: string
+    required: false
+    default: ""
+    description: Contact/feedback message in footer
+  receipt_print_preview:
+    type: boolean
+    required: false
+    default: true
+    description: Show print preview before printing
+  receipt_print_copies:
+    type: number
+    required: false
+    default: 1
+    description: Number of copies to print
+  receipt_auto_print:
+    type: boolean
+    required: false
+    default: false
+    description: Auto-print after order completion
