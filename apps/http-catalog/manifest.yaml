@@ -54,3 +54,5 @@ conversation_slots:
   - find
   - catalog
   kind: string
+ui:
+  name: Catalog API
