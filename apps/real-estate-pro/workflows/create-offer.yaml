@@ -29,6 +29,29 @@ steps:
   output: property
   input_map:
     id: property_id
+- id: list_viewings
+  type: tool
+  tool: entity.viewing.list
+  execution: runtime
+  output: viewings
+  input_map:
+    filter.property_id: property_id
+    limit: $literal:20
+- id: ask_viewing
+  type: ask
+  field: viewing_id
+  message: "Who is this offer for?"
+  choices_from: viewings
+  title_field: code
+  value_field: id
+  chip_prefix: viewing
+- id: get_viewing
+  type: tool
+  tool: entity.viewing.get
+  execution: runtime
+  output: viewing
+  input_map:
+    id: viewing_id
 - id: ask_amount
   type: ask
   field: amount
@@ -38,10 +61,11 @@ steps:
   tool: entity.offer.create
   execution: runtime
   input_map:
+    person_id: viewing.person_id
     property_id: property_id
     property_title: property.title
     amount: amount
-    currency: currency
+    currency: property.currency
     status: $literal:submitted
 - id: confirm
   type: message

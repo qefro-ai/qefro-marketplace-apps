@@ -1,6 +1,6 @@
 id: restaurant-pro
 name: Restaurant Pro
-version: 1.3.9
+version: 1.7.4
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro
   Runtime (no SDK, no custom server)
@@ -8,6 +8,8 @@ category: hospitality
 tags:
 - restaurant
 - reservations
+- takeaway
+- offers
 - runtime
 - pro
 channels:
@@ -22,6 +24,7 @@ entities:
 - reservation
 - order
 - order_item
+- offer
 - staff_member
 - dining_session
 - payment
@@ -30,6 +33,8 @@ flows:
 - cancel-reservation
 - lookup-reservation
 - create-order
+- create-takeaway-order
+- create-offer
 - update-order-status
 - browse-menu
 - check-table-availability
@@ -47,6 +52,9 @@ events:
 - order.completed
 - order.ready
 - order.cancelled
+- offer.created
+- offer.updated
+- offer.sent
 - payment.created
 - payment.received
 - customer.created
@@ -80,9 +88,36 @@ automation_templates:
     body: |
       Hi {{person.name}},
 
-      Your order {{entity.code}} is ready.
+      Your order {{entity.code}} is now ready for pickup.
 
-      Total: {{entity.total_amount}}
+      Total amount: {{entity.total_amount}}
+
+      Thank you for dining with us! Please show this message at the counter when collecting your order.
+- id: offer_message_whatsapp
+  name: WhatsApp offer message
+  description: Message the workspace Person when an offer is created. Requires an approved WhatsApp template named offer_message on this workspace.
+  trigger:
+    event: offer.created
+  actions:
+  - type: send_whatsapp
+    template: offer_message
+    parameters:
+    - "{{person.name}}"
+    - "{{entity.title}}"
+    - "{{entity.message}}"
+    - "{{entity.promo_code}}"
+    - "{{entity.valid_until}}"
+    body: |
+      Hi {{person.name}},
+
+      We have an exciting special offer for you: {{entity.title}}!
+
+      Here are the details of this offer:
+      {{entity.message}}
+
+      Use promo code {{entity.promo_code}} when placing your order to claim this discount. This special offer is valid until {{entity.valid_until}}.
+
+      Reply BOOK to reserve a table or TAKEAWAY to order pickup. We look forward to welcoming you soon!
 permissions:
 - workflow.execute
 - storage.read
@@ -126,14 +161,157 @@ settings:
   type: string
   default: pending,confirmed,seated
   description: Reservation statuses that occupy a table slot
+- key: receipt_business_name
+  type: string
+  default: ""
+  description: Business name shown on receipt header (overrides workspace name)
+- key: receipt_address
+  type: string
+  default: ""
+  description: Address line shown on receipt
+- key: receipt_phone
+  type: string
+  default: ""
+  description: Phone number shown on receipt
+- key: receipt_logo_url
+  type: string
+  default: ""
+  description: Logo URL shown at top of receipt
+- key: receipt_paper_size
+  type: string
+  default: receipt
+  description: "Receipt paper size: receipt (80mm), 80mm, or 58mm"
+- key: receipt_show_logo
+  type: boolean
+  default: true
+  description: Show logo on receipt
+- key: receipt_show_address
+  type: boolean
+  default: true
+  description: Show address on receipt
+- key: receipt_show_phone
+  type: boolean
+  default: true
+  description: Show phone on receipt
+- key: receipt_show_date
+  type: boolean
+  default: true
+  description: Show date and time on receipt
+- key: receipt_show_order_type
+  type: boolean
+  default: true
+  description: Show order type (dine-in, takeaway) on receipt
+- key: receipt_show_table
+  type: boolean
+  default: true
+  description: Show table name on receipt
+- key: receipt_show_customer
+  type: boolean
+  default: true
+  description: Show customer name on receipt
+- key: receipt_show_paid
+  type: boolean
+  default: true
+  description: Show paid amount on receipt
+- key: receipt_show_balance
+  type: boolean
+  default: true
+  description: Show outstanding balance on receipt
+- key: receipt_show_payment_method
+  type: boolean
+  default: true
+  description: Show payment method next to paid amount
+- key: receipt_footer_line1
+  type: string
+  default: Thank you!
+  description: First footer line on receipt
+- key: receipt_footer_line2
+  type: string
+  default: ""
+  description: Second footer line on receipt
+- key: receipt_footer_line3
+  type: string
+  default: ""
+  description: Third footer line on receipt
+- key: receipt_email
+  type: string
+  default: ""
+  description: Email shown on receipt
+- key: receipt_website
+  type: string
+  default: ""
+  description: Website shown on receipt
+- key: receipt_tax_registration_number
+  type: string
+  default: ""
+  description: Tax registration number (e.g., GSTIN) shown on receipt
+- key: receipt_registration_number
+  type: string
+  default: ""
+  description: Additional registration number shown on receipt
+- key: receipt_title
+  type: string
+  default: RECEIPT
+  description: Receipt title shown at top
+- key: receipt_currency
+  type: string
+  default: INR
+  description: Currency code for amounts
+- key: receipt_show_receipt_number
+  type: boolean
+  default: true
+  description: Show receipt number on receipt
+- key: receipt_show_order_number
+  type: boolean
+  default: true
+  description: Show order number on receipt
+- key: receipt_tax_enabled
+  type: boolean
+  default: true
+  description: Enable tax calculation on receipt
+- key: receipt_tax_label
+  type: string
+  default: Tax
+  description: Tax label/name (e.g., GST, VAT)
+- key: receipt_tax_rate
+  type: number
+  default: 0
+  description: Tax rate percentage (e.g., 18 for 18%)
+- key: receipt_tax_inclusive
+  type: boolean
+  default: true
+  description: Prices include tax
+- key: receipt_show_tax_breakdown
+  type: boolean
+  default: true
+  description: Show tax breakdown on receipt
+- key: receipt_footer_contact
+  type: string
+  default: ""
+  description: Contact/feedback message in footer
+- key: receipt_print_preview
+  type: boolean
+  default: true
+  description: Show print preview before printing
+- key: receipt_print_copies
+  type: number
+  default: 1
+  description: Number of copies to print
+- key: receipt_auto_print
+  type: boolean
+  default: false
+  description: Auto-print after order completion
 triggers:
 - id: book_table
   workflow: book-table
   input_variable: reservation_input
   match:
     intents:
+    - book table
     - book a table
+    - reserve table
     - reserve a table
+    - table booking
     - make a reservation
     - table for
     confirmation:
@@ -186,6 +364,24 @@ triggers:
   confirmation_message: |
     Here is the current menu.
     {{items_text}}
+- id: takeaway_order
+  workflow: create-takeaway-order
+  input_variable: takeaway_input
+  match:
+    intents:
+    - takeaway
+    - takeaway order
+    - pickup order
+    - order for pickup
+    - to go
+    confirmation:
+      reply_signals:
+      - takeaway
+      - pickup
+      - order
+      required_slots:
+      - guest_name
+  confirmation_message: Takeaway order started for {{guest_name}}.
 conversation_slots:
 - id: guest_name
   labels:
@@ -213,10 +409,22 @@ conversation_slots:
   - time
   kind: time
   chip_prefix: time
+- id: menu_item_ids
+  labels:
+  - dishes
+  - menu items
+  - items
+  kind: string
 - id: table_name
   labels:
   - table
   - table name
+  kind: string
+- id: notes
+  labels:
+  - notes
+  - note
+  - instructions
   kind: string
 - id: id
   labels:
@@ -236,3 +444,4 @@ conversation_slots:
   kind: string
 ui:
   name: Restaurant Pro
+  navigation_layout: sidebar
