@@ -34,6 +34,7 @@ steps:
   output: tables
   input_map:
     filter.status: $literal:available
+    filter.capacity.$gte: guest_count
     limit: $literal:20
 - id: ask_table
   type: ask
