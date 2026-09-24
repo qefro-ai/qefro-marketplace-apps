@@ -28,7 +28,7 @@ steps:
   description_field: price
   image_field: image
   multiple: true
-  group_by: category_title
+  group_by: category_name
   chip_prefix: dish
 - id: ask_pickup_date
   type: ask
