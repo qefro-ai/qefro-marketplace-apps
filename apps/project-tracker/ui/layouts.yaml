@@ -1,1 +1,3 @@
-[]
+- id: dashboard-grid
+  type: grid
+  columns: 12
