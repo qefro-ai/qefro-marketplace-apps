@@ -1,6 +1,6 @@
 id: real-estate-pro
 name: Real Estate Pro
-version: 1.2.6
+version: 1.4.1
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no
   SDK, no custom server)
@@ -82,16 +82,25 @@ followup_sequences:
     delay:
       unit: hours
       value: 24
+    parameters:
+    - "{{person.name}}"
+    - "{{entity.property_name}}"
+    - "{{entity.listing_price}}"
   - id: step_2
     template: lead_followup_2
     delay:
       unit: days
       value: 3
+    parameters:
+    - "{{person.name}}"
+    - "{{entity.property_name}}"
   - id: step_3
     template: lead_followup_3
     delay:
       unit: days
       value: 7
+    parameters:
+    - "{{person.name}}"
 
 settings:
 - key: timezone
