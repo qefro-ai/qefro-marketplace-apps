@@ -1243,6 +1243,42 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(ask_table["choices_from"], "tables")
         self.assertEqual(ask_table["value_field"], "id")
 
+    def test_related_order_prefill_uses_declared_reservation_fields_only(self):
+        order = self._entity("order")
+        reservation = self._entity("reservation")
+        order_fields = {field["name"]: field for field in order["fields"]}
+        reservation_fields = {field["name"]: field for field in reservation["fields"]}
+        related_create = order["ui"]["form"]["related_create"]
+        self.assertEqual(set(related_create), {"reservation_id"})
+        self.assertEqual(order_fields["reservation_id"]["type"], "relation")
+        self.assertEqual(order_fields["reservation_id"]["ref_entity"], reservation["id"])
+        config = related_create["reservation_id"]
+        prefill = config["prefill"]
+        self.assertEqual(prefill, {
+            "guest_name": "guest_name",
+            "person_id": "person_id",
+            "table_id": "table_id",
+            "table_name": "table_name",
+            "notes": "notes",
+        })
+        for destination, source in prefill.items():
+            with self.subTest(destination=destination, source=source):
+                self.assertIn(destination, order_fields)
+                self.assertIn(source, reservation_fields)
+                self.assertEqual(order_fields[destination]["type"], reservation_fields[source]["type"])
+                self.assertEqual(order_fields[destination].get("ref_entity"), reservation_fields[source].get("ref_entity"))
+                self.assertFalse(order_fields[destination].get("unique"))
+                self.assertFalse(order_fields[destination].get("readonly"))
+                self.assertFalse(order_fields[destination].get("computed"))
+                self.assertNotIn(destination, {spec["field"] for spec in order.get("computed", [])})
+        self.assertEqual(config["context_fields"], ["guest_count", "date", "time"])
+        for source in config["context_fields"]:
+            self.assertIn(source, reservation_fields)
+            self.assertNotIn(source, prefill.values())
+        for name in ("pickup_date", "pickup_time", "status", "code", "reservation_code", "reservation_id"):
+            self.assertNotIn(name, prefill)
+            self.assertNotIn(name, prefill.values())
+
     def test_takeaway_order_has_no_table(self):
         order = self._entity("order")
         order_type = self._field(order, "order_type")
@@ -1273,7 +1309,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertEqual(manifest["version"], "1.9.4")
+        self.assertEqual(manifest["version"], "1.9.5")
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])

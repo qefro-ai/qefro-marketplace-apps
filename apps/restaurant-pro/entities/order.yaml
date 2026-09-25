@@ -95,6 +95,18 @@ views:
 ui:
   style: modern
   form:
+    related_create:
+      reservation_id:
+        prefill:
+          guest_name: guest_name
+          person_id: person_id
+          table_id: table_id
+          table_name: table_name
+          notes: notes
+        context_fields:
+        - guest_count
+        - date
+        - time
     hidden:
     - table_name
     - reservation_code
