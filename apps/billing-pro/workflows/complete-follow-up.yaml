@@ -19,6 +19,7 @@ steps:
   type: ask
   field: id
   message: "✅ Which follow-up is done?"
+  empty_message: "You have no open follow-ups right now."
   choices_from: follow_ups
   title_field: follow_up_date
   value_field: id

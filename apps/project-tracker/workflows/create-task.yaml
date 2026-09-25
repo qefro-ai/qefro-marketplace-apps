@@ -16,6 +16,7 @@ steps:
   type: ask
   field: project_id
   message: "Which project?"
+  empty_message: "There are no active projects right now."
   choices_from: projects
   title_field: title
   value_field: id

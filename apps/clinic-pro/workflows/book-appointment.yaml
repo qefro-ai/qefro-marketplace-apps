@@ -26,6 +26,7 @@ steps:
   type: ask
   field: practitioner_id
   message: "👨‍⚕️ Which doctor would you like? Tap a button below. (Configure practitioners in Clinic Pro → Practitioners.)"
+  empty_message: "No doctors are available for online booking right now."
   choices_from: practitioners
   title_field: name
   value_field: id
@@ -49,6 +50,7 @@ steps:
   type: ask
   field: date
   message: "📅 Choose a date"
+  empty_message: "There are no open dates in the booking window right now."
   choices_from: available_dates
   title_field: label
   value_field: value
@@ -66,6 +68,7 @@ steps:
   type: ask
   field: time
   message: "⏰ Choose a time"
+  empty_message: "There are no open slots on that date."
   choices_from: available_slots
   title_field: label
   value_field: time

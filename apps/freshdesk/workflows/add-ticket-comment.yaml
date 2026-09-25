@@ -17,6 +17,7 @@ steps:
     type: ask
     field: id
     message: "🎫 Which ticket would you like to comment on?"
+    empty_message: "There are no open tickets right now."
     choices_from: tickets
     title_field: subject
     value_field: id

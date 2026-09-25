@@ -22,6 +22,7 @@ steps:
     type: ask
     field: course_title
     message: "🎓 Which course?"
+    empty_message: "No courses are open for enrollment right now."
     choices_from: courses
     title_field: title
     value_field: title

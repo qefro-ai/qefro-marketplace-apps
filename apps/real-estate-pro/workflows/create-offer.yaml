@@ -18,6 +18,7 @@ steps:
   type: ask
   field: property_id
   message: "🏠 Which property?"
+  empty_message: "There are no properties listed right now."
   choices_from: properties
   title_field: title
   value_field: id
@@ -41,6 +42,7 @@ steps:
   type: ask
   field: viewing_id
   message: "Who is this offer for?"
+  empty_message: "You have no viewings on file for this offer yet."
   choices_from: viewings
   title_field: code
   value_field: id

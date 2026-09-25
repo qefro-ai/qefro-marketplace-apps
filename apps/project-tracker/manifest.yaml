@@ -1,6 +1,6 @@
 id: project-tracker
 name: Project Tracker
-version: 1.2.0
+version: 1.2.1
 hosting: runtime
 description: Sample project / task / invoice app for ZIP install genericity tests
 category: productivity

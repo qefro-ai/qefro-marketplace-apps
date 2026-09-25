@@ -18,6 +18,7 @@ steps:
   type: ask
   field: patient_name
   message: "👤 Which patient?"
+  empty_message: "There are no patients on file yet."
   choices_from: patients
   title_field: code
   value_field: code

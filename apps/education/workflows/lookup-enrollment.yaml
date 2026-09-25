@@ -17,6 +17,7 @@ steps:
     type: ask
     field: id
     message: "📋 Which enrollment would you like to view?"
+    empty_message: "You have no enrollments to view right now."
     choices_from: enrollments
     title_field: student_name
     value_field: id

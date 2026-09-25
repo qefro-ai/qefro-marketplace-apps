@@ -18,6 +18,7 @@ steps:
   type: ask
   field: id
   message: "📋 Which order would you like to update?"
+  empty_message: "You have no orders to update right now."
   choices_from: orders
   title_field: code
   value_field: id

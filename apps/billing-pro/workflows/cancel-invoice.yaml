@@ -19,6 +19,7 @@ steps:
   type: ask
   field: id
   message: "🚫 Which invoice should be cancelled?"
+  empty_message: "There are no invoices to cancel right now."
   choices_from: invoices
   title_field: invoice_number
   value_field: id

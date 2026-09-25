@@ -21,6 +21,7 @@ steps:
   type: ask
   field: package_code
   message: "✈️ Which package would you like to book?"
+  empty_message: "No travel packages are open for booking right now."
   choices_from: packages
   title_field: name
   value_field: code

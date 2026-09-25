@@ -17,6 +17,7 @@ steps:
     type: ask
     field: id
     message: "📊 Which product would you like to update?"
+    empty_message: "There are no products in the catalog right now."
     choices_from: products
     title_field: name
     value_field: id

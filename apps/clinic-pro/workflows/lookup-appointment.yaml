@@ -17,6 +17,7 @@ steps:
   type: ask
   field: id
   message: "📅 Which appointment would you like to view?"
+  empty_message: "You have no appointments to view right now."
   choices_from: appointments
   title_field: patient_name
   value_field: id

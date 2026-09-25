@@ -20,6 +20,7 @@ steps:
   type: ask
   field: id
   message: "❌ Which viewing would you like to cancel?"
+  empty_message: "You have no upcoming viewings to cancel right now."
   choices_from: viewings
   title_field: property_title
   value_field: id

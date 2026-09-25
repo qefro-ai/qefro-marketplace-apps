@@ -17,6 +17,7 @@ steps:
   type: ask
   field: id
   message: "💰 Which invoice was paid?"
+  empty_message: "There are no unpaid invoices right now."
   choices_from: invoices
   title_field: invoice_number
   value_field: id

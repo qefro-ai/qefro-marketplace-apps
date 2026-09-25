@@ -22,6 +22,7 @@ steps:
   type: ask
   field: menu_item_ids
   message: "🍽️ Choose your items"
+  empty_message: "Nothing on the menu is available to order right now."
   choices_from: dishes
   title_field: name
   value_field: id

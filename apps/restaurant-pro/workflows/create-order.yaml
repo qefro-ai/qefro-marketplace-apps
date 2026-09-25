@@ -21,6 +21,7 @@ steps:
   type: ask
   field: table_id
   message: "🍳 Which table?"
+  empty_message: "There are no tables open right now."
   choices_from: tables
   title_field: name
   value_field: id

@@ -32,6 +32,7 @@ steps:
   type: ask
   field: city
   message: "📍 Which city or area should I search in?"
+  empty_message: "I could not find any properties listed right now."
   choices_from: properties
   title_field: city
   value_field: city

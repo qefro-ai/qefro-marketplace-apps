@@ -17,6 +17,7 @@ steps:
   type: ask
   field: payment_id
   message: "💳 Which payment?"
+  empty_message: "There are no unallocated payments right now."
   choices_from: payments
   title_field: payment_number
   value_field: id
@@ -32,6 +33,7 @@ steps:
   type: ask
   field: invoice_id
   message: "💰 Which invoice should receive this amount?"
+  empty_message: "There are no open invoices to allocate this payment to."
   choices_from: invoices
   title_field: invoice_number
   value_field: id

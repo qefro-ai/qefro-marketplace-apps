@@ -40,6 +40,7 @@ steps:
   type: ask
   field: table_id
   message: "🍽️ Which table?"
+  empty_message: "There are no tables open for booking right now."
   choices_from: tables
   title_field: name
   value_field: id
@@ -63,6 +64,7 @@ steps:
   type: ask
   field: date
   message: "📅 Choose a date"
+  empty_message: "There are no open dates for reservations right now."
   choices_from: available_dates
   title_field: label
   value_field: value
@@ -80,6 +82,7 @@ steps:
   type: ask
   field: time
   message: "⏰ Choose a time"
+  empty_message: "There are no open slots on that date."
   choices_from: available_slots
   title_field: label
   value_field: time

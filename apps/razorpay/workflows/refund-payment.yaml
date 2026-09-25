@@ -17,6 +17,7 @@ steps:
     type: ask
     field: id
     message: "💰 Which payment would you like to refund?"
+    empty_message: "There are no payments available to refund right now."
     choices_from: payments
     title_field: amount
     value_field: id

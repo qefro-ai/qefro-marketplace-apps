@@ -20,6 +20,7 @@ steps:
     type: ask
     field: id
     message: "✅ Which work order is done?"
+    empty_message: "You have no open work orders right now."
     choices_from: work_orders
     title_field: title
     value_field: id

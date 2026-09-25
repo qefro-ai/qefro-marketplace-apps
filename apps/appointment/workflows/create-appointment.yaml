@@ -18,6 +18,7 @@ steps:
     type: ask
     field: service_id
     message: "📅 Which service should we book?"
+    empty_message: "We have no services open for online booking right now."
     choices_from: services
     title_field: name
     value_field: id
@@ -40,6 +41,7 @@ steps:
     type: ask
     field: staff_id
     message: "👤 Which staff member?"
+    empty_message: "No staff members are available for online booking right now."
     choices_from: staff
     title_field: name
     value_field: id
@@ -63,6 +65,7 @@ steps:
     type: ask
     field: date
     message: "📅 Choose a date"
+    empty_message: "There are no open dates in the booking window right now."
     choices_from: available_dates
     title_field: label
     value_field: value
@@ -80,6 +83,7 @@ steps:
     type: ask
     field: time
     message: "⏰ Choose a time"
+    empty_message: "There are no open slots on that date."
     choices_from: available_slots
     title_field: label
     value_field: time

@@ -18,6 +18,7 @@ steps:
     type: ask
     field: id
     message: "🔄 Which appointment would you like to reschedule?"
+    empty_message: "You have no upcoming appointments to reschedule."
     choices_from: appointments
     title_field: guest_name
     value_field: id
@@ -41,6 +42,7 @@ steps:
     type: ask
     field: date
     message: "📅 Choose a date"
+    empty_message: "There are no open dates in the booking window right now."
     choices_from: available_dates
     title_field: label
     value_field: value
@@ -58,6 +60,7 @@ steps:
     type: ask
     field: time
     message: "⏰ Choose a time"
+    empty_message: "There are no open slots on that date."
     choices_from: available_slots
     title_field: label
     value_field: time

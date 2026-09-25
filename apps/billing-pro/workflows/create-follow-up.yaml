@@ -17,6 +17,7 @@ steps:
   type: ask
   field: id
   message: "📞 Which invoice needs a follow-up?"
+  empty_message: "There are no invoices needing a follow-up right now."
   choices_from: invoices
   title_field: invoice_number
   value_field: id

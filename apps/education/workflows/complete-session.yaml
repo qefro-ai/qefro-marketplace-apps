@@ -20,6 +20,7 @@ steps:
     type: ask
     field: id
     message: "✅ Which session would you like to mark complete?"
+    empty_message: "You have no sessions to mark complete right now."
     choices_from: sessions
     title_field: title
     value_field: id

@@ -17,6 +17,7 @@ steps:
   type: ask
   field: id
   message: "📅 Which reservation would you like to view?"
+  empty_message: "You have no upcoming reservations to view right now."
   choices_from: reservations
   title_field: guest_name
   value_field: id

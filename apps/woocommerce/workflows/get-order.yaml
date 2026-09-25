@@ -17,6 +17,7 @@ steps:
     type: ask
     field: id
     message: "📦 Which order would you like to view?"
+    empty_message: "You have no orders to view right now."
     choices_from: orders
     title_field: order_number
     value_field: id

@@ -20,6 +20,7 @@ steps:
   type: ask
   field: id
   message: "📅 Which reservation would you like to cancel?"
+  empty_message: "You have no upcoming reservation to cancel right now. Anything else I can help you with?"
   choices_from: reservations
   title_field: guest_name
   value_field: id

@@ -38,6 +38,7 @@ steps:
   type: ask
   field: city
   message: "Which city or area should I search in?"
+  empty_message: "I could not find any properties listed right now."
   choices_from: properties
   title_field: city
   value_field: city
@@ -56,6 +57,7 @@ steps:
   type: ask
   field: property_id
   message: "Which property?"
+  empty_message: "No properties matched in that area right now."
   choices_from: properties
   title_field: title
   value_field: id
@@ -81,6 +83,7 @@ steps:
   type: ask
   field: date
   message: "Choose a date"
+  empty_message: "There are no open dates for viewings right now."
   choices_from: available_dates
   title_field: label
   value_field: value
@@ -98,6 +101,7 @@ steps:
   type: ask
   field: time
   message: "Choose a time"
+  empty_message: "There are no open slots on that date."
   choices_from: available_slots
   title_field: label
   value_field: time

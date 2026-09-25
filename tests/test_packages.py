@@ -319,6 +319,21 @@ class PackageConventionTests(unittest.TestCase):
                             else:
                                 self.assertEqual(execution, "http")
 
+    def test_dynamic_choice_asks_handle_an_empty_list(self):
+        # An empty list is an ordinary customer state (nothing to cancel, fully
+        # booked), not a malfunction. Without empty_message the ask step fails
+        # and every team member gets a handoff notification.
+        for app in app_dirs():
+            for path in sorted((app / "workflows").glob("*.yaml")):
+                flow = load_yaml(path)
+                for step in flow.get("steps") or []:
+                    if step.get("type") == "ask" and step.get("choices_from"):
+                        with self.subTest(path=str(path.relative_to(ROOT)), step=step.get("id")):
+                            self.assertTrue(
+                                str(step.get("empty_message") or "").strip(),
+                                "ask step with choices_from must declare empty_message",
+                            )
+
     def test_http_tools_are_generic_and_connection_scoped(self):
         for app in app_dirs():
             manifest = load_yaml(app / "manifest.yaml")
@@ -1188,6 +1203,12 @@ class RestaurantProTests(unittest.TestCase):
             self.assertNotIn("billing-pro", text)
             self.assertNotRegex(text, r"if\s+solution\s*==")
 
+    def test_cancel_reservation_answers_an_empty_list(self):
+        flow = load_yaml(self.APP / "workflows" / "cancel-reservation.yaml")
+        ask = next(s for s in flow["steps"] if s.get("type") == "ask")
+        self.assertEqual(ask["choices_from"], "reservations")
+        self.assertTrue((ask.get("empty_message") or "").strip())
+
     def test_menu_item_uses_generic_image_field(self):
         item = self._entity("menu_item")
         image = self._field(item, "image")
@@ -1252,7 +1273,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertEqual(manifest["version"], "1.7.5")
+        self.assertEqual(manifest["version"], "1.9.4")
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])
