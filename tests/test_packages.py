@@ -1309,7 +1309,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertEqual(manifest["version"], "1.9.7")
+        self.assertEqual(manifest["version"], "1.9.8")
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])
@@ -1522,7 +1522,6 @@ class RestaurantProTests(unittest.TestCase):
             APPS / "restaurant-pro" / "workflows" / "book-table.yaml",
             APPS / "restaurant-pro" / "workflows" / "create-takeaway-order.yaml",
             APPS / "restaurant-pro" / "workflows" / "list-my-orders.yaml",
-            APPS / "restaurant-pro" / "workflows" / "update-order.yaml",
             APPS / "restaurant-pro" / "workflows" / "cancel-takeaway-order.yaml",
             APPS / "restaurant-pro" / "workflows" / "cancel-reservation.yaml",
             APPS / "restaurant-pro" / "workflows" / "lookup-reservation.yaml",
@@ -1555,9 +1554,8 @@ class RestaurantProTests(unittest.TestCase):
         manifest = load_yaml(self.APP / "manifest.yaml")
         self.assertIn("list-my-orders", manifest["flows"])
         self.assertIn("cancel-takeaway-order", manifest["flows"])
-        self.assertIn("update-order", manifest["flows"])
+        self.assertNotIn("update-order", manifest["flows"])
         self.assertIn("order.cancelled", manifest["events"])
-        self.assertIn("order.updated", manifest["events"])
 
         # Triggers
         triggers = {t["id"]: t for t in manifest.get("triggers", [])}
@@ -1571,10 +1569,7 @@ class RestaurantProTests(unittest.TestCase):
         self.assertIn("cancel my order", triggers["cancel_takeaway_order"]["match"]["intents"])
         self.assertIn("cancel takeaway order", triggers["cancel_takeaway_order"]["match"]["intents"])
 
-        self.assertIn("update_order", triggers)
-        self.assertEqual(triggers["update_order"]["workflow"], "update-order")
-        self.assertIn("change my order", triggers["update_order"]["match"]["intents"])
-        self.assertIn("update my order", triggers["update_order"]["match"]["intents"])
+        self.assertNotIn("update_order", triggers)
 
         # 1. list-my-orders
         list_flow = load_yaml(self.APP / "workflows" / "list-my-orders.yaml")
@@ -1588,8 +1583,8 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(ask_order["title_fields"], ["code", "status", "total_amount"])
         self.assertTrue((ask_order.get("empty_message") or "").strip())
         self.assertEqual(list_steps["get_order"]["tool"], "entity.order.get")
-        self.assertIn("check_status", list_steps)
-        self.assertIn("ask_action", list_steps)
+        self.assertIn("confirm", list_steps)
+        self.assertNotIn("ask_action", list_steps)
 
         # 2. cancel-takeaway-order
         cancel_flow = load_yaml(self.APP / "workflows" / "cancel-takeaway-order.yaml")
@@ -1604,20 +1599,6 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(cancel_steps["get_order"]["tool"], "entity.order.get")
         self.assertEqual(cancel_steps["do_cancel"]["tool"], "entity.order.update")
         self.assertEqual(cancel_steps["do_cancel"]["input_map"]["status"], "$literal:cancelled")
-
-        # 3. update-order
-        update_flow = load_yaml(self.APP / "workflows" / "update-order.yaml")
-        self.assertIn("customer", update_flow["surfaces"])
-        self.assertEqual(update_flow.get("whatsapp_flow", {}).get("category"), "OTHER")
-        update_steps = {s["id"]: s for s in update_flow["steps"]}
-        self.assertEqual(update_steps["list_orders"]["tool"], "entity.order.list")
-        ask_update = update_steps["ask_id"]
-        self.assertEqual(ask_update["choices_from"], "orders")
-        self.assertTrue((ask_update.get("empty_message") or "").strip())
-        self.assertEqual(update_steps["get_order"]["tool"], "entity.order.get")
-        self.assertEqual(update_steps["do_update"]["tool"], "entity.order.update")
-        self.assertEqual(update_steps["do_update"]["input_map"]["pickup_time"], "pickup_time")
-        self.assertEqual(update_steps["do_update"]["input_map"]["notes"], "notes")
 
 
 

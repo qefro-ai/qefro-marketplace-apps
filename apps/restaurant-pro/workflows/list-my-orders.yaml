@@ -1,6 +1,6 @@
 id: list-my-orders
 name: My orders
-description: View and manage your recent orders
+description: View your recent orders
 surfaces:
 - customer
 whatsapp_flow:
@@ -20,7 +20,7 @@ steps:
 - id: ask_order
   type: ask
   field: id
-  message: "📋 Here are your recent orders. Which order would you like to manage?"
+  message: "📋 Here are your recent orders. Which order would you like to view?"
   empty_message: "You don't have any recent orders right now."
   choices_from: orders
   title_fields:
@@ -37,88 +37,14 @@ steps:
   output: selected_order
   input_map:
     id: id
-- id: check_status
-  type: condition
-  when: selected_order.status == 'cancelled' || selected_order.status == 'completed'
-  then: msg_terminal
-  else: check_preparing
-- id: check_preparing
-  type: condition
-  when: selected_order.status == 'preparing' || selected_order.status == 'ready'
-  then: msg_in_kitchen
-  else: ask_action
-- id: msg_terminal
+- id: confirm
   type: message
-  message: "Order {{selected_order.code}} is {{selected_order.status}} (Total: {{selected_order.total_amount}}) and cannot be modified."
-- id: goto_done_terminal
-  type: condition
-  when: "true"
-  then: done
-  else: done
-- id: msg_in_kitchen
-  type: message
-  message: "Order {{selected_order.code}} is currently {{selected_order.status}} and being prepared. It can no longer be modified or cancelled."
-- id: goto_done_kitchen
-  type: condition
-  when: "true"
-  then: done
-  else: done
-- id: ask_action
-  type: ask
-  field: action
-  message: "Order {{selected_order.code}} is {{selected_order.status}} (Total: {{selected_order.total_amount}}).\nWhat would you like to do?"
-  choices:
-  - id: cancel
-    label: Cancel Order
-  - id: update
-    label: Update Order
-- id: branch_action
-  type: condition
-  when: action == 'cancel' || action == 'Cancel Order'
-  then: check_cancel_type
-  else: ask_update_time
-- id: check_cancel_type
-  type: condition
-  when: selected_order.order_type == 'takeaway'
-  then: do_cancel
-  else: msg_cannot_cancel_dine_in
-- id: msg_cannot_cancel_dine_in
-  type: message
-  message: "Only takeaway orders can be cancelled online. Please speak to your server to update dine-in orders."
-- id: goto_done_dine_in
-  type: condition
-  when: "true"
-  then: done
-  else: done
-- id: do_cancel
-  type: tool
-  tool: entity.order.update
-  execution: runtime
-  input_map:
-    id: id
-    status: $literal:cancelled
-- id: msg_cancelled
-  type: message
-  message: "❌ Order {{selected_order.code}} has been cancelled."
-- id: goto_done_cancel
-  type: condition
-  when: "true"
-  then: done
-  else: done
-- id: ask_update_time
-  type: ask
-  field: pickup_time
-  input_type: time
-  message: "⏰ What is your updated pickup time?"
-- id: do_update
-  type: tool
-  tool: entity.order.update
-  execution: runtime
-  input_map:
-    id: id
-    pickup_time: pickup_time
-- id: msg_updated
-  type: message
-  message: "✅ Order {{selected_order.code}} updated. Your pickup time is now {{pickup_time}}."
+  message: |
+    📋 **Order #{{selected_order.code}}**
+    • Status: {{selected_order.status}}
+    • Type: {{selected_order.order_type}}
+    • Total: {{selected_order.total_amount}}
+
+    💡 To cancel an active takeaway order, reply "Cancel order" or select Cancel takeaway order.
 - id: done
   type: complete
