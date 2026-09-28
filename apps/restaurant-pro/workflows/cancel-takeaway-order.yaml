@@ -1,0 +1,79 @@
+id: cancel-takeaway-order
+name: Cancel takeaway order
+description: Cancel an active takeaway order
+surfaces:
+- customer
+whatsapp_flow:
+  category: OTHER
+  title: Cancel order
+  cta: Cancel order
+trigger:
+  type: conversation
+steps:
+- id: list_orders
+  type: tool
+  tool: entity.order.list
+  execution: runtime
+  output: orders
+  input_map:
+    filter.status: $literal:pending
+    filter.order_type: $literal:takeaway
+    limit: $literal:10
+- id: ask_id
+  type: ask
+  field: id
+  message: "📋 Which takeaway order would you like to cancel?"
+  empty_message: "You have no active takeaway orders that can be cancelled."
+  choices_from: orders
+  title_fields:
+  - code
+  - status
+  - total_amount
+  title_field: code
+  value_field: id
+  chip_prefix: order
+- id: get_order
+  type: tool
+  tool: entity.order.get
+  execution: runtime
+  output: selected_order
+  input_map:
+    id: id
+- id: check_order_type
+  type: condition
+  when: selected_order.order_type == 'takeaway'
+  then: check_status
+  else: reject_non_takeaway
+- id: reject_non_takeaway
+  type: message
+  message: "Only takeaway orders can be cancelled online. Dine-in orders cannot be cancelled here."
+- id: goto_done_non_takeaway
+  type: condition
+  when: "true"
+  then: done
+  else: done
+- id: check_status
+  type: condition
+  when: selected_order.status == 'pending' || selected_order.status == 'confirmed'
+  then: do_cancel
+  else: reject_status
+- id: reject_status
+  type: message
+  message: "Order {{selected_order.code}} is {{selected_order.status}} and cannot be cancelled."
+- id: goto_done_status
+  type: condition
+  when: "true"
+  then: done
+  else: done
+- id: do_cancel
+  type: tool
+  tool: entity.order.update
+  execution: runtime
+  input_map:
+    id: id
+    status: $literal:cancelled
+- id: confirm
+  type: message
+  message: "❌ Takeaway order {{selected_order.code}} has been cancelled."
+- id: done
+  type: complete

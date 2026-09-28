@@ -1,6 +1,6 @@
 id: restaurant-pro
 name: Restaurant Pro
-version: 1.9.5
+version: 1.9.6
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro
   Runtime (no SDK, no custom server)
@@ -43,6 +43,9 @@ flows:
 - create-menu-category
 - create-customer
 - create-staff-member
+- list-my-orders
+- update-order
+- cancel-takeaway-order
 events:
 - reservation.created
 - reservation.updated
@@ -405,6 +408,56 @@ triggers:
       required_slots:
       - guest_name
   confirmation_message: Takeaway order started for {{guest_name}}.
+- id: list_my_orders
+  workflow: list-my-orders
+  input_variable: order_query
+  match:
+    intents:
+    - my orders
+    - show my orders
+    - show my recent orders
+    - list my orders
+    - view my orders
+    - check my orders
+    - orders
+    confirmation:
+      reply_signals:
+      - orders
+      required_slots: []
+  confirmation_message: Here are your recent orders.
+- id: cancel_takeaway_order
+  workflow: cancel-takeaway-order
+  input_variable: order_cancel
+  match:
+    intents:
+    - cancel my order
+    - cancel order
+    - cancel my takeaway order
+    - cancel takeaway order
+    - cancel takeaway
+    confirmation:
+      reply_signals:
+      - cancelled
+      required_slots:
+      - id
+  confirmation_message: Order cancelled.
+- id: update_order
+  workflow: update-order
+  input_variable: order_update
+  match:
+    intents:
+    - I want to change my order
+    - change my order
+    - update my order
+    - update order
+    - modify my order
+    - edit my order
+    confirmation:
+      reply_signals:
+      - updated
+      required_slots:
+      - id
+  confirmation_message: Order updated.
 conversation_slots:
 - id: guest_name
   labels:
