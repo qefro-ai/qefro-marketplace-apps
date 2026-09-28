@@ -3,6 +3,10 @@ name: Update order status
 description: Advance or change order status
 surfaces:
 - staff
+whatsapp_flow:
+  category: OTHER
+  title: Update order status
+  cta: Update status
 trigger:
   type: conversation
 steps:
@@ -27,6 +31,12 @@ steps:
   type: ask
   field: status
   message: "🔄 New status?"
+  choices:
+  - confirmed
+  - preparing
+  - ready
+  - completed
+  - cancelled
 - id: run
   type: tool
   tool: entity.order.update

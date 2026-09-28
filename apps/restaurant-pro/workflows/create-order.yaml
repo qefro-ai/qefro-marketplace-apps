@@ -3,6 +3,10 @@ name: Create order
 description: Create a dine-in order for a table
 surfaces:
 - staff
+whatsapp_flow:
+  category: OTHER
+  title: Create order
+  cta: Create order
 trigger:
   type: conversation
 steps:

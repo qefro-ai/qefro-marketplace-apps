@@ -1309,7 +1309,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertEqual(manifest["version"], "1.9.6")
+        self.assertEqual(manifest["version"], "1.9.7")
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])
@@ -1521,8 +1521,17 @@ class RestaurantProTests(unittest.TestCase):
         samples = [
             APPS / "restaurant-pro" / "workflows" / "book-table.yaml",
             APPS / "restaurant-pro" / "workflows" / "create-takeaway-order.yaml",
+            APPS / "restaurant-pro" / "workflows" / "list-my-orders.yaml",
+            APPS / "restaurant-pro" / "workflows" / "update-order.yaml",
+            APPS / "restaurant-pro" / "workflows" / "cancel-takeaway-order.yaml",
+            APPS / "restaurant-pro" / "workflows" / "cancel-reservation.yaml",
+            APPS / "restaurant-pro" / "workflows" / "lookup-reservation.yaml",
             APPS / "clinic-pro" / "workflows" / "book-appointment.yaml",
+            APPS / "clinic-pro" / "workflows" / "cancel-appointment.yaml",
+            APPS / "clinic-pro" / "workflows" / "reschedule-appointment.yaml",
             APPS / "real-estate-pro" / "workflows" / "request-viewing.yaml",
+            APPS / "real-estate-pro" / "workflows" / "cancel-viewing.yaml",
+            APPS / "real-estate-pro" / "workflows" / "reschedule-viewing.yaml",
         ]
         for path in samples:
             flow = load_yaml(path)

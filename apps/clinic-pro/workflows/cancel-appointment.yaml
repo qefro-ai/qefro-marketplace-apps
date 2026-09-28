@@ -3,6 +3,10 @@ name: Cancel appointment
 description: Cancel an appointment by updating status (audit-preserving)
 surfaces:
 - customer
+whatsapp_flow:
+  category: OTHER
+  title: Cancel appointment
+  cta: Cancel appointment
 trigger:
   type: conversation
 constants:

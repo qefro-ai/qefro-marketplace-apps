@@ -3,6 +3,10 @@ name: Reschedule viewing
 description: Move a viewing to a new date/time
 surfaces:
 - customer
+whatsapp_flow:
+  category: APPOINTMENT_BOOKING
+  title: Reschedule viewing
+  cta: Reschedule
 trigger:
   type: conversation
 steps:

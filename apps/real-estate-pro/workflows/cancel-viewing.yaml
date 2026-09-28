@@ -3,6 +3,10 @@ name: Cancel viewing
 description: Cancel a viewing by status update
 surfaces:
 - customer
+whatsapp_flow:
+  category: OTHER
+  title: Cancel viewing
+  cta: Cancel viewing
 trigger:
   type: conversation
 constants:

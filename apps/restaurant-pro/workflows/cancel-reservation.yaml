@@ -3,6 +3,10 @@ name: Cancel reservation
 description: Cancel a reservation by status update
 surfaces:
 - customer
+whatsapp_flow:
+  category: OTHER
+  title: Cancel reservation
+  cta: Cancel reservation
 trigger:
   type: conversation
 constants:
