@@ -134,6 +134,46 @@ settings:
   type: number
   default: 3
   description: Typical days to wait between payment reminders.
+- key: tax.enabled
+  type: boolean
+  default: false
+  description: Enable Global Tax Engine calculations for invoices and billing.
+- key: tax.mode
+  type: string
+  default: manual
+  description: "Tax calculation mode: automatic (rules-based) or manual (flat-rate)."
+- key: tax.country
+  type: string
+  default: IN
+  description: Two-letter ISO country code for tax jurisdiction.
+- key: tax.regime
+  type: string
+  default: GST
+  description: Tax regime identifier (e.g. GST, VAT, SALES_TAX).
+- key: tax.registration_type
+  type: string
+  default: GSTIN
+  description: Type of tax registration (e.g. GSTIN, VAT_NUMBER).
+- key: tax.registration_number
+  type: string
+  default: ""
+  description: Official tax registration / identification number.
+- key: tax.price_mode
+  type: string
+  default: exclusive
+  description: "Pricing tax treatment: inclusive or exclusive."
+- key: tax.default_category
+  type: string
+  default: STANDARD
+  description: Default item tax category (e.g. STANDARD, SERVICES, EXEMPT).
+- key: tax.rounding
+  type: string
+  default: per_line
+  description: "Tax rounding method: per_line or document."
+- key: tax.manual_rate
+  type: number
+  default: 0
+  description: Flat tax rate percentage when manual mode is active.
 permissions:
 - workflow.execute
 - storage.read

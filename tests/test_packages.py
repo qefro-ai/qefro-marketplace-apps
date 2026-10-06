@@ -1033,6 +1033,16 @@ class BillingProTests(unittest.TestCase):
             "payment_terms_days",
             "default_tax_rate",
             "follow_up_interval_days",
+            "tax.enabled",
+            "tax.mode",
+            "tax.country",
+            "tax.regime",
+            "tax.registration_type",
+            "tax.registration_number",
+            "tax.price_mode",
+            "tax.default_category",
+            "tax.rounding",
+            "tax.manual_rate",
         }
         self.assertEqual(set(keys), expected)
         self.assertEqual(set(schema), expected)
@@ -1041,6 +1051,10 @@ class BillingProTests(unittest.TestCase):
         self.assertEqual(schema["payment_terms_days"]["default"], 30)
         self.assertEqual(schema["default_tax_rate"]["default"], 0)
         self.assertEqual(schema["follow_up_interval_days"]["default"], 3)
+        self.assertEqual(schema["tax.enabled"]["default"], False)
+        self.assertEqual(schema["tax.mode"]["default"], "manual")
+        self.assertEqual(schema["tax.country"]["default"], "IN")
+        self.assertEqual(schema["tax.manual_rate"]["default"], 0)
 
     def test_flows_use_runtime_entity_tools(self):
         expected = {
