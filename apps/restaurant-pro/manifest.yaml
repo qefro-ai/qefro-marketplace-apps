@@ -1,6 +1,6 @@
 id: restaurant-pro
 name: Restaurant Pro
-version: 1.9.9
+version: 1.9.10
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro
   Runtime (no SDK, no custom server)
@@ -484,6 +484,15 @@ conversation_slots:
   - customer
   kind: person_name
   identity: person_name
+- id: phone
+  labels:
+  - phone
+  - mobile
+  - phone number
+  - contact
+  - whatsapp
+  kind: phone
+  identity: phone
 - id: guest_count
   labels:
   - covers

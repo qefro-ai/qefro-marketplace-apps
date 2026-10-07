@@ -101,6 +101,12 @@ steps:
   type: ask
   field: guest_name
   message: "👤 Name for the reservation?"
+- id: ask_phone
+  type: ask
+  field: phone
+  input_type: phone
+  message: "📱 Mobile number for booking confirmation?"
+  when: "phone empty"
 - id: run
   type: tool
   tool: entity.reservation.create

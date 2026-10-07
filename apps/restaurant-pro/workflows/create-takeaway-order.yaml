@@ -48,6 +48,12 @@ steps:
   type: ask
   field: guest_name
   message: "👤 Name for pickup?"
+- id: ask_phone
+  type: ask
+  field: phone
+  input_type: phone
+  message: "📱 Mobile number for pickup updates?"
+  when: "phone empty"
 - id: run
   type: tool
   tool: entity.order.create
