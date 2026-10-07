@@ -445,8 +445,7 @@ triggers:
       - takeaway
       - pickup
       - order
-      required_slots:
-      - guest_name
+      required_slots: []
   confirmation_message: Takeaway order started for {{guest_name}}.
 - id: list_my_orders
   workflow: list-my-orders
@@ -460,10 +459,6 @@ triggers:
     - view my orders
     - check my orders
     - orders
-    confirmation:
-      reply_signals:
-      - orders
-      required_slots: []
   confirmation_message: Here are your recent orders.
 - id: cancel_takeaway_order
   workflow: cancel-takeaway-order
