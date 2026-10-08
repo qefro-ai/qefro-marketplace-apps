@@ -21,6 +21,9 @@ fields:
   default: dine_in
 - name: guest_name
   type: string
+- name: guest_phone
+  type: phone
+  description: Contact phone number for pickup updates
 - name: table_id
   type: relation
   description: Table for dine-in orders. Leave empty for takeaway.
@@ -85,6 +88,7 @@ views:
   - code
   - order_type
   - guest_name
+  - guest_phone
   - table_name
   - pickup_date
   - status

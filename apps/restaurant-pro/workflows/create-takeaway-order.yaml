@@ -60,6 +60,7 @@ steps:
   execution: runtime
   input_map:
     guest_name: guest_name
+    guest_phone: phone
     items: menu_item_ids
     pickup_date: pickup_date
     pickup_time: pickup_time
