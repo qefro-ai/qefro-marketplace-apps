@@ -484,6 +484,9 @@ conversation_slots:
   - customer
   kind: person_name
   identity: person_name
+  aliases:
+  - customer_name
+  - name
 - id: phone
   labels:
   - phone
@@ -493,6 +496,8 @@ conversation_slots:
   - whatsapp
   kind: phone
   identity: phone
+  aliases:
+  - guest_phone
 - id: guest_count
   labels:
   - covers
@@ -501,23 +506,36 @@ conversation_slots:
   - people
   - for
   kind: integer
+  aliases:
+  - covers
+  - party_size
 - id: date
   labels:
   - date
   - tomorrow
   - tonight
+  - pickup date
+  - pickup
   kind: date
+  aliases:
+  - pickup_date
 - id: time
   labels:
   - time
+  - pickup time
+  - pickup
   kind: time
   chip_prefix: time
+  aliases:
+  - pickup_time
 - id: menu_item_ids
   labels:
   - dishes
   - menu items
   - items
   kind: string
+  aliases:
+  - items
 - id: table_name
   labels:
   - table
