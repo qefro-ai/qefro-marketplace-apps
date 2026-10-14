@@ -4,7 +4,7 @@ Build metadata-only ZIPs for ZIP install / upgrade E2E:
 
 ```bash
 # One app
-./scripts/build_app_zip.sh clinic-pro-runtime
+./scripts/build_app_zip.sh clinic-pro
 
 # Clinic + Restaurant + Real Estate + project-tracker fixture
 ./scripts/build_pro_runtime_zips.sh
@@ -16,11 +16,14 @@ Constraints enforced by the script:
 
 - Requires `apps/<id>/manifest.yaml`
 - Refuses if `.js` / `.ts` / `Dockerfile` / `package.json` are present
+  (outside `dist/`, which is local build output and never packaged)
+- Excludes `dist/` from the archive; `-X` omits machine-local extended
+  attributes
 
 Upload via Portal → Workspace → Tools → Marketplace app → **Upload ZIP**, or:
 
 ```bash
 curl -X POST "$API/api/v1/packages/upload?workspace_id=$WS" \
   -H "Authorization: Bearer $TOKEN" \
-  -F "file=@dist/zips/project-tracker-runtime.zip"
+  -F "file=@dist/zips/project-tracker.zip"
 ```

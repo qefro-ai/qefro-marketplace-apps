@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# DEPRECATED (2026-10-14 arch-audit): one-off publish helper from the 2026-09
+# rename era — targets pre-rename app ids and defaults to the retired kid "k1".
+# Superseded by scripts/build_app_zip.sh + scripts/build_pro_runtime_zips.sh
+# and the platform publish API. Kept for reference; do not extend.
 """Publish clinic/restaurant/real-estate Pro Runtime packages to solution-service.
 
 Usage:

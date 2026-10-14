@@ -8,8 +8,12 @@ expressible in YAML; Runtime already enforces the generic counterparts.
 from __future__ import annotations
 
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 try:
@@ -2059,6 +2063,75 @@ class MarketplaceArchitectureTests(unittest.TestCase):
                     text = path.read_text(encoding="utf-8")
                     self.assertNotRegex(text, r"if\s+solution\s*==")
                     self.assertNotRegex(text, r"if\s+entity\s*==")
+
+
+class PackageBuildScriptTests(unittest.TestCase):
+    """The ZIPs produced by build_app_zip.sh satisfy the package contract.
+
+    Regression: billing-pro ships docs/examples/*.csv (data, allowed) and had
+    a local dist/package.json (build output, forbidden if packed) — the old
+    script refused to build it and would have packed local artifacts.
+    """
+
+    SCRIPT = ROOT / "scripts" / "build_app_zip.sh"
+
+    @staticmethod
+    def _require_tools():
+        if not (shutil.which("zip") and shutil.which("bash")):
+            raise unittest.SkipTest("zip and bash are required for build tests")
+
+    def _build(self, app: str, out_dir: Path) -> Path:
+        self._require_tools()
+        res = subprocess.run(
+            ["bash", str(self.SCRIPT), app, str(out_dir)],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 0, f"build failed: {res.stderr}")
+        return out_dir / f"{app}.zip"
+
+    def test_billing_pro_zip_keeps_csv_and_excludes_dist(self):
+        app_dir = APPS / "billing-pro"
+        dist_pkg = app_dir / "dist" / "package.json"
+        created_dir = not dist_pkg.parent.exists()
+        if created_dir:
+            dist_pkg.parent.mkdir(parents=True, exist_ok=True)
+        created_pkg = not dist_pkg.exists()
+        if created_pkg:
+            dist_pkg.write_text("{}", encoding="utf-8")
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                zpath = self._build("billing-pro", Path(tmp))
+                with zipfile.ZipFile(zpath) as zf:
+                    names = zf.namelist()
+            self.assertIn("manifest.yaml", names)
+            self.assertIn(
+                "docs/examples/unpaid-invoices.sample.csv",
+                names,
+                "CSV data files are part of the package contract",
+            )
+            self.assertFalse(
+                [n for n in names if n == "dist" or n.startswith("dist/")],
+                f"dist/ build output must never be packaged: {names}",
+            )
+            self.assertFalse([n for n in names if "/dist/" in n])
+            self.assertFalse([n for n in names if n == "package.json"])
+        finally:
+            if created_pkg:
+                dist_pkg.unlink()
+            if created_dir:
+                dist_pkg.parent.rmdir()
+
+    def test_repeated_builds_cover_the_same_file_set(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            first = self._build("billing-pro", Path(tmp) / "b1")
+            second = self._build("billing-pro", Path(tmp) / "b2")
+            with zipfile.ZipFile(first) as zf:
+                names_first = sorted(zf.namelist())
+            with zipfile.ZipFile(second) as zf:
+                names_second = sorted(zf.namelist())
+            self.assertEqual(names_first, names_second)
+            self.assertNotIn(".DS_Store", names_first)
 
 
 class CatalogOverlayContractTests(unittest.TestCase):
