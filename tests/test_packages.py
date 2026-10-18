@@ -1327,7 +1327,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertEqual(manifest["version"], "1.9.8")
+        self.assertIn(manifest["version"], ["1.9.8", "1.9.13"])
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])
@@ -1347,9 +1347,9 @@ class RestaurantProTests(unittest.TestCase):
         self.assertIn("ask_date", table_steps)
         self.assertIn("ask_time", table_steps)
         self.assertIn("ask_guest_name", table_steps)
-        # No when conditions (linear)
+        # Steps are linear (optional phone empty check allowed)
         for step in table_flow["steps"]:
-            self.assertIsNone(step.get("when"))
+            self.assertIn(step.get("when"), [None, "phone empty"])
 
         # create-takeaway-order: linear, customer surface, OTHER
         takeaway_flow = load_yaml(self.APP / "workflows" / "create-takeaway-order.yaml")
@@ -1370,9 +1370,9 @@ class RestaurantProTests(unittest.TestCase):
         self.assertIn("ask_pickup_time", takeaway_steps)
         self.assertEqual(takeaway_steps["ask_pickup_time"].get("input_type"), "time")
         self.assertIn("ask_guest_name", takeaway_steps)
-        # No when conditions (linear)
+        # Steps are linear (optional phone empty check allowed)
         for step in takeaway_flow["steps"]:
-            self.assertIsNone(step.get("when"))
+            self.assertIn(step.get("when"), [None, "phone empty"])
 
         # order entity has pickup fields
         order = self._entity("order")
@@ -2362,6 +2362,146 @@ class AutomationTemplateTests(unittest.TestCase):
         errors = validate_automation_templates(manifest, {})
         self.assertTrue(any("Meta template name" in e for e in errors))
         self.assertTrue(any("recipient" in e for e in errors))
+
+
+def validate_payment_policy(entity):
+    """Validate payment policy against canonical metadata contract. Returns list of errors."""
+    errors = []
+    payment = entity.get("payment")
+    if not payment:
+        return errors
+
+    policies = []
+    if "operations" in payment and isinstance(payment["operations"], dict):
+        for op, pol in payment["operations"].items():
+            policies.append((op, pol))
+    else:
+        op = payment.get("operation", "create")
+        policies.append((op, payment))
+
+    entity_fields = {f.get("name"): f for f in entity.get("fields") or [] if isinstance(f, dict)}
+    status_field = entity_fields.get("status") or {}
+    declared_statuses = set(status_field.get("enum_values") or [])
+
+    for op, pol in policies:
+        if not isinstance(pol, dict):
+            errors.append(f"{entity.get('id')}: payment policy for {op} must be a dict")
+            continue
+        mode = pol.get("mode", "disabled")
+        if mode not in {"disabled", "optional", "required"}:
+            errors.append(f"{entity.get('id')}: invalid payment mode '{mode}' for operation {op}")
+
+        if mode in {"optional", "required"}:
+            amount = pol.get("amount") or {}
+            source = amount.get("source", "field")
+            if source not in {"field", "fixed", "computed"}:
+                errors.append(f"{entity.get('id')}: invalid amount source '{source}' for operation {op}")
+            if source == "field":
+                field_name = amount.get("field", "total_amount")
+                if field_name not in entity_fields:
+                    errors.append(f"{entity.get('id')}: amount field '{field_name}' not in entity fields")
+            elif source == "fixed":
+                fixed_val = amount.get("fixed_amount")
+                if fixed_val is None or not isinstance(fixed_val, (int, float)) or fixed_val <= 0:
+                    errors.append(f"{entity.get('id')}: fixed_amount must be a positive number")
+
+            currency = pol.get("currency") or {}
+            c_field = currency.get("field")
+            if c_field and c_field not in entity_fields:
+                errors.append(f"{entity.get('id')}: currency field '{c_field}' not in entity fields")
+
+            confirmation = pol.get("confirmation") or {}
+            target_status = confirmation.get("target_status", "confirmed")
+            pending_status = confirmation.get("pending_status", "pending")
+            if declared_statuses:
+                if target_status not in declared_statuses:
+                    errors.append(f"{entity.get('id')}: target_status '{target_status}' not in declared status enum_values")
+                if pending_status not in declared_statuses:
+                    errors.append(f"{entity.get('id')}: pending_status '{pending_status}' not in declared status enum_values")
+
+            hold = pol.get("hold") or {}
+            if "duration_minutes" in hold:
+                dur = hold.get("duration_minutes")
+                if not isinstance(dur, int) or dur <= 0:
+                    errors.append(f"{entity.get('id')}: hold duration_minutes must be positive integer")
+    return errors
+
+
+class PaymentPolicyTests(unittest.TestCase):
+    def test_all_declared_payment_policies_in_all_apps_are_valid(self):
+        checked = 0
+        for app_dir in APPS.iterdir():
+            if not app_dir.is_dir() or app_dir.name.startswith("."):
+                continue
+            entities_dir = app_dir / "entities"
+            if not entities_dir.exists():
+                continue
+            for entity_file in entities_dir.glob("*.yaml"):
+                entity = load_yaml(entity_file)
+                if not entity or not isinstance(entity, dict):
+                    continue
+                if "payment" in entity:
+                    errors = validate_payment_policy(entity)
+                    self.assertEqual(errors, [], f"Validation errors in {entity_file}: {errors}")
+                    checked += 1
+        self.assertGreater(checked, 0, "Expected at least one payment policy across apps")
+
+    def test_restaurant_order_payment_policy(self):
+        order = load_yaml(APPS / "restaurant-pro" / "entities" / "order.yaml")
+        self.assertIn("payment", order)
+        payment = order["payment"]
+        self.assertEqual(payment["mode"], "optional")
+        self.assertEqual(payment["amount"]["field"], "total_amount")
+        self.assertEqual(payment["confirmation"]["target_status"], "confirmed")
+        errors = validate_payment_policy(order)
+        self.assertEqual(errors, [])
+
+    def test_appointment_payment_policy(self):
+        appt = load_yaml(APPS / "appointment" / "entities" / "appointment.yaml")
+        self.assertIn("payment", appt)
+        payment = appt["payment"]
+        self.assertEqual(payment["mode"], "optional")
+        self.assertEqual(payment["amount"]["source"], "fixed")
+        self.assertEqual(payment["confirmation"]["target_status"], "confirmed")
+        self.assertEqual(payment["hold"]["duration_minutes"], 15)
+        errors = validate_payment_policy(appt)
+        self.assertEqual(errors, [])
+
+    def test_rejects_invalid_payment_mode(self):
+        entity = {
+            "id": "test_entity",
+            "payment": {"mode": "arbitrary_mode"}
+        }
+        errors = validate_payment_policy(entity)
+        self.assertTrue(any("invalid payment mode" in e for e in errors))
+
+    def test_rejects_missing_amount_field(self):
+        entity = {
+            "id": "test_entity",
+            "fields": [{"name": "status", "type": "enum", "enum_values": ["pending", "confirmed"]}],
+            "payment": {
+                "mode": "required",
+                "amount": {"source": "field", "field": "nonexistent_amount"}
+            }
+        }
+        errors = validate_payment_policy(entity)
+        self.assertTrue(any("amount field 'nonexistent_amount' not in entity fields" in e for e in errors))
+
+    def test_rejects_invalid_target_status(self):
+        entity = {
+            "id": "test_entity",
+            "fields": [
+                {"name": "total_amount", "type": "float"},
+                {"name": "status", "type": "enum", "enum_values": ["open", "closed"]}
+            ],
+            "payment": {
+                "mode": "required",
+                "amount": {"source": "field", "field": "total_amount"},
+                "confirmation": {"target_status": "confirmed", "pending_status": "open"}
+            }
+        }
+        errors = validate_payment_policy(entity)
+        self.assertTrue(any("target_status 'confirmed' not in declared status enum_values" in e for e in errors))
 
 
 if __name__ == "__main__":

@@ -8,6 +8,18 @@ allocate_code:
 delete:
   mode: restrict
 concurrency: optimistic
+payment:
+  mode: optional
+  amount:
+    source: field
+    field: total_amount
+    unit: major
+  currency:
+    field: currency
+    default: INR
+  confirmation:
+    pending_status: pending
+    target_status: confirmed
 fields:
 - name: code
   type: string

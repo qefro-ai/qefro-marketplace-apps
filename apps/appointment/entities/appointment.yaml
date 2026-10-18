@@ -5,6 +5,18 @@ description: "Customer booking bound to Person"
 allocate_code:
   prefix: A-
   start: 1001
+payment:
+  mode: optional
+  amount:
+    source: fixed
+    fixed_amount: 50000
+  currency:
+    default: INR
+  confirmation:
+    pending_status: scheduled
+    target_status: confirmed
+  hold:
+    duration_minutes: 15
 fields:
   - name: guest_name
     type: string
