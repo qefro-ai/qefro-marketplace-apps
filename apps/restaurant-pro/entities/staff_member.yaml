@@ -20,3 +20,7 @@ fields:
 - name: user_id
   type: uuid
   description: Reference to the authenticated tenant member (Qefro user)
+- name: person_id
+  type: person
+  description: Optional Person link for staff (legacy reference)
+  ref_entity: person

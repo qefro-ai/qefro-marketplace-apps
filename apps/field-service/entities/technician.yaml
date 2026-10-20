@@ -10,3 +10,7 @@ fields:
   - name: user_id
     type: uuid
     description: "Reference to the authenticated tenant member (Qefro user)"
+  - name: person_id
+    type: person
+    ref_entity: person
+    description: "Existing Qefro Person identity (legacy reference)"
