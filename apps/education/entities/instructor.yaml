@@ -17,3 +17,6 @@ fields:
       - active
       - on_leave
       - inactive
+  - name: user_id
+    type: uuid
+    description: "Reference to the authenticated tenant member (Qefro user)"

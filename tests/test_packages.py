@@ -1327,7 +1327,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertIn(manifest["version"], ["1.9.8", "1.9.13"])
+        self.assertIn(manifest["version"], ["1.9.8", "1.9.13", "1.9.14"])
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])

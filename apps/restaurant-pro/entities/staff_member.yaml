@@ -17,7 +17,6 @@ fields:
   - active
   - inactive
   - on_leave
-- name: person_id
-  type: person
-  description: Optional Person link for staff
-  ref_entity: person
+- name: user_id
+  type: uuid
+  description: Reference to the authenticated tenant member (Qefro user)

@@ -19,7 +19,6 @@ fields:
   - on_leave
 - name: location
   type: string
-- name: person_id
-  type: person
-  description: Optional Person link for the practitioner
-  ref_entity: person
+- name: user_id
+  type: uuid
+  description: Reference to the authenticated tenant member (Qefro user)

@@ -7,7 +7,6 @@ fields:
     required: true
   - name: role
     type: string
-  - name: person_id
-    type: person
-    ref_entity: person
-    description: "Staff Person identity when the teammate is also a Qefro user"
+  - name: user_id
+    type: uuid
+    description: "Reference to the authenticated tenant member (Qefro user)"
