@@ -1,4 +1,5 @@
 id: item
+provider_mirror: the connected catalog
 name: Item
 description: Catalog item shape for staff UI; live reads use HTTP tools
 fields:

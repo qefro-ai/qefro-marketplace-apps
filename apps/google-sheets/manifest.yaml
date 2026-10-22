@@ -1,6 +1,6 @@
 id: google-sheets
 name: Google Sheets
-version: 0.1.4
+version: 0.1.6
 hosting: runtime
 description: Spreadsheets, sheets, and row read/append/update as a metadata Marketplace
   App
@@ -73,7 +73,7 @@ triggers:
       required_slots:
       - spreadsheet_id
       - range
-  confirmation_message: Row appended to {{range}}.
+  confirmation_message: Google Sheets accepted the appended row in {{range}}.
 - id: update_rows
   workflow: update-rows
   input_variable: update_input
@@ -87,7 +87,7 @@ triggers:
       required_slots:
       - spreadsheet_id
       - range
-  confirmation_message: Range {{range}} updated.
+  confirmation_message: Google Sheets accepted the update to {{range}}.
 conversation_slots:
 - id: spreadsheet_id
   labels:

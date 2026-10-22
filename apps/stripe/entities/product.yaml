@@ -1,4 +1,5 @@
 id: product
+provider_mirror: Stripe
 name: Product
 description: "Catalog product schema for staff UI"
 allocate_code:

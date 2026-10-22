@@ -77,7 +77,7 @@
   type: markdown
   title: Zoho CRM
   options:
-    content: Zoho CRM — open a list and tap New to add records.
+    content: "Zoho CRM workflows call the connected Zoho account. Lists, dashboard counts, and New save records only inside Qefro. They do not create Zoho leads or deals. Connect Zoho CRM before those workflows can succeed."
 - id: metric_deal
   type: metric
   title: Deals

@@ -1,4 +1,5 @@
 id: note
+provider_mirror: Zoho CRM
 name: Note
 description: "CRM note"
 fields:

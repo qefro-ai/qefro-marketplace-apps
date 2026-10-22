@@ -1,6 +1,6 @@
 id: zoho-crm
 name: Zoho CRM
-version: 0.1.3
+version: 0.1.5
 hosting: runtime
 description: Leads, contacts, accounts, deals, notes, and activities as a metadata
   Marketplace App
@@ -91,7 +91,7 @@ triggers:
       - lead created
       required_slots:
       - last_name
-  confirmation_message: Lead created for {{last_name}}.
+  confirmation_message: Zoho CRM accepted the lead for {{last_name}}.
 - id: create_deal
   workflow: create-deal
   input_variable: deal_input
@@ -104,7 +104,7 @@ triggers:
       - deal
       required_slots:
       - deal_name
-  confirmation_message: Deal {{deal_name}} created.
+  confirmation_message: Zoho CRM accepted the deal {{deal_name}}.
 - id: create_note
   workflow: create-note
   input_variable: note_input
@@ -117,7 +117,7 @@ triggers:
       - note
       required_slots:
       - title
-  confirmation_message: Note {{title}} created.
+  confirmation_message: Zoho CRM accepted the note {{title}}.
 - id: list_deals
   workflow: list-deals
   input_variable: deal_list

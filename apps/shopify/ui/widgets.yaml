@@ -17,7 +17,7 @@
   options:
     rows_path: items
     empty_title: No products yet
-    empty_subtitle: Add products in storage or search from chat.
+    empty_subtitle: This list is empty Qefro storage. Search uses the connected Shopify store and does not fill this table.
     columns:
     - key: title
       header: Title
@@ -100,7 +100,7 @@
   type: markdown
   title: Shopify
   options:
-    content: Shopify — open a list and tap New to add records.
+    content: "Shopify workflows read the connected Shopify store. Lists, dashboard counts, and New save records only inside Qefro. They do not create Shopify products or orders. Connect Shopify before search and order workflows can return store data."
 - id: metric_order
   type: metric
   title: Orders

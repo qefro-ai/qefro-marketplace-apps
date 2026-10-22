@@ -1,6 +1,7 @@
 id: product
+provider_mirror: Shopify
 name: Product
-description: Catalog product persisted in Qefro-managed storage
+description: Qefro record shape for a product. Saving it does not create a Shopify product. Live catalog search uses the connected store.
 allocate_code:
   prefix: P-
   start: 1001

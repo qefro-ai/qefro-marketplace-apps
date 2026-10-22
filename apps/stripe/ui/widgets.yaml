@@ -89,7 +89,7 @@
   type: markdown
   title: Stripe
   options:
-    content: Stripe — open a list and tap New to add records.
+    content: "Stripe workflows call the connected Stripe account. Lists, dashboard counts, and New save records only inside Qefro. They do not charge cards or create Stripe payments. Connect Stripe before payment-link and refund workflows can succeed."
 - id: metric_checkout_session
   type: metric
   title: Checkouts

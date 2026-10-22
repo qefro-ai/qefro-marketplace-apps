@@ -1,6 +1,6 @@
 id: whatsapp-business
 name: WhatsApp Business
-version: 0.1.3
+version: 0.1.5
 hosting: runtime
 description: Cloud API contacts, templates, outbound messages, and message events
   as a metadata Marketplace App
@@ -58,7 +58,7 @@ triggers:
       - sent
       required_slots:
       - template_name
-  confirmation_message: Template {{template_name}} sent.
+  confirmation_message: WhatsApp accepted the template send for {{template_name}}.
 - id: send_text_message
   workflow: send-text-message
   input_variable: text_input
@@ -71,7 +71,7 @@ triggers:
       - sent
       required_slots:
       - destination_number
-  confirmation_message: Message sent to {{destination_number}}.
+  confirmation_message: WhatsApp accepted the message to {{destination_number}}.
 - id: list_templates
   workflow: list-templates
   input_variable: template_list

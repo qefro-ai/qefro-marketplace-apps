@@ -8,8 +8,8 @@ trigger:
 steps:
   - id: list_tickets
     type: tool
-    tool: entity.ticket.list
-    execution: runtime
+    tool: list_tickets
+    execution: http
     output: tickets
     input_map:
       limit: $literal:20
@@ -40,7 +40,7 @@ steps:
       priority: priority
   - id: confirm
     type: message
-    message: "🔄 Ticket {{subject}} updated."
+    message: "Freshdesk accepted the update for {{subject}}."
   - id: done
     type: complete
     message: ""

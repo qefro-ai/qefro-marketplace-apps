@@ -8,8 +8,8 @@ trigger:
 steps:
   - id: list_tickets
     type: tool
-    tool: entity.ticket.list
-    execution: runtime
+    tool: list_my_tickets
+    execution: http
     output: tickets
     input_map:
       limit: $literal:20
@@ -35,7 +35,7 @@ steps:
       body: body
   - id: confirm
     type: message
-    message: "💬 Comment added to {{subject}}."
+    message: "Freshdesk accepted the comment on {{subject}}."
   - id: done
     type: complete
     message: ""

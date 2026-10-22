@@ -1,4 +1,5 @@
 id: payment_link
+provider_mirror: Stripe
 name: "Payment link"
 description: "Shareable Stripe payment link"
 fields:

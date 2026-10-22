@@ -20,6 +20,46 @@ payment:
   confirmation:
     pending_status: pending
     target_status: confirmed
+# Payment acceptance and kitchen progress are different machines.
+# A paid order is confirmed. Staff move it through preparing, ready, and completed.
+state_machine:
+  status_field: status
+  initial: pending
+  initial_state: pending
+  states:
+  - id: pending
+    name: pending
+  - id: confirmed
+    name: confirmed
+  - id: preparing
+    name: preparing
+  - id: ready
+    name: ready
+  - id: completed
+    name: completed
+    terminal: true
+    final: true
+  - id: cancelled
+    name: cancelled
+    terminal: true
+    final: true
+  transitions:
+  - from: pending
+    to: confirmed
+  - from: pending
+    to: cancelled
+  - from: confirmed
+    to: preparing
+  - from: confirmed
+    to: cancelled
+  - from: preparing
+    to: ready
+  - from: preparing
+    to: cancelled
+  - from: ready
+    to: completed
+  - from: ready
+    to: cancelled
 fields:
 - name: code
   type: string

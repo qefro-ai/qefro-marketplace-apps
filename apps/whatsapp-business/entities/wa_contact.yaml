@@ -1,4 +1,5 @@
 id: wa_contact
+provider_mirror: WhatsApp
 scope: customer
 name: "WhatsApp contact"
 description: "Cloud API contact bound to Person"

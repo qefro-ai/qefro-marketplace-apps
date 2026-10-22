@@ -1,6 +1,7 @@
 id: payment
+provider_mirror: Razorpay
 name: Payment
-description: "Captured or authorized payment"
+description: "Staff record of a Razorpay payment. Saving this row does not capture money. Capture and refunds go through the connected Razorpay workflows."
 fields:
   - name: amount
     type: integer

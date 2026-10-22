@@ -1,4 +1,5 @@
 id: payment_link
+provider_mirror: Razorpay
 name: "Payment link"
 description: "Shareable payment link"
 fields:

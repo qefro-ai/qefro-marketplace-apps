@@ -1,7 +1,8 @@
 id: payment
+provider_mirror: Stripe
 scope: customer
 name: Payment
-description: "PaymentIntent schema for staff UI"
+description: "Staff UI shape for a Stripe PaymentIntent. Saving this row does not charge a card. Charges go through the connected Stripe workflows."
 allocate_code:
   prefix: PAY-
   start: 1001

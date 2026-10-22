@@ -1,4 +1,5 @@
 id: invoice
+provider_mirror: Stripe
 scope: customer
 name: Invoice
 description: "Invoice bound to the platform Person model"

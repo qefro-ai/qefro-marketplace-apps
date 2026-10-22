@@ -1,4 +1,5 @@
 id: category
+provider_mirror: WooCommerce
 name: Category
 description: "Product category"
 fields:

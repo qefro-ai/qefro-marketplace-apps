@@ -75,7 +75,7 @@
   type: markdown
   title: Razorpay
   options:
-    content: Razorpay — open a list and tap New to add records.
+    content: "Razorpay workflows call the connected Razorpay account. Lists, dashboard counts, and New save records only inside Qefro. They do not capture payments or create Razorpay orders. Connect Razorpay before payment-link and refund workflows can succeed."
 - id: metric_order
   type: metric
   title: Orders

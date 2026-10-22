@@ -1,4 +1,5 @@
 id: slack_message
+provider_mirror: Slack
 name: Message
 description: "Channel message"
 fields:

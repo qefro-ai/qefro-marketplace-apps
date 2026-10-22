@@ -1,4 +1,5 @@
 id: customer
+provider_mirror: Razorpay
 scope: customer
 name: Customer
 description: "Razorpay customer bound to Person"

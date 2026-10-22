@@ -1,4 +1,5 @@
 id: ticket_comment
+provider_mirror: Freshdesk
 name: "Ticket comment"
 description: "Note or reply on a ticket"
 fields:

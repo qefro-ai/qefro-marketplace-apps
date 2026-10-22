@@ -8,8 +8,8 @@ trigger:
 steps:
   - id: list_orders
     type: tool
-    tool: entity.order.list
-    execution: runtime
+    tool: list_my_orders
+    execution: http
     output: orders
     input_map:
       limit: $literal:20
@@ -19,7 +19,7 @@ steps:
     message: "📦 Which order would you like to view?"
     empty_message: "You have no orders to view right now."
     choices_from: orders
-    title_field: order_number
+    title_field: number
     value_field: id
     chip_prefix: order
   - id: run
@@ -31,7 +31,7 @@ steps:
   - id: confirm
     type: message
     message: |
-      📋 **Order Details**
+      WooCommerce returned this order.
       {{items_text}}
   - id: done
     type: complete

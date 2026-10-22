@@ -73,7 +73,7 @@
   type: markdown
   title: WooCommerce
   options:
-    content: WooCommerce — open a list and tap New to add records.
+    content: "WooCommerce workflows call the connected store. Lists, dashboard counts, and New save records only inside Qefro. They do not create WooCommerce orders or products. Connect WooCommerce before search and order workflows can return store data."
 - id: metric_order
   type: metric
   title: Orders

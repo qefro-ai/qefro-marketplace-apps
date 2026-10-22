@@ -1,4 +1,5 @@
 id: coupon
+provider_mirror: WooCommerce
 name: Coupon
 description: "Discount coupon"
 fields:

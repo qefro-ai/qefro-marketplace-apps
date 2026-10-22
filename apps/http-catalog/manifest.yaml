@@ -1,8 +1,8 @@
 id: http-catalog
 name: Catalog API
-version: 0.1.4
+version: 0.1.6
 hosting: runtime
-description: Search and fetch catalog items through generic Runtime HTTP tools
+description: Search a connected HTTP catalog. Qefro does not store that catalog. Search returns nothing until the workspace connection succeeds.
 category: commerce
 tags:
 - catalog

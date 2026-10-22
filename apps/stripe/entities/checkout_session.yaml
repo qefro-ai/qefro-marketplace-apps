@@ -1,4 +1,5 @@
 id: checkout_session
+provider_mirror: Stripe
 name: "Checkout session"
 description: "Checkout session schema for staff UI"
 fields:

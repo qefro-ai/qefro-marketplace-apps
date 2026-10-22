@@ -63,7 +63,7 @@
   type: markdown
   title: Calendly
   options:
-    content: Calendly — open a list and tap New to add records.
+    content: "Calendly workflows call the connected Calendly account. Lists, dashboard counts, and New save records only inside Qefro. They do not create Calendly event types or bookings. Connect Calendly before those workflows can succeed."
 - id: metric_event_type
   type: metric
   title: Event types

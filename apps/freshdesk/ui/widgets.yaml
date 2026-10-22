@@ -67,7 +67,7 @@
   type: markdown
   title: Freshdesk
   options:
-    content: Freshdesk — open a list and tap New to add records.
+    content: "Freshdesk workflows call the connected Freshdesk account. Lists, dashboard counts, and New save records only inside Qefro. They do not open Freshdesk tickets. Connect Freshdesk before those workflows can succeed."
 - id: metric_ticket
   type: metric
   title: Tickets

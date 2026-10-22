@@ -1,4 +1,5 @@
 id: lead
+provider_mirror: Zoho CRM
 name: Lead
 description: "Zoho lead"
 allocate_code:

@@ -61,7 +61,7 @@
   type: markdown
   title: Google Calendar
   options:
-    content: Google Calendar — open a list and tap New to add records.
+    content: "Google Calendar workflows call the connected Google account. Lists, dashboard counts, and New save records only inside Qefro. They do not create Google events. Connect Google Calendar before those workflows can succeed."
 - id: metric_calendar
   type: metric
   title: Calendars

@@ -8,8 +8,8 @@ trigger:
 steps:
   - id: list_products
     type: tool
-    tool: entity.product.list
-    execution: runtime
+    tool: list_products
+    execution: http
     output: products
     input_map:
       limit: $literal:20
@@ -35,7 +35,7 @@ steps:
       stock_quantity: stock_quantity
   - id: confirm
     type: message
-    message: "📊 Inventory updated for {{name}}."
+    message: "WooCommerce accepted the stock update for {{name}}."
   - id: done
     type: complete
     message: ""

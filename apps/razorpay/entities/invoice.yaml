@@ -1,4 +1,5 @@
 id: invoice
+provider_mirror: Razorpay
 name: Invoice
 description: "Razorpay invoice"
 fields:

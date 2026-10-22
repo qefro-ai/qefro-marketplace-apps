@@ -1,4 +1,5 @@
 id: outbound_message
+provider_mirror: WhatsApp
 name: "Outbound message"
 description: "Staff-sent Cloud API message"
 fields:

@@ -1,4 +1,5 @@
 id: account
+provider_mirror: Zoho CRM
 name: Account
 description: "Zoho account"
 fields:

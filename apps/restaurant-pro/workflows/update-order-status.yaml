@@ -1,6 +1,6 @@
 id: update-order-status
 name: Update order status
-description: Advance or change order status
+description: Move an open order through confirmed, preparing, ready, or completed. Payment does not complete the order.
 surfaces:
 - staff
 trigger:
@@ -12,7 +12,6 @@ steps:
   execution: runtime
   output: orders
   input_map:
-    filter.status: $literal:pending
     limit: $literal:20
 - id: ask_id
   type: ask
@@ -26,7 +25,7 @@ steps:
 - id: ask_status
   type: ask
   field: status
-  message: "🔄 New status?"
+  message: "🔄 New status? Payment confirms an order. Preparing, ready, and completed are kitchen steps."
   choices:
   - confirmed
   - preparing

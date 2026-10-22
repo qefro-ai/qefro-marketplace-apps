@@ -1,6 +1,6 @@
 id: slack
 name: Slack
-version: 0.1.3
+version: 0.1.5
 hosting: runtime
 description: Channels, users, send message, and channel events as a metadata Marketplace
   App
@@ -60,7 +60,7 @@ triggers:
       required_slots:
       - channel
       - text
-  confirmation_message: Message sent to {{channel}}.
+  confirmation_message: Slack accepted the message to {{channel}}.
 - id: list_channels
   workflow: list-channels
   input_variable: channel_list

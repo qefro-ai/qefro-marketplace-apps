@@ -1,4 +1,5 @@
 id: agent
+provider_mirror: Freshdesk
 name: Agent
 description: "Support agent"
 fields:

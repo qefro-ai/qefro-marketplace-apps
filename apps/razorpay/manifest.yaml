@@ -1,6 +1,6 @@
 id: razorpay
 name: Razorpay
-version: 0.1.5
+version: 0.1.7
 hosting: runtime
 description: Customers, orders, payments, refunds, invoices, and payment links as
   a metadata Marketplace App
@@ -96,7 +96,7 @@ triggers:
       - order
       required_slots:
       - amount
-  confirmation_message: Order created for {{amount}} {{currency}}.
+  confirmation_message: Razorpay accepted the order for {{amount}} {{currency}}.
 - id: refund_payment
   workflow: refund-payment
   input_variable: refund_input
@@ -109,7 +109,7 @@ triggers:
       - refund
       required_slots:
       - id
-  confirmation_message: Refund created for payment of {{amount}}.
+  confirmation_message: Razorpay accepted the refund for {{amount}}.
 - id: create_payment_link
   workflow: create-payment-link
   input_variable: payment_link_input
@@ -122,7 +122,7 @@ triggers:
       - payment link
       required_slots:
       - amount
-  confirmation_message: Payment link created for {{amount}} {{currency}}.
+  confirmation_message: Razorpay accepted the payment link for {{amount}} {{currency}}.
 - id: list_my_customers
   workflow: list-my-customers
   input_variable: my_customer_list

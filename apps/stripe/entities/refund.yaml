@@ -1,4 +1,5 @@
 id: refund
+provider_mirror: Stripe
 name: Refund
 description: "Refund against a payment"
 fields:

@@ -1,4 +1,5 @@
 id: spreadsheet
+provider_mirror: Google Sheets
 name: Spreadsheet
 description: "Google spreadsheet"
 fields:

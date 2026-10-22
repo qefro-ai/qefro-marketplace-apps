@@ -1,4 +1,5 @@
 id: calendar
+provider_mirror: Google Calendar
 name: Calendar
 description: "Google calendar"
 fields:

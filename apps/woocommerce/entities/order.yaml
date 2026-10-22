@@ -1,4 +1,5 @@
 id: order
+provider_mirror: WooCommerce
 scope: customer
 name: Order
 description: "Customer order"

@@ -1,4 +1,5 @@
 id: variant
+provider_mirror: Shopify
 name: Variant
 description: Sellable option of a product (size, color, SKU)
 fields:

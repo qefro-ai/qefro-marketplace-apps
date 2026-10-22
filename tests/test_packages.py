@@ -841,6 +841,34 @@ class RealEstateDomainTests(unittest.TestCase):
         self.assertNotIn("person_id", create["input_map"])
         self.assertNotIn("email", create["input_map"])
         self.assertNotIn("phone", create["input_map"])
+        # One person may have several pipeline records. Nothing in the entity
+        # declares a unique person_id.
+        self.assertFalse(person.get("unique"))
+        self.assertFalse(any(f.get("unique") and f["name"] == "person_id" for f in lead["fields"]))
+
+    def test_lead_followup_uses_person_name_only(self):
+        """Goal follow-up loads person.* from Hub and entity.* from the lead row.
+
+        A lead has no property relation, so property_name and listing_price
+        interpolate to empty strings and the WhatsApp send refuses the step.
+        """
+        manifest = load_yaml(self.APP / "manifest.yaml")
+        lead_fields = {f["name"] for f in self._entity("lead")["fields"]}
+        allowed_person = {"person.name", "person.email", "person.phone", "person.language"}
+        sequence = next(s for s in manifest["followup_sequences"] if s["id"] == "lead_followup")
+        self.assertGreaterEqual(len(sequence["steps"]), 1)
+        for step in sequence["steps"]:
+            params = step.get("parameters") or []
+            self.assertEqual(params, ["{{person.name}}"])
+            for raw in params:
+                path = raw[2:-2]
+                if path.startswith("person."):
+                    self.assertIn(path, allowed_person)
+                else:
+                    self.assertTrue(path.startswith("entity."))
+                    field = path.split(".", 1)[1]
+                    self.assertIn(field, lead_fields)
+                    self.assertNotEqual(field, "person_id")
 
     def test_viewing_is_person_and_property_scoped(self):
         viewing = self._entity("viewing")
@@ -1327,7 +1355,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertIn(manifest["version"], ["1.9.8", "1.9.13", "1.9.14", "1.9.15"])
+        self.assertIn(manifest["version"], ["1.9.8", "1.9.13", "1.9.14", "1.9.15", "1.9.16"])
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])
@@ -1455,15 +1483,45 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(self._field(payment, "order_id").get("required"), True)
         self.assertNotEqual(self._field(payment, "order_code").get("required"), True)
 
-    def test_payment_received_completes_pending_order(self):
+    def test_payment_received_confirms_pending_order_only(self):
         payment = self._entity("payment")
         self.assertEqual(payment["status_events"]["completed"], "payment.received")
+        self.assertNotEqual(payment["status_events"].get("failed"), "payment.received")
+        self.assertNotEqual(payment["status_events"].get("refunded"), "payment.received")
         rule = payment["on_events"][0]
         self.assertEqual(rule["event"], "payment.received")
         self.assertEqual(rule["target"], "order")
         self.assertEqual(rule["match_field"], "id")
         self.assertEqual(rule["match_from"], "order_id")
-        self.assertEqual(rule["set"]["status"], "completed")
+        self.assertEqual(rule["where"]["status"], "pending")
+        self.assertEqual(rule["set"]["status"], "confirmed")
+        self.assertNotIn("completed", rule["set"].values())
+        self.assertNotIn("ready", rule["set"].values())
+        self.assertNotIn("initial_state", payment["state_machine"])
+        order = self._entity("order")
+        machine = order["state_machine"]
+        self.assertEqual(machine["initial_state"], "pending")
+        edges = {(edge["from"], edge["to"]) for edge in machine["transitions"]}
+        self.assertIn(("pending", "confirmed"), edges)
+        self.assertIn(("confirmed", "preparing"), edges)
+        self.assertIn(("preparing", "ready"), edges)
+        self.assertIn(("ready", "completed"), edges)
+        self.assertNotIn(("pending", "completed"), edges)
+        self.assertNotIn(("pending", "ready"), edges)
+        self.assertEqual(order["status_events"]["ready"], "order.ready")
+        self.assertNotEqual(order["status_events"]["confirmed"], "order.ready")
+        update = load_yaml(self.APP / "workflows" / "update-order-status.yaml")
+        list_step = next(step for step in update["steps"] if step["id"] == "list_orders")
+        self.assertNotIn("filter.status", list_step["input_map"])
+        ask = next(step for step in update["steps"] if step["id"] == "ask_status")
+        self.assertEqual(
+            ask["choices"],
+            ["confirmed", "preparing", "ready", "completed", "cancelled"],
+        )
+        cancel = load_yaml(self.APP / "workflows" / "cancel-takeaway-order.yaml")
+        cancel_list = next(step for step in cancel["steps"] if step["id"] == "list_orders")
+        self.assertNotIn("filter.status", cancel_list["input_map"])
+        self.assertEqual(cancel_list["input_map"]["filter.order_type"], "$literal:takeaway")
         manifest = load_yaml(self.APP / "manifest.yaml")
         self.assertIn("payment.received", manifest["events"])
 
@@ -2502,6 +2560,104 @@ class PaymentPolicyTests(unittest.TestCase):
         }
         errors = validate_payment_policy(entity)
         self.assertTrue(any("target_status 'confirmed' not in declared status enum_values" in e for e in errors))
+
+
+class BusinessOwnerHonestyTests(unittest.TestCase):
+    """Staff dashboards must not present a local list as the live provider."""
+
+    CONNECTORS = (
+        "calendly",
+        "freshdesk",
+        "google-calendar",
+        "google-sheets",
+        "http-catalog",
+        "razorpay",
+        "shopify",
+        "slack",
+        "stripe",
+        "whatsapp-business",
+        "woocommerce",
+        "zoho-crm",
+    )
+
+    def test_connector_dashboards_do_not_tell_owners_to_tap_new(self):
+        banned = "open a list and tap New to add records"
+        for name in self.CONNECTORS:
+            widgets = load_yaml(APPS / name / "ui" / "widgets.yaml")
+            intro = next(w for w in widgets if w.get("id") == "intro")
+            content = (intro.get("options") or {}).get("content") or ""
+            with self.subTest(app=name):
+                self.assertNotIn(banned, content)
+                self.assertIn("Qefro", content)
+                lowered = content.lower()
+                self.assertTrue(
+                    "connect" in lowered,
+                    f"{name} intro must tell the owner to connect the external account",
+                )
+
+    def test_shopify_entities_are_not_described_as_the_live_store(self):
+        for entity_name in ("order", "product"):
+            entity = load_yaml(APPS / "shopify" / "entities" / f"{entity_name}.yaml")
+            description = entity.get("description") or ""
+            self.assertNotIn("persisted in Qefro-managed storage", description)
+            self.assertIn("does not create a Shopify", description)
+        widgets = load_yaml(APPS / "shopify" / "ui" / "widgets.yaml")
+        products = next(w for w in widgets if w.get("id") == "products_table")
+        subtitle = (products.get("options") or {}).get("empty_subtitle") or ""
+        self.assertNotIn("Add products in storage", subtitle)
+
+    def test_payment_rows_do_not_claim_capture(self):
+        razorpay = load_yaml(APPS / "razorpay" / "entities" / "payment.yaml")
+        stripe = load_yaml(APPS / "stripe" / "entities" / "payment.yaml")
+        self.assertIn("does not capture money", razorpay["description"])
+        self.assertIn("does not charge a card", stripe["description"])
+
+    def test_project_tracker_is_labeled_as_an_example(self):
+        manifest = load_yaml(APPS / "project-tracker" / "manifest.yaml")
+        self.assertIn("example", manifest["name"].lower())
+        self.assertIn("example", manifest["description"].lower())
+        self.assertIn("fixture", manifest.get("tags") or [])
+        widgets = load_yaml(APPS / "project-tracker" / "ui" / "widgets.yaml")
+        intro = next(w for w in widgets if w.get("id") == "intro")
+        content = (intro.get("options") or {}).get("content") or ""
+        self.assertIn("sample data", content.lower())
+        self.assertNotIn("tap New to add records", content)
+
+    def test_sheets_row_is_not_described_as_the_spreadsheet(self):
+        row = load_yaml(APPS / "google-sheets" / "entities" / "row.yaml")
+        self.assertIn("not sheet cells", row["description"])
+
+    def test_connector_entities_are_provider_mirrors(self):
+        managed = load_yaml(APPS / "restaurant-pro" / "entities" / "order.yaml")
+        self.assertNotIn("provider_mirror", managed)
+        for name in self.CONNECTORS:
+            entity_dir = APPS / name / "entities"
+            files = list(entity_dir.glob("*.yaml"))
+            self.assertTrue(files, name)
+            for path in files:
+                entity = load_yaml(path)
+                with self.subTest(app=name, entity=path.name):
+                    mirror = entity.get("provider_mirror")
+                    self.assertIsInstance(mirror, str)
+                    self.assertTrue(mirror.strip())
+
+    def test_connector_writes_name_the_provider_after_the_http_step(self):
+        checks = {
+            "freshdesk/workflows/update-ticket.yaml": ("list_tickets", "Freshdesk accepted"),
+            "freshdesk/workflows/add-ticket-comment.yaml": ("list_my_tickets", "Freshdesk accepted"),
+            "razorpay/workflows/refund-payment.yaml": ("list_payments", "Razorpay accepted"),
+            "woocommerce/workflows/update-inventory.yaml": ("list_products", "WooCommerce accepted"),
+            "woocommerce/workflows/get-order.yaml": ("list_my_orders", "WooCommerce returned"),
+            "stripe/workflows/refund-payment.yaml": ("create_refund", "Stripe accepted"),
+        }
+        for rel, (tool, phrase) in checks.items():
+            flow = load_yaml(APPS / rel)
+            steps = flow["steps"]
+            tool_at = next(i for i, step in enumerate(steps) if step.get("tool") == tool)
+            confirm = next(step for step in steps[tool_at + 1 :] if step.get("type") == "message")
+            with self.subTest(flow=rel):
+                self.assertIn(phrase, confirm["message"])
+                self.assertNotIn("entity.", steps[tool_at]["tool"])
 
 
 if __name__ == "__main__":

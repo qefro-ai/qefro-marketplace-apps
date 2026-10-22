@@ -1,6 +1,6 @@
 id: stripe
 name: Stripe
-version: 0.1.3
+version: 0.1.5
 hosting: runtime
 description: Customers, products, prices, payment links, checkout, invoices, subscriptions,
   payments, and refunds as a metadata Marketplace App
@@ -110,7 +110,7 @@ triggers:
       - payment link
       required_slots:
       - price_id
-  confirmation_message: Payment link created for {{price_id}}.
+  confirmation_message: Stripe accepted the payment link for {{price_id}}.
 - id: create_subscription
   workflow: create-subscription
   input_variable: subscription_input
@@ -124,7 +124,7 @@ triggers:
       required_slots:
       - stripe_customer
       - price_id
-  confirmation_message: Subscription created for {{stripe_customer}}.
+  confirmation_message: Stripe accepted the subscription for {{stripe_customer}}.
 - id: refund_payment
   workflow: refund-payment
   input_variable: refund_input
@@ -137,7 +137,7 @@ triggers:
       - refund
       required_slots:
       - payment_intent
-  confirmation_message: Refund created for {{payment_intent}}.
+  confirmation_message: Stripe accepted the refund for {{payment_intent}}.
 - id: list_my_invoices
   workflow: list-my-invoices
   input_variable: my_invoice_list

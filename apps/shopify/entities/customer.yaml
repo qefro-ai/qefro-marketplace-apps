@@ -1,4 +1,5 @@
 id: customer
+provider_mirror: Shopify
 scope: customer
 name: Customer
 description: Store customer bound to the platform Person model (never a Shopify-local CRM)

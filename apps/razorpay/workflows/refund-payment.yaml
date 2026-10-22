@@ -8,8 +8,8 @@ trigger:
 steps:
   - id: list_payments
     type: tool
-    tool: entity.payment.list
-    execution: runtime
+    tool: list_payments
+    execution: http
     output: payments
     input_map:
       limit: $literal:20
@@ -19,7 +19,7 @@ steps:
     message: "💰 Which payment would you like to refund?"
     empty_message: "There are no payments available to refund right now."
     choices_from: payments
-    title_field: amount
+    title_field: id
     value_field: id
     chip_prefix: payment
   - id: ask_amount
@@ -35,7 +35,7 @@ steps:
       amount: amount
   - id: confirm
     type: message
-    message: "💰 Refund created for payment of {{amount}}."
+    message: "Razorpay accepted the refund for {{amount}}."
   - id: done
     type: complete
     message: ""

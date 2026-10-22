@@ -45,6 +45,32 @@ status_events:
   completed: payment.received
   failed: payment.created
   refunded: payment.created
+# Cash sales are created already completed. Updates still cannot jump
+# failed or refunded back to completed. `initial_state` is omitted so
+# create may start at completed; `initial` satisfies the package parser.
+state_machine:
+  status_field: status
+  initial: pending
+  states:
+  - id: pending
+    name: pending
+  - id: completed
+    name: completed
+  - id: failed
+    name: failed
+    terminal: true
+    final: true
+  - id: refunded
+    name: refunded
+    terminal: true
+    final: true
+  transitions:
+  - from: pending
+    to: completed
+  - from: pending
+    to: failed
+  - from: completed
+    to: refunded
 on_events:
 - event: payment.received
   target: order
@@ -53,7 +79,7 @@ on_events:
   where:
     status: pending
   set:
-    status: completed
+    status: confirmed
   limit: 50
 relation_caps:
 - field: amount

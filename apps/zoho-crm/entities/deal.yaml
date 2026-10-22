@@ -1,4 +1,5 @@
 id: deal
+provider_mirror: Zoho CRM
 name: Deal
 description: "Zoho deal"
 allocate_code:

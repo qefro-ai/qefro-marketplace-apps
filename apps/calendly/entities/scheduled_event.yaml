@@ -1,4 +1,5 @@
 id: scheduled_event
+provider_mirror: Calendly
 scope: customer
 name: "Scheduled event"
 description: "Booked event"

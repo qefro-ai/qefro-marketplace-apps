@@ -52,7 +52,7 @@
   type: markdown
   title: Slack
   options:
-    content: Slack — open a list and tap New to add records.
+    content: "Slack workflows call the connected Slack workspace. Lists, dashboard counts, and New save records only inside Qefro. They do not post Slack messages. Connect Slack before send-message workflows can succeed."
 - id: metric_channel
   type: metric
   title: Channels

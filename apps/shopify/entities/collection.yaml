@@ -1,4 +1,5 @@
 id: collection
+provider_mirror: Shopify
 name: Collection
 description: Product grouping in the catalog
 fields:

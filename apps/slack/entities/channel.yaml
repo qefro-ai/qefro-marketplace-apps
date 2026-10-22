@@ -1,4 +1,5 @@
 id: channel
+provider_mirror: Slack
 name: Channel
 description: "Slack channel"
 fields:

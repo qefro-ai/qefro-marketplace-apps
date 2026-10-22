@@ -2,7 +2,7 @@
   type: markdown
   title: Catalog API
   options:
-    content: Catalog API — open a list and tap New to add records.
+    content: "Catalog API workflows call the connected HTTP catalog. Lists and New save records only inside Qefro. They do not add items to the remote catalog. Connect the catalog API before search can return items."
 - id: metric_item
   type: metric
   title: Items

@@ -1,4 +1,5 @@
 id: activity
+provider_mirror: Zoho CRM
 name: Activity
 description: "Event or task"
 fields:

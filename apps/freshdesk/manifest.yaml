@@ -1,6 +1,6 @@
 id: freshdesk
 name: Freshdesk
-version: 0.1.5
+version: 0.1.7
 hosting: runtime
 description: Contacts, tickets, comments, agents, and ticket status as a metadata
   Marketplace App
@@ -91,7 +91,7 @@ triggers:
       - ticket created
       required_slots:
       - subject
-  confirmation_message: 'Ticket created: {{subject}}.'
+  confirmation_message: 'Freshdesk accepted the ticket: {{subject}}.'
 - id: update_ticket
   workflow: update-ticket
   input_variable: ticket_update
@@ -104,7 +104,7 @@ triggers:
       - updated
       required_slots:
       - id
-  confirmation_message: Ticket {{subject}} updated.
+  confirmation_message: Freshdesk accepted the update for {{subject}}.
 - id: list_my_tickets
   workflow: list-my-tickets
   input_variable: my_ticket_list
@@ -129,7 +129,7 @@ triggers:
       - comment added
       required_slots:
       - id
-  confirmation_message: Comment added to {{subject}}.
+  confirmation_message: Freshdesk accepted the comment on {{subject}}.
 conversation_slots:
 - id: subject
   labels:

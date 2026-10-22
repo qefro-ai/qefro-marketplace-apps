@@ -1,7 +1,8 @@
 id: order
+provider_mirror: Shopify
 scope: customer
 name: Order
-description: Customer order persisted in Qefro-managed storage
+description: Qefro record shape for an order. Saving it does not create a Shopify order. Live orders come from the connected store through workflows.
 allocate_code:
   prefix: O-
   start: 1001

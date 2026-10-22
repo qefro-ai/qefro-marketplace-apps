@@ -1,4 +1,5 @@
 id: event
+provider_mirror: Google Calendar
 scope: customer
 name: Event
 description: "Calendar event"

@@ -1,6 +1,6 @@
 id: woocommerce
 name: WooCommerce
-version: 0.1.5
+version: 0.1.7
 hosting: runtime
 description: Products, customers, orders, coupons, categories, and inventory as a
   metadata Marketplace App
@@ -136,7 +136,7 @@ triggers:
       required_slots:
       - id
       - stock_quantity
-  confirmation_message: Inventory updated for {{name}}.
+  confirmation_message: WooCommerce accepted the stock update for {{name}}.
 conversation_slots:
 - id: query
   labels:

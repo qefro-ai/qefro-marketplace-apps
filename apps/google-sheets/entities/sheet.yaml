@@ -1,4 +1,5 @@
 id: sheet
+provider_mirror: Google Sheets
 name: Sheet
 description: "Tab inside a spreadsheet"
 fields:

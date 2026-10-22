@@ -71,7 +71,7 @@
   type: markdown
   title: WhatsApp Business
   options:
-    content: WhatsApp Business — open a list and tap New to add records.
+    content: "WhatsApp Business workflows call the connected Cloud API account. Lists, dashboard counts, and New save records only inside Qefro. They do not send WhatsApp messages. Connect WhatsApp before send workflows can succeed."
 - id: metric_message_template
   type: metric
   title: Templates

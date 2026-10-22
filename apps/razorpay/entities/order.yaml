@@ -1,4 +1,5 @@
 id: order
+provider_mirror: Razorpay
 scope: customer
 name: Order
 description: "Razorpay order"

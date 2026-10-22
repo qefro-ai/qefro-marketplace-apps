@@ -1,4 +1,5 @@
 id: message_template
+provider_mirror: WhatsApp
 name: "Message template"
 description: "Approved Cloud API template"
 fields:

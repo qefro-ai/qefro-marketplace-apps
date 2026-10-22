@@ -1,4 +1,5 @@
 id: price
+provider_mirror: Stripe
 name: Price
 description: "Price for a catalog product"
 fields:

@@ -18,7 +18,7 @@ steps:
       payment_intent: payment_intent
   - id: confirm
     type: message
-    message: "💰 Refund created for {{payment_intent}}."
+    message: "Stripe accepted the refund for {{payment_intent}}."
   - id: done
     type: complete
     message: ""

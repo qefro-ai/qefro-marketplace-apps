@@ -1,4 +1,5 @@
 id: event_type
+provider_mirror: Calendly
 name: "Event type"
 description: "Bookable Calendly event type"
 fields:

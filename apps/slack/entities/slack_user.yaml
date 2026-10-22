@@ -1,4 +1,5 @@
 id: slack_user
+provider_mirror: Slack
 name: "Slack user"
 description: "Workspace user"
 fields:

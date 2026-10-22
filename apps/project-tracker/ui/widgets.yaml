@@ -2,7 +2,7 @@
   type: markdown
   title: Project Tracker
   options:
-    content: Projects, tasks, and invoices — open a list and tap New to add records.
+    content: "Example app for install tests. Records you add here stay inside Qefro as sample data. Do not send these invoices to customers. They do not collect payment."
 - id: metric_project
   type: metric
   title: Projects

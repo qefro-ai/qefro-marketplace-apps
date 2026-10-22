@@ -1,6 +1,6 @@
 id: google-calendar
 name: Google Calendar
-version: 0.1.4
+version: 0.1.6
 hosting: runtime
 description: Calendars, events, scheduling, and free-busy as a metadata Marketplace
   App
@@ -87,7 +87,7 @@ triggers:
       required_slots:
       - summary
       - start
-  confirmation_message: Event {{summary}} scheduled.
+  confirmation_message: Google Calendar accepted the event {{summary}}.
 - id: reschedule_event
   workflow: reschedule-event
   input_variable: reschedule_input
@@ -100,7 +100,7 @@ triggers:
       - rescheduled
       required_slots:
       - event_id
-  confirmation_message: Event {{event_id}} rescheduled.
+  confirmation_message: Google Calendar accepted the reschedule of {{event_id}}.
 - id: cancel_event
   workflow: cancel-event
   input_variable: cancel_input
@@ -113,7 +113,7 @@ triggers:
       - cancelled
       required_slots:
       - event_id
-  confirmation_message: Event {{event_id}} cancelled.
+  confirmation_message: Google Calendar accepted the cancellation of {{event_id}}.
 - id: check_availability
   workflow: check-availability
   input_variable: freebusy_input

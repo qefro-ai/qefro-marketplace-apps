@@ -1,8 +1,8 @@
 id: project-tracker
-name: Project Tracker
-version: 1.2.1
+name: Project Tracker (example)
+version: 1.2.2
 hosting: runtime
-description: Sample project / task / invoice app for ZIP install genericity tests
+description: Example package for install and upgrade tests. Do not invoice customers or run a business from this app. It does not take payment or calculate tax.
 category: productivity
 tags:
 - projects

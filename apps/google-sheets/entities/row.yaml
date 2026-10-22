@@ -1,6 +1,7 @@
 id: row
+provider_mirror: Google Sheets
 name: Row
-description: "Row values for staff UI"
+description: "Three-column preview shape for staff screens. The Append workflow writes the connected spreadsheet. Rows saved here are not sheet cells."
 fields:
   - name: col1
     type: string
