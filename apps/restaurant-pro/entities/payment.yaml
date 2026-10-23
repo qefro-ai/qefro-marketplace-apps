@@ -29,6 +29,7 @@ fields:
   - upi
 - name: status
   type: enum
+  default: pending
   enum_values:
   - pending
   - completed
@@ -45,12 +46,13 @@ status_events:
   completed: payment.received
   failed: payment.created
   refunded: payment.created
-# Cash sales are created already completed. Updates still cannot jump
-# failed or refunded back to completed. `initial_state` is omitted so
-# create may start at completed; `initial` satisfies the package parser.
+# Creates start pending. Staff mark a cash tender completed; that emits
+# payment.received. Card and UPI do not confirm an order until a captured
+# provider payment covers the total.
 state_machine:
   status_field: status
   initial: pending
+  initial_state: pending
   states:
   - id: pending
     name: pending
@@ -67,6 +69,11 @@ state_machine:
   transitions:
   - from: pending
     to: completed
+    roles:
+    - owner
+    - admin
+    - member
+    - org:admin
   - from: pending
     to: failed
   - from: completed
