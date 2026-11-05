@@ -1497,7 +1497,7 @@ class RestaurantProTests(unittest.TestCase):
         self.assertEqual(rule["set"]["status"], "confirmed")
         self.assertNotIn("completed", rule["set"].values())
         self.assertNotIn("ready", rule["set"].values())
-        self.assertNotIn("initial_state", payment["state_machine"])
+        self.assertEqual(payment["state_machine"].get("initial_state"), "pending")
         order = self._entity("order")
         machine = order["state_machine"]
         self.assertEqual(machine["initial_state"], "pending")
