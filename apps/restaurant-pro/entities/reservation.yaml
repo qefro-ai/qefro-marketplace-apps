@@ -59,6 +59,9 @@ views:
 - type: tile
   title_field: guest_name
   status_field: status
+- type: calendar
+  start_field: date
+  title_field: guest_name
 ui:
   style: classic
   form:
@@ -66,6 +69,15 @@ ui:
     - table_name
   list:
     default_view: table
+    queues:
+    - id: today
+      label: Today’s reservations
+      date_window: { field: date, range: today }
+      sort: { reservation_at: asc }
+    - id: confirmed
+      label: Confirmed
+      filter: { status: confirmed }
+      sort: { reservation_at: asc }
     empty_state:
       title: No reservations
       description: Book a table for a guest already in Contacts.

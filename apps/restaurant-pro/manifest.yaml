@@ -1,6 +1,6 @@
 id: restaurant-pro
 name: Restaurant Pro
-version: 1.9.16
+version: 1.10.0
 hosting: runtime
 description: Metadata-only restaurant operations Marketplace App executed by Qefro
   Runtime (no SDK, no custom server)
@@ -566,3 +566,11 @@ conversation_slots:
 ui:
   name: Restaurant Pro
   navigation_layout: sidebar
+actions:
+- id: start-preparing-order
+  name: Start preparing
+  target: { entity: order, record_bound: true }
+  required_permission: entity.order.update
+  when: { field: status, operator: eq, value: confirmed }
+  primary: true
+  execution: { type: state_transition, target_state: preparing }

@@ -95,9 +95,11 @@ fields:
   description: Pickup notes or special instructions
 - name: pickup_date
   type: date
+  visible_when: { field: order_type, operator: eq, value: takeaway }
   description: Requested pickup date for takeaway orders
 - name: pickup_time
   type: string
+  visible_when: { field: order_type, operator: eq, value: takeaway }
   description: Requested pickup time for takeaway orders (HH:MM)
 - name: status
   type: enum

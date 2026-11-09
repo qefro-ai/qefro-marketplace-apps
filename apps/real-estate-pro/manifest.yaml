@@ -1,6 +1,6 @@
 id: real-estate-pro
 name: Real Estate Pro
-version: 1.4.3
+version: 1.5.0
 hosting: runtime
 description: Metadata-only real estate Marketplace App executed by Qefro Runtime (no
   SDK, no custom server)
@@ -281,3 +281,15 @@ conversation_slots:
 ui:
   name: Real Estate Pro
   navigation_layout: sidebar
+actions:
+- id: complete-viewing
+  name: Mark completed
+  target: { entity: viewing, record_bound: true }
+  required_permission: entity.viewing.update
+  when: { field: status, operator: eq, value: confirmed }
+  primary: true
+  confirm: true
+  execution:
+    type: mutation
+    mutation_op: update
+    payload_template: { status: completed }

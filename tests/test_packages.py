@@ -1355,7 +1355,7 @@ class RestaurantProTests(unittest.TestCase):
 
     def test_separate_book_table_and_takeaway_whatsapp_flows(self):
         manifest = load_yaml(self.APP / "manifest.yaml")
-        self.assertIn(manifest["version"], ["1.9.8", "1.9.13", "1.9.14", "1.9.15", "1.9.16"])
+        self.assertIn(manifest["version"], ["1.9.8", "1.9.13", "1.9.14", "1.9.15", "1.9.16", "1.10.0"])
         self.assertNotIn("book-or-takeaway", manifest["flows"])
         self.assertIn("book-table", manifest["flows"])
         self.assertIn("create-takeaway-order", manifest["flows"])
@@ -2658,6 +2658,39 @@ class BusinessOwnerHonestyTests(unittest.TestCase):
             with self.subTest(flow=rel):
                 self.assertIn(phrase, confirm["message"])
                 self.assertNotIn("entity.", steps[tool_at]["tool"])
+
+
+
+
+class MarketplaceCollectionPilotsTests(unittest.TestCase):
+    def test_pilot_queues_and_calendar_use_the_same_declared_civil_date(self):
+        for app, entity_id, queue_id, date_range in (
+            ("restaurant-pro", "reservation", "today", "today"),
+            ("real-estate-pro", "viewing", "upcoming", "next_7_days"),
+        ):
+            with self.subTest(app=app):
+                entity = yaml.safe_load((APPS / app / "entities" / f"{entity_id}.yaml").read_text())
+                fields = {field["name"]: field for field in entity["fields"]}
+                queue = next(queue for queue in entity["ui"]["list"]["queues"] if queue["id"] == queue_id)
+                calendar = next(view for view in entity["views"] if view["type"] == "calendar")
+                self.assertEqual(queue["date_window"]["range"], date_range)
+                self.assertEqual(queue["date_window"]["field"], calendar["start_field"])
+                self.assertEqual(fields[calendar["start_field"]]["type"], "date")
+
+    def test_pilots_declare_guarded_actions_and_conditional_fields(self):
+        for app, entity_id, field_id in (
+            ("restaurant-pro", "order", "pickup_time"),
+            ("real-estate-pro", "viewing", "cancellation_reason"),
+        ):
+            with self.subTest(app=app):
+                manifest = yaml.safe_load((APPS / app / "manifest.yaml").read_text())
+                action = next(a for a in manifest["actions"] if a["target"]["entity"] == entity_id)
+                entity = yaml.safe_load((APPS / app / "entities" / f"{entity_id}.yaml").read_text())
+                fields = {field["name"]: field for field in entity["fields"]}
+                self.assertIn(action["when"]["value"], fields[action["when"]["field"]]["enum_values"])
+                self.assertEqual(action["required_permission"], f"entity.{entity_id}.update")
+                condition = fields[field_id]["visible_when"]
+                self.assertIn(condition["value"], fields[condition["field"]]["enum_values"])
 
 
 if __name__ == "__main__":

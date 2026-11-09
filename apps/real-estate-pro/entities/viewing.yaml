@@ -42,6 +42,9 @@ fields:
   - no_show
 - name: notes
   type: string
+- name: cancellation_reason
+  type: string
+  visible_when: { field: status, operator: eq, value: cancelled }
 status_events:
   confirmed: viewing.updated
   completed: viewing.updated
@@ -62,3 +65,22 @@ availability:
     mode: exclusive
     resource:
       field: property_id
+title_field: property_title
+status_field: status
+views:
+- type: table
+- type: calendar
+  start_field: date
+  title_field: property_title
+ui:
+  list:
+    queues:
+    - id: upcoming
+      label: Upcoming viewings · 7 days
+      filter: { status: [scheduled, confirmed] }
+      date_window: { field: date, range: next_7_days }
+      sort: { scheduled_at: asc }
+    - id: scheduled
+      label: Scheduled
+      filter: { status: scheduled }
+      sort: { scheduled_at: asc }
