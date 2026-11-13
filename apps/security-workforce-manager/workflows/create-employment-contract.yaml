@@ -1,0 +1,44 @@
+id: create-employment-contract
+name: Create employment contracts
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: select_employee_id
+  type: tool
+  tool: entity.employee.list
+  execution: runtime
+  output: select_employee_id
+- id: ask_employee_id
+  type: ask
+  field: employee_id
+  message: Enter employee id.
+  choices_from: select_employee_id
+  value_field: id
+  title_field: full_name
+  empty_message: No related records available. Create the related record first.
+- id: ask_start_date
+  type: ask
+  field: start_date
+  message: Enter start date.
+- id: ask_end_date
+  type: ask
+  field: end_date
+  message: Enter end date.
+- id: save
+  type: tool
+  tool: entity.employment_contract.create
+  execution: runtime
+  input_map:
+    employee_id: employee_id
+    start_date: start_date
+    end_date: end_date
+    status: $literal:draft
+    last_working_date: last_working_date
+    cancellation_date: cancellation_date
+    cancellation_reason: cancellation_reason
+    previous_contract: previous_contract
+    notes: notes
+- id: done
+  type: complete

@@ -1,0 +1,138 @@
+id: employment_contract
+name: Employment contracts
+description: Employment contracts records for authorized staff.
+title_field: contract_number
+fields:
+- name: contract_number
+  type: string
+  unique: true
+- name: employee_id
+  type: relation
+  required: true
+  ref_entity: employee
+- name: start_date
+  type: date
+  required: true
+- name: end_date
+  type: date
+  required: true
+- name: duration_years
+  type: integer
+  required: true
+  min: 1
+  max: 10
+  default_from_setting: contract_duration_years
+  help: Default 2. End date must currently be verified manually.
+- name: status
+  type: enum
+  required: true
+  enum_values:
+  - draft
+  - active
+  - terminated
+  - completed
+  - renewed
+  default: draft
+- name: last_working_date
+  type: date
+  required_when:
+    field: status
+    operator: eq
+    value: terminated
+- name: cancellation_date
+  type: date
+  required_when:
+    field: status
+    operator: eq
+    value: terminated
+- name: cancellation_reason
+  type: string
+  required_when:
+    field: status
+    operator: eq
+    value: terminated
+- name: previous_contract
+  type: relation
+  ref_entity: employment_contract
+- name: notes
+  type: string
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table
+allocate_code:
+  prefix: CON-
+  start: 1001
+  field: contract_number
+status_events:
+  terminated: contract.terminated
+  renewed: contract.renewed
+  completed: contract.completed
+date_tasks:
+- id: contract_expiry_hr_review
+  enabled: true
+  date_field: end_date
+  days_before: 30
+  status_field: status
+  when_status:
+  - active
+  team: HR
+  title: Review expiring employment contract
+date_events:
+- field: end_date
+  event: contract.expiry_due
+  when_status:
+  - active
+ui:
+  list:
+    queues:
+    - id: active
+      label: Active contracts
+      filter:
+        status: active
+    - id: expiring
+      label: Ends in next 7 days
+      filter:
+        status: active
+      date_window:
+        field: end_date
+        range: next_7_days
+    - id: terminated
+      label: Early termination report
+      filter:
+        status: terminated
+state_machine:
+  initial: draft
+  states:
+  - name: draft
+    terminal: false
+    id: draft
+    final: false
+  - name: active
+    terminal: false
+    id: active
+    final: false
+  - name: terminated
+    terminal: true
+    id: terminated
+    final: true
+  - name: completed
+    terminal: true
+    id: completed
+    final: true
+  - name: renewed
+    terminal: true
+    id: renewed
+    final: true
+  transitions:
+  - from: draft
+    to: active
+  - from: active
+    to: terminated
+  - from: active
+    to: completed
+  - from: active
+    to: renewed
+  initial_state: draft
+  status_field: status

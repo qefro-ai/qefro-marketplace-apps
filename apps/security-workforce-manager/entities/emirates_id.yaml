@@ -1,0 +1,57 @@
+id: emirates_id
+name: Emirates ID validity
+description: Emirates ID validity records for authorized staff.
+title_field: number_last_four
+fields:
+- name: employee_id
+  type: relation
+  required: true
+  ref_entity: employee
+- name: number_last_four
+  type: string
+  required: true
+  validation:
+    pattern: ^[0-9]{4}$
+    min_length: 4
+    max_length: 4
+  help: Last four digits only. Full ID storage is blocked pending field-security support.
+- name: issue_date
+  type: date
+  required: true
+- name: expiry_date
+  type: date
+  required: true
+- name: status
+  type: enum
+  required: true
+  enum_values:
+  - current
+  - renewed
+  - cancelled
+  default: current
+- name: previous_id
+  type: relation
+  ref_entity: emirates_id
+- name: notes
+  type: string
+  help: Never enter the full identity number.
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table
+date_events:
+- field: expiry_date
+  event: identity.expiry_due
+  when_status:
+  - current
+ui:
+  list:
+    queues:
+    - id: expiring
+      label: Expires in next 7 days
+      filter:
+        status: current
+      date_window:
+        field: expiry_date
+        range: next_7_days

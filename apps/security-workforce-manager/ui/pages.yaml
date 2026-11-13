@@ -1,0 +1,63 @@
+- id: dashboard
+  title: Workforce overview
+  layout: dashboard-grid
+  widgets:
+  - widget: total_employees
+    span: 3
+  - widget: active_employees
+    span: 3
+  - widget: inactive_employees
+    span: 3
+  - widget: active_contracts
+    span: 3
+  - widget: terminated_contracts
+    span: 3
+  - widget: today_attendance
+    span: 3
+  - widget: today_present
+    span: 3
+  - widget: recent_activity
+    span: 12
+- id: duty_site
+  title: Duty sites
+  entity: duty_site
+- id: employee
+  title: Employees
+  entity: employee
+- id: employee_private
+  title: Employee private details
+  entity: employee_private
+- id: employment_contract
+  title: Employment contracts
+  entity: employment_contract
+- id: emirates_id
+  title: Emirates ID validity
+  entity: emirates_id
+- id: attendance
+  title: Attendance
+  entity: attendance
+- id: site_assignment
+  title: Site assignment history
+  entity: site_assignment
+- id: employee_history
+  title: Employee history
+  entity: employee_history
+- id: reports
+  title: Attendance reports
+  layout: dashboard-grid
+  widgets:
+  - widget: monthly_attendance
+    span: 12
+  - widget: duty_hours
+    span: 12
+  - widget: overtime
+    span: 12
+- id: contacts
+  title: Contacts
+  host: contacts
+- id: automations
+  title: Automations
+  host: automations
+- id: roles
+  title: Roles
+  host: roles

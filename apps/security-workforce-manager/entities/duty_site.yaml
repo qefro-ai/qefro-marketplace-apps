@@ -1,0 +1,40 @@
+id: duty_site
+name: Duty sites
+description: Duty sites records for authorized staff.
+title_field: name
+fields:
+- name: site_number
+  type: string
+  unique: true
+- name: name
+  type: string
+  required: true
+- name: client_name
+  type: string
+  required: true
+- name: address
+  type: string
+- name: supervisor
+  type: string
+- name: contact_number
+  type: phone
+- name: timezone
+  type: string
+  required: true
+  default: Asia/Dubai
+- name: status
+  type: enum
+  required: true
+  enum_values:
+  - active
+  - inactive
+  default: active
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table
+allocate_code:
+  prefix: SITE-
+  start: 1001
+  field: site_number

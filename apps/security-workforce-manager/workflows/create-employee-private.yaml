@@ -1,0 +1,39 @@
+id: create-employee-private
+name: Create employee private details
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: select_employee_id
+  type: tool
+  tool: entity.employee.list
+  execution: runtime
+  output: select_employee_id
+- id: ask_employee_id
+  type: ask
+  field: employee_id
+  message: Enter employee id.
+  choices_from: select_employee_id
+  value_field: id
+  title_field: full_name
+  empty_message: No related records available. Create the related record first.
+- id: ask_basic_salary_minor
+  type: ask
+  field: basic_salary_minor
+  message: Enter basic salary minor.
+- id: save
+  type: tool
+  tool: entity.employee_private.create
+  execution: runtime
+  input_map:
+    employee_id: employee_id
+    date_of_birth: date_of_birth
+    nationality: nationality
+    mobile: mobile
+    basic_salary_minor: basic_salary_minor
+    currency: $literal:AED
+    emergency_contact: emergency_contact
+    notes: notes
+- id: done
+  type: complete

@@ -1,0 +1,65 @@
+id: attendance
+name: Attendance
+description: One intended employee/day record. Duplicate prevention is a release blocker;
+  counts are record counts until enforced.
+title_field: duty_date
+fields:
+- name: employee_id
+  type: relation
+  required: true
+  ref_entity: employee
+- name: duty_date
+  type: date
+  required: true
+- name: site_id
+  type: relation
+  required: true
+  ref_entity: duty_site
+- name: site_timezone
+  type: string
+  required: true
+  default: Asia/Dubai
+  help: IANA timezone of this duty site, captured for historical interpretation.
+- name: status
+  type: enum
+  required: true
+  enum_values:
+  - present
+  - absent
+  - leave
+  - off_duty
+  default: present
+- name: check_in
+  type: datetime
+  help: RFC3339 timestamp with explicit UTC offset.
+- name: check_out
+  type: datetime
+  help: For overnight duty, use the next calendar date and explicit UTC offset.
+- name: duty_hours
+  type: float
+  min: 0
+  max: 24
+  help: Manually verified elapsed hours until temporal calculation support is implemented.
+- name: overtime_hours
+  type: float
+  min: 0
+  max: 24
+- name: remarks
+  type: string
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table
+ui:
+  list:
+    queues:
+    - id: today
+      label: Today's attendance
+      date_window:
+        field: duty_date
+        range: today
+    - id: worked
+      label: Worked attendance records
+      filter:
+        status: present

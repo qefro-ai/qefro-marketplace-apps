@@ -1,0 +1,33 @@
+id: site_assignment
+name: Site assignment history
+description: Site assignment history records for authorized staff.
+title_field: start_date
+fields:
+- name: employee_id
+  type: relation
+  required: true
+  ref_entity: employee
+- name: site_id
+  type: relation
+  required: true
+  ref_entity: duty_site
+- name: start_date
+  type: date
+  required: true
+- name: end_date
+  type: date
+- name: reason
+  type: string
+- name: status
+  type: enum
+  required: true
+  enum_values:
+  - planned
+  - active
+  - completed
+  default: planned
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table

@@ -1,0 +1,8 @@
+primary: '#24483d'
+secondary: '#52766a'
+accent: '#a17435'
+background: '#f7f8f6'
+surface: '#ffffff'
+text: '#18271f'
+radius: 8px
+navigation_layout: sidebar

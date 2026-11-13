@@ -1,0 +1,29 @@
+id: create-duty-site
+name: Create duty sites
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_name
+  type: ask
+  field: name
+  message: Enter name.
+- id: ask_client_name
+  type: ask
+  field: client_name
+  message: Enter client name.
+- id: save
+  type: tool
+  tool: entity.duty_site.create
+  execution: runtime
+  input_map:
+    name: name
+    client_name: client_name
+    address: address
+    supervisor: supervisor
+    contact_number: contact_number
+    timezone: $literal:Asia/Dubai
+    status: $literal:active
+- id: done
+  type: complete

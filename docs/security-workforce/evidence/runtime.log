@@ -1,0 +1,22 @@
+running 19 tests
+test flow_engine::entity_validate::tests::create_rejects_missing_required ... ok
+test flow_engine::entity_validate::tests::create_skips_authority_required_but_enforces_person ... ok
+test flow_engine::entity_validate::tests::conditional_required_rules ... ok
+test flow_engine::entity_validate::conditional_record_tests::evaluates_coerced_create_and_partial_update_in_record_context ... ok
+test flow_engine::entity_validate::tests::enum_is_validated ... ok
+test flow_engine::entity_validate::tests::list_search_contains_uses_title_field_not_or ... ok
+test flow_engine::entity_validate::tests::list_filter_rejects_unknown_authority_enum_and_operators ... ok
+test flow_engine::entity_validate::tests::restaurant_kitchen_does_not_skip_to_completed ... ok
+test flow_engine::entity_validate::tests::searchable_fields_are_metadata_derived ... ok
+test flow_engine::entity_validate::tests::sort_drops_authority_and_caps_keys ... ok
+test flow_engine::entity_validate::tests::sort_drops_unknown_and_authority_when_entity_known ... ok
+test flow_engine::entity_validate::tests::update_does_not_require_omitted_fields ... ok
+test flow_engine::entity_validate::tests::list_search_or_escapes_regex ... ok
+test flow_engine::entity_validate::tests::prepare_document_allows_missing_allocated_code_field ... ok
+test flow_engine::entity_validate::tests::state_machine_transitions ... ok
+test flow_engine::entity_validate::tests::peel_range_leaves_equality_for_storage ... ok
+test flow_engine::entity_validate::tests::list_search_ranks_exact_unique_over_contains ... ok
+test flow_engine::entity_validate::tests::form_field_types_and_constraints ... ok
+test flow_engine::entity_validate::tests::date_validation_normalizes_flexible_formats ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 2239 filtered out; finished in 0.04s

@@ -1,0 +1,46 @@
+id: create-emirates-id
+name: Create emirates id validity
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: select_employee_id
+  type: tool
+  tool: entity.employee.list
+  execution: runtime
+  output: select_employee_id
+- id: ask_employee_id
+  type: ask
+  field: employee_id
+  message: Enter employee id.
+  choices_from: select_employee_id
+  value_field: id
+  title_field: full_name
+  empty_message: No related records available. Create the related record first.
+- id: ask_number_last_four
+  type: ask
+  field: number_last_four
+  message: Enter number last four.
+- id: ask_issue_date
+  type: ask
+  field: issue_date
+  message: Enter issue date.
+- id: ask_expiry_date
+  type: ask
+  field: expiry_date
+  message: Enter expiry date.
+- id: save
+  type: tool
+  tool: entity.emirates_id.create
+  execution: runtime
+  input_map:
+    employee_id: employee_id
+    number_last_four: number_last_four
+    issue_date: issue_date
+    expiry_date: expiry_date
+    status: $literal:current
+    previous_id: previous_id
+    notes: notes
+- id: done
+  type: complete

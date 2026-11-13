@@ -1,0 +1,1454 @@
+{
+  "startedAt": "2026-11-13T09:46:43.914Z",
+  "requestedBaseURL": "http://127.0.0.1:5178",
+  "baseURL": "http://localhost:5178",
+  "artifactDirectory": "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z",
+  "limitations": [
+    "Uses localhost alias of parent server: current resolveSolutionHost misclassifies 127.0.0.1 as solution slug 127.",
+    "Fresh synthetic admin session; no real auth, RBAC, production services, or existing browser sessions.",
+    "Current local YAML, no installed workspace/brand overlays; backend serialization projected from local EntityDefinition/EntityField contracts.",
+    "In-memory CRUD/search/query only. Backend flows, payments, computed totals, availability, notifications and event side effects are not validated.",
+    "Mutation audit rows are appended by this fixture server only when a write actually changes data, mirroring `write_mutation_audit`; `created_at` advances a minute per write so newest-first ordering is exercisable. WhatsApp/widget (`flow`) and automation sources cannot be produced from a portal session, so channel attribution is covered by unit tests instead.",
+    "Desktop Chromium engine at four CSS viewport sizes; not actual iOS/Android, touch, or visual baseline comparison.",
+    "Screenshots and horizontal document/dialog overflow checks, not a full accessibility or visual review.",
+    "All WebSockets (including Vite HMR) blocked so parent edits require a fresh rerun."
+  ],
+  "metadata": {
+    "security-workforce-manager": {
+      "version": "0.1.0",
+      "entities": [
+        "duty_site",
+        "employee",
+        "employee_private",
+        "employment_contract",
+        "emirates_id",
+        "attendance",
+        "site_assignment",
+        "employee_history"
+      ],
+      "pages": [
+        "dashboard",
+        "duty_site",
+        "employee",
+        "employee_private",
+        "employment_contract",
+        "emirates_id",
+        "attendance",
+        "site_assignment",
+        "employee_history",
+        "reports",
+        "contacts",
+        "automations",
+        "roles"
+      ],
+      "capabilities": [
+        "theme.get",
+        "user.get",
+        "tenant.get",
+        "runtime.query",
+        "workflow.trigger",
+        "storage.read",
+        "storage.write"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "viewport": "mobile",
+      "app": "security-workforce-manager",
+      "name": "dashboard-host",
+      "status": "passed"
+    },
+    {
+      "viewport": "mobile",
+      "app": "security-workforce-manager",
+      "name": "mobile-dock-and-chat",
+      "status": "passed"
+    },
+    {
+      "viewport": "mobile",
+      "app": "security-workforce-manager",
+      "name": "employee-list-detail-create",
+      "status": "passed"
+    },
+    {
+      "viewport": "mobile",
+      "app": "security-workforce-manager",
+      "name": "employment_contract-list-detail-create",
+      "status": "passed"
+    },
+    {
+      "viewport": "mobile",
+      "app": "security-workforce-manager",
+      "name": "attendance-list-detail-create",
+      "status": "passed"
+    },
+    {
+      "viewport": "mobile",
+      "app": "all-apps",
+      "name": "unobstructed-pointer-targets",
+      "status": "passed"
+    },
+    {
+      "viewport": "mobile",
+      "app": "all-apps",
+      "name": "console-pageerrors-network-contracts",
+      "status": "passed"
+    }
+  ],
+  "screenshots": [
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--dashboard.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--mobile-navigation.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employee-list.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employee-detail.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employee-create-form.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employee-created.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employment_contract-list.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employment_contract-detail.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employment_contract-create-form.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--employment_contract-created.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--attendance-list.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--attendance-detail.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--attendance-create-form.png",
+    "/Users/abu/qefro/ai-customer-support-portal/test-results/ui-polish-smoke/2026-11-13T09-46-43-914Z/mobile--security-workforce-manager--attendance-created.png"
+  ],
+  "runs": [
+    {
+      "viewport": "mobile",
+      "audit": [
+        {
+          "id": "smoke-audit-1",
+          "tenant_id": "00000000-0000-4000-8000-000000000102",
+          "workspace_id": "00000000-0000-4000-8000-000000000101",
+          "installation_id": "install-security-workforce-manager",
+          "solution": "security-workforce-manager",
+          "entity": "employee",
+          "record_id": "smoke-employee-2001",
+          "action": "create",
+          "actor_user_id": "00000000-0000-4000-8000-000000000104",
+          "actor_person_id": null,
+          "record_person_id": null,
+          "source": "api",
+          "before_doc": null,
+          "after_doc": {
+            "full_name": "Full Name 1",
+            "employee_role": "guard",
+            "joining_date": "2026-09-15",
+            "status": "planned",
+            "assigned_site": "smoke-duty_site-1",
+            "notes": "Local-only UI fixture",
+            "employee_number": "EMP-2001",
+            "id": "smoke-employee-2001",
+            "version": 1,
+            "created_at": "2026-09-15T10:00:00.000Z",
+            "updated_at": "2026-09-15T10:00:00.000Z"
+          },
+          "created_at": "2026-09-15T10:00:00.000Z"
+        },
+        {
+          "id": "smoke-audit-2",
+          "tenant_id": "00000000-0000-4000-8000-000000000102",
+          "workspace_id": "00000000-0000-4000-8000-000000000101",
+          "installation_id": "install-security-workforce-manager",
+          "solution": "security-workforce-manager",
+          "entity": "employment_contract",
+          "record_id": "smoke-employment_contract-2002",
+          "action": "create",
+          "actor_user_id": "00000000-0000-4000-8000-000000000104",
+          "actor_person_id": null,
+          "record_person_id": null,
+          "source": "api",
+          "before_doc": null,
+          "after_doc": {
+            "employee_id": "smoke-employee-1",
+            "start_date": "2026-09-15",
+            "end_date": "2026-09-15",
+            "duration_years": 2,
+            "status": "draft",
+            "last_working_date": "2026-09-15",
+            "cancellation_date": "2026-09-15",
+            "cancellation_reason": "Cancellation Reason 1",
+            "previous_contract": "smoke-employment_contract-1",
+            "notes": "Local-only UI fixture",
+            "contract_number": "CON-2002",
+            "id": "smoke-employment_contract-2002",
+            "version": 1,
+            "created_at": "2026-09-15T10:00:00.000Z",
+            "updated_at": "2026-09-15T10:00:00.000Z"
+          },
+          "created_at": "2026-09-15T10:01:00.000Z"
+        },
+        {
+          "id": "smoke-audit-3",
+          "tenant_id": "00000000-0000-4000-8000-000000000102",
+          "workspace_id": "00000000-0000-4000-8000-000000000101",
+          "installation_id": "install-security-workforce-manager",
+          "solution": "security-workforce-manager",
+          "entity": "attendance",
+          "record_id": "smoke-attendance-2003",
+          "action": "create",
+          "actor_user_id": "00000000-0000-4000-8000-000000000104",
+          "actor_person_id": null,
+          "record_person_id": null,
+          "source": "api",
+          "before_doc": null,
+          "after_doc": {
+            "employee_id": "smoke-employee-1",
+            "duty_date": "2026-09-15",
+            "site_id": "smoke-duty_site-1",
+            "site_timezone": "Asia/Dubai",
+            "status": "present",
+            "check_in": "2026-09-15T14:30",
+            "check_out": "2026-09-15T14:30",
+            "duty_hours": 2,
+            "overtime_hours": 2,
+            "remarks": "Remarks 1",
+            "id": "smoke-attendance-2003",
+            "version": 1,
+            "created_at": "2026-09-15T10:00:00.000Z",
+            "updated_at": "2026-09-15T10:00:00.000Z"
+          },
+          "created_at": "2026-09-15T10:02:00.000Z"
+        }
+      ],
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Onboarding"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/org/workspaces",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Workspaces"
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Settings"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {},
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "inactive"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "terminated"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "present"
+            },
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee_history",
+          "solution": "security-workforce-manager",
+          "query": {},
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Onboarding"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/org/workspaces",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Workspaces"
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Settings"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {},
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "inactive"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "terminated"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "present"
+            },
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee_history",
+          "solution": "security-workforce-manager",
+          "query": {},
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/solutions/security-workforce-manager/permissions/me",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/org/members",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/billing/profile",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "attendance",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "site_assignment",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee_history",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee_private",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "emirates_id",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "get",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "id": "smoke-employee-1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/workflows",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/ui/entity/audit",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/solutions/security-workforce-manager/roles",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "duty_site",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "create",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "document": {
+            "full_name": "Full Name 1",
+            "employee_role": "guard",
+            "joining_date": "2026-09-15",
+            "status": "planned",
+            "assigned_site": "smoke-duty_site-1",
+            "notes": "Local-only UI fixture"
+          },
+          "status": 201
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "duty_site",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "get",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "id": "smoke-employee-2001",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/ui/entity/audit",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "attendance",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "site_assignment",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee_history",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee_private",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "emirates_id",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Onboarding"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/org/workspaces",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Workspaces"
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Settings"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {},
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "inactive"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "terminated"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "present"
+            },
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee_history",
+          "solution": "security-workforce-manager",
+          "query": {},
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/solutions/security-workforce-manager/permissions/me",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/org/members",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/billing/profile",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "get",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "id": "smoke-employment_contract-1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/workflows",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/ui/entity/audit",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "create",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "document": {
+            "employee_id": "smoke-employee-1",
+            "start_date": "2026-09-15",
+            "end_date": "2026-09-15",
+            "duration_years": 2,
+            "status": "draft",
+            "last_working_date": "2026-09-15",
+            "cancellation_date": "2026-09-15",
+            "cancellation_reason": "Cancellation Reason 1",
+            "previous_contract": "smoke-employment_contract-1",
+            "notes": "Local-only UI fixture"
+          },
+          "status": 201
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "get",
+          "entity": "employment_contract",
+          "solution": "security-workforce-manager",
+          "id": "smoke-employment_contract-2002",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/ui/entity/audit",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Onboarding"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/team/my-tenants",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tenant/trial",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/org/workspaces",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Workspaces"
+        },
+        {
+          "method": "POST",
+          "path": "/graphql",
+          "status": 200,
+          "graphql": "Settings"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager/ui",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/goals",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {},
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "inactive"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "active"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employment_contract",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "terminated"
+            },
+            "aggregate": "count"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "attendance",
+          "solution": "security-workforce-manager",
+          "query": {
+            "filter": {
+              "status": "present"
+            },
+            "aggregate": "today",
+            "date_field": "duty_date"
+          },
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/data",
+          "source_id": "employee_history",
+          "solution": "security-workforce-manager",
+          "query": {},
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/installations/security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/events",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/workspaces/00000000-0000-4000-8000-000000000101/solutions/security-workforce-manager/permissions/me",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/org/members",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/billing/profile",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "attendance",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "get",
+          "entity": "attendance",
+          "solution": "security-workforce-manager",
+          "id": "smoke-attendance-1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/workflows",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/ui/entity/audit",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "duty_site",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "create",
+          "entity": "attendance",
+          "solution": "security-workforce-manager",
+          "document": {
+            "employee_id": "smoke-employee-1",
+            "duty_date": "2026-09-15",
+            "site_id": "smoke-duty_site-1",
+            "site_timezone": "Asia/Dubai",
+            "status": "present",
+            "check_in": "2026-09-15T14:30",
+            "check_out": "2026-09-15T14:30",
+            "duty_hours": 2,
+            "overtime_hours": 2,
+            "remarks": "Remarks 1"
+          },
+          "status": 201
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "attendance",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "employee",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "list",
+          "entity": "duty_site",
+          "solution": "security-workforce-manager",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/runtime/ui/entity",
+          "op": "get",
+          "entity": "attendance",
+          "solution": "security-workforce-manager",
+          "id": "smoke-attendance-2003",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/runtime/ui/entity/audit",
+          "status": 200
+        }
+      ],
+      "unexpected": [],
+      "blocked": [
+        {
+          "kind": "stylesheet",
+          "url": "https://fonts.googleapis.com/css2"
+        },
+        {
+          "kind": "websocket",
+          "url": "ws://localhost:5178"
+        },
+        {
+          "kind": "stylesheet",
+          "url": "https://fonts.googleapis.com/css2"
+        },
+        {
+          "kind": "websocket",
+          "url": "ws://localhost:5178"
+        },
+        {
+          "kind": "stylesheet",
+          "url": "https://fonts.googleapis.com/css2"
+        },
+        {
+          "kind": "websocket",
+          "url": "ws://localhost:5178"
+        },
+        {
+          "kind": "stylesheet",
+          "url": "https://fonts.googleapis.com/css2"
+        },
+        {
+          "kind": "websocket",
+          "url": "ws://localhost:5178"
+        }
+      ],
+      "pointerBlockers": [],
+      "pageerrors": [],
+      "consoleErrors": [],
+      "warnings": [],
+      "flows": [],
+      "sequence": 2003,
+      "auditFailure": null,
+      "expectedHttpErrors": 0,
+      "unexpectedConsoleErrors": []
+    }
+  ],
+  "browser": "157.0.8103.51",
+  "finishedAt": "2026-11-13T09:46:55.024Z",
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "screenshots": 14
+  }
+}

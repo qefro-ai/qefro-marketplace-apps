@@ -1,0 +1,10 @@
+running 7 tests
+test flow_engine::entity_dates::tests::idempotency_includes_date ... ok
+test flow_engine::entity_dates::tests::rfc3339_passthrough ... ok
+test flow_engine::entity_dates::tests::fire_at_is_timezone_aware ... ok
+test flow_engine::entity_dates::tests::local_today_respects_timezone_boundary ... ok
+test flow_engine::entity_dates::tests::local_period_bounds_and_day_buckets ... ok
+test flow_engine::entity_dates::tests::parses_date_events ... ok
+test flow_engine::entity_dates::tests::date_events_honor_status_field ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 2251 filtered out; finished in 0.02s

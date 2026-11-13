@@ -1,0 +1,46 @@
+# Synthetic development fixture; @key means replace with the returned record ID.
+# Submit in order through authorized native entity CRUD. Never use as a bulk DB insert.
+records:
+- key: north_site
+  entity: duty_site
+  document:
+    name: Synthetic North Depot
+    client_name: Example Client
+    timezone: Asia/Dubai
+    status: active
+- key: employee_one
+  entity: employee
+  document:
+    full_name: Synthetic Guard One
+    employee_role: guard
+    joining_date: '2026-01-01'
+    status: active
+    assigned_site: '@north_site'
+- key: contract_one
+  entity: employment_contract
+  document:
+    employee_id: '@employee_one'
+    start_date: '2026-01-01'
+    end_date: '2027-12-31'
+    duration_years: 2
+    status: draft
+- key: attendance_one
+  entity: attendance
+  document:
+    employee_id: '@employee_one'
+    duty_date: '2026-11-12'
+    site_id: '@north_site'
+    site_timezone: Asia/Dubai
+    status: present
+    check_in: '2026-11-12T22:00:00+04:00'
+    check_out: '2026-11-13T06:00:00+04:00'
+    duty_hours: 8
+    overtime_hours: 0
+- key: identity_one
+  entity: emirates_id
+  document:
+    employee_id: '@employee_one'
+    number_last_four: '0000'
+    issue_date: '2025-01-01'
+    expiry_date: '2026-11-19'
+    status: current

@@ -1,0 +1,60 @@
+- id: dashboard
+  page: dashboard
+  title: Overview
+  icon: home
+- id: duty_site
+  page: duty_site
+  title: Duty sites
+  icon: file-text
+  entity: duty_site
+- id: employee
+  page: employee
+  title: Employees
+  icon: users
+  entity: employee
+- id: employee_private
+  page: employee_private
+  title: Employee private details
+  icon: file-text
+  entity: employee_private
+- id: employment_contract
+  page: employment_contract
+  title: Employment contracts
+  icon: file-text
+  entity: employment_contract
+- id: emirates_id
+  page: emirates_id
+  title: Emirates ID validity
+  icon: file-text
+  entity: emirates_id
+- id: attendance
+  page: attendance
+  title: Attendance
+  icon: file-text
+  entity: attendance
+- id: site_assignment
+  page: site_assignment
+  title: Site assignment history
+  icon: file-text
+  entity: site_assignment
+- id: employee_history
+  page: employee_history
+  title: Employee history
+  icon: file-text
+  entity: employee_history
+- id: reports
+  page: reports
+  title: Attendance reports
+  icon: report
+- id: contacts
+  page: contacts
+  title: Contacts
+  icon: settings
+- id: automations
+  page: automations
+  title: Automations
+  icon: settings
+- id: roles
+  page: roles
+  title: Roles
+  icon: settings

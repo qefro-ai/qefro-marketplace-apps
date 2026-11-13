@@ -1,0 +1,41 @@
+id: create-employee
+name: Create employees
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: ask_full_name
+  type: ask
+  field: full_name
+  message: Enter full name.
+- id: ask_employee_role
+  type: ask
+  field: employee_role
+  message: Enter employee role.
+  choices:
+  - id: guard
+    label: Guard
+  - id: supervisor
+    label: Supervisor
+  - id: operations
+    label: Operations
+  - id: administration
+    label: Administration
+- id: ask_joining_date
+  type: ask
+  field: joining_date
+  message: Enter joining date.
+- id: save
+  type: tool
+  tool: entity.employee.create
+  execution: runtime
+  input_map:
+    full_name: full_name
+    employee_role: employee_role
+    joining_date: joining_date
+    status: $literal:planned
+    assigned_site: assigned_site
+    notes: notes
+- id: done
+  type: complete

@@ -1,0 +1,54 @@
+id: create-employee-history
+name: Create employee history
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: select_employee_id
+  type: tool
+  tool: entity.employee.list
+  execution: runtime
+  output: select_employee_id
+- id: ask_employee_id
+  type: ask
+  field: employee_id
+  message: Enter employee id.
+  choices_from: select_employee_id
+  value_field: id
+  title_field: full_name
+  empty_message: No related records available. Create the related record first.
+- id: ask_effective_date
+  type: ask
+  field: effective_date
+  message: Enter effective date.
+- id: ask_event_type
+  type: ask
+  field: event_type
+  message: Enter event type.
+  choices:
+  - id: joined
+    label: Joined
+  - id: role_changed
+    label: Role Changed
+  - id: transferred
+    label: Transferred
+  - id: terminated
+    label: Terminated
+  - id: note
+    label: Note
+- id: ask_summary
+  type: ask
+  field: summary
+  message: Enter summary.
+- id: save
+  type: tool
+  tool: entity.employee_history.create
+  execution: runtime
+  input_map:
+    employee_id: employee_id
+    effective_date: effective_date
+    event_type: event_type
+    summary: summary
+- id: done
+  type: complete

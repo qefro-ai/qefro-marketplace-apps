@@ -1,0 +1,30 @@
+id: employee_history
+name: Employee history
+description: Employee history records for authorized staff.
+title_field: effective_date
+fields:
+- name: employee_id
+  type: relation
+  required: true
+  ref_entity: employee
+- name: effective_date
+  type: date
+  required: true
+- name: event_type
+  type: enum
+  required: true
+  enum_values:
+  - joined
+  - role_changed
+  - transferred
+  - terminated
+  - note
+- name: summary
+  type: string
+  required: true
+  help: Operational history only; no identity numbers or salary.
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table

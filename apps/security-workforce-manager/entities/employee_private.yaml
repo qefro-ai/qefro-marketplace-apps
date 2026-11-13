@@ -1,0 +1,37 @@
+id: employee_private
+name: Employee private details
+description: Restricted HR entity. Grant view/create/update only to approved HR staff;
+  no general dashboard source.
+title_field: employee_id
+fields:
+- name: employee_id
+  type: relation
+  required: true
+  ref_entity: employee
+- name: date_of_birth
+  type: date
+- name: nationality
+  type: string
+- name: mobile
+  type: phone
+- name: basic_salary_minor
+  type: integer
+  required: true
+  min: 0
+  help: Salary in minor currency units (fils for AED).
+- name: currency
+  type: enum
+  required: true
+  enum_values:
+  - AED
+  default: AED
+- name: emergency_contact
+  type: string
+- name: notes
+  type: string
+  help: No full identity numbers or health records.
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table

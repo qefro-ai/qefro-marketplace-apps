@@ -1,0 +1,171 @@
+running 149 tests
+test flow_engine::runtime_adapter::tests::c1_create_fails_closed_without_identity ... ok
+test flow_engine::runtime_adapter::tests::all_forbidden_authority_keys_are_stripped ... ok
+test flow_engine::runtime_adapter::tests::c1_create_does_not_inject_for_staff_entity ... ok
+test flow_engine::runtime_adapter::tests::c1_create_does_not_inject_for_shared_entity ... ok
+test flow_engine::runtime_adapter::tests::c1_create_injects_person_id_for_customer_scoped_entity ... ok
+test flow_engine::runtime_adapter::tests::c1_create_overrides_caller_person_id ... ok
+test flow_engine::runtime_adapter::tests::c1_list_fails_closed_without_identity ... ok
+test flow_engine::runtime_adapter::tests::c1_list_does_not_inject_for_staff_entity ... ok
+test flow_engine::runtime_adapter::tests::c1_list_injects_person_id_filter_for_customer_scoped_entity ... ok
+test flow_engine::runtime_adapter::tests::c1_list_does_not_inject_for_shared_entity ... ok
+test flow_engine::runtime_adapter::tests::c1_list_without_identity_succeeds_for_shared_entity ... ok
+test flow_engine::runtime_adapter::tests::c1_list_overrides_caller_person_id_filter ... ok
+test flow_engine::runtime_adapter::tests::c1_staff_entity_with_person_field_is_not_customer_scoped ... ok
+test flow_engine::runtime_adapter::tests::c1_scope_customer_without_person_field_returns_none ... ok
+test flow_engine::runtime_adapter::tests::c1_entity_without_scope_is_not_customer_scoped ... ok
+test flow_engine::runtime_adapter::tests::c1_entity_person_field_requires_scope_customer ... ok
+test flow_engine::runtime_adapter::tests::c1_entity_person_field_finds_first_person_field ... ok
+test flow_engine::runtime_adapter::tests::ambiguous_partial_matches_do_not_resolve ... ok
+test flow_engine::runtime_adapter::tests::c2_coerce_positive_int_rejects_zero_and_negative ... ok
+test flow_engine::runtime_adapter::tests::c2_coerce_positive_int_rejects_floats ... ok
+test flow_engine::runtime_adapter::tests::c2_coerce_positive_int_rejects_non_numeric ... ok
+test flow_engine::runtime_adapter::tests::c2_limit_coercion_rejects_fractional ... ok
+test flow_engine::runtime_adapter::tests::c2_limit_coercion_rejects_negative ... ok
+test flow_engine::runtime_adapter::tests::c2_limit_coercion_rejects_zero ... ok
+test flow_engine::runtime_adapter::tests::c2_list_omits_skip_when_none ... ok
+test flow_engine::runtime_adapter::tests::c2_limit_coercion_accepts_whitespace_string ... ok
+test flow_engine::runtime_adapter::tests::c2_coerce_positive_int_accepts_numeric_string ... ok
+test flow_engine::runtime_adapter::tests::c2_skip_coercion_accepts_numeric_string ... ok
+test flow_engine::runtime_adapter::tests::c2_limit_coercion_accepts_valid_integer ... ok
+test flow_engine::runtime_adapter::tests::c2_skip_coercion_rejects_fractional ... ok
+test flow_engine::runtime_adapter::tests::c2_skip_coercion_rejects_invalid_string ... ok
+test flow_engine::runtime_adapter::tests::c3_build_list_body_includes_expand_when_non_empty ... ok
+test flow_engine::runtime_adapter::tests::c2_skip_omitted_remains_omitted_in_body ... ok
+test flow_engine::runtime_adapter::tests::c3_build_list_body_omits_expand_when_empty ... ok
+test flow_engine::runtime_adapter::tests::c2_skip_coercion_accepts_valid_integer ... ok
+test flow_engine::runtime_adapter::tests::c2_coerce_positive_int_accepts_integer ... ok
+test flow_engine::runtime_adapter::tests::c2_list_includes_skip_when_provided ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_accepts_empty_expand_on_relationless_entity ... ok
+test flow_engine::runtime_adapter::tests::c3_extract_relation_fields_empty_for_no_relations ... ok
+test flow_engine::runtime_adapter::tests::c3_extract_relation_fields_skips_missing_ref_entity ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_rejects_all_expand_on_relationless_entity ... ok
+test flow_engine::runtime_adapter::tests::c3_extract_relation_fields_builds_correct_map ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_rejects_empty_target ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_rejects_non_object_expand ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_rejects_non_string_target ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_rejects_undeclared_field ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_rejects_expand_on_non_relation_field ... ok
+test flow_engine::runtime_adapter::tests::c3_trusted_flow_expand_accepts_valid_relation ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_accepts_valid_expand ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_security_rejects_llm_invented_field ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_security_rejects_person_field_as_relation ... ok
+test flow_engine::runtime_adapter::tests::c3_untrusted_llm_expand_rejected_even_when_relation_is_valid ... ok
+test flow_engine::runtime_adapter::tests::c3_llm_cannot_override_trusted_flow_expand ... ok
+test flow_engine::runtime_adapter::tests::create_does_not_emit_status_on_failed_empty_output ... ok
+test flow_engine::runtime_adapter::tests::c3_validate_expand_rejects_wrong_target ... ok
+test flow_engine::runtime_adapter::tests::clean_entity_snapshot_preserves_installation_id ... ok
+test flow_engine::runtime_adapter::tests::agent_supplied_person_is_stripped_not_authoritative ... ok
+test flow_engine::runtime_adapter::tests::crm_extractors_return_none_when_absent ... ok
+test flow_engine::runtime_adapter::tests::crm_extractors_find_installation_id_in_source_nested_path ... ok
+test flow_engine::runtime_adapter::tests::entity_image_fields_empty_for_no_image_fields ... ok
+test flow_engine::runtime_adapter::tests::entity_image_fields_ignores_type_media ... ok
+test flow_engine::runtime_adapter::tests::entity_image_fields_extracts_type_image ... ok
+test flow_engine::runtime_adapter::tests::crm_extractors_find_installation_and_solution_in_payload ... ok
+test flow_engine::runtime_adapter::tests::event_create_without_inherit_still_fails_closed ... ok
+test flow_engine::runtime_adapter::tests::get_update_delete_parse_correctly ... ok
+test flow_engine::runtime_adapter::tests::event_create_keeps_inherited_person_not_payload ... ok
+test flow_engine::runtime_adapter::tests::hub_person_lookup_is_workspace_scoped ... ok
+test flow_engine::runtime_adapter::tests::list_body_pushes_active_filter_before_limit ... ok
+test flow_engine::runtime_adapter::tests::list_op_parses_correctly ... ok
+test flow_engine::runtime_adapter::tests::list_without_workspace_fails ... ok
+test flow_engine::runtime_adapter::tests::entity_ops_fail_without_workspace ... ok
+test flow_engine::runtime_adapter::tests::marketplace_event_is_crm_compatible_and_workspace_isolated ... ok
+test flow_engine::runtime_adapter::tests::marketplace_payload_keeps_workspace_from_trusted_context ... ok
+test flow_engine::runtime_adapter::tests::marketplace_event_carries_person_for_whatsapp_dry_run ... ok
+test flow_engine::runtime_adapter::tests::non_event_does_not_keep_caller_person_even_if_flag_off ... ok
+test flow_engine::runtime_adapter::tests::parses_aggregate_capability ... ok
+test flow_engine::runtime_adapter::tests::parses_entity_capabilities ... ok
+test flow_engine::runtime_adapter::tests::payload_carries_installation_id_when_provided ... ok
+test flow_engine::runtime_adapter::tests::order_ready_fires_only_when_status_becomes_ready ... ok
+test flow_engine::runtime_adapter::tests::payload_omits_installation_id_when_none ... ok
+test flow_engine::runtime_adapter::tests::person_id_is_stripped_from_caller_parameters ... ok
+test flow_engine::runtime_adapter::tests::portal_create_bypasses_person_scoping ... ok
+test flow_engine::runtime_adapter::tests::person_id_stripped_regardless_of_case ... ok
+test flow_engine::runtime_adapter::tests::portal_list_bypasses_person_scoping ... ok
+test flow_engine::runtime_adapter::tests::portal_list_with_person_id_does_not_filter ... ok
+test flow_engine::runtime_adapter::tests::portal_create_persists_validated_hub_person ... ok
+test flow_engine::runtime_adapter::tests::provider_mirror_name_is_a_non_empty_provider ... ok
+test flow_engine::runtime_adapter::tests::record_matches_person_fails_closed_when_field_missing_or_malformed ... ok
+test flow_engine::runtime_adapter::tests::record_matches_person_fails_closed_without_identity ... ok
+test flow_engine::runtime_adapter::tests::record_matches_person_rejects_cross_customer_access ... ok
+test flow_engine::runtime_adapter::tests::record_matches_person_succeeds_for_matching_customer ... ok
+test flow_engine::runtime_adapter::tests::restaurant_failed_and_refunded_do_not_emit_payment_received ... ok
+
+thread 'flow_engine::runtime_adapter::tests::get_without_id_returns_failure' (199793) panicked at crates/api/src/flow_engine/runtime_adapter.rs:6918:17:
+expected 'requires id' error, got: Entity 'viewing' is not declared in the installed solution.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'flow_engine::runtime_adapter::tests::delete_without_id_returns_failure' (199785) panicked at crates/api/src/flow_engine/runtime_adapter.rs:6994:17:
+expected 'requires id' error, got: Entity 'viewing' is not declared in the installed solution.
+test flow_engine::runtime_adapter::tests::http_tools_fail_without_workspace_or_connection ... ok
+test flow_engine::runtime_adapter::tests::delete_without_id_returns_failure ... FAILED
+test flow_engine::runtime_adapter::tests::get_without_id_returns_failure ... FAILED
+test flow_engine::runtime_adapter::tests::catalog_http_fixture_is_not_shopify_specific ... ok
+
+thread 'flow_engine::runtime_adapter::tests::customer_payment_event_does_not_confirm_someone_elses_order' (199784) panicked at crates/api/src/flow_engine/runtime_adapter.rs:5762:9:
+the same person's pending order is confirmed: []
+test flow_engine::runtime_adapter::tests::customer_payment_event_does_not_confirm_someone_elses_order ... FAILED
+test flow_engine::runtime_adapter::tests::runtime_duplicate_exact_titles_block_create ... ok
+test flow_engine::runtime_adapter::tests::runtime_advertised_get_code_executes_storage_read ... ok
+test flow_engine::runtime_adapter::tests::provider_mirror_blocks_every_generic_mutation_and_list_stays_local ... ok
+test flow_engine::runtime_adapter::tests::child_items_inserted_with_authoritative_pricing_and_zero_trust ... ok
+test flow_engine::runtime_adapter::tests::runtime_duplicate_exact_titles_block_update ... ok
+test flow_engine::runtime_adapter::tests::shopify_entity_ops_fail_without_workspace ... ok
+test flow_engine::runtime_adapter::tests::shopify_metadata_http_against_mock_is_workspace_isolated ... ok
+test flow_engine::runtime_adapter::tests::shopify_runtime_events_are_crm_envelopes_not_shopify_webhooks ... ok
+test flow_engine::runtime_adapter::tests::staff_bind_skipped_on_event_and_customer_channels ... ok
+test flow_engine::runtime_adapter::tests::status_config_is_generic_per_entity_metadata ... ok
+test flow_engine::runtime_adapter::tests::strips_authority_overrides ... ok
+test flow_engine::runtime_adapter::tests::test_auto_fill_datetime_fields ... ok
+test flow_engine::runtime_adapter::tests::runtime_empty_titles_do_not_match_nonempty_hints ... ok
+test flow_engine::runtime_adapter::tests::test_blocker3_undeclared_entity_fails_closed_including_org_admin ... ok
+test flow_engine::runtime_adapter::tests::runtime_two_partial_matches_block_create ... ok
+test flow_engine::runtime_adapter::tests::test_is_customer_name_field ... ok
+test flow_engine::runtime_adapter::tests::test_marketplace_event_payload_with_previous_snapshot ... ok
+test flow_engine::runtime_adapter::tests::runtime_get_code_keeps_reference_failures ... ok
+test flow_engine::runtime_adapter::tests::runtime_two_partial_matches_block_update ... ok
+test flow_engine::runtime_adapter::tests::runtime_title_hint_ambiguity_blocks_create_and_update ... ok
+test flow_engine::runtime_adapter::tests::runtime_exact_hint_precedes_multiple_partial_matches ... ok
+test flow_engine::runtime_adapter::tests::runtime_unique_partial_hint_resolves_create_and_update ... ok
+test flow_engine::runtime_adapter::tests::test_blocker2_state_machine_cas_concurrency_conflict ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test2_unknown_entity_deny ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test3_other_app_entity_deny ... ok
+test flow_engine::runtime_adapter::tests::test_disabled_payment_operation_preserves_legacy_behavior ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test4_uninstalled_entity_deny ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test5_org_admin_unknown_entity_deny ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test6_org_admin_other_app_entity_deny ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test7_malformed_capability_deny ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test8_missing_installation_deny ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test9_cross_workspace_entity_deny ... ok
+test flow_engine::runtime_adapter::tests::test_optional_payment_customer_create_with_confirmed_status_is_clamped_to_pending ... ok
+test flow_engine::runtime_adapter::tests::test_optional_payment_portal_caller_fails_closed_without_database_pool ... ok
+test flow_engine::runtime_adapter::tests::test_optional_payment_unverified_customer_update_to_confirmed_is_rejected ... ok
+test flow_engine::runtime_adapter::tests::test_optional_payment_unauthorized_portal_member_is_rejected ... ok
+test flow_engine::runtime_adapter::tests::test_phase1_test1_installed_entity_pass ... ok
+test flow_engine::runtime_adapter::tests::unique_partial_match_resolves ... ok
+test flow_engine::runtime_adapter::tests::unknown_hub_person_is_rejected ... ok
+test flow_engine::runtime_adapter::tests::update_emits_updated_and_status_events_only_on_change ... ok
+test flow_engine::runtime_adapter::tests::update_merge_preserves_stored_version ... ok
+test flow_engine::runtime_adapter::tests::update_without_id_returns_failure ... ok
+test flow_engine::runtime_adapter::tests::uuid_detection_accepts_valid_uuids ... ok
+test flow_engine::runtime_adapter::tests::uuid_detection_rejects_allocated_codes ... ok
+test flow_engine::runtime_adapter::tests::validate_tenant_user_membership_rejects_malformed_and_nil_uuid ... ok
+test flow_engine::runtime_adapter::tests::test_ordinary_update_to_non_confirmation_field_is_allowed ... ok
+test flow_engine::runtime_adapter::tests::test_phase2_test_b_concurrent_identical_transitions_single_winner ... ok
+test flow_engine::runtime_adapter::tests::test_phase2_test_a_concurrent_competing_transitions_single_winner ... ok
+test flow_engine::runtime_adapter::tests::test_phase2_test_c_stale_expected_version_rejected ... ok
+test flow_engine::runtime_adapter::tests::test_phase2_test_d_non_state_machine_entity_unrestricted ... ok
+test flow_engine::runtime_adapter::tests::test_phase2_test_e_losing_transaction_emits_no_side_effects ... ok
+test flow_engine::runtime_adapter::tests::test_required_payment_operation_attempting_confirmation_without_captured_payment_is_rejected ... ok
+
+failures:
+
+failures:
+    flow_engine::runtime_adapter::tests::customer_payment_event_does_not_confirm_someone_elses_order
+    flow_engine::runtime_adapter::tests::delete_without_id_returns_failure
+    flow_engine::runtime_adapter::tests::get_without_id_returns_failure
+
+test result: FAILED. 146 passed; 3 failed; 0 ignored; 0 measured; 2109 filtered out; finished in 1.68s
+
+error: test failed, to rerun pass `-p api --bin b2b-ai-server`

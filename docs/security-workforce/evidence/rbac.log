@@ -1,0 +1,10 @@
+running 7 tests
+test app_rbac_authz::tests::restore_and_aggregate_are_least_privilege ... ok
+test app_rbac_authz_tests::storage_caps_are_least_privilege ... ok
+test app_rbac_authz::tests::storage_invoke_caps_match_actual_tool ... ok
+test app_rbac_authz_tests::skips_whatsapp_and_widget ... ok
+test app_rbac_authz_tests::enforces_portal_and_api_with_user ... ok
+test app_rbac_authz_tests::custom_app_roles_are_not_implied_full_catalog ... ok
+test app_rbac_authz_tests::portal_jwt_owner_is_catalog_admin ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 2251 filtered out; finished in 0.01s

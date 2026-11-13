@@ -1,0 +1,110 @@
+- id: total_employees
+  type: metric
+  title: Employees
+  source: employee
+  options:
+    aggregate: count
+    filter: {}
+    navigate_to: employee
+- id: active_employees
+  type: metric
+  title: Active employees
+  source: employee
+  options:
+    aggregate: count
+    filter:
+      status: active
+    navigate_to: employee
+- id: inactive_employees
+  type: metric
+  title: Inactive employees
+  source: employee
+  options:
+    aggregate: count
+    filter:
+      status: inactive
+    navigate_to: employee
+- id: active_contracts
+  type: metric
+  title: Contracts marked active
+  source: employment_contract
+  options:
+    aggregate: count
+    filter:
+      status: active
+    navigate_to: employment_contract
+- id: terminated_contracts
+  type: metric
+  title: Terminated contracts
+  source: employment_contract
+  options:
+    aggregate: count
+    filter:
+      status: terminated
+    navigate_to: employment_contract
+- id: today_attendance
+  type: metric
+  title: Today's attendance records
+  source: attendance
+  options:
+    aggregate: today
+    date_field: duty_date
+    navigate_to: attendance
+- id: today_present
+  type: metric
+  title: Today's present records
+  source: attendance
+  options:
+    aggregate: today
+    date_field: duty_date
+    filter:
+      status: present
+    navigate_to: attendance
+- id: recent_activity
+  type: table
+  title: Employee history
+  source: employee_history
+  options:
+    rows_path: items
+    limit: 8
+    columns:
+    - key: employee_id
+      header: Employee Id
+    - key: effective_date
+      header: Effective Date
+    - key: event_type
+      header: Event Type
+    - key: summary
+      header: Summary
+    navigate_to: employee_history
+    empty_title: No employee history recorded
+- id: monthly_attendance
+  type: chart
+  title: Attendance records by month
+  source: attendance
+  options:
+    kind: bar
+    aggregate: count
+    group_by: duty_date
+    empty_title: No attendance data
+    time_bucket: month
+- id: duty_hours
+  type: chart
+  title: Recorded duty hours by employee
+  source: attendance
+  options:
+    kind: bar
+    aggregate: sum
+    group_by: employee_id
+    empty_title: No attendance data
+    field: duty_hours
+- id: overtime
+  type: chart
+  title: Recorded overtime by employee
+  source: attendance
+  options:
+    kind: bar
+    aggregate: sum
+    group_by: employee_id
+    empty_title: No attendance data
+    field: overtime_hours

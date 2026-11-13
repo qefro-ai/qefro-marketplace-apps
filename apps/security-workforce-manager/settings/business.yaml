@@ -1,0 +1,12 @@
+settings:
+  timezone:
+    type: string
+    required: true
+    default: Asia/Dubai
+    description: Workspace reporting and expiry-watch timezone.
+  contract_duration_years:
+    type: number
+    required: true
+    default: 2
+    description: Default duration for new contracts. End dates currently require manual
+      verification.

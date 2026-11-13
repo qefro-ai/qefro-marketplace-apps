@@ -1,0 +1,54 @@
+id: create-attendance
+name: Create attendance
+surfaces:
+- staff
+trigger:
+  type: conversation
+steps:
+- id: select_employee_id
+  type: tool
+  tool: entity.employee.list
+  execution: runtime
+  output: select_employee_id
+- id: ask_employee_id
+  type: ask
+  field: employee_id
+  message: Enter employee id.
+  choices_from: select_employee_id
+  value_field: id
+  title_field: full_name
+  empty_message: No related records available. Create the related record first.
+- id: ask_duty_date
+  type: ask
+  field: duty_date
+  message: Enter duty date.
+- id: select_site_id
+  type: tool
+  tool: entity.duty_site.list
+  execution: runtime
+  output: select_site_id
+- id: ask_site_id
+  type: ask
+  field: site_id
+  message: Enter site id.
+  choices_from: select_site_id
+  value_field: id
+  title_field: name
+  empty_message: No related records available. Create the related record first.
+- id: save
+  type: tool
+  tool: entity.attendance.create
+  execution: runtime
+  input_map:
+    employee_id: employee_id
+    duty_date: duty_date
+    site_id: site_id
+    site_timezone: $literal:Asia/Dubai
+    status: $literal:present
+    check_in: check_in
+    check_out: check_out
+    duty_hours: duty_hours
+    overtime_hours: overtime_hours
+    remarks: remarks
+- id: done
+  type: complete

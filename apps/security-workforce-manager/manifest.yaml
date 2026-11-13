@@ -1,0 +1,108 @@
+id: security-workforce-manager
+name: Security Workforce Manager
+version: 0.1.1
+hosting: runtime
+description: Staff-only workforce records, contracts, attendance and identity validity.
+  Development release; see README release gates.
+category: productivity
+tags:
+- workforce
+- security
+- staff
+channels: []
+entities:
+- duty_site
+- employee
+- employee_private
+- employment_contract
+- emirates_id
+- attendance
+- site_assignment
+- employee_history
+flows:
+- create-duty-site
+- create-employee
+- create-employee-private
+- create-employment-contract
+- create-emirates-id
+- create-attendance
+- create-site-assignment
+- create-employee-history
+events:
+- employee.created
+- employee.updated
+- employee.terminated
+- contract.terminated
+- contract.renewed
+- contract.completed
+- contract.expiry_due
+- identity.expiry_due
+settings:
+- key: timezone
+  type: string
+  required: true
+  default: Asia/Dubai
+  description: Workspace reporting and expiry-watch timezone.
+- key: contract_duration_years
+  type: number
+  required: true
+  default: 2
+  description: Default duration for new contracts. End dates currently require manual
+    verification.
+permissions:
+- workflow.execute
+- storage.read
+- storage.write
+- storage.update
+- storage.delete
+capabilities:
+- theme.get
+- user.get
+- tenant.get
+- runtime.query
+- workflow.trigger
+- storage.read
+- storage.write
+ui:
+  name: Security Workforce Manager
+  navigation_layout: sidebar
+automation_templates:
+- id: contract_expiry
+  name: Contract expiry day
+  description: Optional tenant-owned automation; enable after role and notification
+    review. No identity data included.
+  trigger:
+    event: contract.expiry_due
+  actions:
+  - type: notify_team
+    message: A contract has reached its recorded end date. Review the contract expiry
+      queue.
+- id: identity_expiry
+  name: Identity expiry day
+  description: Optional tenant-owned automation; enable after role and notification
+    review. No identity data included.
+  trigger:
+    event: identity.expiry_due
+  actions:
+  - type: notify_team
+    message: An identity validity record expires today. Authorized HR staff should
+      review it.
+- id: contract_renewal
+  name: Contract renewed
+  description: Optional tenant-owned automation; enable after role and notification
+    review. No identity data included.
+  trigger:
+    event: contract.renewed
+  actions:
+  - type: notify_team
+    message: A contract was marked renewed. Review its successor contract.
+- id: employee_termination
+  name: Employee termination
+  description: Optional tenant-owned automation; enable after role and notification
+    review. No identity data included.
+  trigger:
+    event: employee.terminated
+  actions:
+  - type: notify_team
+    message: An employee was marked terminated. Review assignments and attendance
+      permissions.

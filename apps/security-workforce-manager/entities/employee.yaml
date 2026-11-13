@@ -1,0 +1,70 @@
+id: employee
+name: Employees
+description: Employees records for authorized staff.
+title_field: full_name
+fields:
+- name: employee_number
+  type: string
+  unique: true
+- name: full_name
+  type: string
+  required: true
+- name: employee_role
+  type: enum
+  required: true
+  enum_values:
+  - guard
+  - supervisor
+  - operations
+  - administration
+- name: joining_date
+  type: date
+  required: true
+- name: status
+  type: enum
+  required: true
+  enum_values:
+  - planned
+  - active
+  - inactive
+  - terminated
+  - archived
+  default: planned
+- name: assigned_site
+  type: relation
+  ref_entity: duty_site
+- name: notes
+  type: string
+  help: Operational notes only. Do not enter identity numbers, salary or medical information.
+concurrency: optimistic
+delete:
+  mode: soft
+views:
+- type: table
+allocate_code:
+  prefix: EMP-
+  start: 1001
+  field: employee_number
+status_events:
+  terminated: employee.terminated
+ui:
+  list:
+    queues:
+    - id: active
+      label: Active employees
+      filter:
+        status: active
+    - id: inactive
+      label: Inactive employees
+      filter:
+        status:
+        - inactive
+        - terminated
+        - archived
+  detail:
+    related:
+      order:
+      - employment_contract
+      - attendance
+      - site_assignment
+      - employee_history
